@@ -214,7 +214,7 @@ static const QMap<Registry::Interface, SuppertedInterfaceData> s_interfaces = {
         &Registry::remoteAccessManagerRemoved
     }},
     {Registry::Interface::FakeInput, {
-        2,
+        3,
         QByteArrayLiteral("org_kde_kwin_fake_input"),
         &org_kde_kwin_fake_input_interface,
         &Registry::fakeInputAnnounced,
