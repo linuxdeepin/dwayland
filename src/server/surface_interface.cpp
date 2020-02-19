@@ -564,6 +564,9 @@ void SurfaceInterface::Private::attachBuffer(wl_resource *buffer, const QPoint &
     }
     Q_Q(SurfaceInterface);
     pending.buffer = new BufferInterface(buffer, q);
+    // set default damage
+    auto bufferSize = pending.buffer->size();
+    pending.damage = QRegion(0, 0, bufferSize.width(), bufferSize.height());
     QObject::connect(pending.buffer, &BufferInterface::aboutToBeDestroyed, q,
         [this](BufferInterface *buffer) {
             if (pending.buffer == buffer) {
