@@ -250,6 +250,10 @@ void SurfaceInterfacePrivate::surface_attach(Resource *resource, struct ::wl_res
         return;
     }
     pending.buffer = compositor->display()->clientBufferForResource(buffer);
+
+    // set default damage to force initial rendering
+    auto bufferSize = pending.buffer->size();
+    pending.damage = QRegion(0, 0, bufferSize.width(), bufferSize.height());
 }
 
 void SurfaceInterfacePrivate::surface_damage(Resource *, int32_t x, int32_t y, int32_t width, int32_t height)
