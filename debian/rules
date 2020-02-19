@@ -1,0 +1,17 @@
+#!/usr/bin/make -f
+# -*- makefile -*-
+
+export DEB_LDFLAGS_MAINT_APPEND := -Wl,--as-needed
+
+%:
+	dh $@ --with kf5,pkgkde_symbolshelper --buildsystem kf5 --without build_stamp
+
+override_dh_auto_configure:
+	dh_auto_configure -- -DBUILD_QCH=ON
+
+override_dh_strip:
+	dh_strip --dbgsym-migration='kwayland-dbg (<= 4:5.5.5-1~~)'
+
+override_dh_auto_test:
+	# Disable dh_auto_test at build time
+	:

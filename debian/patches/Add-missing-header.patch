@@ -1,0 +1,22 @@
+From: Maximiliano Curia <maxy@gnuservers.com.ar>
+Date: Tue, 15 May 2018 17:52:09 +0200
+Subject: Add missing header
+
+xdgforeign defines exported classes, and is included by the installed
+xdgforeign_v2.h.
+---
+ src/client/CMakeLists.txt | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/src/client/CMakeLists.txt b/src/client/CMakeLists.txt
+index 2d7e73b..df01d3d 100644
+--- a/src/client/CMakeLists.txt
++++ b/src/client/CMakeLists.txt
+@@ -298,6 +298,7 @@ set(CLIENT_LIB_HEADERS
+   xdgdecoration.h
+   xdgshell.h
+   xdgforeign.h
++  xdgforeign_v2.h
+   xdgoutput.h
+ )
+ 
