@@ -63,6 +63,7 @@ Global::~Global()
 void Global::create()
 {
     d->create();
+    wl_display_flush_clients(*(d->display));
 }
 
 void Global::destroy()
@@ -73,6 +74,7 @@ void Global::destroy()
     emit aboutToDestroyGlobal();
     wl_global_destroy(d->global);
     d->global = nullptr;
+    wl_display_flush_clients(*(d->display));
 }
 
 bool Global::isValid() const

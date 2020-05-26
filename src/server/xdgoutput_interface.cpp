@@ -145,6 +145,13 @@ void XdgOutputManagerInterface::Private::getXdgOutputCallback(wl_client *client,
     }
 
     auto xdgOutput = d->outputs[output];
+
+    // when output global gets destroyed, remove connected resource to avoid
+    // invalid events sent.
+    connect(output, &OutputInterface::aboutToDestroyGlobal, xdgOutput, [xdgOutput, iface]() {
+        xdgOutput->d->resourceDisconnected(iface);
+    }, Qt::QueuedConnection);
+
     xdgOutput->d->resourceConnected(iface);
     connect(iface, &XdgOutputV1Interface::unbound, xdgOutput, [xdgOutput, iface]() {
         xdgOutput->d->resourceDisconnected(iface);
