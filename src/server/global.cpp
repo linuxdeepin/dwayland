@@ -74,6 +74,7 @@ void Global::destroy()
     emit aboutToDestroyGlobal();
     wl_global_destroy(d->global);
     d->global = nullptr;
+    emit hasDestroyedGlobal();
     wl_display_flush_clients(*(d->display));
 }
 

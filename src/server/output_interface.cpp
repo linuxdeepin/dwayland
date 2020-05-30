@@ -146,14 +146,13 @@ OutputInterface::OutputInterface(Display *display, QObject *parent)
     connect(this, &OutputInterface::modelChanged,          this, [this, d] { d->updateGeometry(); });
     connect(this, &OutputInterface::manufacturerChanged,   this, [this, d] { d->updateGeometry(); });
     connect(this, &OutputInterface::scaleChanged,          this, [this, d] { d->updateScale(); });
-    connect(this, &OutputInterface::aboutToDestroyGlobal, this, [this, d] {
+    connect(this, &OutputInterface::hasDestroyedGlobal, this, [this, d] {
             for (auto it = d->resources.constBegin(); it != d->resources.constEnd(); ++it) {
                 wl_resource_set_destructor(it->resource, NULL);
                 wl_resource_set_user_data(it->resource, NULL);
             }
             d->resources.clear();
         }
-        , Qt::QueuedConnection
     );
 }
 

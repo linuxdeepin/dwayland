@@ -97,6 +97,12 @@ Q_SIGNALS:
      * cleanup tasks.
      */
     void aboutToDestroyGlobal();
+    /**
+     * This signal is emitted when the client finished removing of the wl_global.
+     * At the time the signal is emitted the global is invalid and allows to perform
+     * post clenaup tasks.
+     */
+    void hasDestroyedGlobal();
 
 protected:
     class Private;
