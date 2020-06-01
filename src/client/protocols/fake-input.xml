@@ -83,5 +83,9 @@
               A client should use this request to send touch frame event.
           </description>
       </request>
+      <request name="keyboard_key" since="2">
+        <arg name="button" type="uint"/>
+        <arg name="state" type="uint"/>
+      </request>
   </interface>
 </protocol>
