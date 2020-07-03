@@ -20,6 +20,7 @@ License along with this library.  If not, see <http://www.gnu.org/licenses/>.
 #include "dpms_interface_p.h"
 #include "display.h"
 #include "output_interface.h"
+#include <QDebug>
 
 namespace KWayland
 {
@@ -62,6 +63,7 @@ void DpmsManagerInterface::Private::getDpmsCallback(wl_client *client, wl_resour
         wl_resource_post_no_memory(resource);
         return;
     }
+    qDebug() << __func__ << "resource: " << resource;
     dpms->sendSupported();
     dpms->sendMode();
     dpms->sendDone();
@@ -122,6 +124,9 @@ DpmsInterface::DpmsInterface(OutputInterface *output, wl_resource *parentResourc
     );
     connect(output, &OutputInterface::dpmsModeChanged, this,
         [this] {
+            qDebug() << "dpmsModeChanged" << "resource:" << this->d->resource;
+            if (!d->resource) return;
+
             sendMode();
             sendDone();
         }
@@ -157,12 +162,15 @@ void DpmsInterface::sendMode()
     default:
         Q_UNREACHABLE();
     }
-    org_kde_kwin_dpms_send_mode(d->resource, wlMode);
+
+    if (d->resource)
+        org_kde_kwin_dpms_send_mode(d->resource, wlMode);
 }
 
 void DpmsInterface::sendDone()
 {
     Q_D();
+    if (!d->resource) return;
     org_kde_kwin_dpms_send_done(d->resource);
     client()->flush();
 }
