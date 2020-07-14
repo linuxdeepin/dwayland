@@ -286,6 +286,15 @@ void PlasmaShellSurface::setRole(PlasmaShellSurface::Role role)
             wlRole = ORG_KDE_PLASMA_SURFACE_ROLE_APPLETPOPUP;
         }
         break;
+    case Role::StandAlone:
+        wlRole = ORG_KDE_PLASMA_SURFACE_ROLE_STANDALONE;
+        break;
+    case Role::Override:
+        wlRole = ORG_KDE_PLASMA_SURFACE_ROLE_OVERRIDE;
+        break;
+    case Role::ActiveFullScreen:
+        wlRole = ORG_KDE_PLASMA_SURFACE_ROLE_ACTIVEFULLSCREEN;
+        break;
     default:
         Q_UNREACHABLE();
         break;

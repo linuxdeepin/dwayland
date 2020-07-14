@@ -240,6 +240,15 @@ void PlasmaShellSurfaceInterface::Private::setRole(uint32_t role)
     case ORG_KDE_PLASMA_SURFACE_ROLE_APPLETPOPUP:
         r = Role::AppletPopup;
         break;
+    case ORG_KDE_PLASMA_SURFACE_ROLE_STANDALONE:
+        r = Role::StandAlone;
+        break;
+    case ORG_KDE_PLASMA_SURFACE_ROLE_OVERRIDE:
+        r = Role::Override;
+        break;
+    case ORG_KDE_PLASMA_SURFACE_ROLE_ACTIVEFULLSCREEN:
+        r = Role::ActiveFullScreen;
+        break;
     case ORG_KDE_PLASMA_SURFACE_ROLE_NORMAL:
     default:
         r = Role::Normal;
