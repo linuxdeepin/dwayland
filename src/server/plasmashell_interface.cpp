@@ -252,6 +252,9 @@ void PlasmaShellSurfaceInterface::Private::setRole(uint32_t role)
     case ORG_KDE_PLASMA_SURFACE_ROLE_TOOLTIP:
         r = Role::ToolTip;
         break;
+    case ORG_KDE_PLASMA_SURFACE_ROLE_STANDALONE:
+        r = Role::StandAlone;
+        break;
     case ORG_KDE_PLASMA_SURFACE_ROLE_NORMAL:
     default:
         r = Role::Normal;

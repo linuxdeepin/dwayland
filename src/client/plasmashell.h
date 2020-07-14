@@ -246,7 +246,8 @@ public:
         Panel, ///< The Surface represents a panel (dock), normally stacked above normal surfaces
         OnScreenDisplay, ///< The Surface represents an on screen display, like a volume changed notification
         Notification, ///< The Surface represents a notification @since 5.24
-        ToolTip ///< The Surface represents a tooltip @since 5.24
+        ToolTip, ///< The Surface represents a tooltip @since 5.24
+        StandAlone ///< The Surface represents a special surface which the same as normal surface but can not be move/resize by window manager
     };
     /**
      * Changes the requested Role to @p role.
