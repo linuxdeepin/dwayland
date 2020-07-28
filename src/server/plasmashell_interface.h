@@ -111,7 +111,8 @@ public:
         OnScreenDisplay, ///< The surface represents an on screen display, like a volume changed notification
         Notification, ///< The surface represents a notification @since 5.24
         ToolTip, ///< The surface represents a tooltip @since 5.24
-        StandAlone ///< The Surface represents a dde-launcher
+        StandAlone, ///< The Surface represents a special surface which the same as normal surface but can not be move/resize by window manager
+        Override, ///< The Surface represents unmanaged surfaces
     };
     /**
      * @returns The requested role, default value is @c Role::Normal.

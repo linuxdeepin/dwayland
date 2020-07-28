@@ -283,6 +283,9 @@ void PlasmaShellSurface::setRole(PlasmaShellSurface::Role role)
     case Role::StandAlone:
         wlRole = ORG_KDE_PLASMA_SURFACE_ROLE_STANDALONE;
         break;
+    case Role::Override:
+        wlRole = ORG_KDE_PLASMA_SURFACE_ROLE_OVERRIDE;
+        break;
     default:
         Q_UNREACHABLE();
         break;
