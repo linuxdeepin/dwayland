@@ -228,11 +228,13 @@ void OutputDevice::Private::addMode(uint32_t flags, int32_t width, int32_t heigh
     if (flags & WL_OUTPUT_MODE_PREFERRED) {
         mode.flags |= Mode::Flag::Preferred;
     }
-    auto currentIt = modes.insert(modes.end(), mode);
+
     bool existing = false;
     if (flags & WL_OUTPUT_MODE_CURRENT) {
         auto it = modes.begin();
-        while (it != currentIt) {
+        // because we may call modes.erase() which means modes.end() maybe changed
+        // so here we use (it != modes.end()) to replace of (it != currentIt)
+        while (it != modes.end()) {
             auto &m = (*it);
             if (m.flags.testFlag(Mode::Flag::Current)) {
                 m.flags &= ~Mode::Flags(Mode::Flag::Current);
@@ -245,8 +247,14 @@ void OutputDevice::Private::addMode(uint32_t flags, int32_t width, int32_t heigh
                 it++;
             }
         }
+    }
+
+    // insert new mode after erase old mode
+    auto currentIt = modes.insert(modes.end(), mode);
+    if (flags & WL_OUTPUT_MODE_CURRENT) {
         currentMode = currentIt;
     }
+
     if (existing) {
         emit q->modeChanged(mode);
     } else {
