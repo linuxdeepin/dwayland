@@ -23,6 +23,7 @@ License along with this library.  If not, see <http://www.gnu.org/licenses/>.
 #include "resource_p.h"
 #include "output_interface.h"
 
+#include <QHash>
 #include <wayland-xdg-output-server-protocol.h>
 
 namespace KWayland
