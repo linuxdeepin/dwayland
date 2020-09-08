@@ -226,7 +226,7 @@ public:
      * @since 5.48
      */
     QStringList plasmaVirtualDesktops() const;
-
+    void setWindowId(quint32 winid);
 Q_SIGNALS:
     void closeRequested();
     /**

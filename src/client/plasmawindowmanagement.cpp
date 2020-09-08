@@ -31,7 +31,6 @@ License along with this library.  If not, see <http://www.gnu.org/licenses/>.
 #include <QFutureWatcher>
 #include <QTimer>
 #include <qplatformdefs.h>
-
 #include <errno.h>
 
 namespace KWayland
@@ -97,7 +96,7 @@ public:
     QStringList plasmaVirtualDesktops;
     QRect geometry;
     quint32 pid = 0;
-
+    quint32 windowId = 0;
 private:
     static void titleChangedCallback(void *data, org_kde_plasma_window *window, const char *title);
     static void appIdChangedCallback(void *data, org_kde_plasma_window *window, const char *app_id);
@@ -112,6 +111,7 @@ private:
     static void iconChangedCallback(void *data, org_kde_plasma_window *org_kde_plasma_window);
     static void virtualDesktopEnteredCallback(void *data, org_kde_plasma_window *org_kde_plasma_window, const char *id);
     static void virtualDesktopLeftCallback(void *data, org_kde_plasma_window *org_kde_plasma_window, const char *id);
+    static void windowIdCallback(void *data, org_kde_plasma_window *window, uint32_t winid);
     void setActive(bool set);
     void setMinimized(bool set);
     void setMaximized(bool set);
@@ -353,7 +353,8 @@ org_kde_plasma_window_listener PlasmaWindow::Private::s_listener = {
     iconChangedCallback,
     pidChangedCallback,
     virtualDesktopEnteredCallback,
-    virtualDesktopLeftCallback
+    virtualDesktopLeftCallback,
+    windowIdCallback
 };
 
 void PlasmaWindow::Private::parentWindowCallback(void *data, org_kde_plasma_window *window, org_kde_plasma_window *parent)
@@ -486,6 +487,13 @@ void PlasmaWindow::Private::virtualDesktopLeftCallback(void *data, org_kde_plasm
     if (p->plasmaVirtualDesktops.isEmpty()) {
         emit p->q->onAllDesktopsChanged();
     }
+}
+
+void PlasmaWindow::Private::windowIdCallback(void *data, org_kde_plasma_window *window, uint32_t winid)
+{
+    Q_UNUSED(window)
+    Private *p = cast(data);
+    p->windowId = winid;
 }
 
 void PlasmaWindow::Private::stateChangedCallback(void *data, org_kde_plasma_window *window, uint32_t state)
@@ -820,6 +828,11 @@ QString PlasmaWindow::title() const
 quint32 PlasmaWindow::virtualDesktop() const
 {
     return d->desktop;
+}
+
+quint32 PlasmaWindow::windowId() const
+{
+    return d->windowId;
 }
 
 bool PlasmaWindow::isActive() const

@@ -308,6 +308,12 @@
       </description>
       <arg name="is" type="string" summary="desktop id"/>
     </event>
-
+    
+    <event name="window_id">
+      <description summary="notify the client accept window id">
+        This event will be sent immediately after a window is mapped.
+      </description>
+      <arg name="winid" type="uint" summary="window Id"/>
+    </event>
   </interface>
 </protocol>
