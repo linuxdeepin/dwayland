@@ -55,6 +55,7 @@ License along with this library.  If not, see <http://www.gnu.org/licenses/>.
 #include "plasmavirtualdesktop_interface.h"
 #include "xdgoutput_interface.h"
 #include "xdgdecoration_interface.h"
+#include "clientmanagement_interface.h"
 
 #include <QCoreApplication>
 #include <QDebug>
@@ -485,6 +486,13 @@ XdgDecorationManagerInterface *Display::createXdgDecorationManager(XdgShellInter
     auto d = new XdgDecorationManagerInterface(this, shellInterface, parent);
     connect(this, &Display::aboutToTerminate, d, [d] { delete d; });
     return d;
+}
+
+ClientManagementInterface *Display::createClientManagement(QObject *parent)
+{
+    ClientManagementInterface *clientManagement = new ClientManagementInterface(this, parent);
+    connect(this, &Display::aboutToTerminate, clientManagement, [this,clientManagement] { delete clientManagement; });
+    return clientManagement;
 }
 
 void Display::createShm()

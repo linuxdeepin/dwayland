@@ -58,6 +58,7 @@ License along with this library.  If not, see <http://www.gnu.org/licenses/>.
 #include "server_decoration_palette.h"
 #include "xdgoutput.h"
 #include "xdgdecoration.h"
+#include "clientmanagement.h"
 // Qt
 #include <QDebug>
 // wayland
@@ -91,6 +92,7 @@ License along with this library.  If not, see <http://www.gnu.org/licenses/>.
 #include <wayland-server-decoration-palette-client-protocol.h>
 #include <wayland-xdg-output-unstable-v1-client-protocol.h>
 #include <wayland-xdg-decoration-unstable-v1-client-protocol.h>
+#include <wayland-client-management-client-protocol.h>
 
 /*****
  * How to add another interface:
@@ -377,7 +379,14 @@ static const QMap<Registry::Interface, SuppertedInterfaceData> s_interfaces = {
         &zxdg_decoration_manager_v1_interface,
         &Registry::xdgDecorationAnnounced,
         &Registry::xdgDecorationRemoved
-    }}
+    }},
+    {Registry::Interface::ClientManagement, {
+        1,
+        QByteArrayLiteral("com_deepin_client_management"),
+        &com_deepin_client_management_interface,
+        &Registry::clientManagementAnnounced,
+        &Registry::clientManagementRemoved
+    }},
 };
 
 static quint32 maxVersion(const Registry::Interface &interface)
@@ -693,6 +702,7 @@ BIND2(AppMenuManager, AppMenu, org_kde_kwin_appmenu_manager)
 BIND2(ServerSideDecorationPaletteManager, ServerSideDecorationPalette, org_kde_kwin_server_decoration_palette_manager)
 BIND(XdgOutputUnstableV1, zxdg_output_manager_v1)
 BIND(XdgDecorationUnstableV1, zxdg_decoration_manager_v1)
+BIND(ClientManagement, com_deepin_client_management)
 
 #undef BIND
 #undef BIND2
@@ -746,6 +756,7 @@ CREATE(ServerSideDecorationManager)
 CREATE2(ShmPool, Shm)
 CREATE(AppMenuManager)
 CREATE(ServerSideDecorationPaletteManager)
+CREATE(ClientManagement)
 
 #undef CREATE
 #undef CREATE2

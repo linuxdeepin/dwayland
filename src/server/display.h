@@ -90,6 +90,7 @@ class ServerSideDecorationPaletteManagerInterface;
 class PlasmaVirtualDesktopManagementInterface;
 class XdgOutputManagerInterface;
 class XdgDecorationManagerInterface;
+class ClientManagementInterface;
 
 /**
  * @brief Class holding the Wayland server display loop.
@@ -287,6 +288,8 @@ public:
      * @since 5.54
      */
     XdgDecorationManagerInterface *createXdgDecorationManager(XdgShellInterface *shellInterface, QObject *parent = nullptr);
+
+    ClientManagementInterface *createClientManagement(QObject *parent = nullptr);
 
     /**
      * Gets the ClientConnection for the given @p client.

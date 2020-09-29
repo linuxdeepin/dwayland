@@ -27,6 +27,10 @@ add_executable(pasteClient pasteclient.cpp)
 target_link_libraries(pasteClient Qt5::Concurrent KF5::WaylandClient)
 ecm_mark_as_test(pasteClient)
 
+add_executable(clientManagementTest clientManagementTest.cpp)
+target_link_libraries(clientManagementTest KF5::WaylandClient)
+ecm_mark_as_test(clientManagementTest)
+
 if (HAVE_LINUX_INPUT_H)
     add_executable(touchClientTest touchclienttest.cpp)
     target_link_libraries(touchClientTest KF5::WaylandClient)
