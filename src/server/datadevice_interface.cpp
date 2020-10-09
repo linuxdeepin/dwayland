@@ -303,6 +303,10 @@ void DataDeviceInterface::updateDragTarget(SurfaceInterface *surface, quint32 se
                 wl_data_device_send_motion(d->resource, d->seat->timestamp(),
                                         wl_fixed_from_double(pos.x()), wl_fixed_from_double(pos.y()));
                 client()->flush();
+                // workaround: drag surface move according to cursor move
+                if (d->seat->dragSource() && d->seat->dragSource()->icon()) {
+                    emit d->seat->dragSource()->icon()->dragPositionChanged(d->seat->pointerPos() + d->seat->dragSource()->icon()->offset());
+                }
             }
         );
     } else if (d->seat->isDragTouch()) {
@@ -318,6 +322,10 @@ void DataDeviceInterface::updateDragTarget(SurfaceInterface *surface, quint32 se
                 wl_data_device_send_motion(d->resource, d->seat->timestamp(),
                                         wl_fixed_from_double(pos.x()), wl_fixed_from_double(pos.y()));
                 client()->flush();
+                // workaround: drag surface move according to cursor move
+                if (d->seat->dragSource() && d->seat->dragSource()->icon()) {
+                    emit d->seat->dragSource()->icon()->dragPositionChanged(d->seat->pointerPos() + d->seat->dragSource()->icon()->offset());
+                }
             }
         );
     }

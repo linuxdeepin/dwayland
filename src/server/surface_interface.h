@@ -298,6 +298,10 @@ Q_SIGNALS:
      **/
     void sizeChanged();
     /**
+     * @since 5.3
+     **/
+    void dragPositionChanged(const QPointF &globalPos);
+    /**
      * @since 5.4
      **/
     void shadowChanged();

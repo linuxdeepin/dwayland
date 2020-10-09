@@ -333,6 +333,7 @@ void SurfaceInterface::Private::swapStates(State *source, State *target, bool em
     bool bufferChanged = source->bufferIsSet;
     const bool opaqueRegionChanged = source->opaqueIsSet;
     const bool inputRegionChanged = source->inputIsSet;
+    const bool offsetChanged = source->offsetIsSet;
     const bool scaleFactorChanged = source->scaleIsSet && (target->scale != source->scale);
     const bool transformChanged = source->transformIsSet && (target->transform != source->transform);
     const bool shadowChanged = source->shadowIsSet;
@@ -405,6 +406,10 @@ void SurfaceInterface::Private::swapStates(State *source, State *target, bool em
     if (opaqueRegionChanged) {
         target->opaque = source->opaque;
         target->opaqueIsSet = true;
+    }
+    if (offsetChanged && (target->offset != source->offset)) {
+        target->offset = source->offset;
+        target->offsetIsSet = true;
     }
     if (scaleFactorChanged) {
         target->scale = source->scale;
@@ -553,6 +558,7 @@ void SurfaceInterface::Private::attachBuffer(wl_resource *buffer, const QPoint &
 {
     pending.bufferIsSet = true;
     pending.offset = offset;
+    pending.offsetIsSet = true;
     if (pending.buffer) {
         delete pending.buffer;
     }

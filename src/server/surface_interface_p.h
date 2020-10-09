@@ -43,6 +43,7 @@ public:
         QRegion input = QRegion();
         bool inputIsSet = false;
         bool opaqueIsSet = false;
+        bool offsetIsSet = false;
         bool bufferIsSet = false;
         bool shadowIsSet = false;
         bool blurIsSet = false;
