@@ -56,6 +56,7 @@ struct zwp_idle_inhibit_manager_v1;
 struct zxdg_output_manager_v1;
 struct zxdg_decoration_manager_v1;
 struct com_deepin_client_management;
+struct dde_seat;
 struct dde_shell;
 struct com_deepin_kwin_strut;
 
@@ -108,6 +109,7 @@ class XdgImporter;
 class XdgOutputManager;
 class XdgDecorationManager;
 class ClientManagement;
+class DDESeat;
 class DDEShell;
 class Strut;
 
@@ -189,6 +191,7 @@ public:
         Keystate, ///< refers to org_kwin_keystate @since 5.60
         PlasmaActivationFeedback, ///< Refers to org_kde_plasma_activation_feedback interface, @since 5.83
         ClientManagement,///refers to com_deepin_client_management, @since 5.83
+        DDESeat, ///refers to dde_shell, @since 5.54
         DDEShell, ///<refers to dde_shell, @since 5.54
         Strut, ///< refers to com_deepin_kwin_strut interface
     };
@@ -718,6 +721,17 @@ public:
      * @since 5.54
      **/
     dde_shell *bindDDEShell(uint32_t name, uint32_t version) const;
+
+    /**
+     * Binds the dde_shell with @p name and @p version.
+     * If the @p name does not exist,
+     * @c null will be returned.
+     *
+     * Prefer using createDDESeat instead.
+     * @see createDDESeat
+     * @since 5.54
+     **/
+    dde_seat *bindDDESeat(uint32_t name, uint32_t version) const;
 
     /**
      * Binds the com_deepin_kwin_strut with @p name and @p version.
@@ -1358,6 +1372,23 @@ public:
     DDEShell *createDDEShell(quint32 name, quint32 version, QObject *parent = nullptr);
 
     /**
+     * Creates an DDESeat and sets it up to manage the interface identified by
+     * @p name and @p version.
+     *
+     * Note: in case @p name is invalid or isn't for the zxdg_decoration_manager_v1 interface,
+     * the returned DDESeat will not be valid. Therefore it's recommended to call
+     * isValid on the created instance.
+     *
+     * @param name The name of the zxdg_decoration_manager_v1 interface to bind
+     * @param version The version or the zxdg_decoration_manager_v1 interface to use
+     * @param parent The parent for DDESeat
+     *
+     * @returns The created DDESeat.
+     * @since 5.54
+     **/
+    DDESeat *createDDESeat(quint32 name, quint32 version, QObject *parent = nullptr);
+
+    /**
      * Creates a Strut and sets it up to manage the interface identified by
      * @p name and @p version.
      *
@@ -1688,6 +1719,14 @@ Q_SIGNALS:
     void ddeShellAnnounced(quint32 name, quint32 version);
 
     /**
+     * Emitted whenever a dde_shell interface gets announced.
+     * @param name The name for the announced interface
+     * @param version The maximum supported version of the announced interface
+     * @since 5.54
+     **/
+    void ddeSeatAnnounced(quint32 name, quint32 version);
+
+    /**
      * Emitted whenever a com_deepin_kwin_strut interface gets announced.
      * @param name The name for the announced interface
      * @param version The maximum supported version of the announced interface
@@ -1950,6 +1989,13 @@ Q_SIGNALS:
     void clientManagementRemoved(quint32 name);
 
     void ddeShellRemoved(quint32 name);
+
+    /**
+     * Emitted whenever a dde_shell gets removed.
+     * @param name The name of the removed interface
+     * @since 5.54
+     **/
+    void ddeSeatRemoved(quint32 name);
 
     /**
      * Emitted whenever a com_deepin_kwin_strut interface gets removed.

@@ -48,6 +48,7 @@
 #include "xdgshell_v5_interface_p.h"
 #include "xdgshell_v6_interface_p.h"
 #include "clientmanagement_interface.h"
+#include "ddeseat_interface.h"
 
 #include <QAbstractEventDispatcher>
 #include <QCoreApplication>
@@ -625,6 +626,13 @@ ClientManagementInterface *Display::createClientManagement(QObject *parent)
 DDEShellInterface *Display::createDDEShell(QObject *parent)
 {
     auto b = new DDEShellInterface(this, parent);
+    connect(this, &Display::aboutToTerminate, b, [this, b] { delete b; });
+    return b;
+}
+
+DDESeatInterface *Display::createDDESeat(QObject *parent)
+{
+    auto b = new DDESeatInterface(this, parent);
     connect(this, &Display::aboutToTerminate, b, [this, b] { delete b; });
     return b;
 }

@@ -20,6 +20,8 @@ set(CLIENT_LIB_SRCS
     datadevicemanager.cpp
     dataoffer.cpp
     datasource.cpp
+    ddeseat.cpp
+    ddekeyboard.cpp
     ddeshell.cpp
     dpms.cpp
     fakeinput.cpp
@@ -232,6 +234,11 @@ ecm_add_wayland_client_protocol(CLIENT_LIB_SRCS
 )
 
 ecm_add_wayland_client_protocol(CLIENT_LIB_SRCS
+    PROTOCOL ${PLASMA_WAYLAND_PROTOCOLS_DIR}/dde-seat.xml
+    BASENAME dde-seat
+)
+
+ecm_add_wayland_client_protocol(CLIENT_LIB_SRCS
     PROTOCOL ${PLASMA_WAYLAND_PROTOCOLS_DIR}/dde-shell.xml
     BASENAME dde-shell
 )
@@ -269,6 +276,7 @@ set(CLIENT_GENERATED_FILES
     ${CMAKE_CURRENT_BINARY_DIR}/wayland-xdg-output-unstable-v1-client-protocol.h
     ${CMAKE_CURRENT_BINARY_DIR}/wayland-xdg-decoration-unstable-v1-client-protocol.h
     ${CMAKE_CURRENT_BINARY_DIR}/wayland-client-management-client-protocol.h
+    ${CMAKE_CURRENT_BINARY_DIR}/wayland-dde-seat-client-protocol.h
     ${CMAKE_CURRENT_BINARY_DIR}/wayland-dde-shell-client-protocol.h
 )
 
@@ -341,6 +349,8 @@ set(CLIENT_LIB_HEADERS
   datadevicemanager.h
   dataoffer.h
   datasource.h
+  ddeseat.h
+  ddekeyboard.h
   ddeshell.h
   dpms.h
   fakeinput.h

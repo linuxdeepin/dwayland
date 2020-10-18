@@ -48,6 +48,7 @@
 #include "xdgshell.h"
 #include "xdgshell_p.h"
 #include "clientmanagement.h"
+#include "ddeseat.h"
 #include "ddeshell.h"
 #include "strut.h"
 // Qt
@@ -87,6 +88,7 @@
 #include <wayland-xdg-shell-client-protocol.h>
 #include <wayland-xdg-shell-v6-client-protocol.h>
 #include <wayland-client-management-client-protocol.h>
+#include <wayland-dde-seat-client-protocol.h>
 #include <wayland-dde-shell-client-protocol.h>
 #include <wayland-strut-client-protocol.h>
 
@@ -419,6 +421,13 @@ static const QMap<Registry::Interface, SuppertedInterfaceData> s_interfaces = {
         &Registry::ddeShellAnnounced,
         &Registry::ddeShellRemoved
     }},
+    {Registry::Interface::DDESeat, {
+        1,
+        QByteArrayLiteral("dde_seat"),
+        &dde_seat_interface,
+        &Registry::ddeSeatAnnounced,
+        &Registry::ddeSeatRemoved
+    }},
     {Registry::Interface::Strut, {
         1,
         QByteArrayLiteral("com_deepin_kwin_strut"),
@@ -740,6 +749,7 @@ BIND2(ServerSideDecorationPaletteManager, ServerSideDecorationPalette, org_kde_k
 BIND(XdgOutputUnstableV1, zxdg_output_manager_v1)
 BIND(XdgDecorationUnstableV1, zxdg_decoration_manager_v1)
 BIND(ClientManagement, com_deepin_client_management)
+BIND(DDESeat, dde_seat)
 BIND(DDEShell, dde_shell)
 BIND(Strut, com_deepin_kwin_strut)
 
@@ -800,6 +810,7 @@ CREATE(AppMenuManager)
 CREATE(Keystate)
 CREATE(ServerSideDecorationPaletteManager)
 CREATE(ClientManagement)
+CREATE(DDESeat)
 CREATE(DDEShell)
 CREATE(Strut)
 

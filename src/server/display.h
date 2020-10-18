@@ -78,6 +78,7 @@ class KeyStateInterface;
 class LinuxDmabufUnstableV1Interface;
 class TabletManagerInterface;
 class ClientManagementInterface;
+class DDESeatInterface;
 class DDEShellInterface;
 class StrutInterface;
 
@@ -293,6 +294,14 @@ public:
      * @since 5.52
      **/
     PlasmaVirtualDesktopManagementInterface *createPlasmaVirtualDesktopManagement(QObject *parent = nullptr);
+
+    /**
+     * Creates the DDESeatInterface in interface @p version.
+     *
+     * @returns The created manager object
+     * @since 5.52
+     **/
+    DDESeatInterface *createDDESeat(QObject *parent = nullptr);
 
     /**
      * Creates the XdgDecorationManagerInterface
