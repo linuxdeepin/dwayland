@@ -32,6 +32,9 @@ License along with this library.  If not, see <http://www.gnu.org/licenses/>.
 #include "../src/client/shell.h"
 #include "../src/client/shm_pool.h"
 #include "../src/client/surface.h"
+#include "../src/client/ddeseat.h"
+
+
 // Qt
 #include <QGuiApplication>
 #include <QDebug>
@@ -66,6 +69,8 @@ private:
     EventQueue *m_eventQueue = nullptr;
     Compositor *m_compositor = nullptr;
     Seat *m_seat = nullptr;
+    DDESeat *m_ddeSeat = nullptr;
+    DDEPointer *m_ddePointer = nullptr;
     Shell *m_shell = nullptr;
     ShellSurface *m_shellSurface = nullptr;
     ShmPool *m_shm = nullptr;
@@ -151,7 +156,7 @@ void PanelTest::hideTooltip()
 void PanelTest::moveTooltip(const QPointF &pos)
 {
     if (m_tooltip.plasmaSurface) {
-        m_tooltip.plasmaSurface->setPosition(QPoint(10, 0) + pos.toPoint());
+        m_tooltip.plasmaSurface->setPosition(pos.toPoint());
     }
 }
 
@@ -215,11 +220,16 @@ void PanelTest::setupRegistry(Registry *registry)
                     );
                     connect(p, &Pointer::left, this,
                         [this] {
-                            hideTooltip();
+                            // hideTooltip();
                         }
                     );
                 }
             );
+        }
+    );
+connect(registry, &Registry::ddeSeatAnnounced, this,
+        [this, registry](quint32 name, quint32 version) {
+            m_ddeSeat = registry->createDDESeat(name, version, this);
         }
     );
     connect(registry, &Registry::plasmaShellAnnounced, this,
@@ -325,8 +335,43 @@ void PanelTest::setupRegistry(Registry *registry)
             connect(m_shellSurface, &ShellSurface::sizeChanged, this, &PanelTest::render);
             if (m_plasmaShell) {
                 m_plasmaShellSurface = m_plasmaShell->createSurface(m_surface, this);
-                m_plasmaShellSurface->setPosition(QPoint(10, 0));
+                m_plasmaShellSurface->setPosition(QPoint(0, 0));
                 m_plasmaShellSurface->setRole(PlasmaShellSurface::Role::Panel);
+            }
+            if (m_ddeSeat) {
+                m_ddePointer = m_ddeSeat->createDDePointer(this);
+                // m_ddePointer->getMotion();
+                // // 注意，roudntrip/dispatch两行非常重要，getMotion是客户端发送一个request给kwin,请求kwin返回当前全局坐标
+                // // kwin收到改请求后，通过一个motioncallback发送一个event给客户端，带的参数就是全局坐标
+                // // 客户端和kwin服务端是异步通信
+                // // 如何保证客户端getGlobalPointerPos接口拿到的全局坐标不是上一次的全局坐标，而是kwin接收到getMotion请求后，回过来的最新的全局坐标
+                // // wayland里面是通过roudntrip/dispatch机制来保证的，所有必须加上roundtrip/dispatch
+                // m_connectionThreadObject->roundtrip();
+                // m_eventQueue->dispatch();
+
+                QPointF cursorPos = m_ddePointer->getGlobalPointerPos();
+                qDebug() << "cursorPos" << cursorPos;
+                connect(m_ddePointer, &DDEPointer::buttonStateChanged, this,
+                    [this] (const QPointF &pos, quint32 button, KWayland::Client::DDEPointer::ButtonState state) {
+                        if (state == DDEPointer::ButtonState::Released) {
+                            qDebug() << "button Released" << pos;
+                            return;
+                        }
+                        if (button == BTN_LEFT) {
+                            qDebug() << "BTN_LEFT Pressed" << pos;
+                            hideTooltip();
+                        } else if (button == BTN_RIGHT) {
+                            qDebug() << "BTN_RIGHT Pressed" << pos;
+                        }
+                    }
+                );
+                connect(m_ddePointer, &DDEPointer::motion, this,
+                    [this] (const QPointF &pos) {
+                            qDebug() << "motion" << pos;
+                            QPointF relativePos = QPoint((pos.x() / 2160) * 1000.0, (pos.y() / 1440) * 500.0);
+                            moveTooltip(relativePos);
+                    }
+                );
             }
             render();
         }
@@ -338,7 +383,7 @@ void PanelTest::setupRegistry(Registry *registry)
 
 void PanelTest::render()
 {
-    const QSize &size = m_shellSurface->size().isValid() ? m_shellSurface->size() : QSize(300, 20);
+    const QSize &size = m_shellSurface->size().isValid() ? m_shellSurface->size() : QSize(1000, 500);
     auto buffer = m_shm->getBuffer(size, size.width() * 4).toStrongRef();
     buffer->setUsed(true);
     QImage image(buffer->address(), size.width(), size.height(), QImage::Format_ARGB32_Premultiplied);

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<protocol name="dde_seat">
+  <copyright><![CDATA[
+        Copyright © 2020  wugang <wugang@uniontech.com>
+
+        Permission to use, copy, modify, distribute, and sell this
+        software and its documentation for any purpose is hereby granted
+        without fee, provided that the above copyright notice appear in
+        all copies and that both that copyright notice and this permission
+        notice appear in supporting documentation, and that the name of
+        the copyright holders not be used in advertising or publicity
+        pertaining to distribution of the software without specific,
+        written prior permission.  The copyright holders make no
+        representations about the suitability of this software for any
+        purpose.  It is provided "as is" without express or implied
+        warranty.
+
+        THE COPYRIGHT HOLDERS DISCLAIM ALL WARRANTIES WITH REGARD TO THIS
+        SOFTWARE, INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND
+        FITNESS, IN NO EVENT SHALL THE COPYRIGHT HOLDERS BE LIABLE FOR ANY
+        SPECIAL, INDIRECT OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+        WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN
+        AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION,
+        ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF
+        THIS SOFTWARE.
+        ]]></copyright>
+
+  <description summary="protocol to get global input events">
+  </description>
+
+  <interface name="dde_seat" version="1">
+    <description summary="get pointer objects">
+      A global interface used for getting the global seat object for a
+      given input device.
+    </description>
+
+    <request name="get_dde_pointer">
+      <description summary="get a pointer object">
+      get a pointer through a global seat object
+      </description>
+      <arg name="id" type="new_id" interface="dde_pointer"/>
+    </request>
+  </interface>
+
+  <interface name="dde_pointer" version="1">
+    <description summary="relative pointer object">
+      A dde_pointer object is an extension to the wl_pointer interface
+      used for emitting global pointer events.
+    </description>
+
+    <request name="get_motion">
+      <description summary="get a global cursor position">
+      </description>
+      client request server to send a global cursor position
+    </request>
+
+    <event name="motion">
+      <description summary="pointer motion event">
+      server send a global cursor position to client
+      </description>
+      <arg name="x" type="fixed" summary="global x coordinate"/>
+      <arg name="y" type="fixed" summary="global y coordinate"/>
+    </event>
+
+    <enum name="button_state">
+      <description summary="physical button state">
+      Describes the physical state of a button that produced the button
+      event.
+      </description>
+      <entry name="released" value="0" summary="the button is not pressed"/>
+      <entry name="pressed" value="1" summary="the button is pressed"/>
+    </enum>
+
+    <event name="button">
+      <description summary="pointer button event">
+      Mouse button click and release notifications.
+
+      The button is a button code as defined in the Linux kernel's
+      linux/input-event-codes.h header file, e.g. BTN_LEFT.
+
+      Any 16-bit button code value is reserved for future additions to the
+      kernel's event code list. All other button codes above 0xFFFF are
+      currently undefined but may be used in future versions of this
+      protocol.
+      </description>
+      <arg name="x" type="fixed" summary="global x coordinate"/>
+      <arg name="y" type="fixed" summary="global y coordinate"/>
+      <arg name="button" type="uint" summary="button that produced the event"/>
+      <arg name="state" type="uint" enum="button_state" summary="physical state of the button"/>
+    </event>
+
+  </interface>
+
+</protocol>

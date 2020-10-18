@@ -59,6 +59,7 @@ License along with this library.  If not, see <http://www.gnu.org/licenses/>.
 #include "xdgoutput.h"
 #include "xdgdecoration.h"
 #include "clientmanagement.h"
+#include "ddeseat.h"
 // Qt
 #include <QDebug>
 // wayland
@@ -93,6 +94,7 @@ License along with this library.  If not, see <http://www.gnu.org/licenses/>.
 #include <wayland-xdg-output-unstable-v1-client-protocol.h>
 #include <wayland-xdg-decoration-unstable-v1-client-protocol.h>
 #include <wayland-client-management-client-protocol.h>
+#include <wayland-dde-seat-client-protocol.h>
 
 /*****
  * How to add another interface:
@@ -386,6 +388,13 @@ static const QMap<Registry::Interface, SuppertedInterfaceData> s_interfaces = {
         &com_deepin_client_management_interface,
         &Registry::clientManagementAnnounced,
         &Registry::clientManagementRemoved
+    }},
+    {Registry::Interface::DDESeat, {
+        1,
+        QByteArrayLiteral("dde_seat"),
+        &dde_seat_interface,
+        &Registry::ddeSeatAnnounced,
+        &Registry::ddeSeatRemoved
     }},
 };
 
@@ -703,6 +712,7 @@ BIND2(ServerSideDecorationPaletteManager, ServerSideDecorationPalette, org_kde_k
 BIND(XdgOutputUnstableV1, zxdg_output_manager_v1)
 BIND(XdgDecorationUnstableV1, zxdg_decoration_manager_v1)
 BIND(ClientManagement, com_deepin_client_management)
+BIND(DDESeat, dde_seat)
 
 #undef BIND
 #undef BIND2
@@ -757,6 +767,7 @@ CREATE2(ShmPool, Shm)
 CREATE(AppMenuManager)
 CREATE(ServerSideDecorationPaletteManager)
 CREATE(ClientManagement)
+CREATE(DDESeat)
 
 #undef CREATE
 #undef CREATE2
