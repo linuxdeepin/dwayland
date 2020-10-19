@@ -413,5 +413,11 @@ PlasmaShellSurfaceInterface *PlasmaShellSurfaceInterface::get(wl_resource *nativ
     return Private::get<PlasmaShellSurfaceInterface>(native);
 }
 
+void PlasmaShellSurfaceInterface::resetPositionSet()
+{
+    Q_D();
+    d->m_positionSet = false;
+}
+
 }
 }
