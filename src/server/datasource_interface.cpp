@@ -122,6 +122,8 @@ void DataSourceInterface::accept(const QString &mimeType)
 {
     Q_D();
     // TODO: does this require a sanity check on the possible mimeType?
+    if (!d->resource)
+        return;
     wl_data_source_send_target(d->resource, mimeType.isEmpty() ? nullptr : mimeType.toUtf8().constData());
 }
 
