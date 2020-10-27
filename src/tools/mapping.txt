@@ -71,3 +71,4 @@ zxdg_decoration_manager_v1;XdgDecorationManager
 zxdg_toplevel_decoration_v1;XdgDecoration
 com_deepin_client_management;ClientManagement
 dde_seat:DDESeat
+dde_shell:DDEShell

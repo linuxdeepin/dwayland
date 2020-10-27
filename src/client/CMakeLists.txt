@@ -20,6 +20,7 @@ set(CLIENT_LIB_SRCS
     dataoffer.cpp
     datasource.cpp
     ddeseat.cpp
+    ddeshell.cpp
     dpms.cpp
     fakeinput.cpp
     fullscreen_shell.cpp
@@ -201,6 +202,11 @@ ecm_add_wayland_client_protocol(CLIENT_LIB_SRCS
     BASENAME dde-seat
 )
 
+ecm_add_wayland_client_protocol(CLIENT_LIB_SRCS
+    PROTOCOL ${KWayland_SOURCE_DIR}/src/client/protocols/dde-shell.xml
+    BASENAME dde-shell
+)
+
 set(CLIENT_GENERATED_FILES
     ${CMAKE_CURRENT_BINARY_DIR}/wayland-fullscreen-shell-client-protocol.h
     ${CMAKE_CURRENT_BINARY_DIR}/wayland-output-management-client-protocol.h
@@ -229,6 +235,7 @@ set(CLIENT_GENERATED_FILES
     ${CMAKE_CURRENT_BINARY_DIR}/wayland-xdg-decoration-unstable-v1-client-protocol.h
     ${CMAKE_CURRENT_BINARY_DIR}/wayland-client-management-client-protocol.h
     ${CMAKE_CURRENT_BINARY_DIR}/wayland-dde-seat-client-protocol.h
+    ${CMAKE_CURRENT_BINARY_DIR}/wayland-dde-shell-client-protocol.h
 )
 
 set_source_files_properties(${CLIENT_GENERATED_FILES} PROPERTIES SKIP_AUTOMOC ON)
@@ -277,6 +284,7 @@ set(CLIENT_LIB_HEADERS
   dataoffer.h
   datasource.h
   ddeseat.h
+  ddeshell.h
   dpms.h
   fakeinput.h
   fullscreen_shell.h

@@ -67,6 +67,7 @@ struct zxdg_output_manager_v1;
 struct zxdg_decoration_manager_v1;
 struct com_deepin_client_management;
 struct dde_seat;
+struct dde_shell;
 
 namespace KWayland
 {
@@ -115,6 +116,7 @@ class XdgOutputManager;
 class XdgDecorationManager;
 class ClientManagement;
 class DDESeat;
+class DDEShell;
 
 /**
  * @short Wrapper for the wl_registry interface.
@@ -190,7 +192,8 @@ public:
         XdgShellStable, ///refers to xdg_wm_base @since 5.48
         XdgDecorationUnstableV1, ///refers to zxdg_decoration_manager_v1, @since 5.54
         ClientManagement, ///refers to com_deepin_client_management, @since 5.54
-        DDESeat, ///refers to dde_shell, @since 5.54    
+        DDESeat, ///refers to dde_shell, @since 5.54 
+        DDEShell, ///refers to dde_shell, @since 5.54   
 };
     explicit Registry(QObject *parent = nullptr);
     virtual ~Registry();
@@ -693,6 +696,17 @@ public:
      * @since 5.54
      **/
     dde_seat *bindDDESeat(uint32_t name, uint32_t version) const;
+
+   /**
+     * Binds the dde_shell with @p name and @p version.
+     * If the @p name does not exist,
+     * @c null will be returned.
+     *
+     * Prefer using createDDEShell instead.
+     * @see createDDEShell
+     * @since 5.54
+     **/
+    dde_shell *bindDDEShell(uint32_t name, uint32_t version) const;
 
     ///@}
 
@@ -1283,7 +1297,22 @@ public:
      * @since 5.54
      **/
     DDESeat *createDDESeat(quint32 name, quint32 version, QObject *parent = nullptr);
-
+    /**
+     * Creates an DDEShell and sets it up to manage the interface identified by
+     * @p name and @p version.
+     *
+     * Note: in case @p name is invalid or isn't for the zxdg_decoration_manager_v1 interface,
+     * the returned DDEShell will not be valid. Therefore it's recommended to call
+     * isValid on the created instance.
+     *
+     * @param name The name of the zxdg_decoration_manager_v1 interface to bind
+     * @param version The version or the zxdg_decoration_manager_v1 interface to use
+     * @param parent The parent for DDEShell
+     *
+     * @returns The created DDEShell.
+     * @since 5.54
+     **/
+    DDEShell *createDDEShell(quint32 name, quint32 version, QObject *parent = nullptr);
     ///@}
 
 
@@ -1577,6 +1606,14 @@ Q_SIGNALS:
      **/
     void ddeSeatAnnounced(quint32 name, quint32 version);
 
+    /**
+     * Emitted whenever a dde_shell interface gets announced.
+     * @param name The name for the announced interface
+     * @param version The maximum supported version of the announced interface
+     * @since 5.54
+     **/
+    void ddeShellAnnounced(quint32 name, quint32 version);
+
     ///@}
 
     /**
@@ -1818,6 +1855,8 @@ Q_SIGNALS:
      * @since 5.54
      **/
     void ddeSeatRemoved(quint32 name);
+
+    void ddeShellRemoved(quint32 name);
 
     ///@}
     /**

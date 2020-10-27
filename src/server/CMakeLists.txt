@@ -9,6 +9,7 @@ set(SERVER_LIB_SRCS
     dataoffer_interface.cpp
     datasource_interface.cpp
     ddeseat_interface.cpp
+    ddeshell_interface.cpp
     display.cpp
     dpms_interface.cpp
     filtered_display.cpp
@@ -214,6 +215,11 @@ ecm_add_wayland_server_protocol(SERVER_LIB_SRCS
     BASENAME dde-seat
 )
 
+ecm_add_wayland_server_protocol(SERVER_LIB_SRCS
+    PROTOCOL ${KWayland_SOURCE_DIR}/src/client/protocols/dde-shell.xml
+    BASENAME dde-shell
+)
+
 set(SERVER_GENERATED_SRCS
     ${CMAKE_CURRENT_BINARY_DIR}/wayland-output-management-client-protocol.h
     ${CMAKE_CURRENT_BINARY_DIR}/wayland-output-management-server-protocol.h
@@ -273,6 +279,8 @@ set(SERVER_GENERATED_SRCS
     ${CMAKE_CURRENT_BINARY_DIR}/wayland-client-management-server-protocol.h
     ${CMAKE_CURRENT_BINARY_DIR}/wayland-dde-seat-server-protocol.h
     ${CMAKE_CURRENT_BINARY_DIR}/wayland-dde-seat-client-protocol.h
+    ${CMAKE_CURRENT_BINARY_DIR}/wayland-dde-shell-server-protocol.h
+    ${CMAKE_CURRENT_BINARY_DIR}/wayland-dde-shell-client-protocol.h
 )
 
 set_source_files_properties(${SERVER_GENERATED_SRCS} PROPERTIES SKIP_AUTOMOC ON)
@@ -319,6 +327,7 @@ set(SERVER_LIB_HEADERS
   dataoffer_interface.h
   datasource_interface.h
   ddeseat_interface.h
+  ddeshell_interface.h
   display.h
   dpms_interface.h
   filtered_display.h

@@ -57,6 +57,7 @@ License along with this library.  If not, see <http://www.gnu.org/licenses/>.
 #include "xdgdecoration_interface.h"
 #include "clientmanagement_interface.h"
 #include "ddeseat_interface.h"
+#include "ddeshell_interface.h"
 
 #include <QCoreApplication>
 #include <QDebug>
@@ -499,6 +500,13 @@ ClientManagementInterface *Display::createClientManagement(QObject *parent)
 DDESeatInterface *Display::createDDESeat(QObject *parent)
 {
     auto b = new DDESeatInterface(this, parent);
+    connect(this, &Display::aboutToTerminate, b, [this, b] { delete b; });
+    return b;
+}
+
+DDEShellInterface *Display::createDDEShell(QObject *parent)
+{
+    auto b = new DDEShellInterface(this, parent);
     connect(this, &Display::aboutToTerminate, b, [this, b] { delete b; });
     return b;
 }

@@ -1,4 +1,4 @@
-kwayland (4:5.54.0-1) unstable; urgency=medium
+kwayland (4:5.56.0102.14-1) unstable; urgency=medium
 
   * New upstream release (5.52.0).
   * Update build-deps and deps with the info from cmake
