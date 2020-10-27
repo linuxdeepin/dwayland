@@ -10,6 +10,7 @@
 #include "compositor_interface.h"
 #include "contrast_interface.h"
 #include "datadevicemanager_interface.h"
+#include "ddeshell_interface.h"
 #include "dpms_interface.h"
 #include "eglstream_controller_interface.h"
 #include "fakeinput_interface.h"
@@ -618,6 +619,13 @@ ClientManagementInterface *Display::createClientManagement(QObject *parent)
     ClientManagementInterface *clientManagement = new ClientManagementInterface(this, parent);
     connect(this, &Display::aboutToTerminate, clientManagement, [this,clientManagement] { delete clientManagement; });
     return clientManagement;
+}
+
+DDEShellInterface *Display::createDDEShell(QObject *parent)
+{
+    auto b = new DDEShellInterface(this, parent);
+    connect(this, &Display::aboutToTerminate, b, [this, b] { delete b; });
+    return b;
 }
 
 void Display::createShm()

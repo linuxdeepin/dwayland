@@ -48,6 +48,7 @@
 #include "xdgshell.h"
 #include "xdgshell_p.h"
 #include "clientmanagement.h"
+#include "ddeshell.h"
 // Qt
 #include <QDebug>
 // wayland
@@ -85,6 +86,7 @@
 #include <wayland-xdg-shell-client-protocol.h>
 #include <wayland-xdg-shell-v6-client-protocol.h>
 #include <wayland-client-management-client-protocol.h>
+#include <wayland-dde-shell-client-protocol.h>
 
 /*****
  * How to add another interface:
@@ -408,6 +410,13 @@ static const QMap<Registry::Interface, SuppertedInterfaceData> s_interfaces = {
         &Registry::clientManagementAnnounced,
         &Registry::clientManagementRemoved
     }},
+    {Registry::Interface::DDEShell, {
+        1,
+        QByteArrayLiteral("dde_shell"),
+        &dde_shell_interface,
+        &Registry::ddeShellAnnounced,
+        &Registry::ddeShellRemoved
+    }},
 };
 // clang-format on
 
@@ -722,6 +731,7 @@ BIND2(ServerSideDecorationPaletteManager, ServerSideDecorationPalette, org_kde_k
 BIND(XdgOutputUnstableV1, zxdg_output_manager_v1)
 BIND(XdgDecorationUnstableV1, zxdg_decoration_manager_v1)
 BIND(ClientManagement, com_deepin_client_management)
+BIND(DDEShell, dde_shell)
 
 #undef BIND
 #undef BIND2
@@ -780,6 +790,7 @@ CREATE(AppMenuManager)
 CREATE(Keystate)
 CREATE(ServerSideDecorationPaletteManager)
 CREATE(ClientManagement)
+CREATE(DDEShell)
 
 #undef CREATE
 #undef CREATE2

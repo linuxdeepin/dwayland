@@ -78,6 +78,7 @@ class KeyStateInterface;
 class LinuxDmabufUnstableV1Interface;
 class TabletManagerInterface;
 class ClientManagementInterface;
+class DDEShellInterface;
 
 /**
  * @brief Class holding the Wayland server display loop.
@@ -315,6 +316,14 @@ public:
      * @since 5.67
      */
     TabletManagerInterface *createTabletManagerInterface(QObject *parent = nullptr);
+
+    /**
+     * Creates the DDEShellInterface in interface @p version.
+     *
+     * @returns The created manager object
+     * @since 5.52
+     **/
+    DDEShellInterface *createDDEShell(QObject *parent = nullptr);
 
     /**
      * Gets the ClientConnection for the given @p client.

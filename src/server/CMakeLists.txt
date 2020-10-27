@@ -11,6 +11,7 @@ set(SERVER_LIB_SRCS
     datadevicemanager_interface.cpp
     dataoffer_interface.cpp
     datasource_interface.cpp
+    ddeshell_interface.cpp
     display.cpp
     dpms_interface.cpp
     eglstream_controller_interface.cpp
@@ -241,6 +242,11 @@ ecm_add_wayland_server_protocol(SERVER_LIB_SRCS
     BASENAME client-management
 )
 
+ecm_add_wayland_server_protocol(SERVER_LIB_SRCS
+    PROTOCOL ${PLASMA_WAYLAND_PROTOCOLS_DIR}/dde-shell.xml
+    BASENAME dde-shell
+)
+
 set(SERVER_GENERATED_SRCS
     ${CMAKE_CURRENT_BINARY_DIR}/wayland-blur-client-protocol.h
     ${CMAKE_CURRENT_BINARY_DIR}/wayland-blur-server-protocol.h
@@ -302,6 +308,8 @@ set(SERVER_GENERATED_SRCS
     ${CMAKE_CURRENT_BINARY_DIR}/qwayland-server-tablet-unstable-v2.cpp
     ${CMAKE_CURRENT_BINARY_DIR}/wayland-client-management-client-protocol.h
     ${CMAKE_CURRENT_BINARY_DIR}/wayland-client-management-server-protocol.h
+    ${CMAKE_CURRENT_BINARY_DIR}/wayland-dde-shell-server-protocol.h
+    ${CMAKE_CURRENT_BINARY_DIR}/wayland-dde-shell-client-protocol.h
 )
 
 set_source_files_properties(${SERVER_GENERATED_SRCS} PROPERTIES SKIP_AUTOMOC ON)
@@ -351,6 +359,7 @@ set(SERVER_LIB_HEADERS
   datadevicemanager_interface.h
   dataoffer_interface.h
   datasource_interface.h
+  ddeshell_interface.h
   display.h
   dpms_interface.h
   eglstream_controller_interface.h
