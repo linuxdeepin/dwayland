@@ -119,9 +119,6 @@ public:
      **/
     DDEShellSurface *createShellSurface(Surface *surface, QObject *parent = nullptr);
 
-    DDEShellSurface *get(wl_surface *surf);
-    DDEShellSurface *get(Surface *surf);
-
     /**
      * Sets the @p queue to use for bound proxies.
      **/
@@ -207,6 +204,9 @@ public:
     void requestKeepBelow(bool set);
     void requestMinimized(bool set);
     void requestMaximized(bool set);
+
+    void requestMinizeable(bool set);
+    void requestMaximizeable(bool set);
 
     void requestGeometry() const;
     void requestActive() const;

@@ -97,6 +97,7 @@ PlasmaSurfaceTest::~PlasmaSurfaceTest()
     m_connectionThreadObject->deleteLater();
 }
 
+static int count = 0;
 void PlasmaSurfaceTest::init()
 {
     connect(m_connectionThreadObject, &ConnectionThread::connected, this,
@@ -180,6 +181,9 @@ void PlasmaSurfaceTest::setupRegistry(Registry *registry)
             connect(m_ddeShellSurface, &DDEShellSurface::activeChanged, this,
                 [this] {
                     qDebug() << "Window active changed: " << m_ddeShellSurface->isActive();
+                    if (count++ > 5 && m_ddeShellSurface->isActive()) {
+                        m_ddeShellSurface->requestKeepAbove(false);
+                    }
                 }
             );
             connect(m_ddeShellSurface, &DDEShellSurface::maximizedChanged, this,
@@ -232,12 +236,14 @@ void PlasmaSurfaceTest::setupRegistry(Registry *registry)
             m_plasmaShellSurface->setSkipSwitcher(m_skipSwitcher);
             m_plasmaShellSurface->setRole(m_role);
 
+            m_ddeShellSurface->requestKeepAbove(true);
+            m_ddeShellSurface->requestMinizeable(false);
+            m_ddeShellSurface->requestMaximizeable(false);
+
             // //创建标题栏server decoration
             auto parentDeco = m_decoration->create(m_surface, this);
             //设置csd/ssd
             parentDeco->requestMode(KWayland::Client::ServerSideDecoration::Mode::Server);
-
-            m_ddeShellSurface->requestKeepAbove(true);
 
             //创建标题栏server decoration
             // auto xdgDecoration = m_xdgDecoration->getToplevelDecoration(m_xdgshellSurface, this);

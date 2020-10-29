@@ -44,8 +44,6 @@ public:
     WaylandPointer<dde_shell, dde_shell_destroy> ddeShell;
     EventQueue *queue = nullptr;
 
-    static QVector<DDEShellSurface*> s_ddeShellSurfaces;
-
 private:
     DDEShell *q;
 };
@@ -101,7 +99,6 @@ private:
     static const dde_shell_surface_listener s_listener;
 };
 
-QVector<DDEShellSurface*> DDEShell::Private::s_ddeShellSurfaces;
 QVector<DDEShellSurface::Private*> DDEShellSurface::Private::s_ddeShellSurfaces;
 
 DDEShell::Private::Private(DDEShell *q)
@@ -124,8 +121,9 @@ DDEShell::DDEShell(QObject *parent)
 
 DDEShell::~DDEShell()
 {
-    d->s_ddeShellSurfaces.clear();
-    d->ddeShell.release();
+    if (d->ddeShell.isValid()) {
+        d->ddeShell.release();
+    }
 }
 
 void DDEShell::setup(dde_shell *DDEShell)
@@ -185,39 +183,12 @@ DDEShellSurface *DDEShell::createShellSurface(wl_surface *surface, QObject *pare
     }
     s->setup(w);
     s->d->parentSurface = QPointer<Surface>(kwS);
-    d->s_ddeShellSurfaces << s;
     return s;
 }
 
 DDEShellSurface *DDEShell::createShellSurface(Surface *surface, QObject *parent)
 {
     return createShellSurface(*surface, parent);
-}
-
-DDEShellSurface *DDEShell::get(wl_surface *surface)
-{
-    if (!surface) {
-        return nullptr;
-    }
-    for (auto it = d->s_ddeShellSurfaces.constBegin(); it != d->s_ddeShellSurfaces.constEnd(); ++it) {
-        if ((*it)->d->parentSurface == Surface::get(surface)) {
-            return (*it);
-        }
-    }
-    return nullptr;
-}
-
-DDEShellSurface *DDEShell::get(Surface *surface)
-{
-    if (!surface) {
-        return nullptr;
-    }
-    for (auto it = d->s_ddeShellSurfaces.constBegin(); it != d->s_ddeShellSurfaces.constEnd(); ++it) {
-        if ((*it)->d->parentSurface == surface) {
-            return (*it);
-        }
-    }
-    return nullptr;
 }
 
 
@@ -525,6 +496,32 @@ void DDEShellSurface::requestMaximized(bool set)
         dde_shell_surface_set_state(d->ddeShellSurface,
             DDE_SHELL_STATE_MAXIMIZED,
             DDE_SHELL_STATE_MAXIMIZED);
+    }
+}
+
+void DDEShellSurface::requestMinizeable(bool set)
+{
+    if (!set) {
+        dde_shell_surface_set_state(d->ddeShellSurface,
+            DDE_SHELL_STATE_MINIMIZABLE,
+            0);
+    } else {
+        dde_shell_surface_set_state(d->ddeShellSurface,
+            DDE_SHELL_STATE_MINIMIZABLE,
+            DDE_SHELL_STATE_MINIMIZABLE);
+    }
+}
+
+void DDEShellSurface::requestMaximizeable(bool set)
+{
+    if (!set) {
+        dde_shell_surface_set_state(d->ddeShellSurface,
+            DDE_SHELL_STATE_MAXIMIZABLE,
+            0);
+    } else {
+        dde_shell_surface_set_state(d->ddeShellSurface,
+            DDE_SHELL_STATE_MAXIMIZABLE,
+            DDE_SHELL_STATE_MAXIMIZABLE);
     }
 }
 
