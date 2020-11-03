@@ -172,6 +172,9 @@ DataDeviceManagerInterface::DnDActions DataSourceInterface::supportedDragAndDrop
 void DataSourceInterface::dropPerformed()
 {
     Q_D();
+    if (!d->resource) {
+        return;
+    }
     if (wl_resource_get_version(d->resource) < WL_DATA_SOURCE_DND_DROP_PERFORMED_SINCE_VERSION) {
         return;
     }
@@ -181,6 +184,9 @@ void DataSourceInterface::dropPerformed()
 void DataSourceInterface::dndFinished()
 {
     Q_D();
+    if (!d->resource) {
+        return;
+    }
     if (wl_resource_get_version(d->resource) < WL_DATA_SOURCE_DND_FINISHED_SINCE_VERSION) {
         return;
     }
@@ -190,6 +196,9 @@ void DataSourceInterface::dndFinished()
 void DataSourceInterface::dndAction(DataDeviceManagerInterface::DnDAction action)
 {
     Q_D();
+    if (!d->resource) {
+        return;
+    }
     if (wl_resource_get_version(d->resource) < WL_DATA_SOURCE_ACTION_SINCE_VERSION) {
         return;
     }
