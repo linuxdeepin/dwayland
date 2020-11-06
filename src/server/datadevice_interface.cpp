@@ -116,6 +116,9 @@ void DataDeviceInterface::Private::startDrag(DataSourceInterface *dataSource, Su
     }
     surface = origin;
     icon = i;
+    if (i) {
+        QObject::connect(i, &Resource::aboutToBeUnbound, q, [this] { icon = nullptr; });
+    }
     drag.serial = serial;
     emit q->dragStarted();
 }

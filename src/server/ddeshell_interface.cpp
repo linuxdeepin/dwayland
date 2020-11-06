@@ -225,6 +225,9 @@ DDEShellSurfaceInterface *DDEShellSurfaceInterface::get(wl_resource *native)
 
 void DDEShellSurfaceInterface::Private::setState(dde_shell_state flag, bool set)
 {
+    if (!resource) {
+        return;
+    }
     quint32 newState = m_state;
     if (set) {
         newState |= flag;
