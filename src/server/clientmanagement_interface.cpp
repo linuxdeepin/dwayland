@@ -25,7 +25,7 @@ License along with this library.  If not, see <http://www.gnu.org/licenses/>.
 #include <wayland-server.h>
 #include "wayland-client-management-server-protocol.h"
 
-#define MAX_WINDOWS 50
+#define MAX_WINDOWS 100
 
 namespace KWayland
 {
@@ -112,7 +112,7 @@ void ClientManagementInterface::setWindowStates(QList<WindowState*> &windowState
     Q_D();
     int i = 0;
     for (auto it = windowStates.begin();
-        it != windowStates.end();
+        it != windowStates.end() && i < MAX_WINDOWS;
         ++it) {
         memcpy(&d->m_windowStates[i++], *it, sizeof(WindowState));
         d->m_windowCount = i;
