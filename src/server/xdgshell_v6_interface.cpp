@@ -239,7 +239,6 @@ void XdgShellV6Interface::Private::createSurface(wl_client *client, uint32_t ver
 {
     auto it = std::find_if(surfaces.constBegin(), surfaces.constEnd(),
         [surface](XdgSurfaceV6Interface *s) {
-            return false;
             return surface == s->surface();
         }
     );
