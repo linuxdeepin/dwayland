@@ -93,6 +93,7 @@ class XdgDecorationManagerInterface;
 class ClientManagementInterface;
 class DDESeatInterface;
 class DDEShellInterface;
+class StrutInterface;
 
 /**
  * @brief Class holding the Wayland server display loop.
@@ -307,6 +308,14 @@ public:
      * @since 5.52
      **/
     DDEShellInterface *createDDEShell(QObject *parent = nullptr);
+
+    /**
+     * Creates the StrutInterface in interface @p version.
+     *
+     * @returns The created strut object
+     * @since 5.52
+     **/
+    StrutInterface *createStrut(QObject *parent = nullptr);
 
     /**
      * Gets the ClientConnection for the given @p client.

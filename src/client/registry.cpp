@@ -61,6 +61,7 @@ License along with this library.  If not, see <http://www.gnu.org/licenses/>.
 #include "clientmanagement.h"
 #include "ddeseat.h"
 #include "ddeshell.h"
+#include "strut.h"
 // Qt
 #include <QDebug>
 // wayland
@@ -77,6 +78,7 @@ License along with this library.  If not, see <http://www.gnu.org/licenses/>.
 #include <wayland-output-management-client-protocol.h>
 #include <wayland-org_kde_kwin_outputdevice-client-protocol.h>
 #include <wayland-blur-client-protocol.h>
+#include <wayland-strut-client-protocol.h>
 #include <wayland-contrast-client-protocol.h>
 #include <wayland-slide-client-protocol.h>
 #include <wayland-dpms-client-protocol.h>
@@ -405,6 +407,13 @@ static const QMap<Registry::Interface, SuppertedInterfaceData> s_interfaces = {
         &Registry::ddeShellAnnounced,
         &Registry::ddeShellRemoved
     }},
+    {Registry::Interface::Strut, {
+        1,
+        QByteArrayLiteral("com_deepin_kwin_strut"),
+        &com_deepin_kwin_strut_interface,
+        &Registry::strutAnnounced,
+        &Registry::strutRemoved
+    }},
 };
 
 static quint32 maxVersion(const Registry::Interface &interface)
@@ -723,6 +732,7 @@ BIND(XdgDecorationUnstableV1, zxdg_decoration_manager_v1)
 BIND(ClientManagement, com_deepin_client_management)
 BIND(DDESeat, dde_seat)
 BIND(DDEShell, dde_shell)
+BIND(Strut, com_deepin_kwin_strut)
 
 
 #undef BIND
@@ -780,6 +790,7 @@ CREATE(ServerSideDecorationPaletteManager)
 CREATE(ClientManagement)
 CREATE(DDESeat)
 CREATE(DDEShell)
+CREATE(Strut)
 
 #undef CREATE
 #undef CREATE2

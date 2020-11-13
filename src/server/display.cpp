@@ -58,6 +58,7 @@ License along with this library.  If not, see <http://www.gnu.org/licenses/>.
 #include "clientmanagement_interface.h"
 #include "ddeseat_interface.h"
 #include "ddeshell_interface.h"
+#include "strut_interface.h"
 
 #include <QCoreApplication>
 #include <QDebug>
@@ -509,6 +510,13 @@ DDEShellInterface *Display::createDDEShell(QObject *parent)
     auto b = new DDEShellInterface(this, parent);
     connect(this, &Display::aboutToTerminate, b, [this, b] { delete b; });
     return b;
+}
+
+StrutInterface *Display::createStrut(QObject* parent)
+{
+    auto s = new StrutInterface(this, parent);
+    connect(this, &Display::aboutToTerminate, s, [this, s] { delete s; });
+    return s;
 }
 
 void Display::createShm()
