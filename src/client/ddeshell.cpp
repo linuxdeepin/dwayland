@@ -121,9 +121,7 @@ DDEShell::DDEShell(QObject *parent)
 
 DDEShell::~DDEShell()
 {
-    if (d->ddeShell.isValid()) {
-        d->ddeShell.release();
-    }
+    release();
 }
 
 void DDEShell::setup(dde_shell *DDEShell)
@@ -161,8 +159,20 @@ DDEShell::operator dde_shell*() const {
 
 void DDEShell::destroy()
 {
+    if (!d->ddeShell) {
+        return;
+    }
+    emit interfaceAboutToBeDestroyed();
     d->ddeShell.destroy();
+}
 
+void DDEShell::release()
+{
+    if (!d->ddeShell) {
+        return;
+    }
+    emit interfaceAboutToBeReleased();
+    d->ddeShell.release();
 }
 
 DDEShellSurface *DDEShell::createShellSurface(wl_surface *surface, QObject *parent)

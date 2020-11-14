@@ -128,6 +128,7 @@ public:
      **/
     EventQueue *eventQueue() const;
 
+    void release();
     /**
     * Destroys the data hold by this DDEShell.
     * This method is supposed to be used when the connection to the Wayland

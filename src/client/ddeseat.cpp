@@ -69,6 +69,24 @@ DDESeat::DDESeat(QObject *parent)
 
 DDESeat::~DDESeat()
 {
+    release();
+}
+
+void DDESeat::destroy()
+{
+    if (!d->ddeSeat) {
+        return;
+    }
+    emit interfaceAboutToBeDestroyed();
+    d->ddeSeat.destroy();
+}
+
+void DDESeat::release()
+{
+    if (!d->ddeSeat) {
+        return;
+    }
+    emit interfaceAboutToBeReleased();
     d->ddeSeat.release();
 }
 
@@ -113,12 +131,6 @@ DDESeat::operator dde_seat*() {
 
 DDESeat::operator dde_seat*() const {
     return d->ddeSeat;
-}
-
-void DDESeat::destroy()
-{
-    d->ddeSeat.destroy();
-
 }
 
 
