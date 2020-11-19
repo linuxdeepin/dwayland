@@ -814,7 +814,9 @@ void SurfaceInterface::setOutputs(const QVector<OutputInterface *> &outputs)
     for (auto it = removedOutputs.constBegin(), end = removedOutputs.constEnd(); it != end; ++it) {
         const auto resources = (*it)->clientResources(client());
         for (wl_resource *r : resources) {
-            wl_surface_send_leave(d->resource, r);
+            if (d->resource && r) {
+                wl_surface_send_leave(d->resource, r);
+            }
         }
         disconnect(d->outputDestroyedConnections.take(*it));
     }
@@ -827,7 +829,9 @@ void SurfaceInterface::setOutputs(const QVector<OutputInterface *> &outputs)
         const auto o = *it;
         const auto resources = o->clientResources(client());
         for (wl_resource *r : resources) {
-            wl_surface_send_enter(d->resource, r);
+            if (d->resource && r) {
+                wl_surface_send_enter(d->resource, r);
+            }
         }
         d->outputDestroyedConnections[o] = connect(o, &Global::aboutToDestroyGlobal, this, [this, o] {
             Q_D();
