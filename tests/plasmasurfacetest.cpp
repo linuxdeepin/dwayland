@@ -239,6 +239,7 @@ void PlasmaSurfaceTest::setupRegistry(Registry *registry)
             m_ddeShellSurface->requestKeepAbove(true);
             m_ddeShellSurface->requestMinizeable(false);
             m_ddeShellSurface->requestMaximizeable(false);
+            m_ddeShellSurface->requestResizable(false);
 
             // //创建标题栏server decoration
             auto parentDeco = m_decoration->create(m_surface, this);

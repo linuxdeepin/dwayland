@@ -535,6 +535,19 @@ void DDEShellSurface::requestMaximizeable(bool set)
     }
 }
 
+void DDEShellSurface::requestResizable(bool set)
+{
+    if (!set) {
+        dde_shell_surface_set_state(d->ddeShellSurface,
+            DDE_SHELL_STATE_RESIZABLE,
+            0);
+    } else {
+        dde_shell_surface_set_state(d->ddeShellSurface,
+            DDE_SHELL_STATE_RESIZABLE,
+            DDE_SHELL_STATE_RESIZABLE);
+    }
+}
+
 bool DDEShellSurface::isActive() const
 {
     return d->active;

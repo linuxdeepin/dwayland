@@ -208,6 +208,7 @@ public:
 
     void requestMinizeable(bool set);
     void requestMaximizeable(bool set);
+    void requestResizable(bool set);
 
     void requestGeometry() const;
     void requestActive() const;
