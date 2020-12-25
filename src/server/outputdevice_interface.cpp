@@ -226,8 +226,7 @@ void OutputDeviceInterface::addMode(Mode &mode)
     auto existingModeIt = std::find_if(d->modes.begin(), d->modes.end(),
         [mode](const Mode &mode_it) {
             return mode.size == mode_it.size &&
-                   mode.refreshRate == mode_it.refreshRate &&
-                   mode.id == mode_it.id;
+                   mode.refreshRate == mode_it.refreshRate;
         }
     );
     auto emitChanges = [this,mode] {
