@@ -199,12 +199,14 @@ public:
     bool isFullscreenable() const;
     bool isMovable() const;
     bool isResizable() const;
+    bool isAcceptFocus() const;
 
     void requestActivate();
     void requestKeepAbove(bool set);
     void requestKeepBelow(bool set);
     void requestMinimized(bool set);
     void requestMaximized(bool set);
+    void requestAcceptFocus(bool set);
 
     void requestMinizeable(bool set);
     void requestMaximizeable(bool set);
@@ -227,6 +229,7 @@ Q_SIGNALS:
     void fullscreenableChanged();
     void movableChanged();
     void resizableChanged();
+    void acceptFocusChanged();
 
 private:
     friend class DDEShell;

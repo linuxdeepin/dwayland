@@ -83,6 +83,7 @@ public:
     void setFullscreenable(bool set);
     void setMovable(bool set);
     void setResizable(bool set);
+    void setAcceptFocus(bool set);
 
 Q_SIGNALS:
     void activationRequested();
@@ -98,6 +99,7 @@ Q_SIGNALS:
     void fullscreenableRequested(bool set);
     void movableRequested(bool set);
     void resizableRequested(bool set);
+    void acceptFocusRequested(bool set);
 
 private:
     friend class DDEShellInterface;

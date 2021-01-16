@@ -241,7 +241,6 @@ void DDEShellSurfaceInterface::Private::setState(dde_shell_state flag, bool set)
     dde_shell_surface_send_state_changed(resource, m_state);
 }
 
-
 void DDEShellSurfaceInterface::Private::requestGeometry(wl_resource *resource)
 {
     // todo 
@@ -273,6 +272,7 @@ void DDEShellSurfaceInterface::Private::setStateCallback(wl_client *client, wl_r
 {
     Q_UNUSED(client)
     Private *p = cast(resource);
+
     if (flags & DDE_SHELL_STATE_ACTIVE) {
         emit p->q_func()->activeRequested(state & DDE_SHELL_STATE_ACTIVE);
     }
@@ -308,6 +308,9 @@ void DDEShellSurfaceInterface::Private::setStateCallback(wl_client *client, wl_r
     }
     if (flags & DDE_SHELL_STATE_RESIZABLE) {
         emit p->q_func()->resizableRequested(state & DDE_SHELL_STATE_RESIZABLE);
+    }
+    if (flags & DDE_SHELL_STATE_ACCEPT_FOCUS) {
+        emit p->q_func()->acceptFocusRequested(state & DDE_SHELL_STATE_ACCEPT_FOCUS);
     }
 }
 
@@ -381,6 +384,12 @@ void DDEShellSurfaceInterface::setResizable(bool set)
 {
     Q_D();
     d->setState(DDE_SHELL_STATE_RESIZABLE, set);
+}
+
+void DDEShellSurfaceInterface::setAcceptFocus(bool set)
+{
+    Q_D();
+    d->setState(DDE_SHELL_STATE_ACCEPT_FOCUS, set);
 }
 
 void DDEShellSurfaceInterface::sendGeometry(const QRect &geom)

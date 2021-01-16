@@ -70,6 +70,7 @@ public:
     bool fullscreenable = false;
     bool movable = false;
     bool resizable = false;
+    bool acceptFocus = true;
 
     static DDEShellSurface *get(wl_surface *surface);
     static DDEShellSurface *get(Surface *surface);
@@ -89,6 +90,7 @@ private:
     void setFullscreenable(bool set);
     void setMovable(bool set);
     void setResizable(bool set);
+    void setAcceptFocus(bool set);
 
     static Private *cast(void *data) {
         return reinterpret_cast<Private*>(data);
@@ -263,6 +265,7 @@ void DDEShellSurface::Private::stateChangedCallback(void *data, dde_shell_surfac
     p->setMinimizeable(state & DDE_SHELL_STATE_MINIMIZABLE);
     p->setMovable(state & DDE_SHELL_STATE_MOVABLE);
     p->setResizable(state & DDE_SHELL_STATE_RESIZABLE);
+    p->setAcceptFocus(state * DDE_SHELL_STATE_ACCEPT_FOCUS);
 }
 
 void DDEShellSurface::Private::geometryCallback(void *data, dde_shell_surface *ddeShellSurface, int32_t x, int32_t y, uint32_t width, uint32_t height)
@@ -390,6 +393,15 @@ void DDEShellSurface::Private::setResizable(bool set)
     emit q->resizableChanged();
 }
 
+void DDEShellSurface::Private::setAcceptFocus(bool set)
+{
+    if (acceptFocus == set) {
+        return;
+    }
+    acceptFocus = set;
+    emit q->acceptFocusChanged();
+}
+
 DDEShellSurface::DDEShellSurface(QObject *parent)
     : QObject(parent)
     , d(new Private(this))
@@ -509,6 +521,19 @@ void DDEShellSurface::requestMaximized(bool set)
     }
 }
 
+void DDEShellSurface::requestAcceptFocus(bool set)
+{
+    if (!set) {
+        dde_shell_surface_set_state(d->ddeShellSurface,
+            DDE_SHELL_STATE_ACCEPT_FOCUS,
+            0);
+    } else {
+        dde_shell_surface_set_state(d->ddeShellSurface,
+            DDE_SHELL_STATE_ACCEPT_FOCUS,
+            DDE_SHELL_STATE_ACCEPT_FOCUS);
+    }
+}
+
 void DDEShellSurface::requestMinizeable(bool set)
 {
     if (!set) {
@@ -601,6 +626,11 @@ bool DDEShellSurface::isMinimizeable() const
 bool DDEShellSurface::isResizable() const
 {
     return d->resizable;
+}
+
+bool DDEShellSurface::isAcceptFocus() const
+{
+    return d->acceptFocus;
 }
 
 bool DDEShellSurface::isMovable() const
