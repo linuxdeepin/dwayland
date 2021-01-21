@@ -56,7 +56,6 @@ public:
     SubPixel subPixel = SubPixel::Unknown;
     Transform transform = Transform::Normal;
     Modes modes;
-    Modes::iterator currentMode = modes.end();
 
     QByteArray edid;
     OutputDevice::Enablement enabled = OutputDevice::Enablement::Enabled;
@@ -250,10 +249,7 @@ void OutputDevice::Private::addMode(uint32_t flags, int32_t width, int32_t heigh
     }
 
     // insert new mode after erase old mode
-    auto currentIt = modes.insert(modes.end(), mode);
-    if (flags & WL_OUTPUT_MODE_CURRENT) {
-        currentMode = currentIt;
-    }
+    modes.insert(modes.end(), mode);
 
     if (existing) {
         emit q->modeChanged(mode);
@@ -427,10 +423,10 @@ void OutputDevice::Private::setScale(qreal s)
 
 QRect OutputDevice::geometry() const
 {
-    if (d->currentMode == d->modes.end()) {
+    if (currentMode() == Mode()) {
         return QRect();
     }
-    return QRect(d->globalPosition, pixelSize());
+    return QRect(d->globalPosition, currentMode().size);
 }
 
 void OutputDevice::Private::setSubPixel(OutputDevice::SubPixel s)
@@ -480,18 +476,12 @@ QSize OutputDevice::physicalSize() const
 
 QSize OutputDevice::pixelSize() const
 {
-    if (d->currentMode == d->modes.end()) {
-        return QSize();
-    }
-    return (*d->currentMode).size;
+    return currentMode().size;
 }
 
 int OutputDevice::refreshRate() const
 {
-    if (d->currentMode == d->modes.end()) {
-        return 0;
-    }
-    return (*d->currentMode).refreshRate;
+    return currentMode().refreshRate;
 }
 
 int OutputDevice::scale() const

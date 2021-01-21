@@ -238,10 +238,12 @@ void OutputDeviceInterface::addMode(Mode &mode)
         }
     };
     if (existingModeIt != d->modes.end()) {
-        if ((*existingModeIt).flags == mode.flags) {
-            // nothing to do
+        if ((*existingModeIt).flags == mode.flags ||
+            (*existingModeIt).flags.testFlag(ModeFlag::Current)) {
+            // no need to replace
             return;
         }
+
         (*existingModeIt).flags = mode.flags;
         emitChanges();
         return;
