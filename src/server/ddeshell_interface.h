@@ -84,6 +84,7 @@ public:
     void setMovable(bool set);
     void setResizable(bool set);
     void setAcceptFocus(bool set);
+    void setModal(bool set);
 
 Q_SIGNALS:
     void activationRequested();
@@ -100,6 +101,7 @@ Q_SIGNALS:
     void movableRequested(bool set);
     void resizableRequested(bool set);
     void acceptFocusRequested(bool set);
+    void modalityRequested(bool set);
 
 private:
     friend class DDEShellInterface;

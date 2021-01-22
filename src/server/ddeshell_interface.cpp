@@ -312,6 +312,9 @@ void DDEShellSurfaceInterface::Private::setStateCallback(wl_client *client, wl_r
     if (flags & DDE_SHELL_STATE_ACCEPT_FOCUS) {
         emit p->q_func()->acceptFocusRequested(state & DDE_SHELL_STATE_ACCEPT_FOCUS);
     }
+    if (flags & DDE_SHELL_STATE_MODALITY) {
+        emit p->q_func()->modalityRequested(state & DDE_SHELL_STATE_MODALITY);
+    }
 }
 
 void DDEShellSurfaceInterface::setActive(bool set)
@@ -390,6 +393,12 @@ void DDEShellSurfaceInterface::setAcceptFocus(bool set)
 {
     Q_D();
     d->setState(DDE_SHELL_STATE_ACCEPT_FOCUS, set);
+}
+
+void DDEShellSurfaceInterface::setModal(bool set)
+{
+    Q_D();
+    d->setState(DDE_SHELL_STATE_MODALITY, set);
 }
 
 void DDEShellSurfaceInterface::sendGeometry(const QRect &geom)

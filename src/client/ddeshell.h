@@ -200,6 +200,7 @@ public:
     bool isMovable() const;
     bool isResizable() const;
     bool isAcceptFocus() const;
+    bool isModal() const;
 
     void requestActivate();
     void requestKeepAbove(bool set);
@@ -207,7 +208,7 @@ public:
     void requestMinimized(bool set);
     void requestMaximized(bool set);
     void requestAcceptFocus(bool set);
-
+    void requestModal(bool set);
     void requestMinizeable(bool set);
     void requestMaximizeable(bool set);
     void requestResizable(bool set);
@@ -230,6 +231,7 @@ Q_SIGNALS:
     void movableChanged();
     void resizableChanged();
     void acceptFocusChanged();
+    void modalityChanged();
 
 private:
     friend class DDEShell;

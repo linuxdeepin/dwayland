@@ -71,6 +71,7 @@ public:
     bool movable = false;
     bool resizable = false;
     bool acceptFocus = true;
+    bool modality = false;
 
     static DDEShellSurface *get(wl_surface *surface);
     static DDEShellSurface *get(Surface *surface);
@@ -91,6 +92,7 @@ private:
     void setMovable(bool set);
     void setResizable(bool set);
     void setAcceptFocus(bool set);
+    void setModal(bool set);
 
     static Private *cast(void *data) {
         return reinterpret_cast<Private*>(data);
@@ -266,6 +268,7 @@ void DDEShellSurface::Private::stateChangedCallback(void *data, dde_shell_surfac
     p->setMovable(state & DDE_SHELL_STATE_MOVABLE);
     p->setResizable(state & DDE_SHELL_STATE_RESIZABLE);
     p->setAcceptFocus(state * DDE_SHELL_STATE_ACCEPT_FOCUS);
+    p->setModal(state & DDE_SHELL_STATE_MODALITY);
 }
 
 void DDEShellSurface::Private::geometryCallback(void *data, dde_shell_surface *ddeShellSurface, int32_t x, int32_t y, uint32_t width, uint32_t height)
@@ -402,6 +405,15 @@ void DDEShellSurface::Private::setAcceptFocus(bool set)
     emit q->acceptFocusChanged();
 }
 
+void DDEShellSurface::Private::setModal(bool set)
+{
+    if (modality == set) {
+        return;
+    }
+    modality = set;
+    emit q->modalityChanged();
+}
+
 DDEShellSurface::DDEShellSurface(QObject *parent)
     : QObject(parent)
     , d(new Private(this))
@@ -534,6 +546,19 @@ void DDEShellSurface::requestAcceptFocus(bool set)
     }
 }
 
+void DDEShellSurface::requestModal(bool set)
+{
+    if (!set) {
+        dde_shell_surface_set_state(d->ddeShellSurface,
+            DDE_SHELL_STATE_MODALITY,
+            0);
+    } else {
+        dde_shell_surface_set_state(d->ddeShellSurface,
+            DDE_SHELL_STATE_MODALITY,
+            DDE_SHELL_STATE_MODALITY);
+    }
+}
+
 void DDEShellSurface::requestMinizeable(bool set)
 {
     if (!set) {
@@ -631,6 +656,11 @@ bool DDEShellSurface::isResizable() const
 bool DDEShellSurface::isAcceptFocus() const
 {
     return d->acceptFocus;
+}
+
+bool DDEShellSurface::isModal() const
+{
+    return d->modality;
 }
 
 bool DDEShellSurface::isMovable() const
