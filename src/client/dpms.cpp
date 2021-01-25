@@ -178,13 +178,13 @@ void Dpms::Private::doneCallback(void *data, org_kde_kwin_dpms *org_kde_kwin_dpm
     Private *p = reinterpret_cast<Private*>(data);
     const bool supportedChanged = p->pending.supportedChanged && p->pending.supported != p->current.supported;
     const bool modeChanged = p->pending.modeChanged && p->pending.mode != p->current.mode;
-    if (supportedChanged) {
-        p->current.supported = p->pending.supported;
-        emit p->q->supportedChanged();
-    }
     if (modeChanged) {
         p->current.mode = p->pending.mode;
         emit p->q->modeChanged();
+    }
+    if (supportedChanged) {
+        p->current.supported = p->pending.supported;
+        emit p->q->supportedChanged();
     }
     p->pending = Data();
 }
