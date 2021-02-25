@@ -42,6 +42,7 @@ set(SERVER_LIB_SRCS
     slide_interface.cpp
     shadow_interface.cpp
     blur_interface.cpp
+    screencast_interface.cpp
     contrast_interface.cpp
     server_decoration_interface.cpp
     server_decoration_palette_interface.cpp
@@ -120,6 +121,11 @@ ecm_add_wayland_server_protocol(SERVER_LIB_SRCS
 ecm_add_wayland_server_protocol(SERVER_LIB_SRCS
     PROTOCOL ${KWayland_SOURCE_DIR}/src/client/protocols/blur.xml
     BASENAME blur
+)
+
+ecm_add_qtwayland_server_protocol(SERVER_LIB_SRCS
+    PROTOCOL ${KWayland_SOURCE_DIR}/src/client/protocols/screencast.xml
+    BASENAME zkde-screencast-unstable-v1
 )
 
 ecm_add_wayland_server_protocol(SERVER_LIB_SRCS
@@ -256,6 +262,8 @@ set(SERVER_GENERATED_SRCS
     ${CMAKE_CURRENT_BINARY_DIR}/wayland-dpms-server-protocol.h
     ${CMAKE_CURRENT_BINARY_DIR}/wayland-blur-client-protocol.h
     ${CMAKE_CURRENT_BINARY_DIR}/wayland-blur-server-protocol.h
+    ${CMAKE_CURRENT_BINARY_DIR}/qwayland-server-screencast-unstable-v1.h
+    ${CMAKE_CURRENT_BINARY_DIR}/qwayland-server-screencast-unstable-v1.cpp
     ${CMAKE_CURRENT_BINARY_DIR}/wayland-contrast-client-protocol.h
     ${CMAKE_CURRENT_BINARY_DIR}/wayland-contrast-server-protocol.h
     ${CMAKE_CURRENT_BINARY_DIR}/wayland-relativepointer-unstable-v1-client-protocol.h
@@ -334,6 +342,7 @@ set(SERVER_LIB_HEADERS
   ${CMAKE_CURRENT_BINARY_DIR}/KWayland/Server/kwaylandserver_export.h
   appmenu_interface.h
   blur_interface.h
+  screencast_interface.h
   contrast_interface.h
   buffer_interface.h
   clientconnection.h

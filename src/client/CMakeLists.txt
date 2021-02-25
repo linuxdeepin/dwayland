@@ -336,6 +336,7 @@ set(CLIENT_LIB_HEADERS
   xdgdecoration.h
   xdgshell.h
   xdgforeign.h
+  xdgforeign_v2.h
   xdgoutput.h
 )
 
