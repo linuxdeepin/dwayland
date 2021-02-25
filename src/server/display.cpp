@@ -60,6 +60,7 @@ License along with this library.  If not, see <http://www.gnu.org/licenses/>.
 #include "ddeshell_interface.h"
 #include "strut_interface.h"
 #include "xwayland_keyboard_grab_v1_interface.h"
+#include "screencast_interface.h"
 
 #include <QCoreApplication>
 #include <QDebug>
@@ -497,6 +498,13 @@ ClientManagementInterface *Display::createClientManagement(QObject *parent)
     ClientManagementInterface *clientManagement = new ClientManagementInterface(this, parent);
     connect(this, &Display::aboutToTerminate, clientManagement, [this,clientManagement] { delete clientManagement; });
     return clientManagement;
+}
+
+ScreencastV1Interface *Display::createScreencastV1Interface(QObject *parent)
+{
+    ScreencastV1Interface *screencast = new ScreencastV1Interface(this, parent);
+    connect(this, &Display::aboutToTerminate, screencast, [this,screencast] { delete screencast; });
+    return screencast;
 }
 
 DDESeatInterface *Display::createDDESeat(QObject *parent)

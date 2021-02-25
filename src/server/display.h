@@ -95,6 +95,7 @@ class DDESeatInterface;
 class DDEShellInterface;
 class StrutInterface;
 class ZWPXwaylandKeyboardGrabManagerV1Interface;
+class ScreencastV1Interface;
 
 /**
  * @brief Class holding the Wayland server display loop.
@@ -292,6 +293,11 @@ public:
      * @since 5.54
      */
     XdgDecorationManagerInterface *createXdgDecorationManager(XdgShellInterface *shellInterface, QObject *parent = nullptr);
+
+    /**
+     * Creates an interface to request video feeds of different compositor resources
+     */
+    ScreencastV1Interface *createScreencastV1Interface(QObject *parent = nullptr);
 
     ClientManagementInterface *createClientManagement(QObject *parent = nullptr);
 
