@@ -110,7 +110,11 @@ void DpmsInterface::Private::setCallback(wl_client *client, wl_resource *resourc
     default:
         return;
     }
-    emit cast<Private>(resource)->output->dpmsModeRequested(dpmsMode);
+    if (cast<Private>(resource) && cast<Private>(resource)->output) {
+        emit cast<Private>(resource)->output->dpmsModeRequested(dpmsMode);
+    } else {
+        qDebug() << "skip dpmsModeRequested";
+    }
 }
 
 DpmsInterface::DpmsInterface(OutputInterface *output, wl_resource *parentResource, DpmsManagerInterface *manager)
