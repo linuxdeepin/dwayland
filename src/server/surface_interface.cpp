@@ -855,7 +855,7 @@ void SurfaceInterface::setOutputs(const QVector<OutputInterface *> &outputs)
         }
         d->outputDestroyedConnections[o] = connect(o, &OutputInterface::removed, this, [this, o] {
             auto outputs = d->outputs;
-            if (outputs.removeOne(o)) {
+            if (outputs.removeAll(o)) {
                 setOutputs(outputs);
             }
         });
