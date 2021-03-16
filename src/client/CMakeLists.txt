@@ -49,6 +49,7 @@ set(CLIENT_LIB_SRCS
     shell.cpp
     shm_pool.cpp
     strut.cpp
+    xwayland_keyboard_grab_v1.cpp
     subcompositor.cpp
     subsurface.cpp
     surface.cpp
@@ -151,6 +152,10 @@ ecm_add_wayland_client_protocol(CLIENT_LIB_SRCS
     BASENAME text-input-v2
 )
 ecm_add_wayland_client_protocol(CLIENT_LIB_SRCS
+    PROTOCOL ${KWayland_SOURCE_DIR}/src/client/protocols/xwayland-keyboard-grab-unstable-v1.xml
+    BASENAME xwayland-keyboard-grab-v1
+)
+ecm_add_wayland_client_protocol(CLIENT_LIB_SRCS
     PROTOCOL ${KWayland_SOURCE_DIR}/src/client/protocols/xdg-shell-unstable-v6.xml
     BASENAME xdg-shell-v6
 )
@@ -232,6 +237,7 @@ set(CLIENT_GENERATED_FILES
     ${CMAKE_CURRENT_BINARY_DIR}/wayland-server-decoration-palette-client-protocol.h
     ${CMAKE_CURRENT_BINARY_DIR}/wayland-text-input-v0-client-protocol.h
     ${CMAKE_CURRENT_BINARY_DIR}/wayland-text-input-v2-client-protocol.h
+    ${CMAKE_CURRENT_BINARY_DIR}/wayland-xwayland-keyboard-grab-v1-client-protocol.h
     ${CMAKE_CURRENT_BINARY_DIR}/wayland-xdg-shell-v6-client-protocol.h
     ${CMAKE_CURRENT_BINARY_DIR}/wayland-relativepointer-unstable-v1-client-protocol.h
     ${CMAKE_CURRENT_BINARY_DIR}/wayland-pointer-gestures-unstable-v1-client-protocol.h
@@ -321,6 +327,7 @@ set(CLIENT_LIB_HEADERS
   shm_pool.h
   slide.h
   strut.h
+  xwayland_keyboard_grab_v1.h
   subcompositor.h
   subsurface.h
   surface.h

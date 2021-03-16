@@ -47,6 +47,7 @@ set(SERVER_LIB_SRCS
     server_decoration_palette_interface.cpp
     shell_interface.cpp
     strut_interface.cpp
+    xwayland_keyboard_grab_v1_interface.cpp
     surface_interface.cpp
     subcompositor_interface.cpp
     touch_interface.cpp
@@ -226,6 +227,11 @@ ecm_add_wayland_server_protocol(SERVER_LIB_SRCS
     BASENAME strut
 )
 
+ecm_add_wayland_server_protocol(SERVER_LIB_SRCS
+    PROTOCOL ${KWayland_SOURCE_DIR}/src/client/protocols/xwayland-keyboard-grab-unstable-v1.xml
+    BASENAME xwayland-keyboard-grab-v1
+)
+
 set(SERVER_GENERATED_SRCS
     ${CMAKE_CURRENT_BINARY_DIR}/wayland-output-management-client-protocol.h
     ${CMAKE_CURRENT_BINARY_DIR}/wayland-output-management-server-protocol.h
@@ -289,6 +295,8 @@ set(SERVER_GENERATED_SRCS
     ${CMAKE_CURRENT_BINARY_DIR}/wayland-dde-shell-client-protocol.h
     ${CMAKE_CURRENT_BINARY_DIR}/wayland-strut-client-protocol.h
     ${CMAKE_CURRENT_BINARY_DIR}/wayland-strut-server-protocol.h
+    ${CMAKE_CURRENT_BINARY_DIR}/wayland-xwayland-keyboard-grab-v1-client-protocol.h
+    ${CMAKE_CURRENT_BINARY_DIR}/wayland-xwayland-keyboard-grab-v1-server-protocol.h
 
 )
 
@@ -368,6 +376,7 @@ set(SERVER_LIB_HEADERS
   shell_interface.h
   slide_interface.h
   strut_interface.h
+  xwayland_keyboard_grab_v1_interface.h
   subcompositor_interface.h
   surface_interface.h
   textinput_interface.h

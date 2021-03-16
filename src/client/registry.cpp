@@ -62,6 +62,7 @@ License along with this library.  If not, see <http://www.gnu.org/licenses/>.
 #include "ddeseat.h"
 #include "ddeshell.h"
 #include "strut.h"
+#include "xwayland_keyboard_grab_v1.h"
 // Qt
 #include <QDebug>
 // wayland
@@ -99,6 +100,7 @@ License along with this library.  If not, see <http://www.gnu.org/licenses/>.
 #include <wayland-client-management-client-protocol.h>
 #include <wayland-dde-seat-client-protocol.h>
 #include <wayland-dde-shell-client-protocol.h>
+#include <wayland-xwayland-keyboard-grab-v1-client-protocol.h>
 
 /*****
  * How to add another interface:
@@ -413,6 +415,13 @@ static const QMap<Registry::Interface, SuppertedInterfaceData> s_interfaces = {
         &com_deepin_kwin_strut_interface,
         &Registry::strutAnnounced,
         &Registry::strutRemoved
+    }},
+    {Registry::Interface::ZWPXwaylandKeyboardGrabV1, {
+        1,
+        QByteArrayLiteral("zwp_xwayland_keyboard_grab_manager_v1"),
+        &zwp_xwayland_keyboard_grab_manager_v1_interface,
+        &Registry::xwaylandKeyboardGrabV1Announced,
+        &Registry::xwaylandKeyboardGrabV1Removed
     }},
 };
 
@@ -733,6 +742,7 @@ BIND(ClientManagement, com_deepin_client_management)
 BIND(DDESeat, dde_seat)
 BIND(DDEShell, dde_shell)
 BIND(Strut, com_deepin_kwin_strut)
+BIND2(ZWPXwaylandKeyboardGrabManagerV1, ZWPXwaylandKeyboardGrabV1, zwp_xwayland_keyboard_grab_manager_v1)
 
 
 #undef BIND
@@ -791,6 +801,7 @@ CREATE(ClientManagement)
 CREATE(DDESeat)
 CREATE(DDEShell)
 CREATE(Strut)
+CREATE(ZWPXwaylandKeyboardGrabManagerV1)
 
 #undef CREATE
 #undef CREATE2

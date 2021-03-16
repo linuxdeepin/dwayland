@@ -94,6 +94,7 @@ class ClientManagementInterface;
 class DDESeatInterface;
 class DDEShellInterface;
 class StrutInterface;
+class ZWPXwaylandKeyboardGrabManagerV1Interface;
 
 /**
  * @brief Class holding the Wayland server display loop.
@@ -309,6 +310,13 @@ public:
      **/
     DDEShellInterface *createDDEShell(QObject *parent = nullptr);
 
+    /**
+     * Creates the ZWPXwaylandKeyboardGrabManagerV1Interface in interface @p version.
+     *
+     * @returns The created manager object
+     * @since 5.52
+     **/
+    ZWPXwaylandKeyboardGrabManagerV1Interface *createZWPXwaylandKeyboardGrabManagerV1(QObject *parent = nullptr);
     /**
      * Creates the StrutInterface in interface @p version.
      *

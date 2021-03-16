@@ -40,6 +40,10 @@ if (HAVE_LINUX_INPUT_H)
     target_link_libraries(panelTest KF5::WaylandClient)
     ecm_mark_as_test(panelTest)
 
+    add_executable(grabTest grabtest.cpp)
+    target_link_libraries(grabTest KF5::WaylandClient)
+    ecm_mark_as_test(grabTest)
+
     add_executable(qtwayland-integration-test qtwaylandintegrationtest.cpp)
     target_link_libraries(qtwayland-integration-test Qt5::Core Qt5::Gui KF5::WaylandClient)
     ecm_mark_as_test(qtwayland-integration-test)

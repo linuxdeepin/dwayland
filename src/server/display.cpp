@@ -59,6 +59,7 @@ License along with this library.  If not, see <http://www.gnu.org/licenses/>.
 #include "ddeseat_interface.h"
 #include "ddeshell_interface.h"
 #include "strut_interface.h"
+#include "xwayland_keyboard_grab_v1_interface.h"
 
 #include <QCoreApplication>
 #include <QDebug>
@@ -501,6 +502,13 @@ ClientManagementInterface *Display::createClientManagement(QObject *parent)
 DDESeatInterface *Display::createDDESeat(QObject *parent)
 {
     auto b = new DDESeatInterface(this, parent);
+    connect(this, &Display::aboutToTerminate, b, [this, b] { delete b; });
+    return b;
+}
+
+ZWPXwaylandKeyboardGrabManagerV1Interface *Display::createZWPXwaylandKeyboardGrabManagerV1(QObject *parent)
+{
+    auto b = new ZWPXwaylandKeyboardGrabManagerV1Interface(this, parent);
     connect(this, &Display::aboutToTerminate, b, [this, b] { delete b; });
     return b;
 }
