@@ -96,6 +96,7 @@ class DDEShellInterface;
 class StrutInterface;
 class ZWPXwaylandKeyboardGrabManagerV1Interface;
 class ScreencastV1Interface;
+class LinuxDmabufUnstableV1Interface;
 
 /**
  * @brief Class holding the Wayland server display loop.
@@ -267,6 +268,13 @@ public:
      * @since 5.42
      **/
     ServerSideDecorationPaletteManagerInterface *createServerSideDecorationPaletteManager(QObject *parent = nullptr);
+
+    /**
+     * Creates the LinuxDmabufUnstableV1Interface in interface @p version.
+     *
+     * @returns A pointer to the created interface
+     **/
+    LinuxDmabufUnstableV1Interface *createLinuxDmabufInterface(QObject *parent = nullptr);
 
     /**
      * Creates the XdgOutputManagerInterface
