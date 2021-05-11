@@ -273,6 +273,7 @@ void SeatInterface::Private::registerDataDevice(DataDeviceInterface *dataDevice)
         if (currentSelection == dataDevice) {
             // current selection is cleared
             currentSelection = nullptr;
+            emit q->selectionChanged(nullptr);
             if (keys.focus.selection) {
                 keys.focus.selection->sendClearSelection();
             }
@@ -306,9 +307,17 @@ void SeatInterface::Private::registerDataDevice(DataDeviceInterface *dataDevice)
                 // no implicit grab, abort drag
                 return;
             }
+            auto *originSurface = dataDevice->origin();
+            const bool proxied = originSurface->dataProxy();
+            if (!proxied) {
+                // origin surface
+                drag.target = dataDevice;
+                drag.surface = originSurface;
+                // TODO: transformation needs to be either pointer or touch
+                drag.transformation = globalPointer.focus.transformation;
+            }
             drag.source = dataDevice;
-            drag.target = dataDevice;
-            drag.surface = dragSurface;
+            drag.sourcePointer = interfaceForSurface(originSurface, pointers);
             drag.destroyConnection = QObject::connect(dataDevice, &QObject::destroyed, q,
                 [this] {
                     endDrag(display->nextSerial());
@@ -328,7 +337,7 @@ void SeatInterface::Private::registerDataDevice(DataDeviceInterface *dataDevice)
             } else {
                 drag.dragSourceDestroyConnection = QMetaObject::Connection();
             }
-            dataDevice->updateDragTarget(dataDevice->origin(), dataDevice->dragImplicitGrabSerial());
+            dataDevice->updateDragTarget(proxied ? nullptr : originSurface, dataDevice->dragImplicitGrabSerial());
             emit q->dragStarted();
             emit q->dragSurfaceChanged();
         }
@@ -405,6 +414,7 @@ void SeatInterface::Private::cancelPreviousSelection(DataDeviceInterface *dataDe
 
 void SeatInterface::Private::updateSelection(DataDeviceInterface *dataDevice, bool set)
 {
+    bool selChanged = currentSelection != dataDevice;
     if (keys.focus.surface && (keys.focus.surface->client() == dataDevice->client())) {
         // cancel the previous selection
         cancelPreviousSelection(dataDevice);
@@ -419,8 +429,12 @@ void SeatInterface::Private::updateSelection(DataDeviceInterface *dataDevice, bo
             } else {
                 keys.focus.selection->sendClearSelection();
                 currentSelection = nullptr;
+                selChanged = true;
             }
         }
+    }
+    if (selChanged) {
+        emit q->selectionChanged(currentSelection);
     }
 }
 
@@ -1580,6 +1594,7 @@ void SeatInterface::setSelection(DataDeviceInterface *dataDevice)
             d->keys.focus.selection->sendClearSelection();
         }
     }
+    emit selectionChanged(dataDevice);
 }
 
 }

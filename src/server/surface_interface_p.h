@@ -104,6 +104,8 @@ public:
     QHash<OutputInterface*, QMetaObject::Connection> outputDestroyedConnections;
     QVector<IdleInhibitorInterface*> idleInhibitors;
 
+    SurfaceInterface *dataProxy = nullptr;
+
 private:
     QMetaObject::Connection constrainsOneShotConnection;
     QMetaObject::Connection constrainsUnboundConnection;
