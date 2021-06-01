@@ -20,6 +20,7 @@
 
 #include "outputchangeset.h"
 #include "outputchangeset_p.h"
+#include <QDebug>
 
 namespace KWayland
 {
@@ -56,7 +57,15 @@ OutputChangeSet::Private *OutputChangeSet::d_func() const
 bool OutputChangeSet::enabledChanged() const
 {
     Q_D();
-    return d->enabled != d->o->enabled();
+    if(d->o != NULL)
+    {
+    	return d->enabled != d->o->enabled();
+    }
+    else
+    {
+	qDebug()<<"enabledChanged d->o is NULL";
+    	return false;
+    }
 }
 
 OutputDeviceInterface::Enablement OutputChangeSet::enabled() const
