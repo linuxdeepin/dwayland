@@ -7,6 +7,7 @@
 
 #include "outputchangeset_v2.h"
 #include "outputchangeset_v2_p.h"
+#include <QDebug>
 
 namespace KWaylandServer
 {
@@ -35,7 +36,12 @@ OutputChangeSetV2::~OutputChangeSetV2() = default;
 
 bool OutputChangeSetV2::enabledChanged() const
 {
-    return d->enabled != d->outputDevice->enabled();
+    if (d->outputDevice != NULL) {
+        return d->enabled != d->outputDevice->enabled();
+    } else {
+        qDebug()<<"enabledChanged d->outputDevice is NULL";
+        return false;
+    }
 }
 
 bool OutputChangeSetV2::enabled() const
