@@ -143,8 +143,10 @@ void KeyboardInterface::keyPressed(quint32 key, quint32 serial)
     if (!d->resource) {
         return;
     }
-    Q_ASSERT(d->focusedSurface);
-    wl_keyboard_send_key(d->resource, serial, d->seat->timestamp(), key, WL_KEYBOARD_KEY_STATE_PRESSED);
+    // Q_ASSERT(d->focusedSurface);
+    if (d->focusedSurface) {
+        wl_keyboard_send_key(d->resource, serial, d->seat->timestamp(), key, WL_KEYBOARD_KEY_STATE_PRESSED);
+    }
 }
 
 void KeyboardInterface::keyReleased(quint32 key, quint32 serial)
@@ -153,15 +155,19 @@ void KeyboardInterface::keyReleased(quint32 key, quint32 serial)
     if (!d->resource) {
         return;
     }
-    Q_ASSERT(d->focusedSurface);
-    wl_keyboard_send_key(d->resource, serial, d->seat->timestamp(), key, WL_KEYBOARD_KEY_STATE_RELEASED);
+    // Q_ASSERT(d->focusedSurface);
+    if (d->focusedSurface) {
+        wl_keyboard_send_key(d->resource, serial, d->seat->timestamp(), key, WL_KEYBOARD_KEY_STATE_RELEASED);
+    }
 }
 
 void KeyboardInterface::updateModifiers(quint32 depressed, quint32 latched, quint32 locked, quint32 group, quint32 serial)
 {
     Q_D();
-    Q_ASSERT(d->focusedSurface);
-    d->sendModifiers(depressed, latched, locked, group, serial);
+    // Q_ASSERT(d->focusedSurface);
+    if (d->focusedSurface) {
+        d->sendModifiers(depressed, latched, locked, group, serial);
+    }
 }
 
 void KeyboardInterface::repeatInfo(qint32 charactersPerSecond, qint32 delay)
