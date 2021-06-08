@@ -307,6 +307,9 @@ void DataDeviceInterface::updateDragTarget(SurfaceInterface *surface, quint32 se
         // TODO: do this for all client's surfaces?
         return;
     }
+    if (!d->seat->dragSource()) {
+        return;
+    }
     auto *source = d->seat->dragSource()->dragSource();
     DataOfferInterface *offer = d->createDataOffer(source);
     d->drag.surface = surface;

@@ -687,8 +687,10 @@ void SeatInterface::setDragTarget(SurfaceInterface *surface, const QMatrix4x4 &i
     if (d->drag.mode == Private::Drag::Mode::Pointer) {
         setDragTarget(surface, pointerPos(), inputTransformation);
     } else {
-        Q_ASSERT(d->drag.mode == Private::Drag::Mode::Touch);
-        setDragTarget(surface, d->globalTouch.focus.firstTouchPos, inputTransformation);
+        // Q_ASSERT(d->drag.mode == Private::Drag::Mode::Touch);
+        if (d->drag.mode == Private::Drag::Mode::Touch) {
+            setDragTarget(surface, d->globalTouch.focus.firstTouchPos, inputTransformation);
+        }
     }
 
 }
