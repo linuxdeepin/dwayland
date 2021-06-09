@@ -232,11 +232,11 @@ PointerInterface::PointerInterface(SeatInterface *parent, wl_resource *parentRes
     // TODO: handle touch
     connect(parent, &SeatInterface::pointerPosChanged, this, [this] {
         Q_D();
-        if (d->seat->isDragPointer()) {
-            // handled by DataDevice
-            return;
-        }
         if (d->focusedSurface && d->resource) {
+            if (d->seat->isDragPointer() && !d->focusedSurface->dataProxy()) {
+                return;
+            }
+
             if (!d->focusedSurface->lockedPointer().isNull() && d->focusedSurface->lockedPointer()->isLocked()) {
                 return;
             }
