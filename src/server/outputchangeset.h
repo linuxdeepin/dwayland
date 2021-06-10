@@ -61,6 +61,10 @@ public:
      * @returns @c true if the currentModeId() property of the outputdevice has changed.
      */
     bool modeChanged() const;
+    /** Whether the globalBrightness() property of the outputdevice changed.
+     * @returns @c true if the globalBrightness() property of the outputdevice has changed.
+     */
+    bool brightnessChanged() const;
     /** Whether the globalPosition() property of the outputdevice changed.
      * @returns @c true if the globalPosition() property of the outputdevice has changed.
      */
@@ -78,6 +82,7 @@ public:
     OutputDeviceInterface::Enablement enabled() const;
     /** The new mode id.*/
     int mode() const;
+    int brightness() const;
     /** The new value for transform. */
     OutputDeviceInterface::Transform transform() const;
     /** The new value for globalPosition. */

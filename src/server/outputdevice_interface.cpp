@@ -67,6 +67,7 @@ public:
     QString manufacturer = QStringLiteral("org.kde.kwin");
     QString model = QStringLiteral("none");
     qreal scale = 1.0;
+    int brightness = 60;
     QString serialNumber;
     QString eisaId;
     SubPixel subPixel = SubPixel::Unknown;
@@ -633,6 +634,12 @@ int OutputDeviceInterface::currentModeId() const
         }
     }
     return -1;
+}
+
+int OutputDeviceInterface::brightness() const
+{
+    Q_D();
+    return d->brightness;
 }
 
 OutputDeviceInterface::Private *OutputDeviceInterface::d_func() const

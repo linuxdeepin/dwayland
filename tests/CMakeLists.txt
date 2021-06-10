@@ -31,6 +31,10 @@ add_executable(clientManagementTest clientManagementTest.cpp)
 target_link_libraries(clientManagementTest KF5::WaylandClient)
 ecm_mark_as_test(clientManagementTest)
 
+add_executable(clientWaylandDemo clientWaylandDemo.cpp)
+target_link_libraries(clientWaylandDemo KF5::WaylandClient)
+ecm_mark_as_test(clientWaylandDemo)
+
 if (HAVE_LINUX_INPUT_H)
     add_executable(touchClientTest touchclienttest.cpp)
     target_link_libraries(touchClientTest KF5::WaylandClient)
