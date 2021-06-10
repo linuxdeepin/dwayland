@@ -111,6 +111,13 @@ void OutputConfiguration::setMode(OutputDevice *outputdevice, const int modeId)
     org_kde_kwin_outputconfiguration_mode(d->outputconfiguration, od, modeId);
 }
 
+void OutputConfiguration::setBrightness(OutputDevice *outputdevice, const int brightness)
+{
+    org_kde_kwin_outputdevice *od = outputdevice->output();
+    org_kde_kwin_outputconfiguration_brightness(d->outputconfiguration, od,
+                                          brightness);
+}
+
 void OutputConfiguration::setTransform(OutputDevice *outputdevice, KWayland::Client::OutputDevice::Transform transform)
 {
     auto toTransform = [transform]() {

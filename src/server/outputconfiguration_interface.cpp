@@ -51,6 +51,7 @@ private:
     static void colorcurvesCallback(wl_client *client, wl_resource *resource, wl_resource *outputdevice, wl_array *red, wl_array *green, wl_array *blue);
     static void overscanCallback(wl_client *client, wl_resource *resource, wl_resource *outputdevice, uint32_t overscan);
     static void vrrCallback(wl_client *client, wl_resource *resource, wl_resource *outputdevice, uint32_t vrrPolicy);
+    static void brightnessCallback(wl_client *client, wl_resource *resource, wl_resource * outputdevice, int32_t brightness);
 
     OutputConfigurationInterface *q_func()
     {
@@ -70,7 +71,8 @@ const struct org_kde_kwin_outputconfiguration_interface OutputConfigurationInter
                                                                                                               colorcurvesCallback,
                                                                                                               resourceDestroyedCallback,
                                                                                                               overscanCallback,
-                                                                                                              vrrCallback};
+                                                                                                              vrrCallback,
+                                                                                                              brightnessCallback};
 
 OutputConfigurationInterface::OutputConfigurationInterface(OutputManagementInterface *parent, wl_resource *parentResource)
     : Resource(new Private(this, parent, parentResource))
@@ -250,6 +252,15 @@ void OutputConfigurationInterface::Private::vrrCallback(wl_client *client, wl_re
     Q_UNUSED(vrrPolicy);
 }
 
+void OutputConfigurationInterface::Private::brightnessCallback(wl_client *client, wl_resource *resource, wl_resource * outputdevice, int32_t brightness)
+{
+    Q_UNUSED(client);
+    OutputDeviceInterface *o = OutputDeviceInterface::get(outputdevice);
+    auto s = cast<Private>(resource);
+    Q_ASSERT(s);
+    s->pendingChanges(o)->d_func()->brightness = brightness;
+}
+
 void OutputConfigurationInterface::Private::emitConfigurationChangeRequested() const
 {
     auto configinterface = reinterpret_cast<OutputConfigurationInterface *>(q);
@@ -318,7 +329,7 @@ bool OutputConfigurationInterface::Private::hasPendingChanges(OutputDeviceInterf
         return false;
     }
     auto c = changes[outputdevice];
-    return c->enabledChanged() || c->modeChanged() || c->transformChanged() || c->positionChanged() || c->scaleChanged();
+    return c->enabledChanged() || c->modeChanged() || c->transformChanged() || c->positionChanged() || c->scaleChanged() || c->brightnessChanged();
 }
 
 void OutputConfigurationInterface::Private::clearPendingChanges()

@@ -69,3 +69,6 @@ add_executable(xdg-test xdgtest.cpp)
 target_link_libraries(xdg-test Qt${QT_MAJOR_VERSION}::Gui KF5::WaylandClient)
 ecm_mark_as_test(xdg-test)
 
+add_executable(clientWaylandDemo clientWaylandDemo.cpp)
+target_link_libraries(clientWaylandDemo KF5::WaylandClient)
+ecm_mark_as_test(clientWaylandDemo)
