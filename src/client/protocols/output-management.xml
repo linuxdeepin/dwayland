@@ -190,6 +190,14 @@
         <description summary="release the outputconfiguration object"/>
     </request>
 
+    <request name="brightness">
+        <description summary="switch outputdevice brightness">
+            Sets the just a test.
+        </description>
+        <arg name="outputdevice" type="object" interface="org_kde_kwin_outputdevice" summary="outputdevice this brightness change applies to"/>
+        <arg name="brightness" type="int" summary="aspired brightness's number"/>
+    </request>
+
 </interface>
 
 </protocol>

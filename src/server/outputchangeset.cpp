@@ -36,6 +36,7 @@ OutputChangeSet::Private::Private(OutputDeviceInterface *outputdevice, OutputCha
     , position(o->globalPosition())
     , scale(o->scale())
     , colorCurves(o->colorCurves())
+    , brightness(o->brightness())
 {
 }
 
@@ -80,10 +81,22 @@ bool OutputChangeSet::modeChanged() const
     return d->modeId != d->o->currentModeId();
 }
 
+bool OutputChangeSet::brightnessChanged() const
+{
+    Q_D();
+    return d->brightness != d->o->brightness();
+}
+
 int OutputChangeSet::mode() const
 {
     Q_D();
     return d->modeId;
+}
+
+int OutputChangeSet::brightness() const
+{
+    Q_D();
+    return d->brightness;
 }
 
 bool OutputChangeSet::transformChanged() const

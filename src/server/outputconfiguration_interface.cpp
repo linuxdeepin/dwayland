@@ -74,6 +74,8 @@ private:
     static void colorcurvesCallback(wl_client *client, wl_resource *resource,
                                     wl_resource * outputdevice,
                                     wl_array *red, wl_array *green, wl_array *blue);
+    static void brightnessCallback(wl_client *client, wl_resource *resource,
+                             wl_resource * outputdevice, int32_t brightness);
 
     OutputConfigurationInterface *q_func() {
         return reinterpret_cast<OutputConfigurationInterface *>(q);
@@ -91,7 +93,8 @@ const struct org_kde_kwin_outputconfiguration_interface OutputConfigurationInter
     applyCallback,
     scaleFCallback,
     colorcurvesCallback,
-    resourceDestroyedCallback
+    resourceDestroyedCallback,
+    brightnessCallback
 };
 
 OutputConfigurationInterface::OutputConfigurationInterface(OutputManagementInterface* parent, wl_resource* parentResource): Resource(new Private(this, parent, parentResource))
@@ -253,6 +256,15 @@ void OutputConfigurationInterface::Private::colorcurvesCallback(wl_client *clien
     s->pendingChanges(o)->d_func()->colorCurves = cc;
 }
 
+void OutputConfigurationInterface::Private::brightnessCallback(wl_client *client, wl_resource *resource, wl_resource * outputdevice, int32_t brightness)
+{
+    Q_UNUSED(client);
+    OutputDeviceInterface *o = OutputDeviceInterface::get(outputdevice);
+    auto s = cast<Private>(resource);
+    Q_ASSERT(s);
+    s->pendingChanges(o)->d_func()->brightness = brightness;
+}
+
 void OutputConfigurationInterface::Private::emitConfigurationChangeRequested() const
 {
     auto configinterface = reinterpret_cast<OutputConfigurationInterface *>(q);
@@ -322,7 +334,7 @@ bool OutputConfigurationInterface::Private::hasPendingChanges(OutputDeviceInterf
     c->modeChanged() ||
     c->transformChanged() ||
     c->positionChanged() ||
-    c->scaleChanged();
+    c->scaleChanged() || c->brightnessChanged();
 }
 
 void OutputConfigurationInterface::Private::clearPendingChanges()
