@@ -60,14 +60,13 @@ License along with this library.  If not, see <http://www.gnu.org/licenses/>.
 #include "../../src/server/relativepointer_interface.h"
 // Wayland
 #include <wayland-client-protocol.h>
-#include <wayland-dpms-client-protocol.h>
-#include <wayland-idle-inhibit-unstable-v1-client-protocol.h>
-#include <wayland-server-decoration-client-protocol.h>
-#include <wayland-text-input-v0-client-protocol.h>
-#include <wayland-text-input-v2-client-protocol.h>
-#include <wayland-relativepointer-unstable-v1-client-protocol.h>
-#include <wayland-pointer-gestures-unstable-v1-client-protocol.h>
-#include <wayland-pointer-constraints-unstable-v1-client-protocol.h>
+#include "../../build/src/server/wayland-dpms-client-protocol.h"
+#include "../../build/src/server/wayland-idle-inhibit-unstable-v1-client-protocol.h"
+#include "../../build/src/server/wayland-server_decoration-client-protocol.h"
+#include "../../build/src/server/wayland-text-input-unstable-v2-client-protocol.h"
+#include "../../build/src/server/wayland-relativepointer-unstable-v1-client-protocol.h"
+#include "../../build/src/server/wayland-pointer-gestures-unstable-v1-client-protocol.h"
+#include "../../build/src/server/wayland-pointer-constraints-unstable-v1-client-protocol.h"
 #include "../../src/compat/wayland-xdg-shell-v5-client-protocol.h"
 
 class TestWaylandRegistry : public QObject
@@ -92,7 +91,6 @@ private Q_SLOTS:
     void testBindSlideManager();
     void testBindDpmsManager();
     void testBindServerSideDecorationManager();
-    void testBindTextInputManagerUnstableV0();
     void testBindTextInputManagerUnstableV2();
     void testBindXdgShellUnstableV5();
     void testBindRelativePointerManagerUnstableV1();
@@ -187,8 +185,6 @@ void TestWaylandRegistry::init()
     m_display->createDpmsManager()->create();
     m_serverSideDecorationManager = m_display->createServerSideDecorationManager();
     m_serverSideDecorationManager->create();
-    m_textInputManagerV0 = m_display->createTextInputManager(KWayland::Server::TextInputInterfaceVersion::UnstableV0);
-    QCOMPARE(m_textInputManagerV0->interfaceVersion(), KWayland::Server::TextInputInterfaceVersion::UnstableV0);
     m_textInputManagerV0->create();
     m_textInputManagerV2 = m_display->createTextInputManager(KWayland::Server::TextInputInterfaceVersion::UnstableV2);
     QCOMPARE(m_textInputManagerV2->interfaceVersion(), KWayland::Server::TextInputInterfaceVersion::UnstableV2);
@@ -333,11 +329,6 @@ void TestWaylandRegistry::testBindDpmsManager()
 void TestWaylandRegistry::testBindServerSideDecorationManager()
 {
     TEST_BIND(KWayland::Client::Registry::Interface::ServerSideDecorationManager, SIGNAL(serverSideDecorationManagerAnnounced(quint32,quint32)), bindServerSideDecorationManager, org_kde_kwin_server_decoration_manager_destroy)
-}
-
-void TestWaylandRegistry::testBindTextInputManagerUnstableV0()
-{
-    TEST_BIND(KWayland::Client::Registry::Interface::TextInputManagerUnstableV0, SIGNAL(textInputManagerUnstableV0Announced(quint32,quint32)), bindTextInputManagerUnstableV0, wl_text_input_manager_destroy)
 }
 
 void TestWaylandRegistry::testBindTextInputManagerUnstableV2()
