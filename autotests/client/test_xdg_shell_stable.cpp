@@ -20,7 +20,7 @@ License along with this library.  If not, see <http://www.gnu.org/licenses/>.
 *********************************************************************/
 
 #include "test_xdg_shell.h"
-#include <wayland-xdg-shell-client-protocol.h>
+#include "./../build/src/server/wayland-xdg-shell-client-protocol.h"
 
 class XdgShellTestStable : public XdgShellTest {
     Q_OBJECT

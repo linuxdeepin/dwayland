@@ -32,7 +32,7 @@ License along with this library.  If not, see <http://www.gnu.org/licenses/>.
 #include "../../src/server/region_interface.h"
 #include "../../src/server/plasmawindowmanagement_interface.h"
 #include "../../src/server/surface_interface.h"
-#include <wayland-plasma-window-management-client-protocol.h>
+#include "../../build/src/server/wayland-plasma-window-management-client-protocol.h"
 
 typedef void (KWayland::Server::PlasmaWindowInterface::*ServerWindowSignal)();
 Q_DECLARE_METATYPE(ServerWindowSignal)
