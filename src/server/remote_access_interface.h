@@ -86,6 +86,7 @@ Q_SIGNALS:
      * Previously sent buffer has been released by client
      */
     void bufferReleased(const BufferHandle *buf);
+    void screenRecordStatusChanged(bool isScreenRecording);
 
 private:
     explicit RemoteAccessManagerInterface(Display *display, QObject *parent = nullptr);
