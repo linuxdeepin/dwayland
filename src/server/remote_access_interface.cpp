@@ -36,6 +36,9 @@ namespace KWayland
 {
 namespace Server
 {
+static const QString SCREEN_RECORDING_START = QStringLiteral("screenRecordingStart");
+static const QString SCREEN_RECORDING_FINISHED = QStringLiteral("screenRecordingStop");
+static QObject gsScreenRecord;
 
 class BufferHandle::Private // @see gbm_import_fd_data
 {
@@ -262,6 +265,8 @@ void RemoteAccessManagerInterface::Private::getBufferCallback(wl_client *client,
 
     // send buffer params
     rbuf->passFd();
+
+    gsScreenRecord.setObjectName(SCREEN_RECORDING_START);
 }
 
 void RemoteAccessManagerInterface::Private::releaseCallback(wl_client *client, wl_resource *resource)
@@ -288,6 +293,8 @@ void RemoteAccessManagerInterface::Private::unbind(wl_resource *resource)
     // we're unbinding, all sent buffers for this client are now effectively invalid
     Private *p = cast(resource);
     p->release(resource);
+
+    gsScreenRecord.setObjectName(SCREEN_RECORDING_FINISHED);
 }
 
 void RemoteAccessManagerInterface::Private::release(wl_resource *resource)
@@ -316,6 +323,9 @@ RemoteAccessManagerInterface::Private::~Private()
 RemoteAccessManagerInterface::RemoteAccessManagerInterface(Display *display, QObject *parent)
     : Global(new Private(this, display), parent)
 {
+    connect(&gsScreenRecord, &QObject::objectNameChanged, this, [=](const QString& name) {
+        emit screenRecordStatusChanged(name == SCREEN_RECORDING_START);
+    });
 }
 
 void RemoteAccessManagerInterface::sendBufferReady(const OutputInterface *output, const BufferHandle *buf)
