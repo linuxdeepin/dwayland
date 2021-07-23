@@ -368,7 +368,10 @@ void DataDeviceInterface::updateDragTarget(SurfaceInterface *surface, quint32 se
         offer->d_func()->sendSourceActions();
         auto matchOffers = [source, offer] {
             DataDeviceManagerInterface::DnDAction action{DataDeviceManagerInterface::DnDAction::None};
-            if (source->supportedDragAndDropActions().testFlag(offer->preferredDragAndDropAction())) {
+            //source->supportedDragAndDropActions()源窗口的drag action，可能是 copy,move,ask的或集，但是offer->preferredDragAndDropAction是目的窗口的action
+            //有可能为None，所以当为None时，下面条件不成立，导致最终发送的是support action。
+            if (source->supportedDragAndDropActions().testFlag(offer->preferredDragAndDropAction())
+                    || offer->preferredDragAndDropAction() == DataDeviceManagerInterface::DnDAction::None) {
                 action = offer->preferredDragAndDropAction();
             } else {
                 if (source->supportedDragAndDropActions().testFlag(DataDeviceManagerInterface::DnDAction::Copy) &&
