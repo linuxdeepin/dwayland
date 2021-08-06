@@ -55,8 +55,12 @@ protected:
 void OutputConfigurationV2InterfacePrivate::kde_output_configuration_v2_enable(Resource *resource, wl_resource *outputdevice, int32_t enable)
 {
     Q_UNUSED(resource)
-    
+
     OutputDeviceV2Interface *output = OutputDeviceV2Interface::get(outputdevice);
+    if (!output) {
+        qDebug() << "outputdevice is nullptr";
+        return;
+    }
     pendingChanges(output)->d->enabled = enable == 1;
 }
 
@@ -65,6 +69,10 @@ void OutputConfigurationV2InterfacePrivate::kde_output_configuration_v2_mode(Res
     Q_UNUSED(resource)
     OutputDeviceV2Interface *output = OutputDeviceV2Interface::get(outputdevice);
     OutputDeviceModeV2Interface *mode = OutputDeviceModeV2Interface::get(modeResource);
+    if (!output) {
+        qDebug() << "outputdevice is nullptr";
+        return;
+    }
 
     pendingChanges(output)->d->size = mode->size();
     pendingChanges(output)->d->refreshRate = mode->refreshRate();
@@ -96,6 +104,10 @@ void OutputConfigurationV2InterfacePrivate::kde_output_configuration_v2_transfor
     };
     auto _transform = toTransform();
     OutputDeviceV2Interface *output = OutputDeviceV2Interface::get(outputdevice);
+    if (!output) {
+        qDebug() << "outputdevice is nullptr";
+        return;
+    }
     pendingChanges(output)->d->transform = _transform;
 }
 
@@ -104,6 +116,10 @@ void OutputConfigurationV2InterfacePrivate::kde_output_configuration_v2_position
     Q_UNUSED(resource)
     auto _pos = QPoint(x, y);
     OutputDeviceV2Interface *output = OutputDeviceV2Interface::get(outputdevice);
+    if (!output) {
+        qDebug() << "outputdevice is nullptr";
+        return;
+    }
     pendingChanges(output)->d->position = _pos;
 }
 
@@ -117,7 +133,11 @@ void OutputConfigurationV2InterfacePrivate::kde_output_configuration_v2_scale(Re
         return;
     }
     OutputDeviceV2Interface *output = OutputDeviceV2Interface::get(outputdevice);
-    
+    if (!output) {
+        qDebug() << "outputdevice is nullptr";
+        return;
+    }
+
     pendingChanges(output)->d->scale = doubleScale;
 }
 
@@ -135,6 +155,10 @@ void OutputConfigurationV2InterfacePrivate::kde_output_configuration_v2_overscan
         return;
     }
     OutputDeviceV2Interface *output = OutputDeviceV2Interface::get(outputdevice);
+    if (!output) {
+        qDebug() << "outputdevice is nullptr";
+        return;
+    }
     pendingChanges(output)->d->overscan = overscan;
 }
 
@@ -146,6 +170,10 @@ void OutputConfigurationV2InterfacePrivate::kde_output_configuration_v2_set_vrr_
         return;
     }
     OutputDeviceV2Interface *output = OutputDeviceV2Interface::get(outputdevice);
+    if (!output) {
+        qDebug() << "outputdevice is nullptr";
+        return;
+    }
     pendingChanges(output)->d->vrrPolicy = static_cast<OutputDeviceV2Interface::VrrPolicy>(policy);
 }
 
@@ -157,6 +185,10 @@ void OutputConfigurationV2InterfacePrivate::kde_output_configuration_v2_set_rgb_
         return;
     }
     OutputDeviceV2Interface *output = OutputDeviceV2Interface::get(outputdevice);
+    if (!output) {
+        qDebug() << "outputdevice is nullptr";
+        return;
+    }
     pendingChanges(output)->d->rgbRange = static_cast<OutputDeviceV2Interface::RgbRange>(rgbRange);
 }
 
@@ -170,6 +202,10 @@ void OutputConfigurationV2InterfacePrivate::kde_output_configuration_v2_brightne
 {
     Q_UNUSED(resource);
     OutputDeviceV2Interface *output = OutputDeviceV2Interface::get(outputdevice);
+    if (!output) {
+        qDebug() << "outputdevice is nullptr";
+        return;
+    }
     pendingChanges(output)->d->brightness = brightness;
 }
 
