@@ -148,6 +148,7 @@ Q_SIGNALS:
     void currentModeChanged();
     void dpmsModeChanged();
     void dpmsSupportedChanged();
+    void resourceChanged();
 
     /**
      * Change of dpms @p mode is requested.
