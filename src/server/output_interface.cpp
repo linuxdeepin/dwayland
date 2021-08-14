@@ -330,6 +330,7 @@ void OutputInterface::Private::bind(wl_client *client, uint32_t version, uint32_
     r.resource = resource;
     r.version = version;
     resources << r;
+    emit q->resourceChanged();
 
     sendGeometry(resource);
     sendScale(r);
