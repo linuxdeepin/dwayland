@@ -134,6 +134,10 @@ public:
 
     static OutputInterface *get(wl_resource *native);
 
+    bool isOutputRemoved() const;
+    bool isOutputDisconnected() const;
+    void setOutputDisconnected(bool disconnected);
+
 Q_SIGNALS:
     void physicalSizeChanged(const QSize&);
     void globalPositionChanged(const QPoint&);
