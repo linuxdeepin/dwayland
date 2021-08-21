@@ -59,6 +59,8 @@ public:
     } dpms;
 
     static OutputInterface *get(wl_resource *native);
+    bool outputRemoved = false;
+    bool outputDisconnected = false;
 
 private:
     static Private *cast(wl_resource *native);
@@ -152,6 +154,11 @@ OutputInterface::OutputInterface(Display *display, QObject *parent)
                 wl_resource_set_user_data(it->resource, NULL);
             }
             d->resources.clear();
+            // 控制中心的模式设置disable某个output也会走到这里销毁resources
+            // 所以这里加入一个outputDisconnected的判断，保证只有屏幕拔出才走这个逻辑
+            if (d->outputDisconnected) {
+                d->outputRemoved = true;
+            }
         }
     );
 }
@@ -527,6 +534,24 @@ bool OutputInterface::isDpmsSupported() const
 {
     Q_D();
     return d->dpms.supported;
+}
+
+bool OutputInterface::isOutputRemoved() const
+{
+    Q_D();
+    return d->outputRemoved;
+}
+
+bool OutputInterface::isOutputDisconnected() const
+{
+    Q_D();
+    return d->outputDisconnected;
+}
+
+void OutputInterface::setOutputDisconnected(bool disconnected)
+{
+    Q_D();
+    d->outputDisconnected = disconnected;
 }
 
 QVector<wl_resource *> OutputInterface::clientResources(ClientConnection *client) const
