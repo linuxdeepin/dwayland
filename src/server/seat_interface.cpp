@@ -414,27 +414,33 @@ void SeatInterface::Private::cancelPreviousSelection(DataDeviceInterface *dataDe
 
 void SeatInterface::Private::updateSelection(DataDeviceInterface *dataDevice, bool set)
 {
-    bool selChanged = currentSelection != dataDevice;
-    if (keys.focus.surface && (keys.focus.surface->client() == dataDevice->client())) {
-        // cancel the previous selection
-        cancelPreviousSelection(dataDevice);
-        // new selection on a data device belonging to current keyboard focus
-        currentSelection = dataDevice;
-    }
-    if (dataDevice == currentSelection) {
-        // need to send out the selection
-        if (keys.focus.selection) {
-            if (set) {
-                keys.focus.selection->sendSelection(dataDevice);
-            } else {
+    bool devChanged = currentSelection != dataDevice; // 输入设备发生变化
+    bool isWayland = keys.focus.selection != nullptr; // x11时,keys.focus.selection为nullptr
+
+    if (set) {// selectionChanged
+        // 输入设备发生变化,更新输入设备
+        if (devChanged) {
+            // cancel the previous selection
+            cancelPreviousSelection(dataDevice);
+            // new selection on a data device belonging to current keyboard focus
+            currentSelection = dataDevice;
+        }
+        // wayland 窗口直接更新焦点selection,x11窗口发送信号,通知x11程序处理
+        if (isWayland) {
+            keys.focus.selection->sendSelection(dataDevice);
+        } else {
+            Q_EMIT q->selectionChanged(dataDevice); // 通知x11窗口更新
+        }
+    } else {// set==false;selection clear
+        // 重置当前selection,若非wayland则通知x11进行处理
+        if (!devChanged) {
+            currentSelection = nullptr;
+            if (isWayland) {
                 keys.focus.selection->sendClearSelection();
-                currentSelection = nullptr;
-                selChanged = true;
+            } else {
+                Q_EMIT q->selectionChanged(nullptr);
             }
         }
-    }
-    if (selChanged) {
-        emit q->selectionChanged(currentSelection);
     }
 }
 
@@ -1138,6 +1144,9 @@ void SeatInterface::setFocusedKeyboardSurface(SurfaceInterface *surface)
             } else {
                 d->keys.focus.selection->sendClearSelection();
             }
+        } else { // x11 window
+            // 通知x11清空之前selection
+            Q_EMIT selectionChanged(nullptr);
         }
     }
     for (auto it = d->keys.focus.keyboards.constBegin(), end = d->keys.focus.keyboards.constEnd(); it != end; ++it) {
