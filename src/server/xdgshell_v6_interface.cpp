@@ -176,9 +176,13 @@ public:
             *s = ZXDG_TOPLEVEL_V6_STATE_ACTIVATED;
         }
         configureSerials << serial;
-        zxdg_toplevel_v6_send_configure(resource, size.width(), size.height(), &state);
+        if (resource) {
+            zxdg_toplevel_v6_send_configure(resource, size.width(), size.height(), &state);
+        }
 
-        zxdg_surface_v6_send_configure(parentResource, serial);
+        if (parentResource) {
+            zxdg_surface_v6_send_configure(parentResource, serial);
+        }
 
         client->flush();
         wl_array_release(&state);

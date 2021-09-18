@@ -1,3 +1,10 @@
+kwayland (4:5.56.1000.11-1) unstable; urgency=medium
+
+  * update for klu/pgv master branch
+  * To automate the packaging with correct versions
+
+ -- wugang <wugang@uniontech.com>  Sat, 18 Sep 2021 18:14:38 -0300
+
 kwayland (4:5.56.0102.14-1) unstable; urgency=medium
 
   * New upstream release (5.52.0).
