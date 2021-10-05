@@ -192,6 +192,7 @@
       <entry name="tooltip" value="5"/>
       <entry name="StandAlone" value="6"/>
       <entry name="override" value="7"/>
+      <entry name="activeFullScreen" value="8"/>
 <!--
       <entry name="splash" value="1"/>
       <entry name="dashboard" value="3"/>
