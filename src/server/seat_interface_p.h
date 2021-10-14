@@ -37,6 +37,8 @@ namespace Server
 
 class DataDeviceInterface;
 class TextInputInterface;
+class PrimarySelectionDeviceV1Interface;
+class PrimarySelectionSourceV1Interface;
 
 class SeatInterface::Private : public Global::Private
 {
@@ -50,10 +52,13 @@ public:
     QVector<TouchInterface *> touchsForSurface(SurfaceInterface *surface) const;
     DataDeviceInterface *dataDeviceForSurface(SurfaceInterface *surface) const;
     TextInputInterface *textInputForSurface(SurfaceInterface *surface) const;
+    void registerPrimarySelectionDevice(PrimarySelectionDeviceV1Interface *primarySelectionDevice);
     void registerDataDevice(DataDeviceInterface *dataDevice);
     void registerTextInput(TextInputInterface *textInput);
     void endDrag(quint32 serial);
     void cancelPreviousSelection(DataDeviceInterface *newlySelectedDataDevice);
+    void cancelPreviousPrimarySelection(PrimarySelectionDeviceV1Interface *newlySelectedDataDevice);
+
 
     QString name;
     bool pointer = false;
@@ -65,8 +70,10 @@ public:
     QVector<KeyboardInterface*> keyboards;
     QVector<TouchInterface*> touchs;
     QVector<DataDeviceInterface*> dataDevices;
+    QVector<PrimarySelectionDeviceV1Interface*> primarySelectionDevices;
     QVector<TextInputInterface*> textInputs;
     DataDeviceInterface *currentSelection = nullptr;
+    PrimarySelectionDeviceV1Interface *currentPrimarySelection = nullptr;
 
     // Pointer related members
     struct Pointer {
@@ -119,6 +126,7 @@ public:
             QMetaObject::Connection destroyConnection;
             quint32 serial = 0;
             DataDeviceInterface *selection = nullptr;
+            QVector<PrimarySelectionDeviceV1Interface *> primarySelections;
         };
         Focus focus;
         quint32 lastStateSerial = 0;
@@ -182,6 +190,7 @@ private:
     void getPointer(wl_client *client, wl_resource *resource, uint32_t id);
     void getKeyboard(wl_client *client, wl_resource *resource, uint32_t id);
     void getTouch(wl_client *client, wl_resource *resource, uint32_t id);
+    void updatePrimarySelection(PrimarySelectionDeviceV1Interface *primarySelectionDevice);
     void updateSelection(DataDeviceInterface *dataDevice, bool set);
     static Private *cast(wl_resource *r);
     static void unbind(wl_resource *r);

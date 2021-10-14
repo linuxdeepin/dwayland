@@ -34,6 +34,10 @@ set(SERVER_LIB_SRCS
     pointerconstraints_interface_v1.cpp
     pointergestures_interface.cpp
     pointergestures_interface_v1.cpp
+    primaryselectiondevice_v1_interface.cpp
+    primaryselectiondevicemanager_v1_interface.cpp
+    primaryselectionoffer_v1_interface.cpp
+    primaryselectionsource_v1_interface.cpp
     qtsurfaceextension_interface.cpp
     region_interface.cpp
     relativepointer_interface.cpp
@@ -244,6 +248,11 @@ ecm_add_wayland_server_protocol(SERVER_LIB_SRCS
     BASENAME linux-dmabuf-unstable-v1
 )
 
+ecm_add_wayland_server_protocol(SERVER_LIB_SRCS
+    PROTOCOL ${KWayland_SOURCE_DIR}/src/client/protocols/wp-primary-selection-unstable-v1.xml
+    BASENAME wp-primary-selection-unstable-v1
+)
+
 set(SERVER_GENERATED_SRCS
     ${CMAKE_CURRENT_BINARY_DIR}/wayland-output-management-client-protocol.h
     ${CMAKE_CURRENT_BINARY_DIR}/wayland-output-management-server-protocol.h
@@ -312,6 +321,7 @@ set(SERVER_GENERATED_SRCS
     ${CMAKE_CURRENT_BINARY_DIR}/wayland-xwayland-keyboard-grab-v1-client-protocol.h
     ${CMAKE_CURRENT_BINARY_DIR}/wayland-xwayland-keyboard-grab-v1-server-protocol.h
     ${CMAKE_CURRENT_BINARY_DIR}/wayland-linux-dmabuf-unstable-v1-server-protocol.h
+    ${CMAKE_CURRENT_BINARY_DIR}/wayland-wp-primary-selection-unstable-v1-protocol.h
 
 )
 
@@ -378,6 +388,10 @@ set(SERVER_LIB_HEADERS
   pointer_interface.h
   pointerconstraints_interface.h
   pointergestures_interface.h
+  primaryselectiondevicemanager_v1_interface.h
+  primaryselectionoffer_v1_interface.h
+  primaryselectiondevice_v1_interface.h
+  primaryselectionsource_v1_interface.h
   plasmashell_interface.h
   plasmavirtualdesktop_interface.h
   plasmawindowmanagement_interface.h

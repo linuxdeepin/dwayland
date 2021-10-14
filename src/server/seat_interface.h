@@ -42,6 +42,8 @@ class DataDeviceInterface;
 class Display;
 class SurfaceInterface;
 class TextInputInterface;
+class PrimarySelectionDeviceV1Interface;
+class PrimarySelectionSourceV1Interface;
 
 /**
  * @brief Represents a Seat on the Wayland Display.
@@ -649,6 +651,14 @@ public:
      * @see setSelection
      **/
     DataDeviceInterface *selection() const;
+
+    /**
+     * @returns The PrimarySelectionDeviceV1Interface holding the current selection.
+     * @since 5.54
+     * @see setSelection
+     **/
+    PrimarySelectionDeviceV1Interface *primarySelection() const;
+
     /**
      * This method allows to manually set the @p dataDevice for the current clipboard selection.
      * The clipboard selection is handled automatically in SeatInterface.
@@ -663,6 +673,18 @@ public:
      * @since 5.24
      **/
     void setSelection(DataDeviceInterface *dataDevice);
+    /**
+     * This method allows to manually set the @p PrimarySelectionDeviceV1Interface for the current  selection.
+     * The  selection is handled automatically in SeatInterface.
+     * If a PrimarySelectionDeviceV1Interface belonging to the current focused KeyboardInterface
+     * sets a selection, the current  selection will be updated automatically.
+     * With this method it's possible to override the automatic select update for
+     *
+     * @param PrimarySelectionDeviceV1Interface Sets the current  selection.
+     * @see selection
+     * @since 5.24
+     **/
+    void setPrimarySelection(PrimarySelectionDeviceV1Interface * );
 
     static SeatInterface *get(wl_resource *native);
 
@@ -694,6 +716,12 @@ Q_SIGNALS:
     void selectionChanged(DataDeviceInterface*);
 
     /**
+     * Emitted whenever the primary selection changes
+     * @see primarySelection
+     **/
+    void primarySelectionChanged(KWayland::Server::PrimarySelectionDeviceV1Interface *);
+
+    /**
      * Emitted when a drag'n'drop operation is started
      * @since 5.6
      * @see dragEnded
@@ -721,6 +749,7 @@ Q_SIGNALS:
 private:
     friend class Display;
     friend class DataDeviceManagerInterface;
+    friend class PrimarySelectionDeviceManagerV1Interface;
     friend class TextInputManagerUnstableV0Interface;
     friend class TextInputManagerUnstableV2Interface;
     explicit SeatInterface(Display *display, QObject *parent);

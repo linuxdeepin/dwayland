@@ -39,6 +39,7 @@ License along with this library.  If not, see <http://www.gnu.org/licenses/>.
 #include "plasmawindowmanagement.h"
 #include "pointerconstraints.h"
 #include "pointergestures.h"
+#include "primaryselectiondevicemanager_v1.h"
 #include "seat.h"
 #include "shadow.h"
 #include "blur.h"
@@ -101,6 +102,7 @@ License along with this library.  If not, see <http://www.gnu.org/licenses/>.
 #include <wayland-dde-seat-client-protocol.h>
 #include <wayland-dde-shell-client-protocol.h>
 #include <wayland-xwayland-keyboard-grab-v1-client-protocol.h>
+#include <wayland-wp-primary-selection-unstable-v1-client-protocol.h>
 
 /*****
  * How to add another interface:
@@ -423,6 +425,13 @@ static const QMap<Registry::Interface, SuppertedInterfaceData> s_interfaces = {
         &Registry::xwaylandKeyboardGrabV1Announced,
         &Registry::xwaylandKeyboardGrabV1Removed
     }},
+    {Registry::Interface::PrimarySelectionDeviceManagerV1, {
+    1,
+    QByteArrayLiteral("zwp_primary_selection_device_manager_v1"),
+    &zwp_primary_selection_device_manager_v1_interface,
+    &Registry::primarySelectDeviceManagerAnnounced,
+    &Registry::primarySelectionDeviceManagerV1Removed
+    }},
 };
 
 static quint32 maxVersion(const Registry::Interface &interface)
@@ -743,7 +752,7 @@ BIND(DDESeat, dde_seat)
 BIND(DDEShell, dde_shell)
 BIND(Strut, com_deepin_kwin_strut)
 BIND2(ZWPXwaylandKeyboardGrabManagerV1, ZWPXwaylandKeyboardGrabV1, zwp_xwayland_keyboard_grab_manager_v1)
-
+BIND(PrimarySelectionDeviceManagerV1, zwp_primary_selection_device_manager_v1)
 
 #undef BIND
 #undef BIND2
@@ -899,6 +908,16 @@ XdgDecorationManager *Registry::createXdgDecorationManager(quint32 name, quint32
     switch(d->interfaceForName(name)) {
     case Interface::XdgDecorationUnstableV1:
         return d->create<XdgDecorationManager>(name, version, parent, &Registry::bindXdgDecorationUnstableV1);
+    default:
+        return nullptr;
+    }
+}
+
+PrimarySelectionDeviceManagerV1 *Registry::createPrimarySelectionDeviceManagerV1(quint32 name, quint32 version, QObject *parent)
+{
+    switch(d->interfaceForName(name)) {
+    case Interface::PrimarySelectionDeviceManagerV1:
+        return d->create<PrimarySelectionDeviceManagerV1>(name, version, parent, &Registry::bindPrimarySelectionDeviceManagerV1);
     default:
         return nullptr;
     }

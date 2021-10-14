@@ -474,3 +474,14 @@ target_link_libraries( testXdgDecoration Qt5::Test Qt5::Gui KF5::WaylandClient K
 add_test(NAME kwayland-testXdgDecoration COMMAND testXdgDecoration)
 ecm_mark_as_test(testXdgDecoration)
 
+
+########################################################
+# Test PrimarySelect
+########################################################
+set( testPrimarySelect_SRCS
+        test_primaryselect.cpp
+    )
+add_executable(testPrimarySelect ${testPrimarySelect_SRCS})
+target_link_libraries( testPrimarySelect Qt5::Test Qt5::Gui KF5::WaylandClient KF5::WaylandServer Wayland::Client)
+add_test(NAME kwayland-testPrimarySelect COMMAND testPrimarySelect)
+ecm_mark_as_test(testPrimarySelect)

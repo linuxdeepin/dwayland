@@ -65,6 +65,10 @@ set(CLIENT_LIB_SRCS
     xdgshell_v6.cpp
     xdgshell_stable.cpp
     xdgoutput.cpp
+    primaryselectiondevice_v1.cpp
+    primaryselectiondevicemanager_v1.cpp
+    primaryselectionoffer_v1.cpp
+    primaryselectionsource_v1.cpp
     ../compat/wayland-xdg-shell-v5-protocol.c
 )
 
@@ -218,6 +222,11 @@ ecm_add_wayland_client_protocol(CLIENT_LIB_SRCS
     BASENAME dde-shell
 )
 
+ecm_add_wayland_client_protocol (CLIENT_LIB_SRCS
+    PROTOCOL ${KWayland_SOURCE_DIR}/src/client/protocols/wp-primary-selection-unstable-v1.xml
+    BASENAME wp-primary-selection-unstable-v1
+)
+
 set(CLIENT_GENERATED_FILES
     ${CMAKE_CURRENT_BINARY_DIR}/wayland-fullscreen-shell-client-protocol.h
     ${CMAKE_CURRENT_BINARY_DIR}/wayland-output-management-client-protocol.h
@@ -249,6 +258,7 @@ set(CLIENT_GENERATED_FILES
     ${CMAKE_CURRENT_BINARY_DIR}/wayland-client-management-client-protocol.h
     ${CMAKE_CURRENT_BINARY_DIR}/wayland-dde-seat-client-protocol.h
     ${CMAKE_CURRENT_BINARY_DIR}/wayland-dde-shell-client-protocol.h
+    ${CMAKE_CURRENT_BINARY_DIR}/wayland-wp-primary-selection-unstable-v1-protocol.h
 )
 
 set_source_files_properties(${CLIENT_GENERATED_FILES} PROPERTIES SKIP_AUTOMOC ON)
@@ -338,6 +348,10 @@ set(CLIENT_LIB_HEADERS
   xdgforeign.h
   xdgforeign_v2.h
   xdgoutput.h
+  primaryselectiondevicemanager_v1.h
+  primaryselectionoffer_v1.h
+  primaryselectiondevice_v1.h
+  primaryselectionsource_v1.h
 )
 
 install(FILES

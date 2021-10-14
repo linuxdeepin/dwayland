@@ -70,6 +70,7 @@ struct dde_seat;
 struct dde_shell;
 struct com_deepin_kwin_strut;
 struct zwp_xwayland_keyboard_grab_manager_v1;
+struct zwp_primary_selection_device_manager_v1;
 
 namespace KWayland
 {
@@ -121,6 +122,7 @@ class DDESeat;
 class DDEShell;
 class Strut;
 class ZWPXwaylandKeyboardGrabManagerV1;
+class PrimarySelectionDeviceManagerV1;
 
 /**
  * @short Wrapper for the wl_registry interface.
@@ -200,6 +202,7 @@ public:
         DDEShell, ///refers to dde_shell, @since 5.54
         Strut, ///< refers to com_deepin_kwin_strut interface
         ZWPXwaylandKeyboardGrabV1, ///< refers to xwayland-keyboard-grab-unstable-v1 interface
+        PrimarySelectionDeviceManagerV1, /// refers to zwp_primary_selection_device_manager_v1
 };
     explicit Registry(QObject *parent = nullptr);
     virtual ~Registry();
@@ -734,6 +737,18 @@ public:
      * @since 5.5
      **/
     com_deepin_kwin_strut *bindStrut(uint32_t name, uint32_t version) const;
+
+     /**
+     * Binds the zwp_primary_selection_device_manager_v1 with @p name and @p version.
+     * If the @p name does not exist,
+     * @c null will be returned.
+     *
+     * Prefer using createPrimarySelectionDeviceManagerV1 instead.
+     * @see createPrimarySelectionDeviceManagerV1
+     * @since 5.54
+     **/
+    zwp_primary_selection_device_manager_v1 *bindPrimarySelectionDeviceManagerV1(uint32_t name, uint32_t version) const;
+
     ///@}
 
     /**
@@ -1373,6 +1388,24 @@ public:
      * @since 5.5
      **/
     Strut *createStrut(quint32 name, quint32 version, QObject *parent = nullptr);
+
+    /**
+     * Creates an PrimarySelectionDeviceManagerV1 and sets it up to manage the interface identified by
+     * @p name and @p version.
+     *
+     * Note: in case @p name is invalid or isn't for the zwp_primary_selection_device_manager_v1 interface,
+     * the returned PrimarySelectionDeviceManagerV1 will not be valid. Therefore it's recommended to call
+     * isValid on the created instance.
+     *
+     * @param name The name of the zwp_primary_selection_device_manager_v1 interface to bind
+     * @param version The version or the zwp_primary_selection_device_manager_v1 interface to use
+     * @param parent The parent for PrimarySelectionDeviceManagerV1
+     *
+     * @returns The created PrimarySelectionDeviceManagerV1.
+     * @since 5.54
+     **/
+    PrimarySelectionDeviceManagerV1 *createPrimarySelectionDeviceManagerV1(quint32 name, quint32 version, QObject *parent = nullptr);
+
     ///@}
 
     /**
@@ -1688,6 +1721,14 @@ Q_SIGNALS:
      **/
     void strutAnnounced(quint32 name, quint32 version);
 
+	/**
+     * Emitted whenever a zwp_primary_selection_device_manager_v1 interface gets announced.
+     * @param name The name for the announced interface
+     * @param version The maximum supported version of the announced interface
+     * @since 5.54
+     **/
+    void primarySelectDeviceManagerAnnounced(quint32 name, quint32 version);
+
     ///@}
 
     /**
@@ -1941,6 +1982,13 @@ Q_SIGNALS:
      * @since 5.5
      **/
     void strutRemoved(quint32 name);
+
+     /**
+     * Emitted whenever a zwp_primary_selection_device_manager_v1 gets removed.
+     * @param name The name of the removed interface
+     * @since 5.54
+     **/
+    void primarySelectionDeviceManagerV1Removed(quint32 name);
 
     ///@}
     /**

@@ -26,6 +26,9 @@ License along with this library.  If not, see <http://www.gnu.org/licenses/>.
 #include "keyboard_interface_p.h"
 #include "pointer_interface.h"
 #include "pointer_interface_p.h"
+#include "primaryselectiondevice_v1_interface.h"
+#include "primaryselectionsource_v1_interface.h"
+#include "primaryselectiondevicemanager_v1_interface.h"
 #include "surface_interface.h"
 #include "textinput_interface_p.h"
 // Wayland
@@ -355,6 +358,44 @@ void SeatInterface::Private::registerDataDevice(DataDeviceInterface *dataDevice)
     }
 }
 
+void SeatInterface::Private::registerPrimarySelectionDevice(PrimarySelectionDeviceV1Interface *primarySelectionDevice)
+{
+    Q_ASSERT(primarySelectionDevice->seat() == q);
+
+    primarySelectionDevices << primarySelectionDevice;
+    auto dataDeviceCleanup = [this, primarySelectionDevice] {
+        primarySelectionDevices.removeOne(primarySelectionDevice);
+        keys.focus.primarySelections.removeOne(primarySelectionDevice);
+    };
+    QObject::connect(primarySelectionDevice, &QObject::destroyed, dataDeviceCleanup);
+    QObject::connect(primarySelectionDevice, &PrimarySelectionDeviceV1Interface::selectionChanged,
+        [=](){
+            updatePrimarySelection(primarySelectionDevice);
+        }
+    );
+    QObject::connect(primarySelectionDevice, &PrimarySelectionDeviceV1Interface::selectionCleared,
+        [=](){
+            updatePrimarySelection(primarySelectionDevice);
+        }
+    );
+    if (keys.focus.surface) {
+        if (keys.focus.surface->client() == primarySelectionDevice->client()) {
+            keys.focus.primarySelections.append(primarySelectionDevice);
+            if (currentPrimarySelection) {
+                primarySelectionDevice->sendSelection(currentPrimarySelection);
+            }
+        }
+    }
+}
+
+void SeatInterface::Private::updatePrimarySelection(PrimarySelectionDeviceV1Interface *primarySelectionDevice)
+{
+    // if the update is from the focussed window we should inform the active client
+    if (!(keys.focus.surface && (keys.focus.surface->client() == primarySelectionDevice->client()))) {
+        return;
+    }
+    q->setPrimarySelection(primarySelectionDevice);
+}
 
 void SeatInterface::Private::registerTextInput(TextInputInterface *ti)
 {
@@ -413,6 +454,20 @@ void SeatInterface::Private::cancelPreviousSelection(DataDeviceInterface *dataDe
     }
 }
 
+void SeatInterface::Private::cancelPreviousPrimarySelection(PrimarySelectionDeviceV1Interface *newlySelectedDataDevice)
+{
+    if (!currentPrimarySelection) {
+        return;
+    }
+    if (auto s = currentPrimarySelection->selection()) {
+        if (currentPrimarySelection != newlySelectedDataDevice) {
+            // only if current selection is not on the same device
+            // that would cancel the newly set source
+            s->cancel();
+        }
+    }
+}
+
 void SeatInterface::Private::updateSelection(DataDeviceInterface *dataDevice, bool set)
 {
     bool selChanged = currentSelection != dataDevice;
@@ -448,6 +503,40 @@ void SeatInterface::setHasKeyboard(bool has)
     d->keyboard = has;
     emit hasKeyboardChanged(d->keyboard);
 }
+
+void SeatInterface::setPrimarySelection(PrimarySelectionDeviceV1Interface *selection)
+{
+    Q_D();
+
+    if (d->currentPrimarySelection == selection) {
+        return;
+    }
+
+    if (d->currentPrimarySelection) {
+        d->currentPrimarySelection->cancel();
+        disconnect(d->currentPrimarySelection, nullptr, this, nullptr);
+    }
+
+
+    if (selection) {
+        auto cleanup = [this]() {
+            setPrimarySelection(nullptr);
+        };
+        connect(selection, &PrimarySelectionSourceV1Interface::unbound, this, cleanup);
+    }
+
+    d->currentPrimarySelection = selection;
+
+    for (auto focussedSelection: qAsConst(d->keys.focus.primarySelections)) {
+        if (selection) {
+            focussedSelection->sendSelection(selection);
+        } else {
+            focussedSelection->sendClearSelection();
+        }
+    }
+    emit primarySelectionChanged(selection);
+}
+
 
 void SeatInterface::setHasPointer(bool has)
 {
@@ -1167,6 +1256,22 @@ void SeatInterface::setFocusedKeyboardSurface(SurfaceInterface *surface)
             }
         }
     }
+
+    // primary selection
+    QVector<PrimarySelectionDeviceV1Interface *> primarySelectionDevices;
+    for (auto it = d->primarySelectionDevices.constBegin(); it != d->primarySelectionDevices.constEnd(); ++it) {
+        if (surface && ((*it)->client() == surface->client())) {
+            primarySelectionDevices << *it;
+        }
+    }
+    d->keys.focus.primarySelections = primarySelectionDevices;
+    for (auto primaryDataDevice : primarySelectionDevices) {
+        if (d->currentPrimarySelection) {
+            primaryDataDevice->sendSelection(d->currentPrimarySelection);
+        } else {
+        primaryDataDevice->sendClearSelection();
+        }
+    }
     for (auto it = d->keys.focus.keyboards.constBegin(), end = d->keys.focus.keyboards.constEnd(); it != end; ++it) {
         (*it)->setFocusedSurface(surface, serial);
     }
@@ -1605,6 +1710,12 @@ DataDeviceInterface *SeatInterface::selection() const
 {
     Q_D();
     return d->currentSelection;
+}
+
+PrimarySelectionDeviceV1Interface *SeatInterface::primarySelection() const
+{
+    Q_D();
+    return d->currentPrimarySelection;
 }
 
 void SeatInterface::setSelection(DataDeviceInterface *dataDevice)

@@ -73,3 +73,4 @@ com_deepin_client_management;ClientManagement
 dde_seat;DDESeat
 dde_shell;DDEShell
 com_deepin_kwin_strut;Strut
+zwp_primary_selection_device_manager_v1;PrimarySelectionDeviceManagerV1

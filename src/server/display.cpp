@@ -35,6 +35,7 @@ License along with this library.  If not, see <http://www.gnu.org/licenses/>.
 #include "plasmawindowmanagement_interface.h"
 #include "pointerconstraints_interface_p.h"
 #include "pointergestures_interface_p.h"
+#include "primaryselectiondevicemanager_v1_interface.h"
 #include "qtsurfaceextension_interface.h"
 #include "seat_interface.h"
 #include "shadow_interface.h"
@@ -540,6 +541,13 @@ StrutInterface *Display::createStrut(QObject* parent)
     auto s = new StrutInterface(this, parent);
     connect(this, &Display::aboutToTerminate, s, [this, s] { delete s; });
     return s;
+}
+
+PrimarySelectionDeviceManagerV1Interface *Display::createPrimarySelectionDeviceManagerV1(QObject *parent)
+{
+    auto primarySelection = new PrimarySelectionDeviceManagerV1Interface(this, parent);
+    connect(this, &Display::aboutToTerminate, primarySelection, [this, primarySelection] { delete primarySelection; });
+    return primarySelection;
 }
 
 void Display::createShm()

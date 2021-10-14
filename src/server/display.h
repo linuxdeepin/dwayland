@@ -97,6 +97,7 @@ class StrutInterface;
 class ZWPXwaylandKeyboardGrabManagerV1Interface;
 class ScreencastV1Interface;
 class LinuxDmabufUnstableV1Interface;
+class PrimarySelectionDeviceManagerV1Interface;
 
 /**
  * @brief Class holding the Wayland server display loop.
@@ -338,6 +339,12 @@ public:
      * @since 5.52
      **/
     StrutInterface *createStrut(QObject *parent = nullptr);
+
+    /**
+     * Creates the PrimarySelectionDeviceManagerV1Interface
+     */
+    PrimarySelectionDeviceManagerV1Interface *createPrimarySelectionDeviceManagerV1(QObject *parent = nullptr);
+
 
     /**
      * Gets the ClientConnection for the given @p client.
