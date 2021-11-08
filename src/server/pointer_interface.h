@@ -63,6 +63,10 @@ public:
      **/
     static PointerInterface *get(wl_resource *native);
 
+    void setFocusedSurface(SurfaceInterface *surface, quint32 serial);
+
+    void setFocusedSurface(SurfaceInterface *surface, quint32 serial, QMatrix4x4 matrix);
+
 Q_SIGNALS:
     /**
      * Signal emitted whenever the Cursor changes.
@@ -70,10 +74,9 @@ Q_SIGNALS:
     void cursorChanged();
 
 private:
-    void setFocusedSurface(SurfaceInterface *surface, quint32 serial);
     void buttonPressed(quint32 button, quint32 serial);
     void buttonReleased(quint32 button, quint32 serial);
-    void axis(Qt::Orientation orientation, quint32 delta);
+    void axis(Qt::Orientation orientation, qint32 delta);
     void relativeMotion(const QSizeF &delta, const QSizeF &deltaNonAccelerated, quint64 microseconds);
     friend class SeatInterface;
     friend class RelativePointerManagerUnstableV1Interface;

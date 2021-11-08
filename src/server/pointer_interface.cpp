@@ -264,6 +264,12 @@ PointerInterface::PointerInterface(SeatInterface *parent, wl_resource *parentRes
 
 PointerInterface::~PointerInterface() = default;
 
+SurfaceInterface *PointerInterface::focusedSurface() const
+{
+    Q_D();
+    return d->focusedSurface;
+}
+
 void PointerInterface::setFocusedSurface(SurfaceInterface *surface, quint32 serial)
 {
     Q_D();
@@ -294,6 +300,36 @@ void PointerInterface::setFocusedSurface(SurfaceInterface *surface, quint32 seri
     d->client->flush();
 }
 
+void PointerInterface::setFocusedSurface(SurfaceInterface *surface, quint32 serial, QMatrix4x4 matrix)
+{
+    Q_D();
+    d->sendLeave(d->focusedChildSurface.data(), serial);
+    disconnect(d->destroyConnection);
+    if (!surface) {
+        d->focusedSurface = nullptr;
+        d->focusedChildSurface.clear();
+        return;
+    }
+    d->focusedSurface = surface;
+    d->destroyConnection = connect(d->focusedSurface, &Resource::aboutToBeUnbound, this,
+        [this] {
+            Q_D();
+            d->sendLeave(d->focusedChildSurface.data(), d->global->display()->nextSerial());
+            d->sendFrame();
+            d->focusedSurface = nullptr;
+            d->focusedChildSurface.clear();
+        }
+    );
+
+    const QPointF pos = matrix.map(d->seat->pointerPos());
+    d->focusedChildSurface = QPointer<SurfaceInterface>(d->focusedSurface->inputSurfaceAt(pos));
+    if (!d->focusedChildSurface) {
+        d->focusedChildSurface = QPointer<SurfaceInterface>(d->focusedSurface);
+    }
+    d->sendEnter(d->focusedChildSurface.data(), pos, serial);
+    d->client->flush();
+}
+
 void PointerInterface::buttonPressed(quint32 button, quint32 serial)
 {
     Q_D();
@@ -316,7 +352,7 @@ void PointerInterface::buttonReleased(quint32 button, quint32 serial)
     d->sendFrame();
 }
 
-void PointerInterface::axis(Qt::Orientation orientation, quint32 delta)
+void PointerInterface::axis(Qt::Orientation orientation, qint32 delta)
 {
     Q_D();
     Q_ASSERT(d->focusedSurface);

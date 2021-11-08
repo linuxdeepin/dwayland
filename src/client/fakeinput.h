@@ -174,6 +174,10 @@ public:
      **/
     void requestPointerAxis(Qt::Orientation axis, qreal delta);
     /**
+     * Request a scroll of the pointer @p axis with @p delta.
+     **/
+    void requestPointerAxisForCapture(Qt::Orientation axis, qreal delta);
+    /**
      * Request a touch down at @p pos in global coordinates.
      *
      * If this is the first touch down it starts a touch sequence.

@@ -110,12 +110,12 @@ void TestServer::init()
                     m_seat->pointerButtonReleased(button);
                 }
             );
-            connect(device, &FakeInputDevice::pointerAxisRequested, this,
+            /*connect(device, &FakeInputDevice::pointerAxisRequested, this,
                 [this] (Qt::Orientation orientation, qreal delta) {
                     m_seat->setTimestamp(m_timeSinceStart->elapsed());
                     m_seat->pointerAxis(orientation, delta);
                 }
-            );
+            );*/
             connect(device, &FakeInputDevice::touchDownRequested, this,
                 [this] (quint32 id, const QPointF &pos) {
                     m_seat->setTimestamp(m_timeSinceStart->elapsed());

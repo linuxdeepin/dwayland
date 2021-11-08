@@ -49,6 +49,10 @@
         <arg name="axis" type="uint"/>
         <arg name="value" type="fixed"/>
       </request>
+      <request name="axis_for_capture">
+        <arg name="axis" type="uint"/>
+        <arg name="value" type="fixed"/>
+      </request>
       <request name="touch_down" since="2">
          <description summary="touch down event">
              A client should use this request to send touch down event at specific

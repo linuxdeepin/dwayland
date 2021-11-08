@@ -23,6 +23,7 @@ License along with this library.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <QSizeF>
 #include <QPointF>
+#include <QDebug>
 
 #include <wayland-server.h>
 #include <wayland-fake-input-server-protocol.h>
@@ -45,6 +46,7 @@ private:
     static void pointerMotionAbsoluteCallback(wl_client *client, wl_resource *resource, wl_fixed_t x, wl_fixed_t y);
     static void buttonCallback(wl_client *client, wl_resource *resource, uint32_t button, uint32_t state);
     static void axisCallback(wl_client *client, wl_resource *resource, uint32_t axis, wl_fixed_t value);
+    static void axisForCaptureCallback(wl_client *client, wl_resource *resource, uint32_t axis, wl_fixed_t value);
     static void touchDownCallback(wl_client *client, wl_resource *resource, quint32 id, wl_fixed_t x, wl_fixed_t y);
     static void touchMotionCallback(wl_client *client, wl_resource *resource, quint32 id, wl_fixed_t x, wl_fixed_t y);
     static void touchUpCallback(wl_client *client, wl_resource *resource, quint32 id);
@@ -85,6 +87,7 @@ const struct org_kde_kwin_fake_input_interface FakeInputInterface::Private::s_in
     pointerMotionCallback,
     buttonCallback,
     axisCallback,
+    axisForCaptureCallback,
     touchDownCallback,
     touchMotionCallback,
     touchUpCallback,
@@ -183,6 +186,28 @@ void FakeInputInterface::Private::axisCallback(wl_client *client, wl_resource *r
         return;
     }
     emit d->pointerAxisRequested(orientation, wl_fixed_to_double(value));
+}
+
+void FakeInputInterface::Private::axisForCaptureCallback(wl_client *client, wl_resource *resource, uint32_t axis, wl_fixed_t value)
+{
+    Q_UNUSED(client)
+    FakeInputDevice *d = device(resource);
+    if (!d || !d->isAuthenticated()) {
+        return;
+    }
+    Qt::Orientation orientation;
+    switch (axis) {
+    case WL_POINTER_AXIS_HORIZONTAL_SCROLL:
+        orientation = Qt::Horizontal;
+        break;
+    case WL_POINTER_AXIS_VERTICAL_SCROLL:
+        orientation = Qt::Vertical;
+        break;
+    default:
+        // invalid
+        return;
+    }
+    emit d->pointerAxisRequestedForCapture(orientation, wl_fixed_to_double(value));
 }
 
 void FakeInputInterface::Private::buttonCallback(wl_client *client, wl_resource *resource, uint32_t button, uint32_t state)

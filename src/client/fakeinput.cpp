@@ -186,6 +186,24 @@ void FakeInput::requestPointerAxis(Qt::Orientation axis, qreal delta)
     org_kde_kwin_fake_input_axis(d->manager, a, wl_fixed_from_double(delta));
 }
 
+void FakeInput::requestPointerAxisForCapture(Qt::Orientation axis, qreal delta)
+{
+    Q_ASSERT(d->manager.isValid());
+    uint32_t a;
+    switch (axis) {
+    case Qt::Horizontal:
+        a = WL_POINTER_AXIS_HORIZONTAL_SCROLL;
+        break;
+    case Qt::Vertical:
+        a = WL_POINTER_AXIS_VERTICAL_SCROLL;
+        break;
+    default:
+        Q_UNREACHABLE();
+        break;
+    }
+    org_kde_kwin_fake_input_axis_for_capture(d->manager, a, wl_fixed_from_double(delta));
+}
+
 void FakeInput::requestTouchDown(quint32 id, const QPointF &pos)
 {
     Q_ASSERT(d->manager.isValid());
