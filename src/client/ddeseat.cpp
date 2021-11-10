@@ -145,6 +145,7 @@ public:
 private:
     static void motionCallback(void *data, dde_pointer *ddePointer, wl_fixed_t sx, wl_fixed_t sy);
     static void buttonCallback(void *data, dde_pointer *ddePointer, wl_fixed_t sx, wl_fixed_t sy, uint32_t button, uint32_t state);
+    static void axisCallback(void *data, dde_pointer *pointer, uint32_t time, uint32_t axis, wl_fixed_t value);
 
     DDEPointer *q;
     static const dde_pointer_listener s_listener;
@@ -166,6 +167,7 @@ void DDEPointer::Private::setup(dde_pointer *p)
 const dde_pointer_listener DDEPointer::Private::s_listener = {
     motionCallback,
     buttonCallback,
+    axisCallback,
 };
 
 DDEPointer::DDEPointer(QObject *parent)
@@ -215,6 +217,20 @@ void DDEPointer::Private::buttonCallback(void *data, dde_pointer *ddePointer, wl
     };
     p->globalPointerPos = QPointF(wl_fixed_to_double(sx), wl_fixed_to_double(sy));
     emit p->q->buttonStateChanged(p->globalPointerPos, button, toState());
+}
+
+void DDEPointer::Private::axisCallback(void *data, dde_pointer *ddePointer, uint32_t time, uint32_t axis, wl_fixed_t value)
+{
+    auto p = reinterpret_cast<DDEPointer::Private*>(data);
+    Q_ASSERT(p->ddePointer == ddePointer);
+    auto toAxis = [axis] {
+        if (axis == WL_POINTER_AXIS_HORIZONTAL_SCROLL) {
+            return Axis::Horizontal;
+        } else {
+            return Axis::Vertical;
+        }
+    };
+    emit p->q->axisChanged(time, toAxis(), wl_fixed_to_double(value));
 }
 
 bool DDEPointer::isValid() const

@@ -166,6 +166,10 @@ public:
         Released,
         Pressed
     };
+    enum class Axis {
+        Vertical,
+        Horizontal
+    };
 
     explicit DDEPointer(QObject *parent);
     virtual ~DDEPointer();
@@ -228,6 +232,14 @@ Q_SIGNALS:
      * @param state @c Released or @c Pressed
      **/
     void buttonStateChanged(const QPointF &globalPos, quint32 button, KWayland::Client::DDEPointer::ButtonState state);
+    /**
+     * Scroll and other axis notifications.
+     *
+     * @param time timestamp with millisecond granularity
+     * @param axis @c Vertical or @c Horizontal
+     * @param delta
+     **/
+    void axisChanged(quint32 time, KWayland::Client::DDEPointer::Axis axis, qreal delta);
 
 private:
     friend class DDESeat;

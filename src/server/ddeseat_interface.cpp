@@ -189,6 +189,13 @@ void DDESeatInterface::pointerButtonReleased(quint32 button)
     }
 }
 
+void DDESeatInterface::pointerAxis(Qt::Orientation orientation, qint32 delta)
+{
+    Q_D();
+    for (auto it = d->ddePointers.constBegin(), end = d->ddePointers.constEnd(); it != end; ++it) {
+        (*it)->axis(orientation, delta);
+    }
+}
 
 /*********************************
  * DDEPointerInterface
@@ -261,6 +268,17 @@ void DDEPointerInterface::buttonReleased(quint32 button)
     }
     const QPointF globalPos = d->ddeSeat->pointerPos();
     dde_pointer_send_button(d->resource, wl_fixed_from_double(globalPos.x()), wl_fixed_from_double(globalPos.y()), button, DDE_POINTER_BUTTON_STATE_RELEASED);
+}
+
+void DDEPointerInterface::axis(Qt::Orientation orientation, qint32 delta)
+{
+    Q_D();
+    if (!d->resource) {
+        return;
+    }
+    dde_pointer_send_axis(d->resource, 0,
+                         (orientation == Qt::Vertical) ? WL_POINTER_AXIS_VERTICAL_SCROLL : WL_POINTER_AXIS_HORIZONTAL_SCROLL,
+                         wl_fixed_from_int(delta));
 }
 
 }

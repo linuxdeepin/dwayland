@@ -78,6 +78,8 @@ public:
      * @param button The Linux button code
      **/
     void pointerButtonReleased(quint32 button);
+
+    void pointerAxis(Qt::Orientation orientation, qint32 delta);
 Q_SIGNALS:
     /**
      * Emitted whenever a DDEPointerInterface got created.
@@ -123,6 +125,7 @@ private:
     friend class DDESeatInterface;
     void buttonPressed(quint32 button);
     void buttonReleased(quint32 button);
+    void axis(Qt::Orientation orientation, qint32 delta);
     explicit DDEPointerInterface(DDESeatInterface *ddeSeat, wl_resource *parentResource);
     class Private;
     Private *d_func() const;
