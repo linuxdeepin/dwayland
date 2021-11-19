@@ -9,6 +9,7 @@ set(SERVER_LIB_SRCS
     dataoffer_interface.cpp
     datasource_interface.cpp
     ddeseat_interface.cpp
+    ddekeyboard_interface.cpp
     ddeshell_interface.cpp
     display.cpp
     dpms_interface.cpp

@@ -39,6 +39,7 @@ namespace Client
 
 class EventQueue;
 class DDEPointer;
+class DDEKeyboard;
 
 /**
  * @short Wrapper for the dde_seat interface.
@@ -100,6 +101,15 @@ public:
      * @returns created DDEPointer
      **/
     DDEPointer *createDDePointer(QObject *parent = nullptr);
+
+    /**
+     * Creates a DDEKeyboard and sets it up.
+     *
+     *
+     * @param parent The parent to use for the DDEKeyboard
+     * @returns created DDEKeyboard
+     **/
+    DDEKeyboard *createDDEKeyboard(QObject *parent = nullptr);
 
     /**
      * Sets the @p queue to use for bound proxies.

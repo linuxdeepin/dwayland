@@ -18,6 +18,7 @@ You should have received a copy of the GNU Lesser General Public
 License along with this library.  If not, see <http://www.gnu.org/licenses/>.
 *********************************************************************/
 #include "ddeseat.h"
+#include "ddekeyboard.h"
 #include "event_queue.h"
 #include "logging.h"
 #include "wayland_pointer_p.h"
@@ -113,6 +114,21 @@ DDEPointer *DDESeat::createDDePointer(QObject *parent)
     connect(this, &DDESeat::interfaceAboutToBeReleased, s, &DDEPointer::release);
     connect(this, &DDESeat::interfaceAboutToBeDestroyed, s, &DDEPointer::destroy);
     auto w = dde_seat_get_dde_pointer(d->ddeSeat);
+    if (d->queue) {
+        d->queue->addProxy(w);
+    }
+    s->setup(w);
+    return s;
+}
+
+DDEKeyboard *DDESeat::createDDEKeyboard(QObject *parent)
+{
+    Q_ASSERT(isValid());
+
+    DDEKeyboard *s = new DDEKeyboard(parent);
+    connect(this, &DDESeat::interfaceAboutToBeReleased, s, &DDEKeyboard::release);
+    connect(this, &DDESeat::interfaceAboutToBeDestroyed, s, &DDEKeyboard::destroy);
+    auto w = dde_seat_get_dde_keyboard(d->ddeSeat);
     if (d->queue) {
         d->queue->addProxy(w);
     }

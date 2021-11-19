@@ -38,6 +38,7 @@ namespace Server
 
 class Display;
 class DDEPointerInterface;
+class DDEKeyboardInterface;
 
 /** @class DDESeatInterface
  *
@@ -80,12 +81,30 @@ public:
     void pointerButtonReleased(quint32 button);
 
     void pointerAxis(Qt::Orientation orientation, qint32 delta);
+
+    void setTimestamp(quint32 time);
+    quint32 timestamp() const;
+
+    void setKeymap(int fd, quint32 size);
+    void keyPressed(quint32 key);
+    void keyReleased(quint32 key);
+    void updateKeyboardModifiers(quint32 depressed, quint32 latched, quint32 locked, quint32 group);
+
+    quint32 depressedModifiers() const;
+    quint32 latchedModifiers() const;
+    quint32 lockedModifiers() const;
+    quint32 groupModifiers() const;
+    quint32 lastModifiersSerial() const;
+
 Q_SIGNALS:
     /**
      * Emitted whenever a DDEPointerInterface got created.
      **/
     void ddePointerCreated(KWayland::Server::DDEPointerInterface*);
     void pointerPosChanged(const QPointF &pos);
+
+    void ddeKeyboardCreated(KWayland::Server::DDEKeyboardInterface*);
+
 private:
     friend class Display;
     explicit DDESeatInterface(Display *display, QObject *parent = nullptr);

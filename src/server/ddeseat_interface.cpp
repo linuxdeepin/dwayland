@@ -18,6 +18,7 @@ You should have received a copy of the GNU Lesser General Public
 License along with this library.  If not, see <http://www.gnu.org/licenses/>.
 *********************************************************************/
 #include "ddeseat_interface.h"
+#include "ddekeyboard_interface.h"
 #include "global_p.h"
 #include "resource_p.h"
 #include "display.h"
@@ -43,6 +44,39 @@ public:
     QVector<DDEPointerInterface*> ddePointers;
     static DDESeatInterface *get(wl_resource *native);
 
+    QVector<DDEKeyboardInterface*> ddeKeyboards;
+    quint32 timestamp = 0;
+
+    // Keyboard related members
+    struct Keyboard {
+        enum class State {
+            Released,
+            Pressed
+        };
+        QHash<quint32, State> states;
+        struct Keymap {
+            int fd = -1;
+            quint32 size = 0;
+            bool xkbcommonCompatible = false;
+        };
+        Keymap keymap;
+        struct Modifiers {
+            quint32 depressed = 0;
+            quint32 latched = 0;
+            quint32 locked = 0;
+            quint32 group = 0;
+            quint32 serial = 0;
+        };
+        Modifiers modifiers;
+        quint32 lastStateSerial = 0;
+        struct {
+            qint32 charactersPerSecond = 0;
+            qint32 delay = 0;
+        } keyRepeat;
+    };
+    Keyboard keys;
+    bool updateKey(quint32 key, Keyboard::State state);
+
 private:
     void bind(wl_client *client, uint32_t version, uint32_t id) override;
     static Private *cast(wl_resource *r) {
@@ -50,12 +84,15 @@ private:
     }
 
     void getPointer(wl_client *client, wl_resource *resource, uint32_t id);
+    void getKeyboard(wl_client *client, wl_resource *resource, uint32_t id);
     // interface
     static void getPointerCallback(wl_client *client, wl_resource *resource, uint32_t id);
+    static void getKeyboardCallback(wl_client *client, wl_resource *resource, uint32_t id);
     static const struct dde_seat_interface s_interface;
 
     static const quint32 s_version;
     static const qint32 s_ddePointerVersion;
+    static const qint32 s_ddeKeyboardVersion;
     DDESeatInterface *q;
 };
 
@@ -81,6 +118,7 @@ private:
 
 const quint32 DDESeatInterface::Private::s_version = 1;
 const qint32 DDESeatInterface::Private::s_ddePointerVersion = 1;
+const qint32 DDESeatInterface::Private::s_ddeKeyboardVersion = 7;
 
 DDESeatInterface::Private::Private(DDESeatInterface *q, Display *d)
     : Global::Private(d, &dde_seat_interface, s_version)
@@ -91,6 +129,7 @@ DDESeatInterface::Private::Private(DDESeatInterface *q, Display *d)
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 const struct dde_seat_interface DDESeatInterface::Private::s_interface = {
     getPointerCallback,
+    getKeyboardCallback,
 };
 #endif
 
@@ -157,6 +196,49 @@ void DDESeatInterface::Private::getPointer(wl_client *client, wl_resource *resou
     emit q->ddePointerCreated(ddePointer);
 }
 
+void DDESeatInterface::Private::getKeyboardCallback(wl_client *client, wl_resource *resource, uint32_t id)
+{
+    cast(resource)->getKeyboard(client, resource, id);
+}
+
+void DDESeatInterface::Private::getKeyboard(wl_client *client, wl_resource *resource, uint32_t id)
+{
+    // TODO: only create if seat has keyboard?
+    DDEKeyboardInterface *keyboard = new DDEKeyboardInterface(q, resource);
+    auto clientConnection = display->getConnection(client);
+    keyboard->create(clientConnection, qMin(wl_resource_get_version(resource), s_ddeKeyboardVersion), id);
+    if (!keyboard->resource()) {
+        wl_resource_post_no_memory(resource);
+        delete keyboard;
+        return;
+    }
+    keyboard->repeatInfo(keys.keyRepeat.charactersPerSecond, keys.keyRepeat.delay);
+    if (keys.keymap.xkbcommonCompatible) {
+        keyboard->setKeymap(keys.keymap.fd, keys.keymap.size);
+    }
+    ddeKeyboards << keyboard;
+    QObject::connect(keyboard, &QObject::destroyed, q,
+        [keyboard,this] {
+            ddeKeyboards.removeAt(ddeKeyboards.indexOf(keyboard));
+        }
+    );
+    emit q->ddeKeyboardCreated(keyboard);
+}
+
+bool DDESeatInterface::Private::updateKey(quint32 key, Keyboard::State state)
+{
+    auto it = keys.states.find(key);
+    if (it == keys.states.end()) {
+        keys.states.insert(key, state);
+        return true;
+    }
+    if (it.value() == state) {
+        return false;
+    }
+    it.value() = state;
+    return true;
+}
+
 QPointF DDESeatInterface::pointerPos() const
 {
     Q_D();
@@ -195,6 +277,109 @@ void DDESeatInterface::pointerAxis(Qt::Orientation orientation, qint32 delta)
     for (auto it = d->ddePointers.constBegin(), end = d->ddePointers.constEnd(); it != end; ++it) {
         (*it)->axis(orientation, delta);
     }
+}
+
+quint32 DDESeatInterface::timestamp() const
+{
+    Q_D();
+    return d->timestamp;
+}
+
+void DDESeatInterface::setTimestamp(quint32 time)
+{
+    Q_D();
+    if (d->timestamp == time) {
+        return;
+    }
+    d->timestamp = time;
+}
+
+void DDESeatInterface::setKeymap(int fd, quint32 size)
+{
+    Q_D();
+    d->keys.keymap.xkbcommonCompatible = true;
+    d->keys.keymap.fd = fd;
+    d->keys.keymap.size = size;
+    for (auto it = d->ddeKeyboards.constBegin(); it != d->ddeKeyboards.constEnd(); ++it) {
+        (*it)->setKeymap(fd, size);
+    }
+}
+
+void DDESeatInterface::keyPressed(quint32 key)
+{
+    Q_D();
+    d->keys.lastStateSerial = d->display->nextSerial();
+    if (!d->updateKey(key, Private::Keyboard::State::Pressed)) {
+        return;
+    }
+    for (auto it = d->ddeKeyboards.constBegin(), end = d->ddeKeyboards.constEnd(); it != end; ++it) {
+        (*it)->keyPressed(key, d->keys.lastStateSerial);
+    }
+}
+
+void DDESeatInterface::keyReleased(quint32 key)
+{
+    Q_D();
+    d->keys.lastStateSerial = d->display->nextSerial();
+    if (!d->updateKey(key, Private::Keyboard::State::Released)) {
+        return;
+    }
+    for (auto it = d->ddeKeyboards.constBegin(), end = d->ddeKeyboards.constEnd(); it != end; ++it) {
+        (*it)->keyReleased(key, d->keys.lastStateSerial);
+    }
+}
+
+void DDESeatInterface::updateKeyboardModifiers(quint32 depressed, quint32 latched, quint32 locked, quint32 group)
+{
+    Q_D();
+    bool changed = false;
+#define UPDATE( value ) \
+    if (d->keys.modifiers.value != value) { \
+        d->keys.modifiers.value = value; \
+        changed = true; \
+    }
+    UPDATE(depressed)
+    UPDATE(latched)
+    UPDATE(locked)
+    UPDATE(group)
+    if (!changed) {
+        return;
+    }
+    const quint32 serial = d->display->nextSerial();
+    d->keys.modifiers.serial = serial;
+    for (auto it = d->ddeKeyboards.constBegin(), end = d->ddeKeyboards.constEnd(); it != end; ++it) {
+        (*it)->updateModifiers(depressed, latched, locked, group, serial);
+    }
+}
+
+quint32 DDESeatInterface::depressedModifiers() const
+{
+    Q_D();
+    return d->keys.modifiers.depressed;
+}
+
+quint32 DDESeatInterface::groupModifiers() const
+{
+    Q_D();
+    return d->keys.modifiers.group;
+}
+
+quint32 DDESeatInterface::latchedModifiers() const
+{
+    Q_D();
+    return d->keys.modifiers.latched;
+}
+
+quint32 DDESeatInterface::lockedModifiers() const
+{
+    Q_D();
+    return d->keys.modifiers.locked;
+}
+
+quint32 DDESeatInterface::lastModifiersSerial() const
+{
+    Q_D();
+    return d->keys.modifiers.serial;
 }
 
 /*********************************

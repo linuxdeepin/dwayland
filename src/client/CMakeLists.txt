@@ -20,6 +20,7 @@ set(CLIENT_LIB_SRCS
     dataoffer.cpp
     datasource.cpp
     ddeseat.cpp
+    ddekeyboard.cpp
     ddeshell.cpp
     dpms.cpp
     fakeinput.cpp
@@ -307,6 +308,7 @@ set(CLIENT_LIB_HEADERS
   dataoffer.h
   datasource.h
   ddeseat.h
+  ddekeyboard.h
   ddeshell.h
   dpms.h
   fakeinput.h
