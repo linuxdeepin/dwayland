@@ -1,3 +1,9 @@
+kwayland (4:5.57.0.3-1) unstable; urgency=medium
+
+  * Release tag 5.57.0.3
+
+ -- luochaojiang <luochaojiang@uniontech.com>  Fri, 25 Nov 2021 11:25:38 +0800
+
 kwayland (4:5.56.1000.11-1) unstable; urgency=medium
 
   * update for klu/pgv master branch
