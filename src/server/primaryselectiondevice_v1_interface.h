@@ -25,6 +25,7 @@ class PrimarySelectionSourceV1Interface;
 class SeatInterface;
 class SurfaceInterface;
 class PrimarySelectionDeviceV1InterfacePrivate;
+class AbstractDataSource;
 
 /**
  * @brief Represents the Resource for the wl_data_device interface.
@@ -43,7 +44,7 @@ public:
 
     PrimarySelectionSourceV1Interface *selection() const;
 
-    void sendSelection(PrimarySelectionDeviceV1Interface *other);
+    void sendSelection(AbstractDataSource *other);
     void sendClearSelection();
     void cancel();
 

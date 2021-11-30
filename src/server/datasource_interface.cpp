@@ -108,7 +108,7 @@ void DataSourceInterface::Private::setActionsCallback(wl_client *client, wl_reso
 }
 
 DataSourceInterface::DataSourceInterface(DataDeviceManagerInterface *parent, wl_resource *parentResource)
-    : Resource(new Private(this, parent, parentResource))
+    : AbstractDataSource(new Private(this, parent, parentResource))
 {
     if (wl_resource_get_version(parentResource) < WL_DATA_SOURCE_ACTION_SINCE_VERSION) {
         Q_D();

@@ -25,9 +25,9 @@ namespace Server
 class PrimarySelectionOfferV1Interface::Private : public Resource::Private
 {
 public:
-    Private(PrimarySelectionSourceV1Interface *source, PrimarySelectionDeviceV1Interface *parentInterface, PrimarySelectionOfferV1Interface *q, wl_resource *parentResource);
+    Private(AbstractDataSource *source, PrimarySelectionDeviceV1Interface *parentInterface, PrimarySelectionOfferV1Interface *q, wl_resource *parentResource);
     PrimarySelectionOfferV1Interface *q;
-    PrimarySelectionSourceV1Interface *source;
+    AbstractDataSource *source;
     PrimarySelectionDeviceV1Interface *primaryDevice;
 
 
@@ -51,7 +51,7 @@ const struct zwp_primary_selection_offer_v1_interface PrimarySelectionOfferV1Int
 };
 #endif
 
-PrimarySelectionOfferV1Interface::Private::Private(PrimarySelectionSourceV1Interface *source, PrimarySelectionDeviceV1Interface *parentInterface, PrimarySelectionOfferV1Interface *q, wl_resource *parentResource)
+PrimarySelectionOfferV1Interface::Private::Private(AbstractDataSource *source, PrimarySelectionDeviceV1Interface *parentInterface, PrimarySelectionOfferV1Interface *q, wl_resource *parentResource)
     : Resource::Private(q, nullptr, parentResource, &zwp_primary_selection_offer_v1_interface, &s_interface)
     , q(q)
     , source(source)
@@ -84,7 +84,7 @@ void PrimarySelectionOfferV1Interface::sendAllOffers()
     }
 }
 
-PrimarySelectionOfferV1Interface::PrimarySelectionOfferV1Interface(PrimarySelectionSourceV1Interface *source, PrimarySelectionDeviceV1Interface *parentInterface, wl_resource *parentResource)
+PrimarySelectionOfferV1Interface::PrimarySelectionOfferV1Interface(AbstractDataSource *source, PrimarySelectionDeviceV1Interface *parentInterface, wl_resource *parentResource)
     : Resource(new Private(source, parentInterface, this, parentResource))
 {
     Q_ASSERT(source);

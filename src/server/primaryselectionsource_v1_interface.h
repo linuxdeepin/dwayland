@@ -8,7 +8,7 @@
 
 
 #include <KWayland/Server/kwaylandserver_export.h>
-#include "resource.h"
+#include "abstract_data_source.h"
 #include "primaryselectiondevicemanager_v1_interface.h"
 
 namespace KWayland
@@ -22,20 +22,18 @@ class PrimarySelectionSourceV1InterfacePrivate;
  * @brief Represents the Resource for the zwp_primary_selection_source_v1 interface.
  * Lifespan is mapped to the underlying object
  **/
-class KWAYLANDSERVER_EXPORT PrimarySelectionSourceV1Interface : public Resource
+class KWAYLANDSERVER_EXPORT PrimarySelectionSourceV1Interface : public AbstractDataSource
 {
     Q_OBJECT
 public:
     virtual  ~PrimarySelectionSourceV1Interface() ;
 
-    void requestData(const QString &mimeType, qint32 fd) ;
-    void cancel() ;
+    void requestData(const QString &mimeType, qint32 fd) override;
+    void cancel() override;
 
-    QStringList mimeTypes() const ;
+    QStringList mimeTypes() const override;
 
     static PrimarySelectionSourceV1Interface *get(wl_resource *native);
-Q_SIGNALS:
-    void mimeTypeOffered(const QString&);
 private:
     class Private;
     friend class PrimarySelectionDeviceManagerV1Interface;

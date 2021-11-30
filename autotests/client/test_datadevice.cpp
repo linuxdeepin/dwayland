@@ -199,8 +199,8 @@ void TestDataDevice::testCreate()
     QVERIFY(deviceInterface->parentResource());
 
     QVERIFY(!m_seatInterface->selection());
-    m_seatInterface->setSelection(deviceInterface);
-    QCOMPARE(m_seatInterface->selection(), deviceInterface);
+    m_seatInterface->setSelection(deviceInterface->selection());
+    QCOMPARE(m_seatInterface->selection(), deviceInterface->selection());
 
     // and destroy
     QSignalSpy destroyedSpy(deviceInterface, &QObject::destroyed);
@@ -418,7 +418,7 @@ void TestDataDevice::testSetSelection()
     // send selection to datadevice
     QSignalSpy selectionOfferedSpy(dataDevice.data(), SIGNAL(selectionOffered(KWayland::Client::DataOffer*)));
     QVERIFY(selectionOfferedSpy.isValid());
-    deviceInterface->sendSelection(deviceInterface);
+    deviceInterface->sendSelection(deviceInterface->selection());
     QVERIFY(selectionOfferedSpy.wait());
     QCOMPARE(selectionOfferedSpy.count(), 1);
     auto dataOffer = selectionOfferedSpy.first().first().value<DataOffer*>();
@@ -453,7 +453,7 @@ void TestDataDevice::testSetSelection()
     dataDevice.reset();
     QVERIFY(unboundSpy.wait());
     // send a selection to the unbound data device
-    deviceInterface->sendSelection(deviceInterface);
+    deviceInterface->sendSelection(deviceInterface->selection());
 }
 
 void TestDataDevice::testSendSelectionOnSeat()

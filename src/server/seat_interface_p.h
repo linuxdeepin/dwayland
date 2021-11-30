@@ -39,6 +39,8 @@ class DataDeviceInterface;
 class TextInputInterface;
 class PrimarySelectionDeviceV1Interface;
 class PrimarySelectionSourceV1Interface;
+class DataControlDeviceV1Interface;
+class AbstractDataSource;
 
 class SeatInterface::Private : public Global::Private
 {
@@ -54,10 +56,11 @@ public:
     TextInputInterface *textInputForSurface(SurfaceInterface *surface) const;
     void registerPrimarySelectionDevice(PrimarySelectionDeviceV1Interface *primarySelectionDevice);
     void registerDataDevice(DataDeviceInterface *dataDevice);
+    void registerDataControlDevice(DataControlDeviceV1Interface *dataDevice);
     void registerTextInput(TextInputInterface *textInput);
     void endDrag(quint32 serial);
-    void cancelPreviousSelection(DataDeviceInterface *newlySelectedDataDevice);
-    void cancelPreviousPrimarySelection(PrimarySelectionDeviceV1Interface *newlySelectedDataDevice);
+    void cancelPreviousSelection(AbstractDataSource *newlySelectedDataDevice);
+    void cancelPreviousPrimarySelection(AbstractDataSource *newlySelectedDataDevice);
 
 
     QString name;
@@ -70,10 +73,12 @@ public:
     QVector<KeyboardInterface*> keyboards;
     QVector<TouchInterface*> touchs;
     QVector<DataDeviceInterface*> dataDevices;
+    QVector<DataControlDeviceV1Interface*> dataControlDevices;
     QVector<PrimarySelectionDeviceV1Interface*> primarySelectionDevices;
     QVector<TextInputInterface*> textInputs;
-    DataDeviceInterface *currentSelection = nullptr;
-    PrimarySelectionDeviceV1Interface *currentPrimarySelection = nullptr;
+
+    AbstractDataSource *currentSelection = nullptr;
+    AbstractDataSource *currentPrimarySelection = nullptr;
 
     // Pointer related members
     struct Pointer {

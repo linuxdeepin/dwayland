@@ -1,3 +1,10 @@
+kwayland (4:5.57.0.5-1) unstable; urgency=medium
+
+  * Add global clipboard protocol.
+  * Release tag 5.57.0.5
+
+ -- Tang Haixiang <tanghaixiang@uniontech.com>  Mon, 30 Nov 2021 9:45:45 +0800
+
 kwayland (4:5.57.0.4-1) unstable; urgency=medium
 
   * Release tag 5.57.0.4

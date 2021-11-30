@@ -29,8 +29,12 @@ License along with this library.  If not, see <http://www.gnu.org/licenses/>.
 #include "primaryselectiondevice_v1_interface.h"
 #include "primaryselectionsource_v1_interface.h"
 #include "primaryselectiondevicemanager_v1_interface.h"
+#include "datacontroldevicemanager_interface.h"
+#include "datacontroldevice_interface.h"
 #include "surface_interface.h"
 #include "textinput_interface_p.h"
+#include "abstract_data_source.h"
+
 // Wayland
 #ifndef WL_SEAT_NAME_SINCE_VERSION
 #define WL_SEAT_NAME_SINCE_VERSION 2
@@ -274,7 +278,7 @@ void SeatInterface::Private::registerDataDevice(DataDeviceInterface *dataDevice)
         if (keys.focus.selection == dataDevice) {
             keys.focus.selection = nullptr;
         }
-        if (currentSelection == dataDevice) {
+        if (currentSelection == dataDevice->selection()) {
             // current selection is cleared
             currentSelection = nullptr;
             emit q->selectionChanged(nullptr);
@@ -351,11 +355,46 @@ void SeatInterface::Private::registerDataDevice(DataDeviceInterface *dataDevice)
         // same client?
         if (keys.focus.surface->client() == dataDevice->client()) {
             keys.focus.selection = dataDevice;
-            if (currentSelection && currentSelection->selection()) {
+            if (currentSelection) {
                 dataDevice->sendSelection(currentSelection);
             }
         }
     }
+}
+
+void SeatInterface::Private::registerDataControlDevice(DataControlDeviceV1Interface *dataDevice)
+{
+    Q_ASSERT(dataDevice->seat() == q);
+    dataControlDevices << dataDevice;
+    auto dataDeviceCleanup = [this, dataDevice] {
+        dataControlDevices.removeOne(dataDevice);
+        if (currentSelection == dataDevice->selection()) {
+            // current selection is cleared
+            currentSelection = nullptr;
+            emit q->selectionChanged(nullptr);
+            if (keys.focus.selection) {
+                keys.focus.selection->sendClearSelection();
+            }
+        }
+    };
+    QObject::connect(dataDevice, &QObject::destroyed, q, dataDeviceCleanup);
+
+    QObject::connect(dataDevice, &DataControlDeviceV1Interface::selectionChanged, q,
+        [this, dataDevice] {
+            q->setSelection(dataDevice->selection());
+        }
+    );
+
+    QObject::connect(dataDevice, &DataControlDeviceV1Interface::selectionCleared, q,
+        [this, dataDevice] {
+            Q_UNUSED(dataDevice);
+            q->setSelection(nullptr);
+        }
+    );
+    if (currentSelection) {
+        dataDevice->sendSelection(currentSelection);
+    }
+
 }
 
 void SeatInterface::Private::registerPrimarySelectionDevice(PrimarySelectionDeviceV1Interface *primarySelectionDevice)
@@ -394,7 +433,7 @@ void SeatInterface::Private::updatePrimarySelection(PrimarySelectionDeviceV1Inte
     if (!(keys.focus.surface && (keys.focus.surface->client() == primarySelectionDevice->client()))) {
         return;
     }
-    q->setPrimarySelection(primarySelectionDevice);
+    q->setPrimarySelection(primarySelectionDevice->selection());
 }
 
 void SeatInterface::Private::registerTextInput(TextInputInterface *ti)
@@ -440,52 +479,55 @@ void SeatInterface::Private::endDrag(quint32 serial)
     emit q->dragEnded();
 }
 
-void SeatInterface::Private::cancelPreviousSelection(DataDeviceInterface *dataDevice)
+void SeatInterface::Private::cancelPreviousSelection(AbstractDataSource *dataDevice)
 {
     if (!currentSelection) {
         return;
     }
-    if (auto s = currentSelection->selection()) {
-        if (currentSelection != dataDevice) {
-            // only if current selection is not on the same device
-            // that would cancel the newly set source
-            s->cancel();
-        }
+    if (currentSelection != dataDevice) {
+        // only if current selection is not on the same device
+        // that would cancel the newly set source
+        currentSelection->cancel();
     }
 }
 
-void SeatInterface::Private::cancelPreviousPrimarySelection(PrimarySelectionDeviceV1Interface *newlySelectedDataDevice)
+void SeatInterface::Private::cancelPreviousPrimarySelection(AbstractDataSource *newlySelectedDataDevice)
 {
     if (!currentPrimarySelection) {
         return;
     }
-    if (auto s = currentPrimarySelection->selection()) {
-        if (currentPrimarySelection != newlySelectedDataDevice) {
-            // only if current selection is not on the same device
-            // that would cancel the newly set source
-            s->cancel();
-        }
+    if (currentPrimarySelection != newlySelectedDataDevice) {
+        // only if current selection is not on the same device
+        // that would cancel the newly set source
+        newlySelectedDataDevice->cancel();
     }
 }
 
 void SeatInterface::Private::updateSelection(DataDeviceInterface *dataDevice, bool set)
 {
-    bool selChanged = currentSelection != dataDevice;
+    bool selChanged = currentSelection != dataDevice->selection();
     if (keys.focus.surface && (keys.focus.surface->client() == dataDevice->client())) {
         // cancel the previous selection
-        cancelPreviousSelection(dataDevice);
+        cancelPreviousSelection(dataDevice->selection());
         // new selection on a data device belonging to current keyboard focus
-        currentSelection = dataDevice;
+        currentSelection = dataDevice->selection();
     }
-    if (dataDevice == currentSelection) {
+    if (dataDevice->selection() == currentSelection) {
         // need to send out the selection
         if (keys.focus.selection) {
             if (set) {
-                keys.focus.selection->sendSelection(dataDevice);
+                keys.focus.selection->sendSelection(dataDevice->selection());
             } else {
                 keys.focus.selection->sendClearSelection();
                 currentSelection = nullptr;
                 selChanged = true;
+            }
+        }
+        for (auto control : qAsConst(dataControlDevices)) {
+            if (dataDevice->selection()) {
+                control->sendSelection(dataDevice->selection());
+            } else {
+                control->sendClearSelection();
             }
         }
     }
@@ -504,11 +546,11 @@ void SeatInterface::setHasKeyboard(bool has)
     emit hasKeyboardChanged(d->keyboard);
 }
 
-void SeatInterface::setPrimarySelection(PrimarySelectionDeviceV1Interface *selection)
+void SeatInterface::setPrimarySelection(AbstractDataSource *primarySource)
 {
     Q_D();
 
-    if (d->currentPrimarySelection == selection) {
+    if (d->currentPrimarySelection == primarySource) {
         return;
     }
 
@@ -518,23 +560,32 @@ void SeatInterface::setPrimarySelection(PrimarySelectionDeviceV1Interface *selec
     }
 
 
-    if (selection) {
+    if (primarySource) {
         auto cleanup = [this]() {
             setPrimarySelection(nullptr);
         };
-        connect(selection, &PrimarySelectionSourceV1Interface::unbound, this, cleanup);
+        connect(primarySource, &PrimarySelectionSourceV1Interface::unbound, this, cleanup);
     }
 
-    d->currentPrimarySelection = selection;
+    d->currentPrimarySelection = primarySource;
 
     for (auto focussedSelection: qAsConst(d->keys.focus.primarySelections)) {
-        if (selection) {
-            focussedSelection->sendSelection(selection);
+        if (primarySource) {
+            focussedSelection->sendSelection(primarySource);
         } else {
             focussedSelection->sendClearSelection();
         }
     }
-    emit primarySelectionChanged(selection);
+
+    for (auto control : qAsConst(d->dataControlDevices)) {
+        if (primarySource) {
+            control->sendPrimarySelection(primarySource);
+        } else {
+            control->sendClearPrimarySelection();
+        }
+    }
+
+    emit primarySelectionChanged(primarySource);
 }
 
 
@@ -1249,7 +1300,7 @@ void SeatInterface::setFocusedKeyboardSurface(SurfaceInterface *surface)
         // selection?
         d->keys.focus.selection = d->dataDeviceForSurface(surface);
         if (d->keys.focus.selection) {
-            if (d->currentSelection && d->currentSelection->selection()) {
+            if (d->currentSelection) {
                 d->keys.focus.selection->sendSelection(d->currentSelection);
             } else {
                 d->keys.focus.selection->sendClearSelection();
@@ -1706,35 +1757,44 @@ TextInputInterface *SeatInterface::focusedTextInput() const
     return d->textInput.focus.textInput;
 }
 
-DataDeviceInterface *SeatInterface::selection() const
+AbstractDataSource *SeatInterface::selection() const
 {
     Q_D();
     return d->currentSelection;
 }
 
-PrimarySelectionDeviceV1Interface *SeatInterface::primarySelection() const
+AbstractDataSource *SeatInterface::primarySelection() const
 {
     Q_D();
     return d->currentPrimarySelection;
 }
 
-void SeatInterface::setSelection(DataDeviceInterface *dataDevice)
+void SeatInterface::setSelection(AbstractDataSource *dataSource)
 {
     Q_D();
-    if (d->currentSelection == dataDevice) {
+    if (d->currentSelection == dataSource) {
         return;
     }
     // cancel the previous selection
-    d->cancelPreviousSelection(dataDevice);
-    d->currentSelection = dataDevice;
+    d->cancelPreviousSelection(dataSource);
+    d->currentSelection = dataSource;
     if (d->keys.focus.selection) {
-        if (dataDevice && dataDevice->selection()) {
-            d->keys.focus.selection->sendSelection(dataDevice);
+        if (dataSource) {
+            d->keys.focus.selection->sendSelection(dataSource);
         } else {
             d->keys.focus.selection->sendClearSelection();
         }
     }
-    emit selectionChanged(dataDevice);
+
+    for (auto control : qAsConst(d->dataControlDevices)) {
+        if (dataSource) {
+            control->sendSelection(dataSource);
+        } else {
+            control->sendClearSelection();
+        }
+    }
+
+    emit selectionChanged(dataSource);
 }
 
 }

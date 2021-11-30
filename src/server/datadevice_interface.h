@@ -36,6 +36,7 @@ class DataOfferInterface;
 class DataSourceInterface;
 class SeatInterface;
 class SurfaceInterface;
+class AbstractDataSource;
 
 /**
  * @brief Represents the Resource for the wl_data_device interface.
@@ -50,7 +51,7 @@ public:
     virtual ~DataDeviceInterface();
 
     SeatInterface *seat() const;
-    DataSourceInterface *dragSource() const;
+    AbstractDataSource *dragSource() const;
     SurfaceInterface *origin() const;
     SurfaceInterface *icon() const;
 
@@ -60,9 +61,9 @@ public:
      **/
     quint32 dragImplicitGrabSerial() const;
 
-    DataSourceInterface *selection() const;
+    AbstractDataSource *selection() const;
 
-    void sendSelection(DataDeviceInterface *other);
+    void sendSelection(AbstractDataSource *other);
     void sendClearSelection();
     /**
      * The event is sent when a drag-and-drop operation is ended because the implicit grab is removed.

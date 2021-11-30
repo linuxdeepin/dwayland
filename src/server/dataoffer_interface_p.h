@@ -32,9 +32,9 @@ namespace Server
 class Q_DECL_HIDDEN DataOfferInterface::Private : public Resource::Private
 {
 public:
-    Private(DataSourceInterface *source, DataDeviceInterface *parentInterface, DataOfferInterface *q, wl_resource *parentResource);
+    Private(AbstractDataSource *source, DataDeviceInterface *parentInterface, DataOfferInterface *q, wl_resource *parentResource);
     ~Private();
-    DataSourceInterface *source;
+    AbstractDataSource *source;
     DataDeviceInterface *dataDevice;
     // defaults are set to sensible values for < version 3 interfaces
     DataDeviceManagerInterface::DnDActions supportedDnDActions = DataDeviceManagerInterface::DnDAction::Copy | DataDeviceManagerInterface::DnDAction::Move;

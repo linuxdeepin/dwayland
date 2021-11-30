@@ -60,7 +60,7 @@ const zwp_primary_selection_device_v1_listener PrimarySelectionDeviceV1::Private
 
 void PrimarySelectionDeviceV1::Private::primarySelectOfferCallback(void *data, zwp_primary_selection_device_v1 *primarySelectDevice, zwp_primary_selection_offer_v1 *id)
 {
-    Q_ASSERT(!data);
+    Q_ASSERT(data);
     auto d = reinterpret_cast<Private*>(data);
     Q_ASSERT(d->device == primarySelectDevice);
     d->primarySelectOffer(id);

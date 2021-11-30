@@ -39,7 +39,7 @@ public:
 
 private:
     friend class PrimarySelectionDeviceV1Interface;
-    explicit PrimarySelectionOfferV1Interface(PrimarySelectionSourceV1Interface *source, PrimarySelectionDeviceV1Interface *parentInterface, wl_resource *parentResource);
+    explicit PrimarySelectionOfferV1Interface(AbstractDataSource *source, PrimarySelectionDeviceV1Interface *parentInterface, wl_resource *parentResource);
     class Private;
     Private *d_func() const;
 };

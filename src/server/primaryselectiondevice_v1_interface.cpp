@@ -24,7 +24,7 @@ class PrimarySelectionDeviceV1Interface::Private : public Resource::Private
 public:
     Private(SeatInterface *seat, PrimarySelectionDeviceV1Interface *q, PrimarySelectionDeviceManagerV1Interface *manager, wl_resource *parentResource);
 
-    PrimarySelectionOfferV1Interface *createDataOffer(PrimarySelectionSourceV1Interface *source);
+    PrimarySelectionOfferV1Interface *createDataOffer(AbstractDataSource *source);
 
     PrimarySelectionDeviceV1Interface *q;
     SeatInterface *seat;
@@ -93,7 +93,7 @@ void PrimarySelectionDeviceV1Interface::Private::setSelection(PrimarySelectionSo
     }
 }
 
-PrimarySelectionOfferV1Interface *PrimarySelectionDeviceV1Interface::Private::createDataOffer(PrimarySelectionSourceV1Interface *source)
+PrimarySelectionOfferV1Interface *PrimarySelectionDeviceV1Interface::Private::createDataOffer(AbstractDataSource *source)
 {
     if (!resource) {
         return nullptr;
@@ -140,17 +140,14 @@ PrimarySelectionSourceV1Interface *PrimarySelectionDeviceV1Interface::selection(
     return d->selection;
 }
 
-void PrimarySelectionDeviceV1Interface::sendSelection(PrimarySelectionDeviceV1Interface *other)
+void PrimarySelectionDeviceV1Interface::sendSelection(AbstractDataSource *other)
 {
     Q_D();
-    if (!other)
-        return;
-    auto otherSelection = other->selection();
-    if (!otherSelection) {
+    if (!other) {
         sendClearSelection();
         return;
     }
-    PrimarySelectionOfferV1Interface *offer = d->createDataOffer(otherSelection);
+    PrimarySelectionOfferV1Interface *offer = d->createDataOffer(other);
     if (!offer) {
         return;
     }

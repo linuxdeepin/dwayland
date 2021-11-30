@@ -98,7 +98,7 @@ class ZWPXwaylandKeyboardGrabManagerV1Interface;
 class ScreencastV1Interface;
 class LinuxDmabufUnstableV1Interface;
 class PrimarySelectionDeviceManagerV1Interface;
-
+class DataControlDeviceManagerInterface;
 /**
  * @brief Class holding the Wayland server display loop.
  *
@@ -345,7 +345,13 @@ public:
      */
     PrimarySelectionDeviceManagerV1Interface *createPrimarySelectionDeviceManagerV1(QObject *parent = nullptr);
 
-
+    /**
+     * Creates the DataControlDeviceManagerInterface in interface @p version.
+     *
+     * @returns The created strut object
+     * @since 5.52
+     **/
+    DataControlDeviceManagerInterface *createDataControlDeviceManager(QObject *parent = nullptr);
     /**
      * Gets the ClientConnection for the given @p client.
      * If there is no ClientConnection yet for the given @p client, it will be created.

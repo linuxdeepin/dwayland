@@ -40,7 +40,7 @@ public:
     Private(SeatInterface *seat, DataDeviceInterface *q, DataDeviceManagerInterface *manager, wl_resource *parentResource);
     ~Private();
 
-    DataOfferInterface *createDataOffer(DataSourceInterface *source);
+    DataOfferInterface *createDataOffer(AbstractDataSource *source);
 
     SeatInterface *seat;
     DataSourceInterface *source = nullptr;
@@ -168,7 +168,7 @@ void DataDeviceInterface::Private::setSelection(DataSourceInterface *dataSource)
     }
 }
 
-DataOfferInterface *DataDeviceInterface::Private::createDataOffer(DataSourceInterface *source)
+DataOfferInterface *DataDeviceInterface::Private::createDataOffer(AbstractDataSource *source)
 {
     if (!resource) {
         return nullptr;
@@ -204,7 +204,7 @@ SeatInterface *DataDeviceInterface::seat() const
     return d->seat;
 }
 
-DataSourceInterface *DataDeviceInterface::dragSource() const
+AbstractDataSource *DataDeviceInterface::dragSource() const
 {
     Q_D();
     return d->source;
@@ -222,21 +222,20 @@ SurfaceInterface *DataDeviceInterface::origin() const
     return d->proxyRemoteSurface ? d->proxyRemoteSurface.data() : d->surface;
 }
 
-DataSourceInterface *DataDeviceInterface::selection() const
+AbstractDataSource *DataDeviceInterface::selection() const
 {
     Q_D();
     return d->selection;
 }
 
-void DataDeviceInterface::sendSelection(DataDeviceInterface *other)
+void DataDeviceInterface::sendSelection(AbstractDataSource *other)
 {
     Q_D();
-    auto otherSelection = other->selection();
-    if (!otherSelection) {
+    if (!other) {
         sendClearSelection();
         return;
     }
-    auto r = d->createDataOffer(otherSelection);
+    auto r = d->createDataOffer(other);
     if (!r) {
         return;
     }

@@ -48,6 +48,8 @@ License along with this library.  If not, see <http://www.gnu.org/licenses/>.
 #include "../../src/server/seat_interface.h"
 #include "../../src/server/subcompositor_interface.h"
 #include "../../src/server/surface_interface.h"
+#include "../../src/server/abstract_data_source.h"
+
 // Wayland
 #include <wayland-client-protocol.h>
 
@@ -1839,7 +1841,7 @@ void TestWaylandSeat::testSelection()
     QVERIFY(cancelledSpy.wait());
 
     // Copy already cleared selection,  BUG 383054
-    ddi->sendSelection(ddi);
+    m_seatInterface->setSelection(ddi);
 }
 
 void TestWaylandSeat::testSelectionNoDataSource()
@@ -1883,8 +1885,6 @@ void TestWaylandSeat::testSelectionNoDataSource()
     m_seatInterface->setFocusedKeyboardSurface(serverSurface);
     QCOMPARE(m_seatInterface->focusedKeyboardSurface(), serverSurface);
 
-    // now let's set the selection
-    m_seatInterface->setSelection(ddi);
 }
 
 void TestWaylandSeat::testDataDeviceForKeyboardSurface()
@@ -1937,7 +1937,7 @@ void TestWaylandSeat::testDataDeviceForKeyboardSurface()
     QVERIFY(ddiCreatedSpy.wait());
     auto ddi = ddiCreatedSpy.first().first().value<DataDeviceInterface*>();
     QVERIFY(ddi);
-    m_seatInterface->setSelection(ddi);
+    m_seatInterface->setSelection((AbstractDataSource*)ddi->selection());
 
     // switch to other client
     // create a surface and pass it keyboard focus

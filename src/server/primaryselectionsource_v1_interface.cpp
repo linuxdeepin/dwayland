@@ -66,7 +66,7 @@ void PrimarySelectionSourceV1Interface::Private::offerCallback(wl_client *client
 
 
 PrimarySelectionSourceV1Interface::PrimarySelectionSourceV1Interface(PrimarySelectionDeviceManagerV1Interface *parent, ::wl_resource *parentResource)
-    : Resource(new Private(this, parent, parentResource))
+    : AbstractDataSource(new Private(this, parent, parentResource))
 {
 }
 

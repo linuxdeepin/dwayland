@@ -1,9 +1,14 @@
 set(SERVER_LIB_SRCS
+    abstract_data_source.cpp
     appmenu_interface.cpp
     buffer_interface.cpp
     clientconnection.cpp
     clientmanagement_interface.cpp
     compositor_interface.cpp
+    datacontroldevice_interface.cpp
+    datacontroldevicemanager_interface.cpp
+    datacontroloffer_interface.cpp
+    datacontrolsource_interface.cpp
     datadevice_interface.cpp
     datadevicemanager_interface.cpp
     dataoffer_interface.cpp
@@ -254,6 +259,11 @@ ecm_add_wayland_server_protocol(SERVER_LIB_SRCS
     BASENAME wp-primary-selection-unstable-v1
 )
 
+ecm_add_wayland_server_protocol(SERVER_LIB_SRCS
+    PROTOCOL ${KWayland_SOURCE_DIR}/src/client/protocols/wlr-data-control-unstable-v1.xml
+    BASENAME wlr-data-control-unstable-v1
+)
+
 set(SERVER_GENERATED_SRCS
     ${CMAKE_CURRENT_BINARY_DIR}/wayland-output-management-client-protocol.h
     ${CMAKE_CURRENT_BINARY_DIR}/wayland-output-management-server-protocol.h
@@ -323,7 +333,7 @@ set(SERVER_GENERATED_SRCS
     ${CMAKE_CURRENT_BINARY_DIR}/wayland-xwayland-keyboard-grab-v1-server-protocol.h
     ${CMAKE_CURRENT_BINARY_DIR}/wayland-linux-dmabuf-unstable-v1-server-protocol.h
     ${CMAKE_CURRENT_BINARY_DIR}/wayland-wp-primary-selection-unstable-v1-protocol.h
-
+    ${CMAKE_CURRENT_BINARY_DIR}/wayland-wlr-data-control-unstable-v1-protocol.h
 )
 
 set_source_files_properties(${SERVER_GENERATED_SRCS} PROPERTIES SKIP_AUTOMOC ON)
@@ -358,6 +368,7 @@ install(TARGETS KF5WaylandServer EXPORT KF5WaylandTargets ${KF5_INSTALL_TARGETS_
 
 set(SERVER_LIB_HEADERS
   ${CMAKE_CURRENT_BINARY_DIR}/KWayland/Server/kwaylandserver_export.h
+  abstract_data_source.h
   appmenu_interface.h
   blur_interface.h
   screencast_interface.h
@@ -366,6 +377,10 @@ set(SERVER_LIB_HEADERS
   clientconnection.h
   clientmanagement_interface.h
   compositor_interface.h
+  datacontroldevice_interface.h
+  datacontroldevicemanager_interface.h
+  datacontroloffer_interface.h
+  datacontrolsource_interface.h
   datadevice_interface.h
   datadevicemanager_interface.h
   dataoffer_interface.h

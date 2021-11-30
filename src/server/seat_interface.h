@@ -44,6 +44,8 @@ class SurfaceInterface;
 class TextInputInterface;
 class PrimarySelectionDeviceV1Interface;
 class PrimarySelectionSourceV1Interface;
+class DataControlDeviceV1Interface;
+class AbstractDataSource;
 
 /**
  * @brief Represents a Seat on the Wayland Display.
@@ -650,14 +652,14 @@ public:
      * @see selectionChanged
      * @see setSelection
      **/
-    DataDeviceInterface *selection() const;
+    AbstractDataSource *selection() const;
 
     /**
      * @returns The PrimarySelectionDeviceV1Interface holding the current selection.
      * @since 5.54
      * @see setSelection
      **/
-    PrimarySelectionDeviceV1Interface *primarySelection() const;
+    AbstractDataSource *primarySelection() const;
 
     /**
      * This method allows to manually set the @p dataDevice for the current clipboard selection.
@@ -672,7 +674,8 @@ public:
      * @see selectionChanged
      * @since 5.24
      **/
-    void setSelection(DataDeviceInterface *dataDevice);
+    void setSelection(AbstractDataSource *dataSource);
+
     /**
      * This method allows to manually set the @p PrimarySelectionDeviceV1Interface for the current  selection.
      * The  selection is handled automatically in SeatInterface.
@@ -684,9 +687,19 @@ public:
      * @see selection
      * @since 5.24
      **/
-    void setPrimarySelection(PrimarySelectionDeviceV1Interface * );
+    void setPrimarySelection(AbstractDataSource *primarySource);
 
-    static SeatInterface *get(wl_resource *native);
+    /**
+	 * This method allows to manually set the @p DataControlDeviceV1Interface for the current  selection.
+     * The  selection is handled automatically in SeatInterface.
+     * If the source changes, it will notify all clients of the clipboard change
+     * sets a selection, the current  selection will be updated automatically.
+     * With this method it's possible to override the automatic select update for
+     * @since 
+	 **/
+	 void setControlSelect(DataControlDeviceV1Interface* );
+
+     static SeatInterface *get(wl_resource *native);
 
 Q_SIGNALS:
     void nameChanged(const QString&);
@@ -713,13 +726,13 @@ Q_SIGNALS:
      * @see selection
      * @see setSelection
      **/
-    void selectionChanged(DataDeviceInterface*);
+    void selectionChanged(KWayland::Server::AbstractDataSource*);
 
     /**
      * Emitted whenever the primary selection changes
      * @see primarySelection
      **/
-    void primarySelectionChanged(KWayland::Server::PrimarySelectionDeviceV1Interface *);
+    void primarySelectionChanged(KWayland::Server::AbstractDataSource*);
 
     /**
      * Emitted when a drag'n'drop operation is started
@@ -748,6 +761,7 @@ Q_SIGNALS:
 
 private:
     friend class Display;
+    friend class DataControlDeviceManagerInterface;
     friend class DataDeviceManagerInterface;
     friend class PrimarySelectionDeviceManagerV1Interface;
     friend class TextInputManagerUnstableV0Interface;

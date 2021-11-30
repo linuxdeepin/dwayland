@@ -485,3 +485,15 @@ add_executable(testPrimarySelect ${testPrimarySelect_SRCS})
 target_link_libraries( testPrimarySelect Qt5::Test Qt5::Gui KF5::WaylandClient KF5::WaylandServer Wayland::Client)
 add_test(NAME kwayland-testPrimarySelect COMMAND testPrimarySelect)
 ecm_mark_as_test(testPrimarySelect)
+
+
+########################################################
+# Test PrimarySelect
+########################################################
+set( testDataControl_SRCS
+        test_datacontrol.cpp
+    )
+add_executable(testDataControl ${testDataControl_SRCS})
+target_link_libraries(testDataControl Qt5::Test Qt5::Gui KF5::WaylandClient KF5::WaylandServer Wayland::Client)
+add_test(NAME kwayland-testDataControl COMMAND testDataControl)
+ecm_mark_as_test(testDataControl)

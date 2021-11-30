@@ -71,6 +71,7 @@ struct dde_shell;
 struct com_deepin_kwin_strut;
 struct zwp_xwayland_keyboard_grab_manager_v1;
 struct zwp_primary_selection_device_manager_v1;
+struct zwlr_data_control_manager_v1;
 
 namespace KWayland
 {
@@ -123,7 +124,7 @@ class DDEShell;
 class Strut;
 class ZWPXwaylandKeyboardGrabManagerV1;
 class PrimarySelectionDeviceManagerV1;
-
+class DataControlDeviceManager;
 /**
  * @short Wrapper for the wl_registry interface.
  *
@@ -203,6 +204,7 @@ public:
         Strut, ///< refers to com_deepin_kwin_strut interface
         ZWPXwaylandKeyboardGrabV1, ///< refers to xwayland-keyboard-grab-unstable-v1 interface
         PrimarySelectionDeviceManagerV1, /// refers to zwp_primary_selection_device_manager_v1
+        DataControlDeviceManager, /// refers to zwlr_data_control_manager_v1
 };
     explicit Registry(QObject *parent = nullptr);
     virtual ~Registry();
@@ -749,6 +751,16 @@ public:
      **/
     zwp_primary_selection_device_manager_v1 *bindPrimarySelectionDeviceManagerV1(uint32_t name, uint32_t version) const;
 
+     /**
+     * Binds the zwlr_data_control_manager_v1 with @p name and @p version.
+     * If the @p name does not exist,
+     * @c null will be returned.
+     *
+     * Prefer using createDataControlDeviceManage instead.
+     * @see createDataControlDeviceManage
+     * @since 5.54
+     **/
+    zwlr_data_control_manager_v1 *bindDataControlDeviceManager(uint32_t name, uint32_t version) const;
     ///@}
 
     /**
@@ -1405,7 +1417,23 @@ public:
      * @since 5.54
      **/
     PrimarySelectionDeviceManagerV1 *createPrimarySelectionDeviceManagerV1(quint32 name, quint32 version, QObject *parent = nullptr);
-
+  
+    /**
+     * Creates an DataControlDeviceManager and sets it up to manage the interface identified by
+     * @p name and @p version.
+     *
+     * Note: in case @p name is invalid or isn't for the zwlr_data_control_manager_v1 interface,
+     * the returned DataControlDeviceManager will not be valid. Therefore it's recommended to call
+     * isValid on the created instance.
+     *
+     * @param name The name of the zwp_primary_selectionzwlr_data_control_manager_v1_device_manager_v1 interface to bind
+     * @param version The version or the zwlr_data_control_manager_v1 interface to use
+     * @param parent The parent for DataControlDeviceManager
+     *
+     * @returns The created DataControlDeviceManager.
+     * @since 5.54
+     **/
+    DataControlDeviceManager *createDataControlDeviceManager(quint32 name, quint32 version, QObject *parent = nullptr);
     ///@}
 
     /**
@@ -1729,6 +1757,13 @@ Q_SIGNALS:
      **/
     void primarySelectDeviceManagerAnnounced(quint32 name, quint32 version);
 
+	/**
+     * Emitted whenever a zwlr_data_control_manager_v1 interface gets announced.
+     * @param name The name for the announced interface
+     * @param version The maximum supported version of the announced interface
+     * @since 5.54
+     **/
+    void dataControlDeviceManagerAnnounced(quint32 name, quint32 version);
     ///@}
 
     /**
@@ -1990,6 +2025,12 @@ Q_SIGNALS:
      **/
     void primarySelectionDeviceManagerV1Removed(quint32 name);
 
+     /**
+     * Emitted whenever a zwlr_data_control_manager_v1 gets removed.
+     * @param name The name of the removed interface
+     * @since 5.54
+     **/
+    void dataControlDeviceManagerRemoved(quint32 name);
     ///@}
     /**
      * Generic announced signal which gets emitted whenever an interface gets

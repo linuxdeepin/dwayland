@@ -63,6 +63,7 @@ License along with this library.  If not, see <http://www.gnu.org/licenses/>.
 #include "xwayland_keyboard_grab_v1_interface.h"
 #include "screencast_interface.h"
 #include "linuxdmabuf_v1_interface.h"
+#include "datacontroldevicemanager_interface.h"
 
 #include <QCoreApplication>
 #include <QDebug>
@@ -548,6 +549,13 @@ PrimarySelectionDeviceManagerV1Interface *Display::createPrimarySelectionDeviceM
     auto primarySelection = new PrimarySelectionDeviceManagerV1Interface(this, parent);
     connect(this, &Display::aboutToTerminate, primarySelection, [this, primarySelection] { delete primarySelection; });
     return primarySelection;
+}
+
+DataControlDeviceManagerInterface *Display::createDataControlDeviceManager(QObject *parent)
+{
+    auto controlSelection = new DataControlDeviceManagerInterface(this, parent);
+    connect(this, &Display::aboutToTerminate, controlSelection, [this, controlSelection] { delete controlSelection; });
+    return controlSelection;
 }
 
 void Display::createShm()

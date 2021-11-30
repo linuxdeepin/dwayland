@@ -21,6 +21,7 @@ License along with this library.  If not, see <http://www.gnu.org/licenses/>.
 #include "registry.h"
 #include "compositor.h"
 #include "connection_thread.h"
+#include "datacontroldevicemanager.h"
 #include "datadevicemanager.h"
 #include "dpms.h"
 #include "event_queue.h"
@@ -103,6 +104,7 @@ License along with this library.  If not, see <http://www.gnu.org/licenses/>.
 #include <wayland-dde-shell-client-protocol.h>
 #include <wayland-xwayland-keyboard-grab-v1-client-protocol.h>
 #include <wayland-wp-primary-selection-unstable-v1-client-protocol.h>
+#include <wayland-wlr-data-control-unstable-v1-client-protocol.h>
 
 /*****
  * How to add another interface:
@@ -426,11 +428,18 @@ static const QMap<Registry::Interface, SuppertedInterfaceData> s_interfaces = {
         &Registry::xwaylandKeyboardGrabV1Removed
     }},
     {Registry::Interface::PrimarySelectionDeviceManagerV1, {
-    1,
-    QByteArrayLiteral("zwp_primary_selection_device_manager_v1"),
-    &zwp_primary_selection_device_manager_v1_interface,
-    &Registry::primarySelectDeviceManagerAnnounced,
-    &Registry::primarySelectionDeviceManagerV1Removed
+        1,
+        QByteArrayLiteral("zwp_primary_selection_device_manager_v1"),
+        &zwp_primary_selection_device_manager_v1_interface,
+        &Registry::primarySelectDeviceManagerAnnounced,
+        &Registry::primarySelectionDeviceManagerV1Removed
+    }},
+    {Registry::Interface::DataControlDeviceManager, {
+        1,
+        QByteArrayLiteral("zwlr_data_control_manager_v1"),
+        &zwlr_data_control_manager_v1_interface,
+        &Registry::dataControlDeviceManagerAnnounced,
+        &Registry::dataControlDeviceManagerRemoved
     }},
 };
 
@@ -753,6 +762,7 @@ BIND(DDEShell, dde_shell)
 BIND(Strut, com_deepin_kwin_strut)
 BIND2(ZWPXwaylandKeyboardGrabManagerV1, ZWPXwaylandKeyboardGrabV1, zwp_xwayland_keyboard_grab_manager_v1)
 BIND(PrimarySelectionDeviceManagerV1, zwp_primary_selection_device_manager_v1)
+BIND(DataControlDeviceManager, zwlr_data_control_manager_v1)
 
 #undef BIND
 #undef BIND2
@@ -918,6 +928,16 @@ PrimarySelectionDeviceManagerV1 *Registry::createPrimarySelectionDeviceManagerV1
     switch(d->interfaceForName(name)) {
     case Interface::PrimarySelectionDeviceManagerV1:
         return d->create<PrimarySelectionDeviceManagerV1>(name, version, parent, &Registry::bindPrimarySelectionDeviceManagerV1);
+    default:
+        return nullptr;
+    }
+}
+
+DataControlDeviceManager *Registry::createDataControlDeviceManager(quint32 name, quint32 version, QObject *parent)
+{
+    switch(d->interfaceForName(name)) {
+    case Interface::DataControlDeviceManager:
+        return d->create<DataControlDeviceManager>(name, version, parent, &Registry::bindDataControlDeviceManager);
     default:
         return nullptr;
     }
