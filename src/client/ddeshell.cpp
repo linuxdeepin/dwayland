@@ -673,6 +673,32 @@ QRect DDEShellSurface::getGeometry() const
     return d->geometry;
 }
 
+void DDEShellSurface::requestNoTitleBarProperty(qint32 value)
+{
+    struct wl_array arr;
+    int *arr_data = nullptr;
+    wl_array_init(&arr);
+    arr_data = static_cast<int *>(wl_array_add(&arr, sizeof(int)));
+    arr_data[0] = value;
+    dde_shell_surface_set_property(d->ddeShellSurface,
+                                   DDE_SHELL_PROPERTY_NOTITLEBAR,
+                                   &arr);
+    wl_array_release(&arr);
+}
+
+void DDEShellSurface::requestWindowRadiusProperty(QPointF windowRadius)
+{
+    struct wl_array arr;
+    float *arr_data = nullptr;
+    wl_array_init(&arr);
+    arr_data = static_cast<float *>(wl_array_add(&arr, sizeof(float)*2));
+    arr_data[0] = windowRadius.x();
+    arr_data[1] = windowRadius.y();
+    dde_shell_surface_set_property(d->ddeShellSurface,
+                                   DDE_SHELL_PROPERTY_WINDOWRADIUS,
+                                   &arr);
+    wl_array_release(&arr);
+}
 
 }
 }

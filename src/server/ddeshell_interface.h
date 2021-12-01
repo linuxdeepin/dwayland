@@ -103,6 +103,8 @@ Q_SIGNALS:
     void acceptFocusRequested(bool set);
     void modalityRequested(bool set);
 
+    void noTitleBarPropertyRequested(qint32 value);
+    void windowRadiusPropertyRequested(QPointF windowRadius);
 private:
     friend class DDEShellInterface;
     QRect geometry;

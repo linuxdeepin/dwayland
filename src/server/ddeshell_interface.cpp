@@ -89,6 +89,7 @@ private:
     static void requestGeometryCallback(wl_client *client, wl_resource *resource);
     static void requestActiveCallback(wl_client *client, wl_resource *resource);
     static void setStateCallback(wl_client *client, wl_resource *resource, uint32_t flags, uint32_t state);
+    static void setPropertyCallback(wl_client *client, wl_resource *resource, uint32_t property, struct wl_array * dataArr);
 
     static const struct dde_shell_surface_interface s_interface;
 };
@@ -187,6 +188,7 @@ const struct dde_shell_surface_interface DDEShellSurfaceInterface::Private::s_in
     requestGeometryCallback,
     requestActiveCallback,
     setStateCallback,
+    setPropertyCallback,
 };
 #endif
 
@@ -243,7 +245,7 @@ void DDEShellSurfaceInterface::Private::setState(dde_shell_state flag, bool set)
 
 void DDEShellSurfaceInterface::Private::requestGeometry(wl_resource *resource)
 {
-    // todo 
+    // todo
     return;
 }
 
@@ -314,6 +316,21 @@ void DDEShellSurfaceInterface::Private::setStateCallback(wl_client *client, wl_r
     }
     if (flags & DDE_SHELL_STATE_MODALITY) {
         emit p->q_func()->modalityRequested(state & DDE_SHELL_STATE_MODALITY);
+    }
+}
+
+void DDEShellSurfaceInterface::Private::setPropertyCallback(wl_client *client, wl_resource *resource, uint32_t property, struct wl_array * dataArr)
+{
+    Q_UNUSED(client)
+    Private *p = cast(resource);
+    if (property & DDE_SHELL_PROPERTY_NOTITLEBAR) {
+        int *value = static_cast<int *>(dataArr->data);
+        emit p->q_func()->noTitleBarPropertyRequested(*value);
+    }
+    if (property & DDE_SHELL_PROPERTY_WINDOWRADIUS) {
+        float *value = static_cast<float *>(dataArr->data);
+        QPointF pnt = QPointF(value[0],value[1]);
+        emit p->q_func()->windowRadiusPropertyRequested(pnt);
     }
 }
 

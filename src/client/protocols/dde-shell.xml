@@ -55,7 +55,20 @@
         <entry name="modality" value="1 &lt;&lt; 20"/>
       </enum>
 
-      <request name="get_shell_surface"> 
+      <enum name="property">
+        <entry name="NoTitleBar" value="1 &lt;&lt; 0"/>
+        <entry name="Theme" value="1 &lt;&lt; 1"/>
+        <entry name="WindowRadius" value="1 &lt;&lt; 2"/>
+        <entry name="BorderWidth" value="1 &lt;&lt; 3"/>
+        <entry name="BorderColor" value="1 &lt;&lt; 4"/>
+        <entry name="ShadowRadius" value="1 &lt;&lt; 5"/>
+        <entry name="ShadowOffset" value="1 &lt;&lt; 6"/>
+        <entry name="ShadowColor" value="1 &lt;&lt; 7"/>
+        <entry name="MouseInputAreaMargins" value="1 &lt;&lt; 8"/>
+        <entry name="WindowPixelRatio" value="1 &lt;&lt; 9"/>
+      </enum>
+
+      <request name="get_shell_surface">
         <description summary="get a dde shell surface bind to a wayland surface">
         </description>
 
@@ -114,6 +127,18 @@
         </description>
         <arg name="flags" type="uint" summary="bitfield of state flags"/>
       </event>
+
+      <request name="set_property">
+        <description summary="set window property">
+          Set window property.
+
+          Values for property argument are described by dde_shell.property
+          and can be used together in a bitfield. The flags bitfield describes which property are
+          supposed to be set.
+        </description>
+        <arg name="property" type="uint" enum="property" summary="property type"/>
+        <arg name="dataArr" type="array" summary="property value"/>
+      </request>
 
     </interface>
 

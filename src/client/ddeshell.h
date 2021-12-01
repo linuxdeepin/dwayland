@@ -25,6 +25,7 @@ License along with this library.  If not, see <http://www.gnu.org/licenses/>.
 #include <QSize>
 #include <QRect>
 #include <QVector>
+#include <QColor>
 
 #include <KWayland/Client/kwaylandclient_export.h>
 
@@ -77,7 +78,7 @@ class KWAYLANDCLIENT_EXPORT DDEShell : public QObject
 {
     Q_OBJECT
 public:
-    
+
     explicit DDEShell(QObject *parent = nullptr);
     virtual ~DDEShell();
 
@@ -171,7 +172,7 @@ class KWAYLANDCLIENT_EXPORT DDEShellSurface : public QObject
 {
     Q_OBJECT
 public:
-    
+
     explicit DDEShellSurface(QObject *parent = nullptr);
     virtual ~DDEShellSurface();
 
@@ -216,6 +217,9 @@ public:
     void requestGeometry() const;
     void requestActive() const;
     QRect getGeometry() const;
+
+    void requestNoTitleBarProperty(qint32 value);
+    void requestWindowRadiusProperty(QPointF windowRadius);
 Q_SIGNALS:
     void geometryChanged(const QRect &geom);
     void activeChanged();
