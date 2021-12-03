@@ -1,3 +1,10 @@
+kwayland (4:5.57.0.6-1) unstable; urgency=medium
+
+  * feat:
+    feat: add decoration property interface
+
+ -- Lei Su <sulei@uniontech.com>  Fri, 03 Dec 2021 16:24:10 +0800
+
 kwayland (4:5.57.0.5-1) unstable; urgency=medium
 
   * Add global clipboard protocol.
