@@ -39,6 +39,7 @@ namespace Server
 class Display;
 class DDEPointerInterface;
 class DDEKeyboardInterface;
+class DDETouchInterface;
 
 /** @class DDESeatInterface
  *
@@ -83,7 +84,9 @@ public:
     void pointerAxis(Qt::Orientation orientation, qint32 delta);
 
     void setTimestamp(quint32 time);
+    void setTouchTimestamp(quint32 time);
     quint32 timestamp() const;
+    quint32 touchtimestamp() const;
 
     void setKeymap(int fd, quint32 size);
     void keyPressed(quint32 key);
@@ -96,6 +99,10 @@ public:
     quint32 groupModifiers() const;
     quint32 lastModifiersSerial() const;
 
+    void touchDown(qint32 id, const QPointF &pos);
+    void touchMotion(qint32 id, const QPointF &pos);
+    void touchUp(qint32 id);
+
 Q_SIGNALS:
     /**
      * Emitted whenever a DDEPointerInterface got created.
@@ -104,6 +111,8 @@ Q_SIGNALS:
     void pointerPosChanged(const QPointF &pos);
 
     void ddeKeyboardCreated(KWayland::Server::DDEKeyboardInterface*);
+
+    void ddeTouchCreated(KWayland::Server::DDETouchInterface*);
 
 private:
     friend class Display;
@@ -146,6 +155,41 @@ private:
     void buttonReleased(quint32 button);
     void axis(Qt::Orientation orientation, qint32 delta);
     explicit DDEPointerInterface(DDESeatInterface *ddeSeat, wl_resource *parentResource);
+    class Private;
+    Private *d_func() const;
+};
+
+/**
+ * @brief Resource for the dde_touch interface.
+ *
+ * DDEPointerInterface gets created by DDESeatInterface.
+ *
+ * @since 5.4
+ **/
+class KWAYLANDSERVER_EXPORT DDETouchInterface : public Resource
+{
+    Q_OBJECT
+public:
+    virtual ~DDETouchInterface();
+
+    /**
+     * @returns The DDESeatInterface which created this DDETouchInterface.
+     **/
+    DDESeatInterface *ddeSeat() const;
+
+    /**
+     * @returns The DDETouchInterface for the @p native resource.
+     * @since 5.5
+     **/
+    static DDETouchInterface *get(wl_resource *native);
+
+private:
+    friend class DDESeatInterface;
+
+    void touchDown(qint32 id, const QPointF &pos);
+    void touchMotion(qint32 id, const QPointF &pos);
+    void touchUp(qint32 id);
+    explicit DDETouchInterface(DDESeatInterface *ddeSeat, wl_resource *parentResource);
     class Private;
     Private *d_func() const;
 };

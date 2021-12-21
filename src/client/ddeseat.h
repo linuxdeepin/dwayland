@@ -29,6 +29,7 @@ License along with this library.  If not, see <http://www.gnu.org/licenses/>.
 
 struct dde_seat;
 struct dde_pointer;
+struct dde_touch;
 class  QPoint;
 class  QRect;
 
@@ -40,6 +41,7 @@ namespace Client
 class EventQueue;
 class DDEPointer;
 class DDEKeyboard;
+class DDETouch;
 
 /**
  * @short Wrapper for the dde_seat interface.
@@ -110,6 +112,15 @@ public:
      * @returns created DDEKeyboard
      **/
     DDEKeyboard *createDDEKeyboard(QObject *parent = nullptr);
+
+    /**
+     * Creates a DDETouch and sets it up.
+     *
+     *
+     * @param parent The parent to use for the DDETouch
+     * @returns created DDETouch
+     **/
+    DDETouch *createDDETouch(QObject *parent = nullptr);
 
     /**
      * Sets the @p queue to use for bound proxies.
@@ -253,6 +264,92 @@ Q_SIGNALS:
 
 private:
     friend class DDESeat;
+    class Private;
+    QScopedPointer<Private> d;
+};
+
+
+/**
+ * @short Wrapper for the dde_touch interface.
+ *
+ * This class is a convenient wrapper for the dde_touch interface.
+ *
+ * To create an instance use DDETouch::createDDETouch.
+ *
+ *
+ * @see DDETouch
+ **/
+class KWAYLANDCLIENT_EXPORT DDETouch : public QObject
+{
+    Q_OBJECT
+public:
+    explicit DDETouch(QObject *parent = nullptr);
+    virtual ~DDETouch();
+
+    /**
+     * @returns @c true if managing a dde_touch.
+     **/
+    bool isValid() const;
+    /**
+     * Setup this DDETouch to manage the @p touch.
+     * When using Seat::createDDETouch there is no need to call this
+     * method.
+     **/
+    void setup(dde_touch *touch);
+    /**
+     * Releases the dde_touch interface.
+     * After the interface has been released the DDETouch instance is no
+     * longer valid and can be setup with another dde_touch interface.
+     *
+     * This method is automatically invoked when the Seat which created this
+     * DDEKeyboard gets released.
+     **/
+    void release();
+    /**
+     * Destroys the data held by this DDETouch.
+     * This method is supposed to be used when the connection to the Wayland
+     * server goes away. If the connection is not valid anymore, it's not
+     * possible to call release anymore as that calls into the Wayland
+     * connection and the call would fail. This method cleans up the data, so
+     * that the instance can be deleted or set up to a new dde_touch interface
+     * once there is a new connection available.
+     *
+     * This method is automatically invoked when the Seat which created this
+     * DDETouch gets destroyed.
+     *
+     * @see release
+     **/
+    void destroy();
+
+    operator dde_touch*();
+    operator dde_touch*() const;
+
+Q_SIGNALS:
+    /**
+     * This signal provides a file descriptor to the client which can
+     * be memory-mapped to provide a keyboard mapping description.
+     *
+     * The signal is only emitted if the keymap format is libxkbcommon compatible.
+     *
+     * @param id id of the touch
+     * @param pos The position of the touch
+     **/
+    void touchDown(int32_t id, const QPointF &pos);
+    /**
+     * A key was pressed or released.
+     * The time argument is a timestamp with millisecond granularity, with an undefined base.
+     * @param id id of the touch
+     * @param pos The position of the touch
+     **/
+    void touchMotion(int32_t id, const QPointF &pos);
+    /**
+     * Notifies clients that the modifier and/or group state has changed,
+     * and it should update its local state.
+     * @param id id of the touch
+     **/
+    void touchUp(int32_t id);
+
+private:
     class Private;
     QScopedPointer<Private> d;
 };

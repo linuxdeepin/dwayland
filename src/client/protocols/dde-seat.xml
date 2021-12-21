@@ -54,6 +54,13 @@
       </description>
       <arg name="id" type="new_id" interface="dde_keyboard" summary="seat keyboard"/>
     </request>
+
+    <request name="get_dde_touch">
+      <description summary="get touch object">
+        get a touch through a global seat object
+      </description>
+      <arg name="id" type="new_id" interface="dde_touch" summary="seat touch"/>
+    </request>
   </interface>
 
   <interface name="dde_pointer" version="1">
@@ -261,6 +268,50 @@
       <arg name="delay" type="int"
      summary="delay in milliseconds since key down until repeating starts"/>
     </event>
+  </interface>
+
+  <interface name="dde_touch" version="7">
+    <description summary="touch input device">
+      The wl_touch interface represents one or more touchs
+      associated with a seat.
+    </description>
+
+    <event name="down">
+      <description summary="down event">
+        Notification that this seat's touch down.
+        The time argument is a timestamp with millisecond
+        granularity, with an undefined base.
+      </description>
+      <arg name="id" type="int" summary="id of the touch down event"/>
+      <arg name="time" type="uint" summary="timestamp with millisecond granularity"/>
+      <arg name="x" type="fixed" summary="global x coordinate"/>
+      <arg name="y" type="fixed" summary="global y coordinate"/>
+    </event>
+
+    <event name="up">
+      <description summary="up event">
+        Notification that this seat's touch up.
+        The time argument is a timestamp with millisecond
+        granularity, with an undefined base.
+      </description>
+      <arg name="id" type="int" summary="id of the touch up event"/>
+      <arg name="time" type="uint" summary="timestamp with millisecond granularity"/>
+    </event>
+
+    <event name="motion">
+      <description summary="touch motion event">
+        Notification that this seat's touch motion.
+        The time argument is a timestamp with millisecond
+        granularity, with an undefined base.
+      </description>
+      <arg name="id" type="int" summary="id of the touch motion event"/>
+      <arg name="time" type="uint" summary="timestamp with millisecond granularity"/>
+      <arg name="x" type="fixed" summary="global x coordinate"/>
+      <arg name="y" type="fixed" summary="global y coordinate"/>
+    </event>
+    <request name="release" type="destructor" since="3">
+      <description summary="release the touch object"/>
+    </request>
   </interface>
 
 </protocol>

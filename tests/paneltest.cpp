@@ -71,6 +71,7 @@ private:
     Seat *m_seat = nullptr;
     DDESeat *m_ddeSeat = nullptr;
     DDEPointer *m_ddePointer = nullptr;
+    DDETouch *m_ddeTouch = nullptr;
     Shell *m_shell = nullptr;
     ShellSurface *m_shellSurface = nullptr;
     ShmPool *m_shm = nullptr;
@@ -370,6 +371,23 @@ connect(registry, &Registry::ddeSeatAnnounced, this,
                             qDebug() << "motion" << pos;
                             QPointF relativePos = QPoint((pos.x() / 2160) * 1000.0, (pos.y() / 1440) * 500.0);
                             moveTooltip(relativePos);
+                    }
+                );
+
+                m_ddeTouch = m_ddeSeat->createDDETouch(this);
+                connect(m_ddeTouch, &DDETouch::touchDown, this,
+                    [this] (int32_t id, const QPointF &pos) {
+                        qDebug() << "ddeseat touch down" << id << pos;
+                    }
+                );
+                connect(m_ddeTouch, &DDETouch::touchMotion, this,
+                    [this] (int32_t id, const QPointF &pos) {
+                        qDebug() << "ddeseat touch motion" << id << pos;
+                    }
+                );
+                connect(m_ddeTouch, &DDETouch::touchUp, this,
+                    [this] (int32_t id) {
+                        qDebug() << "ddeseat touch up" << id;
                     }
                 );
             }

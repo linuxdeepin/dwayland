@@ -136,6 +136,21 @@ DDEKeyboard *DDESeat::createDDEKeyboard(QObject *parent)
     return s;
 }
 
+DDETouch *DDESeat::createDDETouch(QObject *parent)
+{
+    Q_ASSERT(isValid());
+
+    DDETouch *s = new DDETouch(parent);
+    connect(this, &DDESeat::interfaceAboutToBeReleased, s, &DDETouch::release);
+    connect(this, &DDESeat::interfaceAboutToBeDestroyed, s, &DDETouch::destroy);
+    auto w = dde_seat_get_dde_touch(d->ddeSeat);
+    if (d->queue) {
+        d->queue->addProxy(w);
+    }
+    s->setup(w);
+    return s;
+}
+
 bool DDESeat::isValid() const
 {
     return d->ddeSeat.isValid();
@@ -274,6 +289,103 @@ QPointF DDEPointer::getGlobalPointerPos()
     return d->globalPointerPos;
 }
 
+//DDETouch
+class Q_DECL_HIDDEN DDETouch::Private
+{
+public:
+    Private(DDETouch *q);
+    void setup(dde_touch *k);
+
+    WaylandPointer<dde_touch, dde_touch_release> ddeTouch;
+
+private:
+    static void downCallback(void *data, struct dde_touch *touch, int32_t id, uint32_t time, wl_fixed_t x, wl_fixed_t y);
+    static void motionCallback(void *data, struct dde_touch *touch, int32_t id, uint32_t time, wl_fixed_t x, wl_fixed_t y);
+    static void upCallback(void *data, struct dde_touch *touch, int32_t id, uint32_t time);
+    DDETouch *q;
+    static const dde_touch_listener s_listener;
+};
+
+DDETouch::Private::Private(DDETouch *q)
+    : q(q)
+{
+}
+
+void DDETouch::Private::setup(dde_touch *t)
+{
+    Q_ASSERT(t);
+    Q_ASSERT(!ddeTouch);
+    ddeTouch.setup(t);
+    dde_touch_add_listener(ddeTouch, &s_listener, this);
+}
+
+const dde_touch_listener DDETouch::Private::s_listener = {
+    downCallback,
+    upCallback,
+    motionCallback,
+};
+
+DDETouch::DDETouch(QObject *parent)
+    : QObject(parent)
+    , d(new Private(this))
+{
+}
+
+DDETouch::~DDETouch()
+{
+    release();
+}
+
+void DDETouch::release()
+{
+    d->ddeTouch.release();
+}
+
+void DDETouch::destroy()
+{
+    d->ddeTouch.destroy();
+}
+
+void DDETouch::setup(dde_touch *keyboard)
+{
+    d->setup(keyboard);
+}
+
+bool DDETouch::isValid() const
+{
+    return d->ddeTouch.isValid();
+}
+
+DDETouch::operator dde_touch*()
+{
+    return d->ddeTouch;
+}
+
+DDETouch::operator dde_touch*() const
+{
+    return d->ddeTouch;
+}
+
+void DDETouch::Private::downCallback(void *data, struct dde_touch *touch, int32_t id, uint32_t time, wl_fixed_t x, wl_fixed_t y)
+{
+    auto t = reinterpret_cast<DDETouch::Private*>(data);
+    Q_ASSERT(t->ddeTouch == touch);
+    emit t->q->touchDown(id, QPointF(wl_fixed_to_double(x), wl_fixed_to_double(y)));
+}
+
+void DDETouch::Private::motionCallback(void *data, struct dde_touch *touch, int32_t id, uint32_t time, wl_fixed_t x, wl_fixed_t y)
+{
+    auto t = reinterpret_cast<DDETouch::Private*>(data);
+    Q_ASSERT(t->ddeTouch == touch);
+    emit t->q->touchMotion(id, QPointF(wl_fixed_to_double(x), wl_fixed_to_double(y)));
+}
+
+void DDETouch::Private::upCallback(void *data, struct dde_touch *touch, int32_t id, uint32_t time)
+{
+    auto t = reinterpret_cast<DDETouch::Private*>(data);
+    Q_ASSERT(t->ddeTouch == touch);
+    emit t->q->touchUp(id);
+}
 
 }
 }

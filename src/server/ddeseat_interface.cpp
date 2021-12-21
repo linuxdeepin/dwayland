@@ -47,6 +47,9 @@ public:
     QVector<DDEKeyboardInterface*> ddeKeyboards;
     quint32 timestamp = 0;
 
+    QVector<DDETouchInterface*> ddeTouchs;
+    quint32 touchtimestamp = 0;
+
     // Keyboard related members
     struct Keyboard {
         enum class State {
@@ -85,14 +88,17 @@ private:
 
     void getPointer(wl_client *client, wl_resource *resource, uint32_t id);
     void getKeyboard(wl_client *client, wl_resource *resource, uint32_t id);
+    void getTouch(wl_client *client, wl_resource *resource, uint32_t id);
     // interface
     static void getPointerCallback(wl_client *client, wl_resource *resource, uint32_t id);
     static void getKeyboardCallback(wl_client *client, wl_resource *resource, uint32_t id);
+    static void getTouchCallback(wl_client *client, wl_resource *resource, uint32_t id);
     static const struct dde_seat_interface s_interface;
 
     static const quint32 s_version;
     static const qint32 s_ddePointerVersion;
     static const qint32 s_ddeKeyboardVersion;
+    static const qint32 s_ddeTouchVersion;
     DDESeatInterface *q;
 };
 
@@ -116,9 +122,26 @@ private:
     static const struct dde_pointer_interface s_interface;
 };
 
+class DDETouchInterface::Private : public Resource::Private
+{
+public:
+    Private(DDESeatInterface *parent, wl_resource *parentResource, DDETouchInterface *q);
+
+    DDESeatInterface *ddeSeat;
+    QMetaObject::Connection destroyConnection;
+
+private:
+    DDETouchInterface *q_func() {
+        return reinterpret_cast<DDETouchInterface *>(q);
+    }
+
+    static const struct dde_touch_interface s_touch_interface;
+};
+
 const quint32 DDESeatInterface::Private::s_version = 1;
 const qint32 DDESeatInterface::Private::s_ddePointerVersion = 1;
 const qint32 DDESeatInterface::Private::s_ddeKeyboardVersion = 7;
+const qint32 DDESeatInterface::Private::s_ddeTouchVersion = 1;
 
 DDESeatInterface::Private::Private(DDESeatInterface *q, Display *d)
     : Global::Private(d, &dde_seat_interface, s_version)
@@ -130,6 +153,7 @@ DDESeatInterface::Private::Private(DDESeatInterface *q, Display *d)
 const struct dde_seat_interface DDESeatInterface::Private::s_interface = {
     getPointerCallback,
     getKeyboardCallback,
+    getTouchCallback,
 };
 #endif
 
@@ -225,6 +249,31 @@ void DDESeatInterface::Private::getKeyboard(wl_client *client, wl_resource *reso
     emit q->ddeKeyboardCreated(keyboard);
 }
 
+void DDESeatInterface::Private::getTouchCallback(wl_client *client, wl_resource *resource, uint32_t id)
+{
+    cast(resource)->getTouch(client, resource, id);
+}
+
+void DDESeatInterface::Private::getTouch(wl_client *client, wl_resource *resource, uint32_t id)
+{
+    // TODO: only create if seat has touch?
+    DDETouchInterface *touch = new DDETouchInterface(q, resource);
+    auto clientConnection = display->getConnection(client);
+    touch->create(clientConnection, qMin(wl_resource_get_version(resource), s_ddeTouchVersion), id);
+    if (!touch->resource()) {
+        wl_resource_post_no_memory(resource);
+        delete touch;
+        return;
+    }
+    ddeTouchs << touch;
+    QObject::connect(touch, &QObject::destroyed, q,
+        [touch,this] {
+            ddeTouchs.removeAt(ddeTouchs.indexOf(touch));
+        }
+    );
+    emit q->ddeTouchCreated(touch);
+}
+
 bool DDESeatInterface::Private::updateKey(quint32 key, Keyboard::State state)
 {
     auto it = keys.states.find(key);
@@ -294,6 +343,21 @@ void DDESeatInterface::setTimestamp(quint32 time)
     d->timestamp = time;
 }
 
+quint32 DDESeatInterface::touchtimestamp() const
+{
+    Q_D();
+    return d->touchtimestamp;
+}
+
+void DDESeatInterface::setTouchTimestamp(quint32 time)
+{
+    Q_D();
+    if (d->touchtimestamp == time) {
+        return;
+    }
+    d->touchtimestamp = time;
+}
+
 void DDESeatInterface::setKeymap(int fd, quint32 size)
 {
     Q_D();
@@ -326,6 +390,30 @@ void DDESeatInterface::keyReleased(quint32 key)
     }
     for (auto it = d->ddeKeyboards.constBegin(), end = d->ddeKeyboards.constEnd(); it != end; ++it) {
         (*it)->keyReleased(key, d->keys.lastStateSerial);
+    }
+}
+
+void DDESeatInterface::touchDown(qint32 id, const QPointF &pos)
+{
+    Q_D();
+    for (auto it = d->ddeTouchs.constBegin(), end = d->ddeTouchs.constEnd(); it != end; ++it) {
+        (*it)->touchDown(id, pos);
+    }
+}
+
+void DDESeatInterface::touchMotion(qint32 id, const QPointF &pos)
+{
+    Q_D();
+    for (auto it = d->ddeTouchs.constBegin(), end = d->ddeTouchs.constEnd(); it != end; ++it) {
+        (*it)->touchMotion(id, pos);
+    }
+}
+
+void DDESeatInterface::touchUp(qint32 id)
+{
+    Q_D();
+    for (auto it = d->ddeTouchs.constBegin(), end = d->ddeTouchs.constEnd(); it != end; ++it) {
+        (*it)->touchUp(id);
     }
 }
 
@@ -464,6 +552,68 @@ void DDEPointerInterface::axis(Qt::Orientation orientation, qint32 delta)
     dde_pointer_send_axis(d->resource, 0,
                          (orientation == Qt::Vertical) ? WL_POINTER_AXIS_VERTICAL_SCROLL : WL_POINTER_AXIS_HORIZONTAL_SCROLL,
                          wl_fixed_from_int(delta));
+}
+
+/*********************************
+ * DDETouchInterface
+ *********************************/
+DDETouchInterface::Private::Private(DDESeatInterface *parent, wl_resource *parentResource, DDETouchInterface *q)
+    : Resource::Private(q, parent, parentResource, &dde_touch_interface, &s_touch_interface)
+    , ddeSeat(parent)
+{
+}
+
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+const struct dde_touch_interface DDETouchInterface::Private::s_touch_interface = {
+    resourceDestroyedCallback,
+};
+#endif
+
+DDETouchInterface::DDETouchInterface(DDESeatInterface *parent, wl_resource *parentResource)
+    : Resource(new Private(parent, parentResource, this))
+{
+}
+
+DDETouchInterface::~DDETouchInterface() = default;
+
+DDESeatInterface *DDETouchInterface::ddeSeat() const {
+    Q_D();
+    return reinterpret_cast<DDESeatInterface*>(d->global);
+}
+
+DDETouchInterface::Private *DDETouchInterface::d_func() const
+{
+    return reinterpret_cast<DDETouchInterface::Private*>(d.data());
+}
+
+void DDETouchInterface::touchDown(qint32 id, const QPointF &pos)
+{
+    Q_D();
+    if (!d->resource) {
+        return;
+    }
+
+    dde_touch_send_down(d->resource, id, d->ddeSeat->touchtimestamp(), wl_fixed_from_double(pos.x()), wl_fixed_from_double(pos.y()));
+}
+
+void DDETouchInterface::touchMotion(qint32 id, const QPointF &pos)
+{
+    Q_D();
+    if (!d->resource) {
+        return;
+    }
+
+    dde_touch_send_motion(d->resource, id, d->ddeSeat->touchtimestamp(), wl_fixed_from_double(pos.x()), wl_fixed_from_double(pos.y()));
+}
+
+void DDETouchInterface::touchUp(qint32 id)
+{
+    Q_D();
+    if (!d->resource) {
+        return;
+    }
+
+    dde_touch_send_up(d->resource, id, d->ddeSeat->touchtimestamp());
 }
 
 }
