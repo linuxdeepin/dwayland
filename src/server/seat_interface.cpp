@@ -291,12 +291,12 @@ void SeatInterface::Private::registerDataDevice(DataDeviceInterface *dataDevice)
     QObject::connect(dataDevice, &Resource::unbound, q, dataDeviceCleanup);
     QObject::connect(dataDevice, &DataDeviceInterface::selectionChanged, q,
         [this, dataDevice] {
-            updateSelection(dataDevice, true);
+            updateSelection(dataDevice->selection(), true);
         }
     );
     QObject::connect(dataDevice, &DataDeviceInterface::selectionCleared, q,
         [this, dataDevice] {
-            updateSelection(dataDevice, false);
+            updateSelection(dataDevice->selection(), true);
         }
     );
     QObject::connect(dataDevice, &DataDeviceInterface::dragStarted, q,
@@ -381,14 +381,14 @@ void SeatInterface::Private::registerDataControlDevice(DataControlDeviceV1Interf
 
     QObject::connect(dataDevice, &DataControlDeviceV1Interface::selectionChanged, q,
         [this, dataDevice] {
-            q->setSelection(dataDevice->selection());
+            updateSelection(dataDevice->selection(),false);
         }
     );
 
     QObject::connect(dataDevice, &DataControlDeviceV1Interface::selectionCleared, q,
         [this, dataDevice] {
             Q_UNUSED(dataDevice);
-            q->setSelection(nullptr);
+            updateSelection(dataDevice->selection(),false);
         }
     );
     if (currentSelection) {
@@ -503,36 +503,30 @@ void SeatInterface::Private::cancelPreviousPrimarySelection(AbstractDataSource *
     }
 }
 
-void SeatInterface::Private::updateSelection(DataDeviceInterface *dataDevice, bool set)
+void SeatInterface::Private::updateSelection(AbstractDataSource *dataSource, bool sendDataConctrl)
 {
-    bool selChanged = currentSelection != dataDevice->selection();
-    if (keys.focus.surface && (keys.focus.surface->client() == dataDevice->client())) {
-        // cancel the previous selection
-        cancelPreviousSelection(dataDevice->selection());
-        // new selection on a data device belonging to current keyboard focus
-        currentSelection = dataDevice->selection();
+    // if the update is from the focussed window we should inform the active client
+    // && sendDataConctrl The client in the dataconctrl protocol may not be the active window
+    if (dataSource && sendDataConctrl && !(keys.focus.surface  && (keys.focus.surface->client() == dataSource->client()))) {
+        return ;
     }
-    if (dataDevice->selection() == currentSelection) {
-        // need to send out the selection
+    if(sendDataConctrl)
+        q->setSelection(dataSource);
+    else {   //   dataconctrl Don’t send to yourself when you don’t change yourself
+        if (currentSelection == dataSource) {
+            return;
+        }
+        // cancel the previous selection
+        cancelPreviousSelection(dataSource);
+        currentSelection = dataSource;
         if (keys.focus.selection) {
-            if (set) {
-                keys.focus.selection->sendSelection(dataDevice->selection());
+            if (dataSource) {
+                keys.focus.selection->sendSelection(dataSource);
             } else {
                 keys.focus.selection->sendClearSelection();
-                currentSelection = nullptr;
-                selChanged = true;
             }
         }
-        for (auto control : qAsConst(dataControlDevices)) {
-            if (dataDevice->selection()) {
-                control->sendSelection(dataDevice->selection());
-            } else {
-                control->sendClearSelection();
-            }
-        }
-    }
-    if (selChanged) {
-        emit q->selectionChanged(currentSelection);
+        emit q->selectionChanged(dataSource);
     }
 }
 
@@ -1774,6 +1768,7 @@ AbstractDataSource *SeatInterface::primarySelection() const
 void SeatInterface::setSelection(AbstractDataSource *dataSource)
 {
     Q_D();
+
     if (d->currentSelection == dataSource) {
         return;
     }

@@ -26,7 +26,7 @@ public:
     Private(zwlr_data_control_offer_v1 *offer, DataControlOfferV1 *q);
     WaylandPointer<zwlr_data_control_offer_v1, zwlr_data_control_offer_v1_destroy> dataOffer;
 
-    QList<QMimeType> mimeTypes;
+    QList<QString> mimeTypes;
 private:
     void offer(const QString &mimeType);
     static void offerCallback(void *data, zwlr_data_control_offer_v1 *dataOffer, const char *mimeType);
@@ -57,12 +57,8 @@ void DataControlOfferV1::Private::offerCallback(void *data, zwlr_data_control_of
 
 void DataControlOfferV1::Private::offer(const QString &mimeType)
 {
-    QMimeDatabase db;
-    const auto &m = db.mimeTypeForName(mimeType);
-    if (m.isValid()) {
-        mimeTypes << m;
-        emit q->mimeTypeOffered(m.name());
-    }
+    mimeTypes <<mimeType;
+    emit q->mimeTypeOffered(mimeType);
 }
 
 DataControlOfferV1::DataControlOfferV1(DataControlDeviceV1 *parent, zwlr_data_control_offer_v1 *dataOffer)
@@ -91,7 +87,7 @@ bool DataControlOfferV1::isValid() const
     return d->dataOffer.isValid();
 }
 
-QList< QMimeType > DataControlOfferV1::offeredMimeTypes() const
+QList<QString> DataControlOfferV1::offeredMimeTypes() const
 {
     return d->mimeTypes;
 }

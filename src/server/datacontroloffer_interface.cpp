@@ -97,6 +97,12 @@ DataControlOfferV1Interface::DataControlOfferV1Interface(AbstractDataSource *sou
             zwlr_data_control_offer_v1_send_offer(d->resource, mimeType.toUtf8().constData());
         }
     );
+    QObject::connect(source, &QObject::destroyed, this,
+        [this] {
+            Q_D();
+            d->source = nullptr;
+        }
+    );
 }
 
 DataControlOfferV1Interface::~DataControlOfferV1Interface() = default;

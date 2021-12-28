@@ -71,7 +71,7 @@ public:
      **/
     bool isValid() const;
 
-    QList<QMimeType> offeredMimeTypes() const;
+    QList<QString> offeredMimeTypes() const;
 
     void receive(const QMimeType &mimeType, qint32 fd);
     void receive(const QString &mimeType, qint32 fd);

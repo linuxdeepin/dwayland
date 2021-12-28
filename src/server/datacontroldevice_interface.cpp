@@ -83,18 +83,31 @@ void DataControlDeviceV1Interface::Private::setPrimarySelectionCallback(struct w
 
 void DataControlDeviceV1Interface::Private::setSelection(DataControlSourceV1Interface *dataSource)
 {
-    Q_ASSERT(dataSource);
-    if (dataSource) {
-        if (dataSource == seat->selection() || dataSource == seat->primarySelection()) {
-            //thx wl_resource_post_error(resource, error::error_used_source, "source given to set_selection was already used before");
-            return;
-        }
+    if (dataSource && (dataSource == seat->selection() || dataSource == seat->primarySelection())) {
+        return;
     }
+    if (select == dataSource) {
+        return;
+    }
+    Q_Q(DataControlDeviceV1Interface);
+    QObject::disconnect(selectionUnboundConnection);
+    QObject::disconnect(selectionDestroyedConnection);
     if (select) {
         select->cancel();
     }
     select = dataSource;
-    emit q_func()->selectionChanged(select);
+    if (select) {
+        auto clearSelection = [this] {
+            setSelection(nullptr);
+        };
+        selectionUnboundConnection = QObject::connect(select, &Resource::unbound, q, clearSelection);
+        selectionDestroyedConnection = QObject::connect(select, &QObject::destroyed, q, clearSelection);
+        emit q->selectionChanged(select);
+    } else {
+        selectionUnboundConnection = QMetaObject::Connection();
+        selectionDestroyedConnection = QMetaObject::Connection();
+        emit q->selectionCleared();
+    }
 }
 
 void DataControlDeviceV1Interface::Private::setPrimarySelection(DataControlSourceV1Interface *dataSource)

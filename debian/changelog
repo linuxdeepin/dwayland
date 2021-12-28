@@ -1,7 +1,13 @@
+kwayland (4:5.57.0.9-1) unstable; urgency=medium
+  * Fix some errors in dataconctrl.
+  * Release tag 5.57.0.9
+ -- Tang Haixiang <tanghaixiang@uniontech.com>  Wed, 5 Jan 2022 13:31:45 +0800
+
 kwayland (4:5.57.0.8-1) unstable; urgency=medium
   * fix some problems about touch drag file to another window.
   * Release tag 5.57.0.8
  -- zhangyaning <zhangyaning@uniontech.com>  Mon, 31 Dec 2021 09:45:45 +0800
+
 kwayland (4:5.57.0.7-1) unstable; urgency=medium
   * Add global touch protocol.
   * Release tag 5.57.0.7

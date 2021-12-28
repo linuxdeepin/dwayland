@@ -196,7 +196,7 @@ private:
     void getKeyboard(wl_client *client, wl_resource *resource, uint32_t id);
     void getTouch(wl_client *client, wl_resource *resource, uint32_t id);
     void updatePrimarySelection(PrimarySelectionDeviceV1Interface *primarySelectionDevice);
-    void updateSelection(DataDeviceInterface *dataDevice, bool set);
+    void updateSelection(AbstractDataSource *dataSource, bool sendDataConctrl);
     static Private *cast(wl_resource *r);
     static void unbind(wl_resource *r);
 
