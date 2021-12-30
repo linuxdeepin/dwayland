@@ -331,17 +331,13 @@ void DataDeviceInterface::updateDragTarget(SurfaceInterface *surface, quint32 se
             [this](qint32 id, quint32 serial, const QPointF &globalPosition) {
                 Q_D();
                 Q_UNUSED(id);
-                if (serial != d->drag.serial) {
-                    // different touch down has been moved
-                    return;
-                }
                 const QPointF pos = d->seat->dragSurfaceTransformation().map(globalPosition);
                 wl_data_device_send_motion(d->resource, d->seat->timestamp(),
                                         wl_fixed_from_double(pos.x()), wl_fixed_from_double(pos.y()));
                 client()->flush();
                 // workaround: drag surface move according to cursor move
                 if (d->seat->dragSource() && d->seat->dragSource()->icon()) {
-                    emit d->seat->dragSource()->icon()->dragPositionChanged(d->seat->pointerPos() + d->seat->dragSource()->icon()->offset());
+                    emit d->seat->dragSource()->icon()->dragPositionChanged(globalPosition + d->seat->dragSource()->icon()->offset());
                 }
             }
         );

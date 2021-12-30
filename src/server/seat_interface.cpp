@@ -1613,6 +1613,8 @@ void SeatInterface::touchUp(qint32 id)
             d->drag.source->dragImplicitGrabSerial() == d->globalTouch.ids.value(id)) {
         // the implicitly grabbing touch point has been upped
         d->endDrag(serial);
+        d->globalTouch.ids.remove(id);
+        return;
     }
     for (auto it = d->globalTouch.focus.touchs.constBegin(), end = d->globalTouch.focus.touchs.constEnd(); it != end; ++it) {
         (*it)->up(id, serial);
