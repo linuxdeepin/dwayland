@@ -291,12 +291,17 @@ void SeatInterface::Private::registerDataDevice(DataDeviceInterface *dataDevice)
     QObject::connect(dataDevice, &Resource::unbound, q, dataDeviceCleanup);
     QObject::connect(dataDevice, &DataDeviceInterface::selectionChanged, q,
         [this, dataDevice] {
-            updateSelection(dataDevice->selection(), true);
+            if(keys.focus.surface && dataDevice && dataDevice->client() == keys.focus.surface->client()) {
+                updateSelection(dataDevice->selection(), true);
+            }
+
         }
     );
     QObject::connect(dataDevice, &DataDeviceInterface::selectionCleared, q,
         [this, dataDevice] {
-            updateSelection(dataDevice->selection(), true);
+            if(keys.focus.surface && dataDevice && dataDevice->client() == keys.focus.surface->client()) {
+                updateSelection(dataDevice->selection(), true);
+            }
         }
     );
     QObject::connect(dataDevice, &DataDeviceInterface::dragStarted, q,
