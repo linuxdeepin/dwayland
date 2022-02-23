@@ -24,9 +24,11 @@ License along with this library.  If not, see <http://www.gnu.org/licenses/>.
 #include <QPoint>
 #include <QSize>
 #include <QVector>
+#include <QImage>
 
 #include <KWayland/Server/kwaylandserver_export.h>
 #include "global.h"
+#include "surface_interface.h"
 
 struct wl_resource;
 
@@ -67,9 +69,15 @@ public:
     static ClientManagementInterface *get(wl_resource *native);
     void setWindowStates(QList<WindowState*> &windowStates);
 
+    void sendWindowCaptionImage(int windowId, wl_resource *buffer, QImage image);
+    void sendWindowCaption(int windowId, wl_resource *buffer, SurfaceInterface* surface);
+
 Q_SIGNALS:
     void windowStatesRequest();
     void windowStatesChanged();
+
+    void captureWindowImageRequest(int windowId, wl_resource *buffer);
+
 private:
     friend class Display;
     explicit ClientManagementInterface(Display *display, QObject *parent = nullptr);

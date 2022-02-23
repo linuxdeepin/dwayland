@@ -25,6 +25,8 @@ License along with this library.  If not, see <http://www.gnu.org/licenses/>.
 #include <QSize>
 #include <QVector>
 
+#include <wayland-client-protocol.h>
+
 #include <KWayland/Client/kwaylandclient_export.h>
 
 struct com_deepin_client_management;
@@ -129,6 +131,8 @@ public:
 
     const QVector <ClientManagement::WindowState> &getWindowStates() const;
 
+    void getWindowCaption(int windowId, wl_buffer* buffer);
+
 Q_SIGNALS:
     /**
      * Emitted whenever window State changed.
@@ -143,6 +147,8 @@ Q_SIGNALS:
      * @since 5.5
      **/
     void removed();
+
+    void captionWindowDone(int windowId, bool succeed);
 
 private:
     class Private;

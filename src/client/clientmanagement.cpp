@@ -41,6 +41,7 @@ public:
     Private(ClientManagement *q);
     void setup(com_deepin_client_management *o);
     void get_window_states();
+    void getWindowCaption(int windowId, wl_buffer *buffer);
 
     WaylandPointer<com_deepin_client_management, com_deepin_client_management_destroy> clientManagement;
     EventQueue *queue = nullptr;
@@ -49,7 +50,9 @@ public:
 
 private:
     static void windowStatesCallback(void *data, com_deepin_client_management *clientManagement, uint32_t count, wl_array *windowStates);
+    static void windowCaptureCallback(void *data, com_deepin_client_management *clientManagement, int windowId, int succeed, wl_buffer *buffer);
     void addWindowStates(uint32_t count, wl_array *windowStates);
+    void sendWindowCaptionDone(int windowId, bool succeed, wl_buffer *buffer);
 
     ClientManagement *q;
     static struct com_deepin_client_management_listener s_clientManagementListener;
@@ -64,6 +67,12 @@ void ClientManagement::Private::get_window_states()
 {
     Q_ASSERT(clientManagement);
     com_deepin_client_management_get_window_states(clientManagement);
+}
+
+void ClientManagement::Private::getWindowCaption(int windowId, wl_buffer *buffer)
+{
+    Q_ASSERT(clientManagement);
+    com_deepin_client_management_capture_window_image(clientManagement, windowId, buffer);
 }
 
 void ClientManagement::Private::setup(com_deepin_client_management *o)
@@ -87,6 +96,7 @@ ClientManagement::~ClientManagement()
 
 com_deepin_client_management_listener ClientManagement::Private::s_clientManagementListener = {
     windowStatesCallback,
+    windowCaptureCallback
 };
 
 void ClientManagement::Private::addWindowStates(uint32_t count, wl_array *windowStates)
@@ -103,6 +113,11 @@ void ClientManagement::Private::addWindowStates(uint32_t count, wl_array *window
     }
 }
 
+void ClientManagement::Private::sendWindowCaptionDone(int windowId, bool succeed, wl_buffer *buffer)
+{
+    emit q->captionWindowDone(windowId, succeed);
+}
+
 void ClientManagement::Private::windowStatesCallback(void *data, com_deepin_client_management *clientManagement,
                                                 uint32_t count,
                                                 wl_array *windowStates)
@@ -110,6 +125,15 @@ void ClientManagement::Private::windowStatesCallback(void *data, com_deepin_clie
     Q_UNUSED(clientManagement);
     auto o = reinterpret_cast<ClientManagement::Private*>(data);
     o->addWindowStates(count, windowStates);
+}
+
+void ClientManagement::Private::windowCaptureCallback(void *data, com_deepin_client_management *clientManagement,
+                                                int windowId, int succeed,
+                                                wl_buffer *buffer)
+{
+    Q_UNUSED(clientManagement);
+    auto o = reinterpret_cast<ClientManagement::Private*>(data);
+    o->sendWindowCaptionDone(windowId, succeed == 1, buffer);
 }
 
 void ClientManagement::setup(com_deepin_client_management *clientManagement)
@@ -158,6 +182,11 @@ const QVector <ClientManagement::WindowState> &ClientManagement::getWindowStates
         d->get_window_states();
     }
     return d->m_windowStates;
+}
+
+void ClientManagement::getWindowCaption(int windowId, wl_buffer *buffer)
+{
+    d->getWindowCaption(windowId, buffer);
 }
 
 }

@@ -46,5 +46,22 @@
         <arg name="states" type="array" summary="windows information"/>
     </event>
 
+    <request name="capture_window_image">
+        <description summary="request get the window state of all clients">
+            request window state of all clients, will notify by "windows_state" event.
+        </description>
+        <arg name="window_id" type="int" summary="window id"/>
+        <arg name="buffer" type="object" interface="wl_buffer" summary="buffer of capture contents"/>
+    </request>
+
+    <event name="capture_callback" since="1">
+        <description summary="get special window information for all clients">
+        windows information such as pid/window_id/property
+        </description>
+        <arg name="window_id" type="int" summary="window id"/>
+        <arg name="succeed" type="int" summary="1 to succeed or 0 failed"/>
+        <arg name="buffer" type="object" interface="wl_buffer" allow-null="true" summary="buffer of capture contents"/>
+    </event>
+
 </interface>
 </protocol>
