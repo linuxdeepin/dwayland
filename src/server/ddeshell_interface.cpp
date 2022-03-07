@@ -90,6 +90,7 @@ private:
     static void requestActiveCallback(wl_client *client, wl_resource *resource);
     static void setStateCallback(wl_client *client, wl_resource *resource, uint32_t flags, uint32_t state);
     static void setPropertyCallback(wl_client *client, wl_resource *resource, uint32_t property, struct wl_array * dataArr);
+    static void setSplitWindowCallback(wl_client *client, wl_resource *resource, uint32_t value);
 
     static const struct dde_shell_surface_interface s_interface;
 };
@@ -189,6 +190,7 @@ const struct dde_shell_surface_interface DDEShellSurfaceInterface::Private::s_in
     requestActiveCallback,
     setStateCallback,
     setPropertyCallback,
+    setSplitWindowCallback,
 };
 #endif
 
@@ -334,6 +336,22 @@ void DDEShellSurfaceInterface::Private::setPropertyCallback(wl_client *client, w
     }
 }
 
+void DDEShellSurfaceInterface::Private::setSplitWindowCallback(wl_client *client, wl_resource *resource, uint32_t type)
+{
+    Q_UNUSED(client)
+    Private *p = cast(resource);
+    switch (type) {
+    case DDE_SHELL_SPLIT_TYPE_LEFT_SPLIT:
+        emit p->q_func()->splitWindowRequested(SplitType::leftSplit);
+        break;
+    case DDE_SHELL_SPLIT_TYPE_RIGHT_SPLIT:
+        emit p->q_func()->splitWindowRequested(SplitType::rightSplit);
+        break;
+    default:
+        break;
+    }
+}
+
 void DDEShellSurfaceInterface::setActive(bool set)
 {
     Q_D();
@@ -432,6 +450,15 @@ void DDEShellSurfaceInterface::sendGeometry(const QRect &geom)
         return;
     }
     dde_shell_surface_send_geometry(d->resource, geometry.x(), geometry.y(), geometry.width(), geometry.height());
+}
+
+void DDEShellSurfaceInterface::sendSplitable(bool splitable)
+{
+    Q_D();
+    if (!d->resource) {
+        return;
+    }
+    dde_shell_surface_send_splitable(d->resource, splitable);
 }
 
 }

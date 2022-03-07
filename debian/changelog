@@ -1,4 +1,4 @@
-kwayland (4:5.57.0.10-1) unstable; urgency=medium
+kwayland (4:5.57.0.11-1) unstable; urgency=medium
   * Fix copy failure in some cases.
   * Release tag 5.57.0.10
  -- Tang Haixiang <tanghaixiang@uniontech.com>  Mon, 17 Jan 2022 13:31:45 +0800

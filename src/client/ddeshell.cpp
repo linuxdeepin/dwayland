@@ -72,6 +72,7 @@ public:
     bool resizable = false;
     bool acceptFocus = true;
     bool modality = false;
+    bool splitable = false;
 
     static DDEShellSurface *get(wl_surface *surface);
     static DDEShellSurface *get(Surface *surface);
@@ -79,6 +80,7 @@ public:
 private:
     static void geometryCallback(void *data, dde_shell_surface *dde_shell_surface, int32_t x, int32_t y, uint32_t width, uint32_t height);
     static void stateChangedCallback(void *data, dde_shell_surface *dde_shell_surface, uint32_t state);
+    static void splitableCallback(void *data, dde_shell_surface *dde_shell_surface, uint32_t splitable);
     void setActive(bool set);
     void setMinimized(bool set);
     void setMaximized(bool set);
@@ -283,9 +285,18 @@ void DDEShellSurface::Private::geometryCallback(void *data, dde_shell_surface *d
     emit p->q->geometryChanged(geo);
 }
 
+void DDEShellSurface::Private::splitableCallback(void *data, dde_shell_surface *ddeShellSurface, uint32_t splitable)
+{
+    Q_UNUSED(ddeShellSurface)
+    Private *p = cast(data);
+
+    p->splitable = splitable;
+}
+
 const dde_shell_surface_listener DDEShellSurface::Private::s_listener = {
     geometryCallback,
     stateChangedCallback,
+    splitableCallback,
 };
 
 void DDEShellSurface::Private::setActive(bool set)
@@ -668,6 +679,11 @@ bool DDEShellSurface::isMovable() const
     return d->movable;
 }
 
+bool DDEShellSurface::isSplitable() const
+{
+    return d->splitable;
+}
+
 QRect DDEShellSurface::getGeometry() const
 {
     return d->geometry;
@@ -698,6 +714,20 @@ void DDEShellSurface::requestWindowRadiusProperty(QPointF windowRadius)
                                    DDE_SHELL_PROPERTY_WINDOWRADIUS,
                                    &arr);
     wl_array_release(&arr);
+}
+
+void DDEShellSurface::requestSplitWindow(DDEShellSurface::SplitType splitType)
+{
+    switch (splitType) {
+    case SplitType::leftSplit:
+        dde_shell_surface_request_split_window(d->ddeShellSurface, DDE_SHELL_SPLIT_TYPE_LEFT_SPLIT);
+        break;
+    case SplitType::rightSplit:
+        dde_shell_surface_request_split_window(d->ddeShellSurface, DDE_SHELL_SPLIT_TYPE_RIGHT_SPLIT);
+        break;
+    default:
+        break;
+    }
 }
 
 }

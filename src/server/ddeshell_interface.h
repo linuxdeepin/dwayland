@@ -70,6 +70,7 @@ public:
 
     static DDEShellSurfaceInterface *get(wl_resource *native);
     void sendGeometry(const QRect &geom);
+    void sendSplitable(bool splitable);
 
     void setActive(bool set);
     void setMinimized(bool set);
@@ -85,6 +86,11 @@ public:
     void setResizable(bool set);
     void setAcceptFocus(bool set);
     void setModal(bool set);
+
+    enum class SplitType {
+        leftSplit        = 1 << 0,
+        rightSplit       = 1 << 1,
+    };
 
 Q_SIGNALS:
     void activationRequested();
@@ -105,6 +111,8 @@ Q_SIGNALS:
 
     void noTitleBarPropertyRequested(qint32 value);
     void windowRadiusPropertyRequested(QPointF windowRadius);
+    void splitWindowRequested(SplitType splitType);
+
 private:
     friend class DDEShellInterface;
     QRect geometry;

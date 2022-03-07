@@ -68,6 +68,11 @@
         <entry name="WindowPixelRatio" value="1 &lt;&lt; 9"/>
       </enum>
 
+      <enum name="split_type">
+        <entry name="left_split" value="1 &lt;&lt; 0"/>
+        <entry name="right_split" value="1 &lt;&lt; 1"/>
+      </enum>
+
       <request name="get_shell_surface">
         <description summary="get a dde shell surface bind to a wayland surface">
         </description>
@@ -128,6 +133,13 @@
         <arg name="flags" type="uint" summary="bitfield of state flags"/>
       </event>
 
+      <event name="splitable">
+        <description summary="window splitable">
+          This event will be sent as soon as the window splitable.
+        </description>
+        <arg name="flags" type="uint" summary="splitable value"/>
+      </event>
+
       <request name="set_property">
         <description summary="set window property">
           Set window property.
@@ -138,6 +150,13 @@
         </description>
         <arg name="property" type="uint" enum="property" summary="property type"/>
         <arg name="dataArr" type="array" summary="property value"/>
+      </request>
+
+      <request name="request_split_window">
+        <description summary="request split window">
+          Request split window.
+        </description>
+        <arg name="split_type" type="uint"/>
       </request>
 
     </interface>

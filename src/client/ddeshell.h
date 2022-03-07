@@ -202,6 +202,7 @@ public:
     bool isResizable() const;
     bool isAcceptFocus() const;
     bool isModal() const;
+    bool isSplitable() const;
 
     void requestActivate();
     void requestKeepAbove(bool set);
@@ -220,6 +221,13 @@ public:
 
     void requestNoTitleBarProperty(qint32 value);
     void requestWindowRadiusProperty(QPointF windowRadius);
+
+    enum class SplitType {
+        leftSplit        = 1 << 0,
+        rightSplit       = 1 << 1,
+    };
+
+    void requestSplitWindow(SplitType splitType);
 Q_SIGNALS:
     void geometryChanged(const QRect &geom);
     void activeChanged();
