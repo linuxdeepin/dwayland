@@ -64,6 +64,10 @@ add_executable(shadowTest shadowtest.cpp)
 target_link_libraries(shadowTest KF5::WaylandClient)
 ecm_mark_as_test(shadowTest)
 
+add_executable(gammaTest gammatest.cpp)
+target_link_libraries(gammaTest KF5::WaylandClient)
+ecm_mark_as_test(gammaTest)
+
 
 if (Qt5Widgets_FOUND)
     add_executable(dpmsTest dpmstest.cpp)
