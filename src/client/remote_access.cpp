@@ -34,6 +34,7 @@ class RemoteAccessManager::Private
 public:
     explicit Private(RemoteAccessManager *ram);
     void setup(org_kde_kwin_remote_access_manager *k);
+    bool startRecording(int frame);
 
     WaylandPointer<org_kde_kwin_remote_access_manager, org_kde_kwin_remote_access_manager_release> ram;
     EventQueue *queue = nullptr;
@@ -73,6 +74,13 @@ void RemoteAccessManager::Private::setup(org_kde_kwin_remote_access_manager *k)
     Q_ASSERT(!ram);
     ram.setup(k);
     org_kde_kwin_remote_access_manager_add_listener(k, &s_listener, this);
+}
+
+bool RemoteAccessManager::Private::startRecording(int frame)
+{
+    Q_ASSERT(ram);
+    org_kde_kwin_remote_access_manager_record(ram, frame);
+    return true;
 }
 
 RemoteAccessManager::RemoteAccessManager(QObject *parent)
@@ -122,6 +130,11 @@ RemoteAccessManager::operator org_kde_kwin_remote_access_manager*() const {
 bool RemoteAccessManager::isValid() const
 {
     return d->ram.isValid();
+}
+
+bool RemoteAccessManager::startRecording(int frame)
+{
+    return d->startRecording(frame);
 }
 
 class RemoteBuffer::Private

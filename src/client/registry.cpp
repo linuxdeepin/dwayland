@@ -211,7 +211,7 @@ static const QMap<Registry::Interface, SuppertedInterfaceData> s_interfaces = {
         &Registry::idleRemoved
     }},
     {Registry::Interface::RemoteAccessManager, {
-        1,
+        2,
         QByteArrayLiteral("org_kde_kwin_remote_access_manager"),
         &org_kde_kwin_remote_access_manager_interface,
         &Registry::remoteAccessManagerAnnounced,

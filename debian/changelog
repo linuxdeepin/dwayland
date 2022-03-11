@@ -1,3 +1,10 @@
+kwayland (4:5.57.0.13-1) unstable; urgency=medium
+
+  * Add window caption protocol
+  * Release tag 5.57.0.13
+
+ -- luochaojiang <luochaojiang@uniontech.com>  Thu, 15 Mar 2022 13:37:20 +0800
+
 kwayland (4:5.57.0.12-1) unstable; urgency=medium
 
   * Add window caption protocol

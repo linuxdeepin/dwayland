@@ -16,7 +16,7 @@
     You should have received a copy of the GNU Lesser General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
   ]]></copyright>
-    <interface name="org_kde_kwin_remote_access_manager" version="1">
+    <interface name="org_kde_kwin_remote_access_manager" version="2">
         <description summary="Protocol for managing rendered GBM buffers passing"/>
         <event name="buffer_ready" since="1">
             <description summary="Signals about buffer ready to be consumed by clients"/>
@@ -30,6 +30,10 @@
         </request>
         <request name="release" type="destructor">
             <description summary="release org_kde_kwin_remote_access_manager interface"/>
+        </request>
+        <request name="record" since="2">
+            <description summary="start retrieving buffer from server"/>
+            <arg name="frame" type="int" summary="screen shot count, 0 for stop, -1 for recording"/>
         </request>
     </interface>
     <interface name="org_kde_kwin_remote_buffer" version="1">

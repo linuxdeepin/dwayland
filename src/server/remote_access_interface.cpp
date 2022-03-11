@@ -150,8 +150,10 @@ private:
         return reinterpret_cast<Private*>(wl_resource_get_user_data(r));
     }
     static void getBufferCallback(wl_client *client, wl_resource *resource, uint32_t buffer, int32_t internalBufId);
+    static void recordCallback(wl_client *client, wl_resource *resource, int32_t count);
     static void releaseCallback(wl_client *client, wl_resource *resource);
     void bind(wl_client *client, uint32_t version, uint32_t id) override;
+    void startRecord(wl_client *client, wl_resource *resource, int32_t frame);
 
     /**
      * @brief Unreferences counter and frees buffer when it reaches zero
@@ -173,7 +175,7 @@ private:
     QHash<qint32, BufferHolder> sentBuffers;
 };
 
-const quint32 RemoteAccessManagerInterface::Private::s_version = 1;
+const quint32 RemoteAccessManagerInterface::Private::s_version = 2;
 
 RemoteAccessManagerInterface::Private::Private(RemoteAccessManagerInterface *q, Display *d)
     : Global::Private(d, &org_kde_kwin_remote_access_manager_interface, s_version)
@@ -226,7 +228,8 @@ void RemoteAccessManagerInterface::Private::sendBufferReady(const OutputInterfac
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 const struct org_kde_kwin_remote_access_manager_interface RemoteAccessManagerInterface::Private::s_interface = {
     getBufferCallback,
-    releaseCallback
+    releaseCallback,
+    recordCallback
 };
 #endif
 
@@ -266,13 +269,32 @@ void RemoteAccessManagerInterface::Private::getBufferCallback(wl_client *client,
     // send buffer params
     rbuf->passFd();
 
-    gsScreenRecord.setObjectName(SCREEN_RECORDING_START);
+    if (wl_resource_get_version(resource) <= 1) {
+        gsScreenRecord.setObjectName(SCREEN_RECORDING_START);
+        emit p->q->startRecord(-1);
+    }
 }
 
 void RemoteAccessManagerInterface::Private::releaseCallback(wl_client *client, wl_resource *resource)
 {
     Q_UNUSED(client);
     unbind(resource);
+}
+
+void RemoteAccessManagerInterface::Private::recordCallback(wl_client *client, wl_resource *resource, int32_t frame)
+{
+    Private *p = cast(resource);
+    p->startRecord(client, resource, frame);
+}
+
+void RemoteAccessManagerInterface::Private::startRecord(wl_client *client, wl_resource *resource, int32_t frame)
+{
+    if (!frame) {
+        gsScreenRecord.setObjectName(SCREEN_RECORDING_FINISHED);
+    } else {
+        gsScreenRecord.setObjectName(SCREEN_RECORDING_START);
+    }
+    emit q->startRecord(frame);
 }
 
 bool RemoteAccessManagerInterface::Private::unref(BufferHolder &bh)
@@ -295,6 +317,9 @@ void RemoteAccessManagerInterface::Private::unbind(wl_resource *resource)
     p->release(resource);
 
     gsScreenRecord.setObjectName(SCREEN_RECORDING_FINISHED);
+    if (wl_resource_get_version(resource) > 1) {
+        emit p->q->startRecord(0);
+    }
 }
 
 void RemoteAccessManagerInterface::Private::release(wl_resource *resource)

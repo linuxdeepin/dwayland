@@ -118,6 +118,8 @@ public:
     operator org_kde_kwin_remote_access_manager*();
     operator org_kde_kwin_remote_access_manager*() const;
 
+    bool startRecording(int frame);
+
 Q_SIGNALS:
     /**
      * The corresponding global for this interface on the Registry got removed.
