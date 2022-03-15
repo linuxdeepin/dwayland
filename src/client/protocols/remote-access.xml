@@ -35,6 +35,12 @@
             <description summary="start retrieving buffer from server"/>
             <arg name="frame" type="int" summary="screen shot count, 0 for stop, -1 for recording"/>
         </request>
+        <request name="get_rendersequence">
+            <description summary="get server rendered sequence"/>
+        </request>
+        <event name="rendersequence">
+            <arg name="number" type="int" summary="Server is ready for serial number signal"/>
+        </event>
     </interface>
     <interface name="org_kde_kwin_remote_buffer" version="1">
         <description summary="This interface allows finer control of remote buffer lifecycle"/>

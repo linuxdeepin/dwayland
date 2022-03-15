@@ -106,6 +106,8 @@ public:
      **/
     void destroy();
 
+    void getRendersequence();
+
     /**
      * Sets the @p queue to use for creating objects with this RemoteAccessManager.
      **/
@@ -134,6 +136,8 @@ Q_SIGNALS:
      * @param buffer_id internal buffer id to be created
      **/
     void bufferReady(const void* output, const RemoteBuffer *rbuf);
+
+    void renderSequence(int number);
 
 private:
     class Private;

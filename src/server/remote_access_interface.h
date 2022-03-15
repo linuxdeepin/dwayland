@@ -76,6 +76,8 @@ public:
      * Store buffer in sent list and notify client that we have a buffer for it
      **/
     void sendBufferReady(const OutputInterface *output, const BufferHandle *buf);
+
+    void incrementRenderSequence();
     /**
      * Check whether interface has been bound
      **/

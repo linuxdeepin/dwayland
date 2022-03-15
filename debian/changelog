@@ -1,3 +1,10 @@
+kwayland (4:5.57.0.15-1) unstable; urgency=medium
+
+  * Remote access adds render sequence interface
+  * Release tag 5.57.0.15
+
+ -- diguoliang <diguoliang@uniontech.com>  Tue, 15 Mar 2022 21:28:29 +0800
+
 kwayland (4:5.57.0.14-1) unstable; urgency=medium
 
   * Add a test program for gamma to adjust brightness

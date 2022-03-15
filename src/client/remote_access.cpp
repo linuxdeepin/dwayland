@@ -41,6 +41,7 @@ public:
 private:
     static const struct org_kde_kwin_remote_access_manager_listener s_listener;
     static void bufferReadyCallback(void *data, org_kde_kwin_remote_access_manager *interface, qint32 buffer_id, wl_output *output);
+    static void renderSequenceCallback(void *data, org_kde_kwin_remote_access_manager *interface, int number);
 
     RemoteAccessManager *q;
 };
@@ -51,7 +52,8 @@ RemoteAccessManager::Private::Private(RemoteAccessManager *q)
 }
 
 const org_kde_kwin_remote_access_manager_listener RemoteAccessManager::Private::s_listener = {
-    bufferReadyCallback
+    bufferReadyCallback,
+    renderSequenceCallback,
 };
 
 void RemoteAccessManager::Private::bufferReadyCallback(void *data, org_kde_kwin_remote_access_manager *interface, qint32 buffer_id, wl_output *output)
@@ -66,6 +68,14 @@ void RemoteAccessManager::Private::bufferReadyCallback(void *data, org_kde_kwin_
     qCDebug(KWAYLAND_CLIENT) << "Got buffer, server fd:" << buffer_id;
 
     emit ramp->q->bufferReady(output, rbuf);
+}
+
+void RemoteAccessManager::Private::renderSequenceCallback(void *data, org_kde_kwin_remote_access_manager *interface, int number)
+{
+    auto ramp = reinterpret_cast<RemoteAccessManager::Private*>(data);
+    Q_ASSERT(ramp->ram == interface);
+
+    emit ramp->q->renderSequence(number);
 }
 
 void RemoteAccessManager::Private::setup(org_kde_kwin_remote_access_manager *k)
@@ -107,6 +117,11 @@ void RemoteAccessManager::release()
 void RemoteAccessManager::destroy()
 {
     d->ram.destroy();
+}
+
+void RemoteAccessManager::getRendersequence()
+{
+    org_kde_kwin_remote_access_manager_get_rendersequence(d->ram);
 }
 
 void RemoteAccessManager::setEventQueue(EventQueue *queue)

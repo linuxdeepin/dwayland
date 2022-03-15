@@ -137,6 +137,8 @@ public:
      */
     void release(wl_resource *resource);
 
+    void incrementRenderSequence();
+
     /**
      * Clients of this interface.
      * This may be screenshot app, video capture app,
@@ -152,6 +154,7 @@ private:
     static void getBufferCallback(wl_client *client, wl_resource *resource, uint32_t buffer, int32_t internalBufId);
     static void recordCallback(wl_client *client, wl_resource *resource, int32_t count);
     static void releaseCallback(wl_client *client, wl_resource *resource);
+    static void getRenderSequenceCallback(wl_client *client, wl_resource *resource);
     void bind(wl_client *client, uint32_t version, uint32_t id) override;
     void startRecord(wl_client *client, wl_resource *resource, int32_t frame);
 
@@ -173,6 +176,8 @@ private:
      * Keys are fd numbers as they are unique
      **/
     QHash<qint32, BufferHolder> sentBuffers;
+
+    int renderSequence = 0;
 };
 
 const quint32 RemoteAccessManagerInterface::Private::s_version = 2;
@@ -225,11 +230,17 @@ void RemoteAccessManagerInterface::Private::sendBufferReady(const OutputInterfac
     sentBuffers[buf->fd()] = holder;
 }
 
+void RemoteAccessManagerInterface::Private::incrementRenderSequence()
+{
+    renderSequence++;
+}
+
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 const struct org_kde_kwin_remote_access_manager_interface RemoteAccessManagerInterface::Private::s_interface = {
     getBufferCallback,
     releaseCallback,
-    recordCallback
+    recordCallback,
+    getRenderSequenceCallback
 };
 #endif
 
@@ -297,6 +308,12 @@ void RemoteAccessManagerInterface::Private::startRecord(wl_client *client, wl_re
     emit q->startRecord(frame);
 }
 
+void RemoteAccessManagerInterface::Private::getRenderSequenceCallback(wl_client *client, wl_resource *resource)
+{
+    Private *p = cast(resource);
+    org_kde_kwin_remote_access_manager_send_rendersequence(resource, p->renderSequence);
+}
+
 bool RemoteAccessManagerInterface::Private::unref(BufferHolder &bh)
 {
     bh.counter--;
@@ -357,6 +374,12 @@ void RemoteAccessManagerInterface::sendBufferReady(const OutputInterface *output
 {
     Private *priv = reinterpret_cast<Private *>(d.data());
     priv->sendBufferReady(output, buf);
+}
+
+void RemoteAccessManagerInterface::incrementRenderSequence()
+{
+    Private *priv = reinterpret_cast<Private *>(d.data());
+    priv->incrementRenderSequence();
 }
 
 bool RemoteAccessManagerInterface::isBound() const

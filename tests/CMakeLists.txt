@@ -68,6 +68,9 @@ add_executable(gammaTest gammatest.cpp)
 target_link_libraries(gammaTest KF5::WaylandClient)
 ecm_mark_as_test(gammaTest)
 
+add_executable(rendersequenceTest rendersequencetest.cpp)
+target_link_libraries(rendersequenceTest KF5::WaylandClient)
+ecm_mark_as_test(rendersequenceTest)
 
 if (Qt5Widgets_FOUND)
     add_executable(dpmsTest dpmstest.cpp)
