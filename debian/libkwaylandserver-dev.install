@@ -1,0 +1,4 @@
+usr/include/KWaylandServer/
+usr/include/kwaylandserver_version.h
+usr/lib/*/cmake/KWaylandServer/
+usr/lib/*/libKWaylandServer.so

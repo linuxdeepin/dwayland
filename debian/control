@@ -1,0 +1,52 @@
+Source: kwayland-server
+Section: libs
+Priority: optional
+Maintainer: Debian Qt/KDE Maintainers <debian-qt-kde@lists.debian.org>
+Uploaders: Aurélien COUDERC <coucouf@debian.org>,
+           Norbert Preining <norbert@preining.info>,
+           Patrick Franz <deltaone@debian.org>,
+           Pino Toscano <pino@debian.org>,
+           Scarlett Moore <sgmoore@kde.org>,
+Build-Depends: cmake (>= 3.16~),
+               debhelper-compat (= 13),
+               extra-cmake-modules (>= 5.86~),
+               libegl-dev,
+               libkf5wayland-dev (>= 4:5.86~),
+               libqt5waylandclient5-dev (>= 5.15.0~),
+               libwayland-dev (>= 1.18~),
+               pkg-config,
+               pkg-kde-tools (>= 0.15.18~),
+               plasma-wayland-protocols (>= 1.6.0~),
+               qtbase5-dev (>= 5.15.0~),
+               qtwayland5-dev-tools (>= 5.15.0~),
+               wayland-protocols (>= 1.24~),
+Standards-Version: 4.6.0
+Rules-Requires-Root: no
+Homepage: https://invent.kde.org/plasma/kwayland-server
+Vcs-Browser: https://salsa.debian.org/qt-kde-team/kde/kwayland-server
+Vcs-Git: https://salsa.debian.org/qt-kde-team/kde/kwayland-server.git
+
+Package: libkwaylandserver5
+Architecture: any
+Multi-Arch: same
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Breaks: libkwin4-effect-builtins1
+Description: Qt library wrapper for Wayland libraries
+ KWaylandServier provides a Qt-style Server library wrapper for
+ the Wayland libraries.
+ .
+ This package contains the shared library.
+Provides: ${ABI:VirtualPackage}
+
+Package: libkwaylandserver-dev
+Section: libdevel
+Architecture: any
+Depends: libkf5wayland-dev (>= 4:5.86~),
+         libkwaylandserver5 (= ${binary:Version}),
+         qtbase5-dev (>= 5.15.0~),
+         ${misc:Depends},
+Description: development files for kwaylandserver
+ KWaylandServier provides a Qt-style Server library wrapper for
+ the Wayland libraries.
+ .
+ This package contains the development files for kwaylandserver.
