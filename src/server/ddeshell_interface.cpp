@@ -211,6 +211,9 @@ void DDEShellSurfaceInterfacePrivate::dde_shell_surface_set_state(Resource *reso
     if (flags & DDE_SHELL_STATE_KEEP_BELOW) {
         Q_EMIT q->keepBelowRequested(state & DDE_SHELL_STATE_KEEP_BELOW);
     }
+    if (flags & DDE_SHELL_STATE_ON_ALL_DESKTOPS) {
+        Q_EMIT q->onAllDesktopsRequested(state & DDE_SHELL_STATE_ON_ALL_DESKTOPS);
+    }
     if (flags & DDE_SHELL_STATE_CLOSEABLE) {
         Q_EMIT q->closeableRequested(state & DDE_SHELL_STATE_CLOSEABLE);
     }
@@ -269,6 +272,11 @@ void DDEShellSurfaceInterface::setKeepAbove(bool set)
 void DDEShellSurfaceInterface::setKeepBelow(bool set)
 {
     d->setState(DDE_SHELL_STATE_KEEP_BELOW, set);
+}
+
+void DDEShellSurfaceInterface::setOnAllDesktops(bool set)
+{
+    d->setState(DDE_SHELL_STATE_ON_ALL_DESKTOPS, set);
 }
 
 void DDEShellSurfaceInterface::setMaximized(bool set)

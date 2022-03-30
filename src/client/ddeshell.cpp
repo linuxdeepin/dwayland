@@ -72,6 +72,7 @@ public:
     bool resizable = false;
     bool acceptFocus = true;
     bool modality = false;
+    bool onAllDesktops = false;
 
     static DDEShellSurface *get(wl_surface *surface);
     static DDEShellSurface *get(Surface *surface);
@@ -85,6 +86,7 @@ private:
     void setFullscreen(bool set);
     void setKeepAbove(bool set);
     void setKeepBelow(bool set);
+    void setOnAllDesktops(bool set);
     void setCloseable(bool set);
     void setMinimizeable(bool set);
     void setMaximizeable(bool set);
@@ -261,6 +263,7 @@ void DDEShellSurface::Private::stateChangedCallback(void *data, dde_shell_surfac
     p->setFullscreen(state & DDE_SHELL_STATE_FULLSCREEN);
     p->setKeepAbove(state & DDE_SHELL_STATE_KEEP_ABOVE);
     p->setKeepBelow(state & DDE_SHELL_STATE_KEEP_BELOW);
+    p->setOnAllDesktops(state & DDE_SHELL_STATE_ON_ALL_DESKTOPS);
     p->setCloseable(state & DDE_SHELL_STATE_CLOSEABLE);
     p->setFullscreenable(state & DDE_SHELL_STATE_FULLSCREENABLE);
     p->setMaximizeable(state & DDE_SHELL_STATE_MAXIMIZABLE);
@@ -295,6 +298,15 @@ void DDEShellSurface::Private::setActive(bool set)
     }
     active = set;
     Q_EMIT q->activeChanged();
+}
+
+void DDEShellSurface::Private::setOnAllDesktops(bool set)
+{
+    if (onAllDesktops == set) {
+        return;
+    }
+    onAllDesktops = set;
+    emit q->onAllDesktopsChanged();
 }
 
 void DDEShellSurface::Private::setFullscreen(bool set)
@@ -596,6 +608,24 @@ void DDEShellSurface::requestResizable(bool set)
             DDE_SHELL_STATE_RESIZABLE,
             DDE_SHELL_STATE_RESIZABLE);
     }
+}
+
+void DDEShellSurface::requestOnAllDesktops(bool set)
+{
+    if (!set) {
+        dde_shell_surface_set_state(d->ddeShellSurface,
+            DDE_SHELL_STATE_ON_ALL_DESKTOPS,
+            0);
+    } else {
+        dde_shell_surface_set_state(d->ddeShellSurface,
+            DDE_SHELL_STATE_ON_ALL_DESKTOPS,
+            DDE_SHELL_STATE_ON_ALL_DESKTOPS);
+    }
+}
+
+bool DDEShellSurface::isOnAllDesktops() const
+{
+    return d->onAllDesktops;
 }
 
 bool DDEShellSurface::isActive() const
