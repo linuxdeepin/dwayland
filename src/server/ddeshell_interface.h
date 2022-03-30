@@ -78,6 +78,7 @@ public:
     void setFullscreen(bool set);
     void setKeepAbove(bool set);
     void setKeepBelow(bool set);
+    void setOnAllDesktops(bool set);
     void setCloseable(bool set);
     void setMinimizeable(bool set);
     void setMaximizeable(bool set);
@@ -100,6 +101,7 @@ Q_SIGNALS:
     void fullscreenRequested(bool set);
     void keepAboveRequested(bool set);
     void keepBelowRequested(bool set);
+    void onAllDesktopsRequested(bool set);
     void closeableRequested(bool set);
     void minimizeableRequested(bool set);
     void maximizeableRequested(bool set);

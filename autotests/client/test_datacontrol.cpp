@@ -300,7 +300,7 @@ void DataControlInterfaceTest::testCopyToControl()
     QCOMPARE(selectionSpy.count(), 1);
     KWayland::Client::DataControlOfferV1* offer(selectionSpy.first().first().value<KWayland::Client::DataControlOfferV1 *>());
     QCOMPARE(offer->offeredMimeTypes().count(), 1);
-    QCOMPARE(offer->offeredMimeTypes()[0].name(), "text/plain");
+    QCOMPARE(offer->offeredMimeTypes()[0], "text/plain");
 
 }
 
@@ -328,7 +328,7 @@ void DataControlInterfaceTest::testCopyToControlPrimarySelection()
      KWayland::Client::DataControlOfferV1* offer(selectionSpy.first().first().value<KWayland::Client::DataControlOfferV1 *>());
 
     QCOMPARE(offer->offeredMimeTypes().count(), 1);
-    QCOMPARE(offer->offeredMimeTypes()[0].name(), "text/plain");
+    QCOMPARE(offer->offeredMimeTypes()[0], "text/plain");
 }
 
 void DataControlInterfaceTest::testCopyFromControl()

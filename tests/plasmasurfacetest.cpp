@@ -231,6 +231,11 @@ void PlasmaSurfaceTest::setupRegistry(Registry *registry)
                     qDebug() << "Window is fullscreenable changed: " << m_ddeShellSurface->isFullscreenable();
                 }
             );
+            connect(m_ddeShellSurface, &DDEShellSurface::onAllDesktopsChanged, this,
+                [this] {
+                    qDebug() << "Window is onAllDesktops changed: " << m_ddeShellSurface->isOnAllDesktops();
+                }
+            );
             Q_ASSERT(m_plasmaShellSurface);
             m_plasmaShellSurface->setSkipTaskbar(m_skipTaskbar);
             m_plasmaShellSurface->setSkipSwitcher(m_skipSwitcher);
@@ -240,6 +245,7 @@ void PlasmaSurfaceTest::setupRegistry(Registry *registry)
             m_ddeShellSurface->requestMinizeable(false);
             m_ddeShellSurface->requestMaximizeable(false);
             m_ddeShellSurface->requestResizable(false);
+            m_ddeShellSurface->requestOnAllDesktops(true);
 
             // //创建标题栏server decoration
             auto parentDeco = m_decoration->create(m_surface, this);
