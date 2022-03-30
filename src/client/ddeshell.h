@@ -202,6 +202,7 @@ public:
     bool isResizable() const;
     bool isAcceptFocus() const;
     bool isModal() const;
+    bool isOnAllDesktops() const;
 
     void requestActivate();
     void requestKeepAbove(bool set);
@@ -213,6 +214,7 @@ public:
     void requestMinizeable(bool set);
     void requestMaximizeable(bool set);
     void requestResizable(bool set);
+    void requestOnAllDesktops(bool set);
 
     void requestGeometry() const;
     void requestActive() const;
@@ -236,6 +238,7 @@ Q_SIGNALS:
     void resizableChanged();
     void acceptFocusChanged();
     void modalityChanged();
+    void onAllDesktopsChanged();
 
 private:
     friend class DDEShell;
