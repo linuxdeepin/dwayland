@@ -45,6 +45,7 @@
 #include "xdgshell_stable_interface_p.h"
 #include "xdgshell_v5_interface_p.h"
 #include "xdgshell_v6_interface_p.h"
+#include "clientmanagement_interface.h"
 
 #include <QAbstractEventDispatcher>
 #include <QCoreApplication>
@@ -610,6 +611,13 @@ TabletManagerInterface *Display::createTabletManagerInterface(QObject *parent)
         delete d;
     });
     return d;
+}
+
+ClientManagementInterface *Display::createClientManagement(QObject *parent)
+{
+    ClientManagementInterface *clientManagement = new ClientManagementInterface(this, parent);
+    connect(this, &Display::aboutToTerminate, clientManagement, [this,clientManagement] { delete clientManagement; });
+    return clientManagement;
 }
 
 void Display::createShm()

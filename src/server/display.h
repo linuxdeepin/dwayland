@@ -77,6 +77,7 @@ class EglStreamControllerInterface;
 class KeyStateInterface;
 class LinuxDmabufUnstableV1Interface;
 class TabletManagerInterface;
+class ClientManagementInterface;
 
 /**
  * @brief Class holding the Wayland server display loop.
@@ -189,6 +190,7 @@ public:
     ContrastManagerInterface *createContrastManager(QObject *parent = nullptr);
     SlideManagerInterface *createSlideManager(QObject *parent = nullptr);
     DpmsManagerInterface *createDpmsManager(QObject *parent = nullptr);
+    ClientManagementInterface *createClientManagement(QObject *parent = nullptr);
 
     /** @since 5.60 */
     KeyStateInterface *createKeyStateInterface(QObject *parent = nullptr);

@@ -10,6 +10,7 @@ set(CLIENT_LIB_SRCS
     appmenu.cpp
     buffer.cpp
     blur.cpp
+    clientmanagement.cpp
     compositor.cpp
     connection_thread.cpp
     contrast.cpp
@@ -223,6 +224,11 @@ ecm_add_wayland_client_protocol(CLIENT_LIB_SRCS
     BASENAME keystate
 )
 
+ecm_add_wayland_client_protocol(CLIENT_LIB_SRCS
+    PROTOCOL ${PLASMA_WAYLAND_PROTOCOLS_DIR}/client-management.xml
+    BASENAME client-management
+)
+
 set(CLIENT_GENERATED_FILES
     ${CMAKE_CURRENT_BINARY_DIR}/wayland-fullscreen-shell-client-protocol.h
     ${CMAKE_CURRENT_BINARY_DIR}/wayland-output-management-client-protocol.h
@@ -249,6 +255,7 @@ set(CLIENT_GENERATED_FILES
     ${CMAKE_CURRENT_BINARY_DIR}/wayland-idle-inhibit-unstable-v1-client-protocol.h
     ${CMAKE_CURRENT_BINARY_DIR}/wayland-xdg-output-unstable-v1-client-protocol.h
     ${CMAKE_CURRENT_BINARY_DIR}/wayland-xdg-decoration-unstable-v1-client-protocol.h
+    ${CMAKE_CURRENT_BINARY_DIR}/wayland-client-management-client-protocol.h
 )
 
 set_source_files_properties(${CLIENT_GENERATED_FILES} PROPERTIES SKIP_AUTOMOC ON)
@@ -311,6 +318,7 @@ set(CLIENT_LIB_HEADERS
   appmenu.h
   blur.h
   buffer.h
+  clientmanagement.h
   compositor.h
   connection_thread.h
   contrast.h

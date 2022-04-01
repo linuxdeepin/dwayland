@@ -4,6 +4,7 @@ set(SERVER_LIB_SRCS
     blur_interface.cpp
     buffer_interface.cpp
     clientconnection.cpp
+    clientmanagement_interface.cpp
     compositor_interface.cpp
     contrast_interface.cpp
     datadevice_interface.cpp
@@ -235,6 +236,11 @@ ecm_add_qtwayland_server_protocol(SERVER_LIB_SRCS
     BASENAME tablet-unstable-v2
 )
 
+ecm_add_wayland_server_protocol(SERVER_LIB_SRCS
+    PROTOCOL ${PLASMA_WAYLAND_PROTOCOLS_DIR}/client-management.xml
+    BASENAME client-management
+)
+
 set(SERVER_GENERATED_SRCS
     ${CMAKE_CURRENT_BINARY_DIR}/wayland-blur-client-protocol.h
     ${CMAKE_CURRENT_BINARY_DIR}/wayland-blur-server-protocol.h
@@ -294,6 +300,8 @@ set(SERVER_GENERATED_SRCS
     ${CMAKE_CURRENT_BINARY_DIR}/wayland-xdg-shell-v6-server-protocol.h
     ${CMAKE_CURRENT_BINARY_DIR}/qwayland-server-tablet-unstable-v2.h
     ${CMAKE_CURRENT_BINARY_DIR}/qwayland-server-tablet-unstable-v2.cpp
+    ${CMAKE_CURRENT_BINARY_DIR}/wayland-client-management-client-protocol.h
+    ${CMAKE_CURRENT_BINARY_DIR}/wayland-client-management-server-protocol.h
 )
 
 set_source_files_properties(${SERVER_GENERATED_SRCS} PROPERTIES SKIP_AUTOMOC ON)
@@ -336,6 +344,7 @@ set(SERVER_LIB_HEADERS
   blur_interface.h
   buffer_interface.h
   clientconnection.h
+  clientmanagement_interface.h
   compositor_interface.h
   contrast_interface.h
   datadevice_interface.h
