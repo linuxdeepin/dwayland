@@ -6,6 +6,7 @@ set(SERVER_LIB_SRCS
     clientbuffer.cpp
     clientbufferintegration.cpp
     clientconnection.cpp
+    clientmanagement_interface.cpp
     compositor_interface.cpp
     contrast_interface.cpp
     datacontroldevice_v1_interface.cpp
@@ -270,6 +271,11 @@ ecm_add_qtwayland_server_protocol_kde(SERVER_LIB_SRCS
 )
 
 ecm_add_qtwayland_server_protocol_kde(SERVER_LIB_SRCS
+    PROTOCOL ${PLASMA_WAYLAND_PROTOCOLS_DIR}/client-management.xml
+    BASENAME com-deepin-client-management
+)
+
+ecm_add_qtwayland_server_protocol_kde(SERVER_LIB_SRCS
     PROTOCOL ${WaylandProtocols_DATADIR}/unstable/input-method/input-method-unstable-v1.xml
     BASENAME input-method-unstable-v1
 )
@@ -337,6 +343,7 @@ set(SERVER_LIB_HEADERS
   clientbuffer.h
   clientbufferintegration.h
   clientconnection.h
+  clientmanagement_interface.h
   compositor_interface.h
   contrast_interface.h
   datacontroldevice_v1_interface.h
