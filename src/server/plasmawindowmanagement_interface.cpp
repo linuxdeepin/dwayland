@@ -67,6 +67,7 @@ public:
     void setParentWindow(PlasmaWindowInterface *parent);
     void setGeometry(const QRect &geometry);
     void setApplicationMenuPaths(const QString &service, const QString &object);
+    void setWindowId(quint32 winid);
     wl_resource *resourceForParent(PlasmaWindowInterface *parent, Resource *child) const;
 
     quint32 windowId = 0;
@@ -401,6 +402,15 @@ void PlasmaWindowInterfacePrivate::setPid(quint32 pid)
 
     for (auto resource : clientResources) {
         send_pid_changed(resource->handle, pid);
+    }
+}
+
+void PlasmaWindowInterfacePrivate::setWindowId(quint32 winid)
+{
+    const auto clientResources = resourceMap();
+
+    for (auto resource : clientResources) {
+        send_window_id(resource->handle, winid);
     }
 }
 
@@ -994,6 +1004,11 @@ void PlasmaWindowInterface::setApplicationMenuPaths(const QString &serviceName, 
 quint32 PlasmaWindowInterface::internalId() const
 {
     return d->windowId;
+}
+
+void PlasmaWindowInterface::setWindowId(quint32 winid)
+{
+    d->setWindowId(winid);
 }
 
 QString PlasmaWindowInterface::uuid() const

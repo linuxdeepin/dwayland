@@ -129,6 +129,7 @@ public:
     void setShaded(bool set);
     void setMovable(bool set);
     void setResizable(bool set);
+    void setWindowId(quint32 winid);
     /**
      * FIXME: still relevant with new desktops?
      */
