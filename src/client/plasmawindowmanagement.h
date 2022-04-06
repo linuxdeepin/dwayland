@@ -296,6 +296,13 @@ public:
      * @see appIdChanged
      **/
     QString appId() const;
+
+    /**
+     * @returns the id of the window created
+     * @see windowIdCallback
+     **/
+    quint32 windowId() const;
+
 #if KWAYLANDCLIENT_ENABLE_DEPRECATED_SINCE(5, 52)
     /**
      * @returns the id of the virtual desktop this PlasmaWindow is on

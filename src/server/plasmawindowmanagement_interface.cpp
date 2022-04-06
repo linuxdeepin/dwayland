@@ -72,6 +72,7 @@ public:
     void setParentWindow(PlasmaWindowInterface *parent);
     void setGeometry(const QRect &geometry);
     void setApplicationMenuPaths(const QString &service, const QString &object);
+    void setWindowId(const quint32 &winid);
     wl_resource *resourceForParent(PlasmaWindowInterface *parent, wl_resource *child) const;
 
     QVector<wl_resource *> resources;
@@ -109,6 +110,7 @@ private:
     QString m_title;
     QString m_appId;
     quint32 m_pid = 0;
+    quint32 m_windowId = 0;
     QString m_themedIconName;
     QString m_appServiceName;
     QString m_appObjectPath;
@@ -401,6 +403,9 @@ void PlasmaWindowInterface::Private::createResource(wl_resource *parent, uint32_
     if (m_pid != 0) {
         org_kde_plasma_window_send_pid_changed(resource, m_pid);
     }
+    if(m_windowId != 0){
+        org_kde_plasma_window_send_window_id(resource,m_windowId);
+    }
     if (!m_title.isEmpty()) {
         org_kde_plasma_window_send_title_changed(resource, m_title.toUtf8().constData());
     }
@@ -618,6 +623,18 @@ void PlasmaWindowInterface::Private::setGeometry(const QRect &geo)
             continue;
         }
         org_kde_plasma_window_send_geometry(resource, geometry.x(), geometry.y(), geometry.width(), geometry.height());
+    }
+}
+
+void PlasmaWindowInterface::Private::setWindowId(const quint32 &winid)
+{
+    if(m_windowId == winid){
+        return;
+    }
+    m_windowId = winid;
+    for (auto it = resources.constBegin(); it != resources.constEnd(); ++it) {
+        auto resource = *it;
+        org_kde_plasma_window_send_window_id(resource,winid);
     }
 }
 
@@ -965,6 +982,11 @@ void PlasmaWindowInterface::removePlasmaVirtualDesktop(const QString &id)
 QStringList PlasmaWindowInterface::plasmaVirtualDesktops() const
 {
     return d->plasmaVirtualDesktops;
+}
+
+void PlasmaWindowInterface::setWindowId(quint32 winid)
+{
+    d->setWindowId(winid);
 }
 
 void PlasmaWindowInterface::setShadeable(bool set)

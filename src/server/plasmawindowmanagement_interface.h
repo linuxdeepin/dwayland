@@ -238,6 +238,8 @@ public:
      */
     quint32 internalId() const;
 
+    void setWindowId(quint32 winid);
+
 Q_SIGNALS:
     void closeRequested();
     /**
