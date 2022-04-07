@@ -78,6 +78,11 @@ public:
      */
     bool rgbRangeChanged() const;
 
+    /** Whether the globalBrightness() property of the outputdevice changed.
+     * @returns @c true if the globalBrightness() property of the outputdevice has changed.
+     */
+    bool brightnessChanged() const;
+
     /** The new value for enabled. */
     bool enabled() const;
 
@@ -105,6 +110,8 @@ public:
 
     /** The new value for rgbRange */
     OutputDeviceV2Interface::RgbRange rgbRange() const;
+
+    int brightness() const;
 
 private:
     friend class OutputConfigurationV2InterfacePrivate;

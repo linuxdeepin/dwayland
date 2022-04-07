@@ -94,6 +94,7 @@ public:
     qreal scale() const;
     SubPixel subPixel() const;
     Transform transform() const;
+    int brightness() const;
 
     QByteArray edid() const;
     bool enabled() const;

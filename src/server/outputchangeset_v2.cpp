@@ -21,6 +21,7 @@ OutputChangeSetV2Private::OutputChangeSetV2Private(OutputDeviceV2Interface *outp
     , position(outputDevice->globalPosition())
     , scale(outputDevice->scale())
     , overscan(outputDevice->overscan())
+    , brightness(outputDevice->brightness())
 {
 }
 
@@ -120,4 +121,15 @@ OutputDeviceV2Interface::RgbRange OutputChangeSetV2::rgbRange() const
 {
     return d->rgbRange;
 }
+
+bool OutputChangeSetV2::brightnessChanged() const
+{
+    return d->brightness != d->outputDevice->brightness();
+}
+
+int OutputChangeSetV2::brightness() const
+{
+    return d->brightness;
+}
+
 }

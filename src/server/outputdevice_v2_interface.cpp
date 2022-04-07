@@ -50,6 +50,7 @@ public:
     QString manufacturer = QStringLiteral("org.kde.kwin");
     QString model = QStringLiteral("none");
     qreal scale = 1.0;
+    int brightness = 60;
     QString serialNumber;
     QString eisaId;
     QString name;
@@ -487,6 +488,11 @@ OutputDeviceV2Interface::SubPixel OutputDeviceV2Interface::subPixel() const
 OutputDeviceV2Interface::Transform OutputDeviceV2Interface::transform() const
 {
     return d->transform;
+}
+
+int OutputDeviceV2Interface::brightness() const
+{
+    return d->brightness;
 }
 
 void OutputDeviceV2Interface::setModes(const QList<OutputDeviceModeV2Interface *> &modes)

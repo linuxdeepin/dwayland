@@ -49,6 +49,7 @@ protected:
     void kde_output_configuration_v2_set_vrr_policy(Resource *resource, struct ::wl_resource *outputdevice, uint32_t policy) override;
     void kde_output_configuration_v2_set_rgb_range(Resource *resource, wl_resource *outputdevice, uint32_t rgbRange) override;
     void kde_output_configuration_v2_set_primary_output(Resource *resource, struct ::wl_resource *output) override;
+    void kde_output_configuration_v2_brightness(Resource *resource, struct ::wl_resource *outputdevice, int32_t brightness);
 };
 
 void OutputConfigurationV2InterfacePrivate::kde_output_configuration_v2_enable(Resource *resource, wl_resource *outputdevice, int32_t enable)
@@ -165,6 +166,13 @@ void OutputConfigurationV2InterfacePrivate::kde_output_configuration_v2_set_prim
     primaryOutput = OutputDeviceV2Interface::get(output);
 }
 
+void OutputConfigurationV2InterfacePrivate::kde_output_configuration_v2_brightness(Resource *resource, struct ::wl_resource *outputdevice, int32_t brightness)
+{
+    Q_UNUSED(resource);
+    OutputDeviceV2Interface *output = OutputDeviceV2Interface::get(outputdevice);
+    pendingChanges(output)->d->brightness = brightness;
+}
+
 void OutputConfigurationV2InterfacePrivate::kde_output_configuration_v2_destroy(Resource *resource)
 {
     wl_resource_destroy(resource->handle);
@@ -247,7 +255,8 @@ bool OutputConfigurationV2InterfacePrivate::hasPendingChanges(OutputDeviceV2Inte
     c->refreshRateChanged() ||
     c->transformChanged() ||
     c->positionChanged() ||
-    c->scaleChanged();
+    c->scaleChanged() ||
+    c->brightnessChanged();
 }
 
 void OutputConfigurationV2InterfacePrivate::clearPendingChanges()
