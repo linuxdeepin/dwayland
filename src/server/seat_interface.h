@@ -372,6 +372,9 @@ public:
      * @param source Describes how the axis event was physically generated.
      */
     void notifyPointerAxis(Qt::Orientation orientation, qreal delta, qint32 discreteDelta, PointerAxisSource source);
+
+    void notifyPointerAxisToClient(Qt::Orientation orientation, qint32 delta, SurfaceInterface * surface, QMatrix4x4 matrix);
+
     /**
      * @returns true if there is a pressed button with the given @p serial
      */
