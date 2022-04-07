@@ -22,6 +22,7 @@
 #include <linux/input.h>
 
 #include <functional>
+#include <unistd.h>
 
 namespace KWayland
 {
@@ -804,7 +805,7 @@ void SeatInterface::pointerAxisV5(Qt::Orientation orientation, qreal delta, qint
     }
 }
 
-void SeatInterface::pointerAxis(Qt::Orientation orientation, quint32 delta)
+void SeatInterface::pointerAxis(Qt::Orientation orientation, qint32 delta)
 {
     Q_D();
     if (d->drag.mode == Private::Drag::Mode::Pointer) {
@@ -814,6 +815,32 @@ void SeatInterface::pointerAxis(Qt::Orientation orientation, quint32 delta)
     if (d->globalPointer.focus.surface) {
         for (auto it = d->globalPointer.focus.pointers.constBegin(), end = d->globalPointer.focus.pointers.constEnd(); it != end; ++it) {
             (*it)->axis(orientation, delta);
+        }
+    }
+}
+
+void SeatInterface::pointerAxisToClient(Qt::Orientation orientation, qint32 delta, SurfaceInterface * surface, QMatrix4x4 matrix)
+{
+    Q_D();
+    if (d->drag.mode == Private::Drag::Mode::Pointer) {
+        // ignore
+        return;
+    }
+    if (!surface) {
+        return;
+    }
+    const quint32 serial = d->display->nextSerial();
+    QVector<PointerInterface *> targetPoints =  d->pointersForSurface(surface);
+    for (auto it = targetPoints.constBegin(), end = targetPoints.constEnd(); it != end; it) {
+        SurfaceInterface * sur = (*it)->focusedSurface();
+        if (sur != surface) {
+            (*it)->setFocusedSurface(surface, serial, matrix);
+        }
+        (*it)->axis(orientation, delta);
+        (*it)->client()->flush();
+        usleep(10000);
+        if ((*it) != focusedPointer()) {
+            (*it)->setFocusedSurface(nullptr, serial, matrix);
         }
     }
 }

@@ -388,7 +388,9 @@ public:
     /**
      * @see pointerAxisV5
      **/
-    void pointerAxis(Qt::Orientation orientation, quint32 delta);
+    void pointerAxis(Qt::Orientation orientation, qint32 delta);
+
+    void pointerAxisToClient(Qt::Orientation orientation, qint32 delta, SurfaceInterface * surface, QMatrix4x4 matrix);
     /**
      * @returns true if there is a pressed button with the given @p serial
      * @since 5.6
