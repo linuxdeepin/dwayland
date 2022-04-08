@@ -57,6 +57,7 @@ set(SERVER_LIB_SRCS
     shadow_interface.cpp
     shmclientbuffer.cpp
     slide_interface.cpp
+    strut_interface.cpp
     subcompositor_interface.cpp
     surface_interface.cpp
     surfacerole.cpp
@@ -296,6 +297,11 @@ ecm_add_qtwayland_server_protocol_kde(SERVER_LIB_SRCS
     BASENAME dde-shell
 )
 
+ecm_add_qtwayland_server_protocol_kde(SERVER_LIB_SRCS
+    PROTOCOL ${PLASMA_WAYLAND_PROTOCOLS_DIR}/strut.xml
+    BASENAME strut
+)
+
 add_library(KWaylandServer ${SERVER_LIB_SRCS})
 
 if(CMAKE_SYSTEM_NAME MATCHES "Linux")
@@ -399,6 +405,7 @@ set(SERVER_LIB_HEADERS
   shadow_interface.h
   shmclientbuffer.h
   slide_interface.h
+  strut_interface.h
   subcompositor_interface.h
   surface_interface.h
   tablet_v2_interface.h
