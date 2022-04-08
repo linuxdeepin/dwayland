@@ -37,6 +37,7 @@
 #include "shadow_interface.h"
 #include "shell_interface.h"
 #include "slide_interface.h"
+#include "strut_interface.h"
 #include "subcompositor_interface.h"
 #include "tablet_interface.h"
 #include "textinput_interface_p.h"
@@ -626,6 +627,13 @@ DDEShellInterface *Display::createDDEShell(QObject *parent)
     auto b = new DDEShellInterface(this, parent);
     connect(this, &Display::aboutToTerminate, b, [this, b] { delete b; });
     return b;
+}
+
+StrutInterface *Display::createStrut(QObject* parent)
+{
+    auto s = new StrutInterface(this, parent);
+    connect(this, &Display::aboutToTerminate, s, [this, s] { delete s; });
+    return s;
 }
 
 void Display::createShm()

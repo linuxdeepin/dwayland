@@ -57,6 +57,7 @@ struct zxdg_output_manager_v1;
 struct zxdg_decoration_manager_v1;
 struct com_deepin_client_management;
 struct dde_shell;
+struct com_deepin_kwin_strut;
 
 namespace KWayland
 {
@@ -108,6 +109,7 @@ class XdgOutputManager;
 class XdgDecorationManager;
 class ClientManagement;
 class DDEShell;
+class Strut;
 
 /**
  * @short Wrapper for the wl_registry interface.
@@ -188,6 +190,7 @@ public:
         PlasmaActivationFeedback, ///< Refers to org_kde_plasma_activation_feedback interface, @since 5.83
         ClientManagement,///refers to com_deepin_client_management, @since 5.83
         DDEShell, ///<refers to dde_shell, @since 5.54
+        Strut, ///< refers to com_deepin_kwin_strut interface
     };
     explicit Registry(QObject *parent = nullptr);
     ~Registry() override;
@@ -716,6 +719,16 @@ public:
      **/
     dde_shell *bindDDEShell(uint32_t name, uint32_t version) const;
 
+    /**
+     * Binds the com_deepin_kwin_strut with @p name and @p version.
+     * If the @p name does not exist or is not for the strut interface,
+     * @c null will be returned.
+     *
+     * Prefer using createStrut instead.
+     * @see createStrut
+     * @since 5.5
+     **/
+    com_deepin_kwin_strut *bindStrut(uint32_t name, uint32_t version) const;
     ///@}
 
     /**
@@ -1344,6 +1357,23 @@ public:
      **/
     DDEShell *createDDEShell(quint32 name, quint32 version, QObject *parent = nullptr);
 
+    /**
+     * Creates a Strut and sets it up to manage the interface identified by
+     * @p name and @p version.
+     *
+     * Note: in case @p name is invalid or isn't for the com_deepin_kwin_strut interface,
+     * the returned Strut will not be valid. Therefore it's recommended to call
+     * isValid on the created instance.
+     *
+     * @param name The name of the com_deepin_kwin_strut interface to bind
+     * @param version The version or the com_deepin_kwin_strut interface to use
+     * @param parent The parent for Strut
+     *
+     * @returns The created Strut.
+     * @since 5.5
+     **/
+    Strut *createStrut(quint32 name, quint32 version, QObject *parent = nullptr);
+
     ///@}
 
     /**
@@ -1657,6 +1687,14 @@ Q_SIGNALS:
      **/
     void ddeShellAnnounced(quint32 name, quint32 version);
 
+    /**
+     * Emitted whenever a com_deepin_kwin_strut interface gets announced.
+     * @param name The name for the announced interface
+     * @param version The maximum supported version of the announced interface
+     * @since 5.5
+     **/
+    void strutAnnounced(quint32 name, quint32 version);
+
     ///@}
 
     /**
@@ -1912,6 +1950,13 @@ Q_SIGNALS:
     void clientManagementRemoved(quint32 name);
 
     void ddeShellRemoved(quint32 name);
+
+    /**
+     * Emitted whenever a com_deepin_kwin_strut interface gets removed.
+     * @param name The name for the removed interface
+     * @since 5.5
+     **/
+    void strutRemoved(quint32 name);
 
     ///@}
     /**

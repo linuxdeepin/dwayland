@@ -53,6 +53,7 @@ set(CLIENT_LIB_SRCS
     shadow.cpp
     shell.cpp
     shm_pool.cpp
+    strut.cpp
     subcompositor.cpp
     subsurface.cpp
     surface.cpp
@@ -235,6 +236,11 @@ ecm_add_wayland_client_protocol(CLIENT_LIB_SRCS
     BASENAME dde-shell
 )
 
+ecm_add_wayland_client_protocol(CLIENT_LIB_SRCS
+    PROTOCOL ${PLASMA_WAYLAND_PROTOCOLS_DIR}/strut.xml
+    BASENAME strut
+)
+
 set(CLIENT_GENERATED_FILES
     ${CMAKE_CURRENT_BINARY_DIR}/wayland-fullscreen-shell-client-protocol.h
     ${CMAKE_CURRENT_BINARY_DIR}/wayland-output-management-client-protocol.h
@@ -246,6 +252,7 @@ set(CLIENT_GENERATED_FILES
     ${CMAKE_CURRENT_BINARY_DIR}/wayland-fake-input-client-protocol.h
     ${CMAKE_CURRENT_BINARY_DIR}/wayland-shadow-client-protocol.h
     ${CMAKE_CURRENT_BINARY_DIR}/wayland-blur-client-protocol.h
+    ${CMAKE_CURRENT_BINARY_DIR}/wayland-strut-client-protocol.h
     ${CMAKE_CURRENT_BINARY_DIR}/wayland-contrast-client-protocol.h
     ${CMAKE_CURRENT_BINARY_DIR}/wayland-slide-client-protocol.h
     ${CMAKE_CURRENT_BINARY_DIR}/wayland-dpms-client-protocol.h
@@ -368,6 +375,7 @@ set(CLIENT_LIB_HEADERS
   shell.h
   shm_pool.h
   slide.h
+  strut.h
   subcompositor.h
   subsurface.h
   surface.h

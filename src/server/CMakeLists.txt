@@ -49,6 +49,7 @@ set(SERVER_LIB_SRCS
     shadow_interface.cpp
     shell_interface.cpp
     slide_interface.cpp
+    strut_interface.cpp
     subcompositor_interface.cpp
     surface_interface.cpp
     surfacerole.cpp
@@ -247,6 +248,11 @@ ecm_add_wayland_server_protocol(SERVER_LIB_SRCS
     BASENAME dde-shell
 )
 
+ecm_add_wayland_server_protocol(SERVER_LIB_SRCS
+    PROTOCOL ${PLASMA_WAYLAND_PROTOCOLS_DIR}/strut.xml
+    BASENAME strut
+)
+
 set(SERVER_GENERATED_SRCS
     ${CMAKE_CURRENT_BINARY_DIR}/wayland-blur-client-protocol.h
     ${CMAKE_CURRENT_BINARY_DIR}/wayland-blur-server-protocol.h
@@ -310,6 +316,8 @@ set(SERVER_GENERATED_SRCS
     ${CMAKE_CURRENT_BINARY_DIR}/wayland-client-management-server-protocol.h
     ${CMAKE_CURRENT_BINARY_DIR}/wayland-dde-shell-server-protocol.h
     ${CMAKE_CURRENT_BINARY_DIR}/wayland-dde-shell-client-protocol.h
+    ${CMAKE_CURRENT_BINARY_DIR}/wayland-strut-client-protocol.h
+    ${CMAKE_CURRENT_BINARY_DIR}/wayland-strut-server-protocol.h
 )
 
 set_source_files_properties(${SERVER_GENERATED_SRCS} PROPERTIES SKIP_AUTOMOC ON)
@@ -393,6 +401,7 @@ set(SERVER_LIB_HEADERS
   shadow_interface.h
   shell_interface.h
   slide_interface.h
+  strut_interface.h
   subcompositor_interface.h
   surface_interface.h
   tablet_interface.h
