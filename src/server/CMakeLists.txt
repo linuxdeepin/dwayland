@@ -17,6 +17,8 @@ set(SERVER_LIB_SRCS
     datadevicemanager_interface.cpp
     dataoffer_interface.cpp
     datasource_interface.cpp
+    ddeseat_interface.cpp
+    ddekeyboard_interface.cpp
     ddeshell_interface.cpp
     display.cpp
     dpms_interface.cpp
@@ -293,6 +295,11 @@ ecm_add_qtwayland_server_protocol_kde(SERVER_LIB_SRCS
 )
 
 ecm_add_qtwayland_server_protocol_kde(SERVER_LIB_SRCS
+    PROTOCOL ${PLASMA_WAYLAND_PROTOCOLS_DIR}/dde-seat.xml
+    BASENAME dde-seat
+)
+
+ecm_add_qtwayland_server_protocol_kde(SERVER_LIB_SRCS
     PROTOCOL ${PLASMA_WAYLAND_PROTOCOLS_DIR}/dde-shell.xml
     BASENAME dde-shell
 )
@@ -366,6 +373,7 @@ set(SERVER_LIB_HEADERS
   datadevicemanager_interface.h
   dataoffer_interface.h
   datasource_interface.h
+  ddeseat_interface.h
   ddeshell_interface.h
   display.h
   dpms_interface.h
