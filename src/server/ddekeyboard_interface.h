@@ -55,6 +55,7 @@ public:
     void repeatInfo(qint32 charactersPerSecond, qint32 delay);
 
 private:
+    friend class DDESeatInterface;
     friend class DDEKeyboardInterfacePrivate;
     explicit DDEKeyboardInterface(DDESeatInterface *ddeSeat);
     QScopedPointer<DDEKeyboardInterfacePrivate> d;

@@ -80,6 +80,10 @@ public:
     void touchMotion(qint32 id, const QPointF &pos);
     void touchUp(qint32 id);
 
+    void setHasPointer(bool has);
+    void setHasKeyboard(bool has);
+    void setHasTouch(bool has);
+
 Q_SIGNALS:
     /**
      * Emitted whenever a DDEPointerInterface got created.

@@ -108,6 +108,9 @@ QPointF DDESeatInterface::pointerPos() const
 
 void DDESeatInterface::setPointerPos(const QPointF &pos)
 {
+    if (!d->ddepointer) {
+        return;
+    }
     if (d->globalPos == pos) {
         return;
     }
@@ -117,16 +120,25 @@ void DDESeatInterface::setPointerPos(const QPointF &pos)
 
 void DDESeatInterface::pointerButtonPressed(quint32 button)
 {
+    if (!d->ddepointer) {
+        return;
+    }
     d->ddepointer->buttonPressed(button);
 }
 
 void DDESeatInterface::pointerButtonReleased(quint32 button)
 {
+    if (!d->ddepointer) {
+        return;
+    }
     d->ddepointer->buttonReleased(button);
 }
 
 void DDESeatInterface::pointerAxis(Qt::Orientation orientation, qint32 delta)
 {
+    if (!d->ddepointer) {
+        return;
+    }
     d->ddepointer->axis(orientation, delta);
 }
 
@@ -158,6 +170,9 @@ void DDESeatInterface::setTouchTimestamp(quint32 time)
 
 void DDESeatInterface::setKeymap(int fd, quint32 size)
 {
+    if (!d->ddekeyboard) {
+        return;
+    }
     d->keys.keymap.xkbcommonCompatible = true;
     d->keys.keymap.fd = fd;
     d->keys.keymap.size = size;
@@ -167,6 +182,9 @@ void DDESeatInterface::setKeymap(int fd, quint32 size)
 
 void DDESeatInterface::keyPressed(quint32 key)
 {
+    if (!d->ddekeyboard) {
+        return;
+    }
     d->keys.lastStateSerial = d->display->nextSerial();
     if (!d->updateKey(key, DDESeatInterfacePrivate::Keyboard::State::Pressed)) {
         return;
@@ -177,6 +195,9 @@ void DDESeatInterface::keyPressed(quint32 key)
 
 void DDESeatInterface::keyReleased(quint32 key)
 {
+    if (!d->ddekeyboard) {
+        return;
+    }
     d->keys.lastStateSerial = d->display->nextSerial();
     if (!d->updateKey(key, DDESeatInterfacePrivate::Keyboard::State::Released)) {
         return;
@@ -187,21 +208,33 @@ void DDESeatInterface::keyReleased(quint32 key)
 
 void DDESeatInterface::touchDown(qint32 id, const QPointF &pos)
 {
+    if (!d->ddetouch) {
+        return;
+    }
     d->ddetouch->touchDown(id, pos);
 }
 
 void DDESeatInterface::touchMotion(qint32 id, const QPointF &pos)
 {
+    if (!d->ddetouch) {
+        return;
+    }
     d->ddetouch->touchMotion(id, pos);
 }
 
 void DDESeatInterface::touchUp(qint32 id)
 {
+    if (!d->ddetouch) {
+        return;
+    }
     d->ddetouch->touchUp(id);
 }
 
 void DDESeatInterface::updateKeyboardModifiers(quint32 depressed, quint32 latched, quint32 locked, quint32 group)
 {
+    if (!d->ddekeyboard) {
+        return;
+    }
     bool changed = false;
 #define UPDATE( value ) \
     if (d->keys.modifiers.value != value) { \
@@ -244,6 +277,45 @@ quint32 DDESeatInterface::lockedModifiers() const
 quint32 DDESeatInterface::lastModifiersSerial() const
 {
     return d->keys.modifiers.serial;
+}
+
+void DDESeatInterface::setHasKeyboard(bool has)
+{
+    if (d->ddekeyboard.isNull() != has) {
+        return;
+    }
+    if (has) {
+        d->ddekeyboard.reset(new DDEKeyboardInterface(this));
+        Q_EMIT ddeKeyboardCreated(d->ddekeyboard.data());
+    } else {
+        d->ddekeyboard.reset();
+    }
+}
+
+void DDESeatInterface::setHasPointer(bool has)
+{
+    if (d->ddepointer.isNull() != has) {
+        return;
+    }
+    if (has) {
+        d->ddepointer.reset(new DDEPointerInterface(this));
+        Q_EMIT ddePointerCreated(d->ddepointer.data());
+    } else {
+        d->ddepointer.reset();
+    }
+}
+
+void DDESeatInterface::setHasTouch(bool has)
+{
+    if (d->ddetouch.isNull() != has) {
+        return;
+    }
+    if (has) {
+        d->ddetouch.reset(new DDETouchInterface(this));
+        Q_EMIT ddeTouchCreated(d->ddetouch.data());
+    } else {
+        d->ddetouch.reset();
+    }
 }
 
 /*********************************
