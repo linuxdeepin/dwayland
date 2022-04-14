@@ -32,7 +32,6 @@ namespace KWaylandServer
 {
 static const int s_version = 1;
 static const int s_ddePointerVersion = 1;
-static const int s_ddeKeyboardVersion = 7;
 static const int s_ddeTouchVersion = 1;
 
 /*********************************
@@ -54,6 +53,9 @@ void DDESeatInterfacePrivate::dde_seat_get_dde_pointer(Resource *resource, uint3
     if (ddepointer) {
         DDEPointerInterfacePrivate *pointerPrivate = DDEPointerInterfacePrivate::get(ddepointer.data());
         pointerPrivate->add(resource->client(), id, resource->version());
+    } else {
+        ddepointer.reset(new DDEPointerInterface(q, resource->handle));
+        Q_EMIT q->ddePointerCreated(ddepointer.data());
     }
 }
 
@@ -61,6 +63,9 @@ void DDESeatInterfacePrivate::dde_seat_get_dde_keyboard(Resource *resource, uint
     if (ddekeyboard) {
         DDEKeyboardInterfacePrivate *keyboardPrivate = DDEKeyboardInterfacePrivate::get(ddekeyboard.data());
         keyboardPrivate->add(resource->client(), id, resource->version());
+    } else {
+        ddekeyboard.reset(new DDEKeyboardInterface(q, resource->handle));
+        Q_EMIT q->ddeKeyboardCreated(ddekeyboard.data());
     }
 }
 
@@ -68,6 +73,9 @@ void DDESeatInterfacePrivate::dde_seat_get_dde_touch(Resource *resource, uint32_
     if (ddetouch) {
         DDETouchInterfacePrivate *touchPrivate = DDETouchInterfacePrivate::get(ddetouch.data());
         touchPrivate->add(resource->client(), id, resource->version());
+    } else {
+        ddetouch.reset(new DDETouchInterface(q, resource->handle));
+        Q_EMIT q->ddeTouchCreated(ddetouch.data());
     }
 }
 
@@ -281,41 +289,17 @@ quint32 DDESeatInterface::lastModifiersSerial() const
 
 void DDESeatInterface::setHasKeyboard(bool has)
 {
-    if (d->ddekeyboard.isNull() != has) {
-        return;
-    }
-    if (has) {
-        d->ddekeyboard.reset(new DDEKeyboardInterface(this));
-        Q_EMIT ddeKeyboardCreated(d->ddekeyboard.data());
-    } else {
-        d->ddekeyboard.reset();
-    }
+    Q_UNUSED(has)
 }
 
 void DDESeatInterface::setHasPointer(bool has)
 {
-    if (d->ddepointer.isNull() != has) {
-        return;
-    }
-    if (has) {
-        d->ddepointer.reset(new DDEPointerInterface(this));
-        Q_EMIT ddePointerCreated(d->ddepointer.data());
-    } else {
-        d->ddepointer.reset();
-    }
+    Q_UNUSED(has)
 }
 
 void DDESeatInterface::setHasTouch(bool has)
 {
-    if (d->ddetouch.isNull() != has) {
-        return;
-    }
-    if (has) {
-        d->ddetouch.reset(new DDETouchInterface(this));
-        Q_EMIT ddeTouchCreated(d->ddetouch.data());
-    } else {
-        d->ddetouch.reset();
-    }
+    Q_UNUSED(has)
 }
 
 /*********************************
@@ -326,8 +310,9 @@ DDEPointerInterfacePrivate *DDEPointerInterfacePrivate::get(DDEPointerInterface 
     return pointer->d.data();
 }
 
-DDEPointerInterfacePrivate::DDEPointerInterfacePrivate(DDEPointerInterface *q, DDESeatInterface *seat)
-    : q(q)
+DDEPointerInterfacePrivate::DDEPointerInterfacePrivate(DDEPointerInterface *q, DDESeatInterface *seat, wl_resource *resource)
+    : QtWaylandServer::dde_pointer(resource)
+    , q(q)
     , ddeSeat(seat)
 {
 }
@@ -344,8 +329,8 @@ void DDEPointerInterfacePrivate::dde_pointer_get_motion(Resource *resource)
     send_motion(wl_fixed_from_double(globalPos.x()), wl_fixed_from_double(globalPos.y()));
 }
 
-DDEPointerInterface::DDEPointerInterface(DDESeatInterface *seat)
-    : d(new DDEPointerInterfacePrivate(this, seat))
+DDEPointerInterface::DDEPointerInterface(DDESeatInterface *seat, wl_resource *resource)
+    : d(new DDEPointerInterfacePrivate(this, seat, resource))
 {
 }
 
@@ -389,8 +374,9 @@ DDETouchInterfacePrivate *DDETouchInterfacePrivate::get(DDETouchInterface *touch
     return touch->d.data();
 }
 
-DDETouchInterfacePrivate::DDETouchInterfacePrivate(DDETouchInterface *q, DDESeatInterface *seat)
-    : q(q)
+DDETouchInterfacePrivate::DDETouchInterfacePrivate(DDETouchInterface *q, DDESeatInterface *seat, wl_resource *resource)
+    : QtWaylandServer::dde_touch(resource)
+    , q(q)
     , ddeSeat(seat)
 {
 }
@@ -402,8 +388,8 @@ void DDETouchInterfacePrivate::dde_touch_release(Resource *resource)
 
 }
 
-DDETouchInterface::DDETouchInterface(DDESeatInterface *seat)
-    : d(new DDETouchInterfacePrivate(this, seat))
+DDETouchInterface::DDETouchInterface(DDESeatInterface *seat, wl_resource *resource)
+    : d(new DDETouchInterfacePrivate(this, seat, resource))
 {
 }
 

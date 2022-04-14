@@ -126,9 +126,10 @@ public:
 
 private:
     friend class DDESeatInterface;
+    friend class DDESeatInterfacePrivate;
     friend class DDEPointerInterfacePrivate;
 
-    explicit DDEPointerInterface(DDESeatInterface *seat);
+    explicit DDEPointerInterface(DDESeatInterface *seat, wl_resource *resource);
     QScopedPointer<DDEPointerInterfacePrivate> d;
 
     void buttonPressed(quint32 button);
@@ -163,13 +164,14 @@ public:
 
 private:
     friend class DDESeatInterface;
+    friend class DDESeatInterfacePrivate;
     friend class DDETouchInterfacePrivate;
 
     void touchDown(qint32 id, const QPointF &pos);
     void touchMotion(qint32 id, const QPointF &pos);
     void touchUp(qint32 id);
 
-    explicit DDETouchInterface(DDESeatInterface *ddeSeat);
+    explicit DDETouchInterface(DDESeatInterface *ddeSeat, wl_resource *resource);
     QScopedPointer<DDETouchInterfacePrivate> d;
 };
 

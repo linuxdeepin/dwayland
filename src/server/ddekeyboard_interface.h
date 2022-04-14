@@ -56,8 +56,9 @@ public:
 
 private:
     friend class DDESeatInterface;
+    friend class DDESeatInterfacePrivate;
     friend class DDEKeyboardInterfacePrivate;
-    explicit DDEKeyboardInterface(DDESeatInterface *ddeSeat);
+    explicit DDEKeyboardInterface(DDESeatInterface *ddeSeat, wl_resource *resource);
     QScopedPointer<DDEKeyboardInterfacePrivate> d;
 };
 

@@ -36,7 +36,7 @@ class DDEKeyboardInterfacePrivate : public QtWaylandServer::dde_keyboard
 public:
     static DDEKeyboardInterfacePrivate *get(DDEKeyboardInterface *ddekeyboard);
 
-    DDEKeyboardInterfacePrivate(DDEKeyboardInterface *q, DDESeatInterface *seat);
+    DDEKeyboardInterfacePrivate(DDEKeyboardInterface *q, DDESeatInterface *seat, wl_resource *resource);
     ~DDEKeyboardInterfacePrivate() override;
 
     void sendKeymap(int fd, quint32 size);
