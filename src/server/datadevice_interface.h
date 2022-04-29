@@ -9,7 +9,7 @@
 
 #include <QObject>
 
-#include <KWaylandServer/kwaylandserver_export.h>
+#include <DWayland/Server/kwaylandserver_export.h>
 
 #include "abstract_drop_handler.h"
 

@@ -14,12 +14,12 @@
 #include "../../src/server/keyboard_shortcuts_inhibit_v1_interface.h"
 #include "../../src/server/seat_interface.h"
 
-#include "KWayland/Client/compositor.h"
-#include "KWayland/Client/connection_thread.h"
-#include "KWayland/Client/event_queue.h"
-#include "KWayland/Client/registry.h"
-#include "KWayland/Client/seat.h"
-#include "KWayland/Client/surface.h"
+#include "../../src/client/compositor.h"
+#include "../../src/client/connection_thread.h"
+#include "../../src/client/event_queue.h"
+#include "../../src/client/registry.h"
+#include "../../src/client/seat.h"
+#include "../../src/client/surface.h"
 
 #include "qwayland-keyboard-shortcuts-inhibit-unstable-v1.h"
 

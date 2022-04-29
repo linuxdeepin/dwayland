@@ -12,13 +12,13 @@
 #include "../../src/server/outputconfiguration_interface.h"
 #include "../../src/server/outputdevice_interface.h"
 #include "../../src/server/outputmanagement_interface.h"
-#include "KWayland/Client/connection_thread.h"
-#include "KWayland/Client/event_queue.h"
-#include "KWayland/Client/output.h"
-#include "KWayland/Client/outputconfiguration.h"
-#include "KWayland/Client/outputdevice.h"
-#include "KWayland/Client/outputmanagement.h"
-#include "KWayland/Client/registry.h"
+#include "../../src/client/connection_thread.h"
+#include "../../src/client/event_queue.h"
+#include "../../src/client/output.h"
+#include "../../src/client/outputconfiguration.h"
+#include "../../src/client/outputdevice.h"
+#include "../../src/client/outputmanagement.h"
+#include "../../src/client/registry.h"
 
 // Wayland
 #include <wayland-client-protocol.h>

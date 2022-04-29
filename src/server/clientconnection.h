@@ -9,7 +9,7 @@
 
 #include <QObject>
 
-#include <KWaylandServer/kwaylandserver_export.h>
+#include <DWayland/Server/kwaylandserver_export.h>
 
 struct wl_client;
 struct wl_resource;

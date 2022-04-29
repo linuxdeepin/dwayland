@@ -9,7 +9,7 @@
 
 #include <QObject>
 
-#include <KWaylandServer/kwaylandserver_export.h>
+#include <DWayland/Server/kwaylandserver_export.h>
 
 /*
  * In terms of protocol XdgOutputInterface are a resource

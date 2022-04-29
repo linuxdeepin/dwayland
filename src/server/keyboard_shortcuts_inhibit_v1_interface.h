@@ -8,7 +8,7 @@
 
 #include "seat_interface.h"
 #include "surface_interface.h"
-#include <KWaylandServer/kwaylandserver_export.h>
+#include <DWayland/Server/kwaylandserver_export.h>
 #include <QObject>
 
 namespace KWaylandServer

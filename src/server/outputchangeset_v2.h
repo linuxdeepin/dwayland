@@ -10,7 +10,7 @@
 #include <QObject>
 
 #include "outputdevice_v2_interface.h"
-#include <KWaylandServer/kwaylandserver_export.h>
+#include <DWayland/Server/kwaylandserver_export.h>
 
 namespace KWaylandServer
 {

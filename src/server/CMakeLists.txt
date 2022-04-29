@@ -79,10 +79,10 @@ set(SERVER_LIB_SRCS
 ecm_qt_declare_logging_category(SERVER_LIB_SRCS
     HEADER logging.h
     IDENTIFIER KWAYLAND_SERVER
-    CATEGORY_NAME kwayland-server
+    CATEGORY_NAME dwayland.server
     DEFAULT_SEVERITY Critical
-    DESCRIPTION "KWayland Server Library"
-    EXPORT KWAYLANDSERVER
+    DESCRIPTION "DWayland Server Library"
+    EXPORT DWAYLAND
 )
 
 ecm_add_qtwayland_server_protocol_kde(SERVER_LIB_SRCS
@@ -91,66 +91,66 @@ ecm_add_qtwayland_server_protocol_kde(SERVER_LIB_SRCS
 )
 
 ecm_add_qtwayland_server_protocol_kde(SERVER_LIB_SRCS
-    PROTOCOL ${PLASMA_WAYLAND_PROTOCOLS_DIR}/kde-output-device-v2.xml
+    PROTOCOL ${DEEPIN_WAYLAND_PROTOCOLS_DIR}/kde-output-device-v2.xml
     BASENAME kde-output-device-v2
 )
 
 ecm_add_qtwayland_server_protocol_kde(SERVER_LIB_SRCS
-    PROTOCOL ${PLASMA_WAYLAND_PROTOCOLS_DIR}/kde-primary-output-v1.xml
+    PROTOCOL ${DEEPIN_WAYLAND_PROTOCOLS_DIR}/kde-primary-output-v1.xml
     BASENAME kde-primary-output-v1
 )
 
 ecm_add_qtwayland_server_protocol_kde(SERVER_LIB_SRCS
-    PROTOCOL ${PLASMA_WAYLAND_PROTOCOLS_DIR}/kde-output-management-v2.xml
+    PROTOCOL ${DEEPIN_WAYLAND_PROTOCOLS_DIR}/kde-output-management-v2.xml
     BASENAME kde-output-management-v2
 )
 
 ecm_add_qtwayland_server_protocol_kde(SERVER_LIB_SRCS
-    PROTOCOL ${PLASMA_WAYLAND_PROTOCOLS_DIR}/plasma-shell.xml
+    PROTOCOL ${DEEPIN_WAYLAND_PROTOCOLS_DIR}/plasma-shell.xml
     BASENAME plasma-shell
 )
 
 ecm_add_qtwayland_server_protocol_kde(SERVER_LIB_SRCS
-    PROTOCOL ${PLASMA_WAYLAND_PROTOCOLS_DIR}/plasma-virtual-desktop.xml
+    PROTOCOL ${DEEPIN_WAYLAND_PROTOCOLS_DIR}/plasma-virtual-desktop.xml
     BASENAME org-kde-plasma-virtual-desktop
 )
 
 ecm_add_qtwayland_server_protocol_kde(SERVER_LIB_SRCS
-    PROTOCOL ${PLASMA_WAYLAND_PROTOCOLS_DIR}/plasma-window-management.xml
+    PROTOCOL ${DEEPIN_WAYLAND_PROTOCOLS_DIR}/plasma-window-management.xml
     BASENAME plasma-window-management
 )
 
 ecm_add_wayland_server_protocol(SERVER_LIB_SRCS
-    PROTOCOL ${PLASMA_WAYLAND_PROTOCOLS_DIR}/surface-extension.xml
+    PROTOCOL ${DEEPIN_WAYLAND_PROTOCOLS_DIR}/surface-extension.xml
     BASENAME qt-surface-extension
 )
 
 ecm_add_qtwayland_server_protocol_kde(SERVER_LIB_SRCS
-    PROTOCOL ${PLASMA_WAYLAND_PROTOCOLS_DIR}/idle.xml
+    PROTOCOL ${DEEPIN_WAYLAND_PROTOCOLS_DIR}/idle.xml
     BASENAME idle
 )
 
 ecm_add_qtwayland_server_protocol_kde(SERVER_LIB_SRCS
-    PROTOCOL ${PLASMA_WAYLAND_PROTOCOLS_DIR}/fake-input.xml
+    PROTOCOL ${DEEPIN_WAYLAND_PROTOCOLS_DIR}/fake-input.xml
     BASENAME fake-input
 )
 
 ecm_add_qtwayland_server_protocol_kde(SERVER_LIB_SRCS
-    PROTOCOL ${PLASMA_WAYLAND_PROTOCOLS_DIR}/shadow.xml
+    PROTOCOL ${DEEPIN_WAYLAND_PROTOCOLS_DIR}/shadow.xml
     BASENAME shadow
 )
 ecm_add_qtwayland_server_protocol_kde(SERVER_LIB_SRCS
-    PROTOCOL ${PLASMA_WAYLAND_PROTOCOLS_DIR}/dpms.xml
+    PROTOCOL ${DEEPIN_WAYLAND_PROTOCOLS_DIR}/dpms.xml
     BASENAME dpms
 )
 
 ecm_add_qtwayland_server_protocol_kde(SERVER_LIB_SRCS
-    PROTOCOL ${PLASMA_WAYLAND_PROTOCOLS_DIR}/blur.xml
+    PROTOCOL ${DEEPIN_WAYLAND_PROTOCOLS_DIR}/blur.xml
     BASENAME blur
 )
 
 ecm_add_qtwayland_server_protocol_kde(SERVER_LIB_SRCS
-    PROTOCOL ${PLASMA_WAYLAND_PROTOCOLS_DIR}/contrast.xml
+    PROTOCOL ${DEEPIN_WAYLAND_PROTOCOLS_DIR}/contrast.xml
     BASENAME contrast
 )
 
@@ -160,12 +160,12 @@ ecm_add_qtwayland_server_protocol_kde(SERVER_LIB_SRCS
 )
 
 ecm_add_qtwayland_server_protocol_kde(SERVER_LIB_SRCS
-    PROTOCOL ${PLASMA_WAYLAND_PROTOCOLS_DIR}/slide.xml
+    PROTOCOL ${DEEPIN_WAYLAND_PROTOCOLS_DIR}/slide.xml
     BASENAME slide
 )
 
 ecm_add_qtwayland_server_protocol_kde(SERVER_LIB_SRCS
-    PROTOCOL ${PLASMA_WAYLAND_PROTOCOLS_DIR}/server-decoration.xml
+    PROTOCOL ${DEEPIN_WAYLAND_PROTOCOLS_DIR}/server-decoration.xml
     BASENAME server-decoration
 )
 
@@ -175,7 +175,7 @@ ecm_add_qtwayland_server_protocol_kde(SERVER_LIB_SRCS
 )
 
 ecm_add_qtwayland_server_protocol_kde(SERVER_LIB_SRCS
-    PROTOCOL ${PLASMA_WAYLAND_PROTOCOLS_DIR}/text-input-unstable-v2.xml
+    PROTOCOL ${DEEPIN_WAYLAND_PROTOCOLS_DIR}/text-input-unstable-v2.xml
     BASENAME text-input-unstable-v2
 )
 
@@ -205,12 +205,12 @@ ecm_add_qtwayland_server_protocol_kde(SERVER_LIB_SRCS
 )
 
 ecm_add_qtwayland_server_protocol_kde(SERVER_LIB_SRCS
-    PROTOCOL ${PLASMA_WAYLAND_PROTOCOLS_DIR}/appmenu.xml
+    PROTOCOL ${DEEPIN_WAYLAND_PROTOCOLS_DIR}/appmenu.xml
     BASENAME appmenu
 )
 
 ecm_add_qtwayland_server_protocol_kde(SERVER_LIB_SRCS
-    PROTOCOL ${PLASMA_WAYLAND_PROTOCOLS_DIR}/server-decoration-palette.xml
+    PROTOCOL ${DEEPIN_WAYLAND_PROTOCOLS_DIR}/server-decoration-palette.xml
     BASENAME server-decoration-palette
 )
 
@@ -230,7 +230,7 @@ ecm_add_qtwayland_server_protocol_kde(SERVER_LIB_SRCS
 )
 
 ecm_add_qtwayland_server_protocol_kde(SERVER_LIB_SRCS
-    PROTOCOL ${PLASMA_WAYLAND_PROTOCOLS_DIR}/keystate.xml
+    PROTOCOL ${DEEPIN_WAYLAND_PROTOCOLS_DIR}/keystate.xml
     BASENAME keystate
 )
 
@@ -270,12 +270,12 @@ ecm_add_qtwayland_server_protocol_kde(SERVER_LIB_SRCS
 )
 
 ecm_add_qtwayland_server_protocol_kde(SERVER_LIB_SRCS
-    PROTOCOL ${PLASMA_WAYLAND_PROTOCOLS_DIR}/screencast.xml
+    PROTOCOL ${DEEPIN_WAYLAND_PROTOCOLS_DIR}/screencast.xml
     BASENAME zkde-screencast-unstable-v1
 )
 
 ecm_add_qtwayland_server_protocol_kde(SERVER_LIB_SRCS
-    PROTOCOL ${PLASMA_WAYLAND_PROTOCOLS_DIR}/client-management.xml
+    PROTOCOL ${DEEPIN_WAYLAND_PROTOCOLS_DIR}/client-management.xml
     BASENAME com-deepin-client-management
 )
 
@@ -295,44 +295,44 @@ ecm_add_qtwayland_server_protocol_kde(SERVER_LIB_SRCS
 )
 
 ecm_add_qtwayland_server_protocol_kde(SERVER_LIB_SRCS
-    PROTOCOL ${PLASMA_WAYLAND_PROTOCOLS_DIR}/dde-seat.xml
+    PROTOCOL ${DEEPIN_WAYLAND_PROTOCOLS_DIR}/dde-seat.xml
     BASENAME dde-seat
 )
 
 ecm_add_qtwayland_server_protocol_kde(SERVER_LIB_SRCS
-    PROTOCOL ${PLASMA_WAYLAND_PROTOCOLS_DIR}/dde-shell.xml
+    PROTOCOL ${DEEPIN_WAYLAND_PROTOCOLS_DIR}/dde-shell.xml
     BASENAME dde-shell
 )
 
 ecm_add_qtwayland_server_protocol_kde(SERVER_LIB_SRCS
-    PROTOCOL ${PLASMA_WAYLAND_PROTOCOLS_DIR}/strut.xml
+    PROTOCOL ${DEEPIN_WAYLAND_PROTOCOLS_DIR}/strut.xml
     BASENAME strut
 )
 
-add_library(KWaylandServer ${SERVER_LIB_SRCS})
+add_library(DWaylandServer ${SERVER_LIB_SRCS})
 
 if(CMAKE_SYSTEM_NAME MATCHES "Linux")
-    target_sources(KWaylandServer PRIVATE utils/executable_path_proc.cpp)
+    target_sources(DWaylandServer PRIVATE utils/executable_path_proc.cpp)
 elseif(CMAKE_SYSTEM_NAME MATCHES "FreeBSD")
-    target_sources(KWaylandServer PRIVATE utils/executable_path_sysctl.cpp)
+    target_sources(DWaylandServer PRIVATE utils/executable_path_sysctl.cpp)
 else()
     message(FATAL_ERROR "Unsupported platform ${CMAKE_SYSTEM_NAME}")
 endif()
 
 
-add_library(Plasma::KWaylandServer ALIAS KWaylandServer)
-ecm_generate_export_header(KWaylandServer
+add_library(Deepin::DWaylandServer ALIAS DWaylandServer)
+ecm_generate_export_header(DWaylandServer
     BASE_NAME
         KWaylandServer
     EXPORT_FILE_NAME
-        KWaylandServer/kwaylandserver_export.h
+        DWayland/Server/kwaylandserver_export.h
     GROUP_BASE_NAME KF
     VERSION ${PROJECT_VERSION}
 )
 
-target_include_directories(KWaylandServer INTERFACE "$<INSTALL_INTERFACE:${KDE_INSTALL_INCLUDEDIR}>")
+target_include_directories(DWaylandServer INTERFACE "$<INSTALL_INTERFACE:${KDE_INSTALL_INCLUDEDIR}>/DWayland/Server")
 
-target_link_libraries(KWaylandServer
+target_link_libraries(DWaylandServer
     PUBLIC
         Qt::Gui
         Wayland::Server
@@ -341,20 +341,20 @@ target_link_libraries(KWaylandServer
         Qt::Concurrent
 )
 
-target_compile_definitions(KWaylandServer PRIVATE
+target_compile_definitions(DWaylandServer PRIVATE
     MESA_EGL_NO_X11_HEADERS
     EGL_NO_X11
     EGL_NO_PLATFORM_SPECIFIC_TYPES
 )
 
-set_target_properties(KWaylandServer PROPERTIES VERSION   ${KWAYLANDSERVER_VERSION}
-                                                SOVERSION ${KWAYLANDSERVER_SOVERSION}
+set_target_properties(DWaylandServer PROPERTIES VERSION   ${DWAYLAND_VERSION}
+                                                SOVERSION ${DWAYLAND_SOVERSION}
 )
 
-install(TARGETS KWaylandServer EXPORT KWaylandServerTargets ${KF5_INSTALL_TARGETS_DEFAULT_ARGS})
+install(TARGETS DWaylandServer EXPORT DWaylandServerTargets ${KF5_INSTALL_TARGETS_DEFAULT_ARGS})
 
 set(SERVER_LIB_HEADERS
-  ${CMAKE_CURRENT_BINARY_DIR}/KWaylandServer/kwaylandserver_export.h
+  ${CMAKE_CURRENT_BINARY_DIR}/DWayland/Server/kwaylandserver_export.h
   abstract_data_source.h
   abstract_drop_handler.h
   appmenu_interface.h
@@ -432,9 +432,9 @@ set(SERVER_LIB_HEADERS
 
 install(FILES
   ${SERVER_LIB_HEADERS}
-  DESTINATION ${KDE_INSTALL_INCLUDEDIR}/KWaylandServer COMPONENT Devel
+  DESTINATION ${KDE_INSTALL_INCLUDEDIR}/DWayland/Server COMPONENT Devel
 )
 
 # make available to ecm_add_qch in parent folder
-set(KWaylandServer_APIDOX_SRCS ${SERVER_LIB_HEADERS} PARENT_SCOPE)
-set(KWaylandServer_APIDOX_BUILD_INCLUDE_DIRS ${CMAKE_CURRENT_BINARY_DIR} PARENT_SCOPE)
+set(DWaylandServer_APIDOX_SRCS ${SERVER_LIB_HEADERS} PARENT_SCOPE)
+set(DWaylandServer_APIDOX_BUILD_INCLUDE_DIRS ${CMAKE_CURRENT_BINARY_DIR} PARENT_SCOPE)

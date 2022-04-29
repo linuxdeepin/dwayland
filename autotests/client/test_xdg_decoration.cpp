@@ -10,13 +10,13 @@
 #include "../../src/server/display.h"
 #include "../../src/server/xdgdecoration_v1_interface.h"
 #include "../../src/server/xdgshell_interface.h"
-#include "KWayland/Client/compositor.h"
-#include "KWayland/Client/connection_thread.h"
-#include "KWayland/Client/event_queue.h"
-#include "KWayland/Client/registry.h"
-#include "KWayland/Client/surface.h"
-#include "KWayland/Client/xdgdecoration.h"
-#include "KWayland/Client/xdgshell.h"
+#include "../../src/client/compositor.h"
+#include "../../src/client/connection_thread.h"
+#include "../../src/client/event_queue.h"
+#include "../../src/client/registry.h"
+#include "../../src/client/surface.h"
+#include "../../src/client/xdgdecoration.h"
+#include "../../src/client/xdgshell.h"
 
 class TestXdgDecoration : public QObject
 {

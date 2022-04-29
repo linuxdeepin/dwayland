@@ -9,7 +9,7 @@
 #include <QObject>
 
 #include "textinput.h"
-#include <KWaylandServer/kwaylandserver_export.h>
+#include <DWayland/Server/kwaylandserver_export.h>
 
 struct wl_resource;
 namespace KWaylandServer

@@ -6,7 +6,7 @@
 */
 #pragma once
 
-#include <KWaylandServer/kwaylandserver_export.h>
+#include <DWayland/Server/kwaylandserver_export.h>
 
 #include <QMatrix4x4>
 #include <QObject>

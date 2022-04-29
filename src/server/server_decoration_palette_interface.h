@@ -7,7 +7,7 @@
 
 struct wl_resource;
 
-#include <KWaylandServer/kwaylandserver_export.h>
+#include <DWayland/Server/kwaylandserver_export.h>
 #include <QObject>
 
 namespace KWaylandServer

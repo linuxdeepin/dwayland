@@ -8,7 +8,7 @@
 
 #include <QObject>
 
-#include <KWaylandServer/kwaylandserver_export.h>
+#include <DWayland/Server/kwaylandserver_export.h>
 
 namespace KWaylandServer
 {

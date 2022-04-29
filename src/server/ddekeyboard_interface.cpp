@@ -29,8 +29,6 @@ License along with this library.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace KWaylandServer
 {
-static const int s_ddeKeyboardVersion = 7;
-
 /*********************************
  * DDEKeyboardInterface
  *********************************/
@@ -50,7 +48,7 @@ DDEKeyboardInterfacePrivate::~DDEKeyboardInterfacePrivate() = default;
 
 void DDEKeyboardInterfacePrivate::dde_keyboard_release(Resource *resource)
 {
-
+    wl_resource_destroy(resource->handle);
 }
 
 DDEKeyboardInterface::DDEKeyboardInterface(DDESeatInterface *seat, wl_resource *resource)

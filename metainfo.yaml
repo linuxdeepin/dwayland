@@ -10,8 +10,8 @@ portingAid: false
 deprecated: false
 release: true
 libraries:
-   - cmake: "Plasma::KWaylandServer"
-cmakename: KWaylandServer
+   - cmake: "Deepin::DWayland"
+cmakename: DWayland
 group: plasma
 
 public_lib: true

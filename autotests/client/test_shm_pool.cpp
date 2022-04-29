@@ -10,11 +10,11 @@
 #include "../../src/server/compositor_interface.h"
 #include "../../src/server/display.h"
 #include "../../src/server/surface_interface.h"
-#include "KWayland/Client/compositor.h"
-#include "KWayland/Client/connection_thread.h"
-#include "KWayland/Client/registry.h"
-#include "KWayland/Client/shm_pool.h"
-#include "KWayland/Client/surface.h"
+#include "../../src/client/compositor.h"
+#include "../../src/client/connection_thread.h"
+#include "../../src/client/registry.h"
+#include "../../src/client/shm_pool.h"
+#include "../../src/client/surface.h"
 
 class TestShmPool : public QObject
 {

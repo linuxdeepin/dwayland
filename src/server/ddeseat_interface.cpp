@@ -32,7 +32,8 @@ namespace KWaylandServer
 {
 static const int s_version = 1;
 static const int s_ddePointerVersion = 1;
-static const int s_ddeTouchVersion = 1;
+static const int s_ddeTouchVersion = 7;
+static const int s_ddeKeyboardVersion = 7;
 
 /*********************************
  * DDESeatInterface
@@ -54,7 +55,8 @@ void DDESeatInterfacePrivate::dde_seat_get_dde_pointer(Resource *resource, uint3
         DDEPointerInterfacePrivate *pointerPrivate = DDEPointerInterfacePrivate::get(ddepointer.data());
         pointerPrivate->add(resource->client(), id, resource->version());
     } else {
-        ddepointer.reset(new DDEPointerInterface(q, resource->handle));
+        wl_resource *pointer_resource = wl_resource_create(resource->client(), &dde_pointer_interface, s_ddePointerVersion, id);
+        ddepointer.reset(new DDEPointerInterface(q, pointer_resource));
         Q_EMIT q->ddePointerCreated(ddepointer.data());
     }
 }
@@ -64,7 +66,8 @@ void DDESeatInterfacePrivate::dde_seat_get_dde_keyboard(Resource *resource, uint
         DDEKeyboardInterfacePrivate *keyboardPrivate = DDEKeyboardInterfacePrivate::get(ddekeyboard.data());
         keyboardPrivate->add(resource->client(), id, resource->version());
     } else {
-        ddekeyboard.reset(new DDEKeyboardInterface(q, resource->handle));
+        wl_resource *keyboard_resource = wl_resource_create(resource->client(), &dde_keyboard_interface, s_ddeKeyboardVersion, id);
+        ddekeyboard.reset(new DDEKeyboardInterface(q, keyboard_resource));
         Q_EMIT q->ddeKeyboardCreated(ddekeyboard.data());
     }
 }
@@ -74,7 +77,8 @@ void DDESeatInterfacePrivate::dde_seat_get_dde_touch(Resource *resource, uint32_
         DDETouchInterfacePrivate *touchPrivate = DDETouchInterfacePrivate::get(ddetouch.data());
         touchPrivate->add(resource->client(), id, resource->version());
     } else {
-        ddetouch.reset(new DDETouchInterface(q, resource->handle));
+        wl_resource *touch_resource = wl_resource_create(resource->client(), &dde_touch_interface, s_ddeTouchVersion, id);
+        ddetouch.reset(new DDETouchInterface(q, touch_resource));
         Q_EMIT q->ddeTouchCreated(ddetouch.data());
     }
 }
@@ -385,7 +389,7 @@ DDETouchInterfacePrivate::~DDETouchInterfacePrivate() = default;
 
 void DDETouchInterfacePrivate::dde_touch_release(Resource *resource)
 {
-
+    wl_resource_destroy(resource->handle);
 }
 
 DDETouchInterface::DDETouchInterface(DDESeatInterface *seat, wl_resource *resource)

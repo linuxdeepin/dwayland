@@ -9,13 +9,13 @@
 #include "../../src/server/compositor_interface.h"
 #include "../../src/server/display.h"
 #include "../../src/server/slide_interface.h"
-#include "KWayland/Client/compositor.h"
-#include "KWayland/Client/connection_thread.h"
-#include "KWayland/Client/event_queue.h"
-#include "KWayland/Client/region.h"
-#include "KWayland/Client/registry.h"
-#include "KWayland/Client/slide.h"
-#include "KWayland/Client/surface.h"
+#include "../../src/client/compositor.h"
+#include "../../src/client/connection_thread.h"
+#include "../../src/client/event_queue.h"
+#include "../../src/client/region.h"
+#include "../../src/client/registry.h"
+#include "../../src/client/slide.h"
+#include "../../src/client/surface.h"
 
 using namespace KWayland::Client;
 

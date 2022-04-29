@@ -15,9 +15,8 @@ override_dh_makeshlibs:
 		dh_makeshlibs -p$${pkg} -V "$${pkg} (>= $(DEB_VERSION_EPOCH_UPSTREAM)), $${name}-$(AbiVirtualPackageVersion)"; \
 	done
 
-
 override_dh_auto_configure:
-	dh_auto_configure -Skf5 -- -DBUILD_TESTING=OFF
+	dh_auto_configure -- -DBUILD_QCH=ON -DBUILD_TESTING=OFF
 
 override_dh_auto_test:
 	:

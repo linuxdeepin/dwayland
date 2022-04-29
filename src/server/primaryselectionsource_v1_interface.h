@@ -7,7 +7,7 @@
 
 #include "abstract_data_source.h"
 
-#include <KWaylandServer/kwaylandserver_export.h>
+#include <DWayland/Server/kwaylandserver_export.h>
 
 #include "primaryselectiondevicemanager_v1_interface.h"
 

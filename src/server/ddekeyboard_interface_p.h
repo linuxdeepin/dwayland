@@ -45,7 +45,7 @@ public:
 
     DDEKeyboardInterface *q;
     DDESeatInterface *ddeSeat;
-private:
+protected:
     void dde_keyboard_release(Resource *resource) override;
 };
 

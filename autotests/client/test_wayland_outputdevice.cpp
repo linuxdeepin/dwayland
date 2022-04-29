@@ -9,10 +9,10 @@
 // KWin
 #include "../../src/server/display.h"
 #include "../../src/server/outputdevice_interface.h"
-#include "KWayland/Client/connection_thread.h"
-#include "KWayland/Client/event_queue.h"
-#include "KWayland/Client/outputdevice.h"
-#include "KWayland/Client/registry.h"
+#include "../../src/client/connection_thread.h"
+#include "../../src/client/event_queue.h"
+#include "../../src/client/outputdevice.h"
+#include "../../src/client/registry.h"
 // Wayland
 #include <wayland-client-protocol.h>
 

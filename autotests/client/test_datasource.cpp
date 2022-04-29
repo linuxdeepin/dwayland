@@ -10,11 +10,11 @@
 #include "../../src/server/datadevicemanager_interface.h"
 #include "../../src/server/datasource_interface.h"
 #include "../../src/server/display.h"
-#include "KWayland/Client/connection_thread.h"
-#include "KWayland/Client/datadevicemanager.h"
-#include "KWayland/Client/datasource.h"
-#include "KWayland/Client/event_queue.h"
-#include "KWayland/Client/registry.h"
+#include "../../src/client/connection_thread.h"
+#include "../../src/client/datadevicemanager.h"
+#include "../../src/client/datasource.h"
+#include "../../src/client/event_queue.h"
+#include "../../src/client/registry.h"
 // Wayland
 #include <wayland-client.h>
 

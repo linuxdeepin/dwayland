@@ -10,7 +10,7 @@ set(KF5_MIN_VERSION "5.86")
 set(KDE_COMPILERSETTINGS_LEVEL "5.82")
 set(WAYLAND_MIN_VERSION "1.18")
 
-project(KWaylandServer VERSION ${PROJECT_VERSION})
+project(DWayland VERSION ${PROJECT_VERSION})
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -39,15 +39,14 @@ include(KDEGitCommitHooks)
 option(BUILD_QCH "Build API documentation in QCH format (for e.g. Qt Assistant, Qt Creator & KDevelop)" OFF)
 add_feature_info(QCH ${BUILD_QCH} "API documentation in QCH format (for e.g. Qt Assistant, Qt Creator & KDevelop)")
 
-ecm_setup_version(PROJECT VARIABLE_PREFIX KWAYLANDSERVER
-                        VERSION_HEADER "${CMAKE_CURRENT_BINARY_DIR}/kwaylandserver_version.h"
-                        PACKAGE_VERSION_FILE "${CMAKE_CURRENT_BINARY_DIR}/KWaylandServerConfigVersion.cmake"
+ecm_setup_version(PROJECT VARIABLE_PREFIX DWAYLAND
+                        VERSION_HEADER "${CMAKE_CURRENT_BINARY_DIR}/dwayland_version.h"
+                        PACKAGE_VERSION_FILE "${CMAKE_CURRENT_BINARY_DIR}/DWaylandConfigVersion.cmake"
                         SOVERSION 5)
 
 # Dependencies
 find_package(Qt5 ${QT_MIN_VERSION} CONFIG REQUIRED Concurrent Gui WaylandClient)
-find_package(KF5Wayland ${KF5_MIN_VERSION} CONFIG REQUIRED)
-find_package(PlasmaWaylandProtocols 1.6.0 CONFIG REQUIRED)
+find_package(DeepinWaylandProtocols 1.6.0 CONFIG REQUIRED)
 
 find_package(QtWaylandScanner REQUIRED)
 
@@ -84,32 +83,32 @@ if (BUILD_TESTING)
 endif()
 
 # create a Config.cmake and a ConfigVersion.cmake file and install them
-set(CMAKECONFIG_INSTALL_DIR "${CMAKECONFIG_INSTALL_PREFIX}/KWaylandServer")
+set(CMAKECONFIG_INSTALL_DIR "${CMAKECONFIG_INSTALL_PREFIX}/DWayland")
 
 if (BUILD_QCH)
     ecm_install_qch_export(
-        TARGETS KWaylandServer_QCH
-        FILE KWaylandServerQchTargets.cmake
+        TARGETS DWayland_QCH
+        FILE DWaylandQchTargets.cmake
         DESTINATION "${CMAKECONFIG_INSTALL_DIR}"
         COMPONENT Devel
     )
-    set(PACKAGE_INCLUDE_QCHTARGETS "include(\"\${CMAKE_CURRENT_LIST_DIR}/KWaylandServerQchTargets.cmake\")")
+    set(PACKAGE_INCLUDE_QCHTARGETS "include(\"\${CMAKE_CURRENT_LIST_DIR}/DWaylandQchTargets.cmake\")")
 endif()
 
-configure_package_config_file("${CMAKE_CURRENT_SOURCE_DIR}/KWaylandServerConfig.cmake.in"
-                              "${CMAKE_CURRENT_BINARY_DIR}/KWaylandServerConfig.cmake"
+configure_package_config_file("${CMAKE_CURRENT_SOURCE_DIR}/DWaylandConfig.cmake.in"
+                              "${CMAKE_CURRENT_BINARY_DIR}/DWaylandConfig.cmake"
                               INSTALL_DESTINATION  ${CMAKECONFIG_INSTALL_DIR}
                               )
 
-install(FILES  "${CMAKE_CURRENT_BINARY_DIR}/KWaylandServerConfig.cmake"
-               "${CMAKE_CURRENT_BINARY_DIR}/KWaylandServerConfigVersion.cmake"
+install(FILES  "${CMAKE_CURRENT_BINARY_DIR}/DWaylandConfig.cmake"
+               "${CMAKE_CURRENT_BINARY_DIR}/DWaylandConfigVersion.cmake"
         DESTINATION "${CMAKECONFIG_INSTALL_DIR}"
         COMPONENT Devel )
 
-install(EXPORT KWaylandServerTargets DESTINATION "${CMAKECONFIG_INSTALL_DIR}" FILE KWaylandServerTargets.cmake NAMESPACE Plasma:: )
+install(EXPORT DWaylandTargets DESTINATION "${CMAKECONFIG_INSTALL_DIR}" FILE DWaylandTargets.cmake NAMESPACE Deepin:: )
 
 
-install(FILES ${CMAKE_CURRENT_BINARY_DIR}/kwaylandserver_version.h
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/dwayland_version.h
         DESTINATION ${KDE_INSTALL_INCLUDEDIR} COMPONENT Devel )
 
 # add clang-format target for all our real source files

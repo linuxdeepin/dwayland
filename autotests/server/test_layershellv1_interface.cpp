@@ -13,11 +13,11 @@
 #include "../../src/server/surface_interface.h"
 #include "../../src/server/xdgshell_interface.h"
 
-#include "KWayland/Client/compositor.h"
-#include "KWayland/Client/connection_thread.h"
-#include "KWayland/Client/event_queue.h"
-#include "KWayland/Client/registry.h"
-#include "KWayland/Client/surface.h"
+#include "../../src/client/compositor.h"
+#include "../../src/client/connection_thread.h"
+#include "../../src/client/event_queue.h"
+#include "../../src/client/registry.h"
+#include "../../src/client/surface.h"
 
 #include "qwayland-wlr-layer-shell-unstable-v1.h"
 #include "qwayland-xdg-shell.h"

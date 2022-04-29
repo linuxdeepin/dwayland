@@ -66,7 +66,7 @@ public:
     Keyboard keys;
     bool updateKey(quint32 key, Keyboard::State state);
 
-private:
+protected:
     // interface
     void dde_seat_get_dde_pointer(Resource *resource, uint32_t id) override;
     void dde_seat_get_dde_keyboard(Resource *resource, uint32_t id) override;
@@ -84,7 +84,7 @@ public:
     DDEPointerInterface *q;
     DDESeatInterface *ddeSeat;
 
-private:
+protected:
     void dde_pointer_get_motion(Resource *resource) override;
 };
 
@@ -98,7 +98,7 @@ public:
     DDETouchInterface *q;
     DDESeatInterface *ddeSeat;
 
-private:
+protected:
     void dde_touch_release(Resource *resource) override;
 };
 
