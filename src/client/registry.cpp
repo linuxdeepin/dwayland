@@ -22,7 +22,9 @@
 #include "output.h"
 #include "outputconfiguration.h"
 #include "outputdevice.h"
+#include "outputdevice_v2.h"
 #include "outputmanagement.h"
+#include "outputmanagement_v2.h"
 #include "plasmashell.h"
 #include "plasmavirtualdesktop.h"
 #include "plasmawindowmanagement.h"
@@ -64,7 +66,9 @@
 #include <wayland-idle-inhibit-unstable-v1-client-protocol.h>
 #include <wayland-keystate-client-protocol.h>
 #include <wayland-org_kde_kwin_outputdevice-client-protocol.h>
+#include <wayland-kde-output-device-v2-client-protocol.h>
 #include <wayland-output-management-client-protocol.h>
+#include "wayland-kde-output-management-v2-client-protocol.h"
 #include <wayland-plasma-shell-client-protocol.h>
 #include <wayland-plasma-virtual-desktop-client-protocol.h>
 #include <wayland-plasma-window-management-client-protocol.h>
@@ -214,12 +218,26 @@ static const QMap<Registry::Interface, SuppertedInterfaceData> s_interfaces = {
         &Registry::outputManagementAnnounced,
         &Registry::outputManagementRemoved
     }},
+    {Registry::Interface::OutputManagementV2, {
+        2,
+        QByteArrayLiteral("kde_output_management_v2"),
+        &kde_output_management_v2_interface,
+        &Registry::outputManagementV2Announced,
+        &Registry::outputManagementV2Removed
+    }},
     {Registry::Interface::OutputDevice, {
         4,
         QByteArrayLiteral("org_kde_kwin_outputdevice"),
         &org_kde_kwin_outputdevice_interface,
         &Registry::outputDeviceAnnounced,
         &Registry::outputDeviceRemoved
+    }},
+    {Registry::Interface::OutputDeviceV2, {
+        2,
+        QByteArrayLiteral("kde_output_device_v2"),
+        &kde_output_device_v2_interface,
+        &Registry::outputDeviceV2Announced,
+        &Registry::outputDeviceV2Removed
     }},
     {Registry::Interface::Shadow, {
         2,
@@ -705,7 +723,9 @@ BIND(Idle, org_kde_kwin_idle)
 BIND(RemoteAccessManager, org_kde_kwin_remote_access_manager)
 BIND(FakeInput, org_kde_kwin_fake_input)
 BIND(OutputManagement, org_kde_kwin_outputmanagement)
+BIND(OutputManagementV2, kde_output_management_v2)
 BIND(OutputDevice, org_kde_kwin_outputdevice)
+BIND(OutputDeviceV2, kde_output_device_v2)
 BIND(ServerSideDecorationManager, org_kde_kwin_server_decoration_manager)
 BIND(TextInputManagerUnstableV0, wl_text_input_manager)
 BIND(TextInputManagerUnstableV2, zwp_text_input_manager_v2)
@@ -776,7 +796,9 @@ CREATE(Idle)
 CREATE(RemoteAccessManager)
 CREATE(FakeInput)
 CREATE(OutputManagement)
+CREATE(OutputManagementV2)
 CREATE(OutputDevice)
+CREATE(OutputDeviceV2)
 CREATE(ShadowManager)
 CREATE(BlurManager)
 CREATE(ContrastManager)

@@ -31,8 +31,12 @@ set(CLIENT_LIB_SRCS
     keystate.cpp
     remote_access.cpp
     outputconfiguration.cpp
+    outputconfiguration_v2.cpp
     outputmanagement.cpp
+    outputmanagement_v2.cpp
     outputdevice.cpp
+    outputdevicemode_v2.cpp
+    outputdevice_v2.cpp
     output.cpp
     pointer.cpp
     pointerconstraints.cpp
@@ -92,6 +96,21 @@ ecm_add_wayland_client_protocol(CLIENT_LIB_SRCS
 ecm_add_wayland_client_protocol(CLIENT_LIB_SRCS
     PROTOCOL ${DEEPIN_WAYLAND_PROTOCOLS_DIR}/outputdevice.xml
     BASENAME org_kde_kwin_outputdevice
+)
+
+ecm_add_wayland_client_protocol(CLIENT_LIB_SRCS
+    PROTOCOL ${DEEPIN_WAYLAND_PROTOCOLS_DIR}/kde-output-device-v2.xml
+    BASENAME kde-output-device-v2
+)
+
+ecm_add_wayland_client_protocol(CLIENT_LIB_SRCS
+    PROTOCOL ${DEEPIN_WAYLAND_PROTOCOLS_DIR}/kde-output-management-v2.xml
+    BASENAME kde-output-management-v2
+)
+
+ecm_add_wayland_client_protocol(CLIENT_LIB_SRCS
+    PROTOCOL ${DEEPIN_WAYLAND_PROTOCOLS_DIR}/kde-primary-output-v1.xml
+    BASENAME kde-primary-output-v1
 )
 
 ecm_add_wayland_client_protocol(CLIENT_LIB_SRCS
@@ -323,8 +342,12 @@ set(CLIENT_LIB_HEADERS
   keystate.h
   remote_access.h
   outputconfiguration.h
+  outputconfiguration_v2.h
   outputmanagement.h
+  outputmanagement_v2.h
   outputdevice.h
+  outputdevice_v2.h
+  outputdevicemode_v2.h
   output.h
   pointer.h
   pointerconstraints.h
