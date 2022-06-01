@@ -1,3 +1,10 @@
+kwayland (4:5.57.0.17-1) unstable; urgency=medium
+
+  * feat: move start and stop logic from kwin
+  * Release tag 5.57.0.17
+
+ -- Lei Su <sulei@uniontech.com>  Wed, 01 Jun 2022 13:57:37 +0800
+
 kwayland (4:5.57.0.16-1) unstable; urgency=medium
 
   * Realize the function of setOnAllDesktops in ddeshell protocol
