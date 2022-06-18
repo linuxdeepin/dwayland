@@ -1,3 +1,10 @@
+dwayland (5.24.3-deepin.1.0) unstable; urgency=medium
+
+  * [Chaojiang Luo]
+  * Init DDEShellSurfaceInterface parent QObject
+
+ -- jccKevin <luochaojiang@uniontech.com>  Sat, 18 Jun 2022 16:21:54 +0800
+
 dwayland (5.24.3-1) unstable; urgency=medium
 
   [ Aurélien COUDERC ]
