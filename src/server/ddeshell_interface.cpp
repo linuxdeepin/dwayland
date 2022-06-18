@@ -112,7 +112,8 @@ void DDEShellInterfacePrivate::dde_shell_get_shell_surface(Resource *resource, u
  * DDEShellSurfaceInterface
  *********************************/
 DDEShellSurfaceInterface::DDEShellSurfaceInterface(SurfaceInterface *surface, wl_resource *resource)
-    : d(new DDEShellSurfaceInterfacePrivate(this, surface, resource))
+    : QObject(surface)
+    , d(new DDEShellSurfaceInterfacePrivate(this, surface, resource))
 {
 }
 
