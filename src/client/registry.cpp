@@ -51,6 +51,7 @@
 #include "ddeseat.h"
 #include "ddeshell.h"
 #include "strut.h"
+#include "globalproperty.h"
 // Qt
 #include <QDebug>
 // wayland
@@ -91,6 +92,7 @@
 #include <wayland-dde-seat-client-protocol.h>
 #include <wayland-dde-shell-client-protocol.h>
 #include <wayland-strut-client-protocol.h>
+#include <wayland-dde-globalproperty-client-protocol.h>
 
 /*****
  * How to add another interface:
@@ -420,6 +422,13 @@ static const QMap<Registry::Interface, SuppertedInterfaceData> s_interfaces = {
         &dde_shell_interface,
         &Registry::ddeShellAnnounced,
         &Registry::ddeShellRemoved
+    }},
+    {Registry::Interface::GlobalProperty, {
+        1,
+        QByteArrayLiteral("dde_globalproperty"),
+        &dde_globalproperty_interface,
+        &Registry::ddeGlobalPropertyAnnounced,
+        &Registry::ddeGlobalPropertyRemoved
     }},
     {Registry::Interface::DDESeat, {
         1,
@@ -752,6 +761,7 @@ BIND(ClientManagement, com_deepin_client_management)
 BIND(DDESeat, dde_seat)
 BIND(DDEShell, dde_shell)
 BIND(Strut, com_deepin_kwin_strut)
+BIND(GlobalProperty, dde_globalproperty)
 
 #undef BIND
 #undef BIND2
@@ -813,6 +823,7 @@ CREATE(ClientManagement)
 CREATE(DDESeat)
 CREATE(DDEShell)
 CREATE(Strut)
+CREATE(GlobalProperty)
 
 #undef CREATE
 #undef CREATE2

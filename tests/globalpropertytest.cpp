@@ -28,20 +28,18 @@
 
 using namespace KWayland::Client;
 
-class XdgTest : public QObject
+class GlobalPropertyTest : public QObject
 {
     Q_OBJECT
 public:
-    explicit XdgTest(QObject *parent = nullptr);
-    virtual ~XdgTest();
+    explicit GlobalPropertyTest(QObject *parent = nullptr);
+    virtual ~GlobalPropertyTest();
 
     void init();
 
 private:
     void setupRegistry(Registry *registry);
-    void createPopup();
     void render();
-    void renderPopup();
     QThread *m_connectionThread;
     ConnectionThread *m_connectionThreadObject;
     EventQueue *m_eventQueue = nullptr;
@@ -59,21 +57,21 @@ private:
     KWayland::Client::ServerSideDecorationManager *m_decoration = nullptr;
 };
 
-XdgTest::XdgTest(QObject *parent)
+GlobalPropertyTest::GlobalPropertyTest(QObject *parent)
     : QObject(parent)
     , m_connectionThread(new QThread(this))
     , m_connectionThreadObject(new ConnectionThread())
 {
 }
 
-XdgTest::~XdgTest()
+GlobalPropertyTest::~GlobalPropertyTest()
 {
     m_connectionThread->quit();
     m_connectionThread->wait();
     m_connectionThreadObject->deleteLater();
 }
 
-void XdgTest::init()
+void GlobalPropertyTest::init()
 {
     connect(
         m_connectionThreadObject,
@@ -93,7 +91,7 @@ void XdgTest::init()
     m_connectionThreadObject->initConnection();
 }
 
-void XdgTest::setupRegistry(Registry *registry)
+void GlobalPropertyTest::setupRegistry(Registry *registry)
 {
     connect(registry, &Registry::compositorAnnounced, this, [this, registry](quint32 name, quint32 version) {
         m_compositor = registry->createCompositor(name, version, this);
@@ -153,32 +151,13 @@ void XdgTest::setupRegistry(Registry *registry)
         }
         obj.insert("clippath", arr);
         obj.insert("direction", 1);
+        obj.insert("blurRegion", 1);
+        obj.insert("unstandardwindow", 1);
+        obj.insert("shadow", 1);
         doc.setObject(obj);
         QByteArray jsonByteArr = doc.toJson(QJsonDocument::JsonFormat::Compact);
         // QString jsonStr = QString::fromUtf8(jsonByteArr);
-        m_ddeGlobalProperty->setProperty("decorate", "unstandardwindow", m_surface, 1, jsonByteArr.constData());
-    });
-    connect(registry, &Registry::seatAnnounced, this, [this, registry](quint32 name) {
-        Seat *s = registry->createSeat(name, 2, this);
-        connect(s, &Seat::hasPointerChanged, this, [this, s](bool has) {
-            if (!has) {
-                return;
-            }
-            Pointer *p = s->createPointer(this);
-            connect(p, &Pointer::buttonStateChanged, this, [this](quint32 serial, quint32 time, quint32 button, Pointer::ButtonState state) {
-                Q_UNUSED(button)
-                Q_UNUSED(serial)
-                Q_UNUSED(time)
-                if (state == Pointer::ButtonState::Released) {
-                    if (m_popupSurface) {
-                        m_popupSurface->deleteLater();
-                        m_popupSurface = nullptr;
-                    } else {
-                        createPopup();
-                    }
-                }
-            });
-        });
+        m_ddeGlobalProperty->setProperty("window", "decorate", m_surface, 1, jsonByteArr.constData());
     });
 
     registry->setEventQueue(m_eventQueue);
@@ -186,23 +165,7 @@ void XdgTest::setupRegistry(Registry *registry)
     registry->setup();
 }
 
-void XdgTest::createPopup()
-{
-    if (m_popupSurface) {
-        m_popupSurface->deleteLater();
-    }
-
-    m_popupSurface = m_compositor->createSurface(this);
-
-    XdgPositioner positioner(QSize(200, 200), QRect(50, 50, 400, 400));
-    positioner.setAnchorEdge(Qt::BottomEdge | Qt::RightEdge);
-    positioner.setGravity(Qt::BottomEdge);
-    positioner.setConstraints(XdgPositioner::Constraint::FlipX | XdgPositioner::Constraint::SlideY);
-    m_xdgShellPopup = m_xdgShell->createPopup(m_popupSurface, m_xdgShellSurface, positioner, m_popupSurface);
-    renderPopup();
-}
-
-void XdgTest::render()
+void GlobalPropertyTest::render()
 {
     const QSize &size = m_xdgShellSurface->size().isValid() ? m_xdgShellSurface->size() : QSize(500, 500);
     auto buffer = m_shm->getBuffer(size, size.width() * 4).toStrongRef();
@@ -213,7 +176,7 @@ void XdgTest::render()
     QPainter painter(&image);
     painter.setBrush(Qt::red);
     painter.setPen(Qt::black);
-    painter.drawRect(50, 50, 400, 400);
+    painter.drawRect(10, 10, 180, 100);
 
     m_surface->attachBuffer(*buffer);
     m_surface->damage(QRect(QPoint(0, 0), size));
@@ -221,27 +184,13 @@ void XdgTest::render()
     buffer->setUsed(false);
 }
 
-void XdgTest::renderPopup()
-{
-    QSize size(200, 200);
-    auto buffer = m_shm->getBuffer(size, size.width() * 4).toStrongRef();
-    buffer->setUsed(true);
-    QImage image(buffer->address(), size.width(), size.height(), QImage::Format_ARGB32_Premultiplied);
-    image.fill(QColor(0, 0, 255, 255));
-
-    m_popupSurface->attachBuffer(*buffer);
-    m_popupSurface->damage(QRect(QPoint(0, 0), size));
-    m_popupSurface->commit(Surface::CommitFlag::None);
-    buffer->setUsed(false);
-}
-
 int main(int argc, char **argv)
 {
     QCoreApplication app(argc, argv);
-    XdgTest client;
+    GlobalPropertyTest client;
     client.init();
 
     return app.exec();
 }
 
-#include "xdgtest.moc"
+#include "globalpropertytest.moc"

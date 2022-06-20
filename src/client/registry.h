@@ -59,6 +59,7 @@ struct com_deepin_client_management;
 struct dde_seat;
 struct dde_shell;
 struct com_deepin_kwin_strut;
+struct dde_globalproperty;
 
 namespace KWayland
 {
@@ -112,6 +113,7 @@ class ClientManagement;
 class DDESeat;
 class DDEShell;
 class Strut;
+class GlobalProperty;
 
 /**
  * @short Wrapper for the wl_registry interface.
@@ -194,6 +196,7 @@ public:
         DDESeat, ///refers to dde_shell, @since 5.54
         DDEShell, ///<refers to dde_shell, @since 5.54
         Strut, ///< refers to com_deepin_kwin_strut interface
+        GlobalProperty,
     };
     explicit Registry(QObject *parent = nullptr);
     ~Registry() override;
@@ -721,6 +724,17 @@ public:
      * @since 5.54
      **/
     dde_shell *bindDDEShell(uint32_t name, uint32_t version) const;
+
+    /**
+     * Binds the dde_globalproperty with @p name and @p version.
+     * If the @p name does not exist,
+     * @c null will be returned.
+     *
+     * Prefer using createGlobalProperty instead.
+     * @see createGlobalProperty
+     * @since 5.54
+     **/
+    dde_globalproperty *bindGlobalProperty(uint32_t name, uint32_t version) const;
 
     /**
      * Binds the dde_shell with @p name and @p version.
@@ -1372,6 +1386,23 @@ public:
     DDEShell *createDDEShell(quint32 name, quint32 version, QObject *parent = nullptr);
 
     /**
+     * Creates an GlobalProperty and sets it up to manage the interface identified by
+     * @p name and @p version.
+     *
+     * Note: in case @p name is invalid or isn't for the zxdg_decoration_manager_v1 interface,
+     * the returned GlobalProperty will not be valid. Therefore it's recommended to call
+     * isValid on the created instance.
+     *
+     * @param name The name of the zxdg_decoration_manager_v1 interface to bind
+     * @param version The version or the zxdg_decoration_manager_v1 interface to use
+     * @param parent The parent for GlobalProperty
+     *
+     * @returns The created GlobalProperty.
+     * @since 5.54
+     **/
+    GlobalProperty *createGlobalProperty(quint32 name, quint32 version, QObject *parent = nullptr);
+
+    /**
      * Creates an DDESeat and sets it up to manage the interface identified by
      * @p name and @p version.
      *
@@ -1719,6 +1750,14 @@ Q_SIGNALS:
     void ddeShellAnnounced(quint32 name, quint32 version);
 
     /**
+     * Emitted whenever a dde_globalProperty interface gets announced.
+     * @param name The name for the announced interface
+     * @param version The maximum supported version of the announced interface
+     * @since 5.54
+     **/
+    void ddeGlobalPropertyAnnounced(quint32 name, quint32 version);
+
+    /**
      * Emitted whenever a dde_shell interface gets announced.
      * @param name The name for the announced interface
      * @param version The maximum supported version of the announced interface
@@ -1989,6 +2028,8 @@ Q_SIGNALS:
     void clientManagementRemoved(quint32 name);
 
     void ddeShellRemoved(quint32 name);
+
+    void ddeGlobalPropertyRemoved(quint32 name);
 
     /**
      * Emitted whenever a dde_shell gets removed.

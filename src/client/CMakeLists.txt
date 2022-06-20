@@ -70,6 +70,7 @@ set(CLIENT_LIB_SRCS
     xdgshell_v6.cpp
     xdgshell_stable.cpp
     xdgoutput.cpp
+    globalproperty.cpp
     ../compat/wayland-xdg-shell-v5-protocol.c
 )
 
@@ -243,6 +244,11 @@ ecm_add_wayland_client_protocol(CLIENT_LIB_SRCS
 )
 
 ecm_add_wayland_client_protocol(CLIENT_LIB_SRCS
+    PROTOCOL ${DEEPIN_WAYLAND_PROTOCOLS_DIR}/dde-globalproperty.xml
+    BASENAME dde-globalproperty
+)
+
+ecm_add_wayland_client_protocol(CLIENT_LIB_SRCS
     PROTOCOL ${DEEPIN_WAYLAND_PROTOCOLS_DIR}/strut.xml
     BASENAME strut
 )
@@ -277,6 +283,7 @@ set(CLIENT_GENERATED_FILES
     ${CMAKE_CURRENT_BINARY_DIR}/wayland-client-management-client-protocol.h
     ${CMAKE_CURRENT_BINARY_DIR}/wayland-dde-seat-client-protocol.h
     ${CMAKE_CURRENT_BINARY_DIR}/wayland-dde-shell-client-protocol.h
+    ${CMAKE_CURRENT_BINARY_DIR}/wayland-dde-globalproperty-client-protocol.h
 )
 
 set_source_files_properties(${CLIENT_GENERATED_FILES} PROPERTIES SKIP_AUTOMOC ON)
@@ -376,6 +383,7 @@ set(CLIENT_LIB_HEADERS
   xdgshell.h
   xdgforeign.h
   xdgoutput.h
+  globalproperty.h
 )
 
 install(FILES

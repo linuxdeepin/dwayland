@@ -74,6 +74,7 @@ set(SERVER_LIB_SRCS
     xdgforeign_v2_interface.cpp
     xdgoutput_v1_interface.cpp
     xdgshell_interface.cpp
+    globalproperty_interface.cpp
 )
 
 ecm_qt_declare_logging_category(SERVER_LIB_SRCS
@@ -305,6 +306,11 @@ ecm_add_qtwayland_server_protocol_kde(SERVER_LIB_SRCS
 )
 
 ecm_add_qtwayland_server_protocol_kde(SERVER_LIB_SRCS
+    PROTOCOL ${DEEPIN_WAYLAND_PROTOCOLS_DIR}/dde-globalproperty.xml
+    BASENAME dde-globalproperty
+)
+
+ecm_add_qtwayland_server_protocol_kde(SERVER_LIB_SRCS
     PROTOCOL ${DEEPIN_WAYLAND_PROTOCOLS_DIR}/strut.xml
     BASENAME strut
 )
@@ -428,6 +434,7 @@ set(SERVER_LIB_HEADERS
   xdgforeign_v2_interface.h
   xdgoutput_v1_interface.h
   xdgshell_interface.h
+  globalproperty_interface.h
 )
 
 install(FILES

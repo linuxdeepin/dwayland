@@ -53,6 +53,10 @@ add_executable(plasmasurface-test plasmasurfacetest.cpp)
 target_link_libraries(plasmasurface-test Qt::Gui Deepin::WaylandClient)
 ecm_mark_as_test(plasmasurface-test)
 
+add_executable(globalproperty-test globalpropertytest.cpp)
+target_link_libraries(globalproperty-test Qt::Gui Deepin::WaylandClient)
+ecm_mark_as_test(globalproperty-test)
+
 add_executable(xdgforeign-test xdgforeigntest.cpp)
 target_link_libraries(xdgforeign-test Qt::Gui Deepin::WaylandClient)
 ecm_mark_as_test(xdgforeign-test)
