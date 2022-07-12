@@ -91,6 +91,20 @@ public:
         bool isMinimized;
         bool isFullScreen;
         bool isActive;
+        int32_t splitable;
+        char uuid[256];
+    };
+
+    enum class SplitType {
+        None        = 0,
+        Left        = 1 << 0,
+        Right       = 1 << 1,
+        Top         = 1 << 2,
+        Bottom      = 1 << 3,
+        LeftTop     = Left | Top,
+        RightTop    = Right | Top,
+        LeftBottom  = Left | Bottom,
+        RightBottom = Right | Bottom,
     };
 
     /**
@@ -133,6 +147,8 @@ public:
 
     void getWindowCaption(int windowId, wl_buffer* buffer);
 
+    void requestSplitWindow(const char *uuid, SplitType splitType);
+
 Q_SIGNALS:
     /**
      * Emitted whenever window State changed.
@@ -149,6 +165,8 @@ Q_SIGNALS:
     void removed();
 
     void captionWindowDone(int windowId, bool succeed);
+
+    void splitStateChange(const char* uuid, int splitable);
 
 private:
     class Private;

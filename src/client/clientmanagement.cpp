@@ -42,6 +42,7 @@ public:
     void setup(com_deepin_client_management *o);
     void get_window_states();
     void getWindowCaption(int windowId, wl_buffer *buffer);
+    void requestSplitWindow(const char *uuid, int splitType);
 
     WaylandPointer<com_deepin_client_management, com_deepin_client_management_destroy> clientManagement;
     EventQueue *queue = nullptr;
@@ -51,8 +52,10 @@ public:
 private:
     static void windowStatesCallback(void *data, com_deepin_client_management *clientManagement, uint32_t count, wl_array *windowStates);
     static void windowCaptureCallback(void *data, com_deepin_client_management *clientManagement, int windowId, int succeed, wl_buffer *buffer);
+    static void splitChangeCallback(void *data, com_deepin_client_management *clientManagement, const char *uuid, uint32_t splitable);
     void addWindowStates(uint32_t count, wl_array *windowStates);
     void sendWindowCaptionDone(int windowId, bool succeed, wl_buffer *buffer);
+    void splitChange(const char* uuid, int splitable);
 
     ClientManagement *q;
     static struct com_deepin_client_management_listener s_clientManagementListener;
@@ -73,6 +76,12 @@ void ClientManagement::Private::getWindowCaption(int windowId, wl_buffer *buffer
 {
     Q_ASSERT(clientManagement);
     com_deepin_client_management_capture_window_image(clientManagement, windowId, buffer);
+}
+
+void ClientManagement::Private::requestSplitWindow(const char *uuid, int splitType)
+{
+    Q_ASSERT(clientManagement);
+    com_deepin_client_management_split_window(clientManagement, uuid, splitType);
 }
 
 void ClientManagement::Private::setup(com_deepin_client_management *o)
@@ -96,6 +105,7 @@ ClientManagement::~ClientManagement()
 
 com_deepin_client_management_listener ClientManagement::Private::s_clientManagementListener = {
     windowStatesCallback,
+    splitChangeCallback,
     windowCaptureCallback
 };
 
@@ -118,6 +128,11 @@ void ClientManagement::Private::sendWindowCaptionDone(int windowId, bool succeed
     Q_EMIT q->captionWindowDone(windowId, succeed);
 }
 
+void ClientManagement::Private::splitChange(const char* uuid, int splitable)
+{
+    Q_EMIT q->splitStateChange(uuid, splitable);
+}
+
 void ClientManagement::Private::windowStatesCallback(void *data, com_deepin_client_management *clientManagement,
                                                 uint32_t count,
                                                 wl_array *windowStates)
@@ -134,6 +149,14 @@ void ClientManagement::Private::windowCaptureCallback(void *data, com_deepin_cli
     Q_UNUSED(clientManagement);
     auto o = reinterpret_cast<ClientManagement::Private*>(data);
     o->sendWindowCaptionDone(windowId, succeed == 1, buffer);
+}
+
+void ClientManagement::Private::splitChangeCallback(void *data, com_deepin_client_management *clientManagement,
+                                                const char *uuid, uint32_t splitable)
+{
+    Q_UNUSED(clientManagement);
+    auto o = reinterpret_cast<ClientManagement::Private*>(data);
+    o->splitChange(uuid, splitable);
 }
 
 void ClientManagement::setup(com_deepin_client_management *clientManagement)
@@ -182,6 +205,11 @@ const QVector <ClientManagement::WindowState> &ClientManagement::getWindowStates
         d->get_window_states();
     }
     return d->m_windowStates;
+}
+
+void ClientManagement::requestSplitWindow(const char *uuid, ClientManagement::SplitType splitType)
+{
+    d->requestSplitWindow(uuid, (int)splitType);
 }
 
 void ClientManagement::getWindowCaption(int windowId, wl_buffer *buffer)

@@ -46,6 +46,8 @@ public:
     void captureWindowImage(int windowId, wl_resource *buffer);
     void sendWindowStates(wl_resource *resource);
     void sendWindowCaption(int windowId, bool succeed, wl_resource *buffer);
+    void sendSplitChange(const QString& uuid, int splitable);
+    void splitWindow(QString uuid, int splitType);
 
     ClientManagementInterface::WindowState m_windowStates[MAX_WINDOWS];
     uint32_t m_windowCount;
@@ -54,6 +56,11 @@ protected:
     void com_deepin_client_management_get_window_states(Resource *resource) override;
     void com_deepin_client_management_capture_window_image(Resource *resource,
         int32_t window_id, struct ::wl_resource *buffer) override;
+    void com_deepin_client_management_split_window(Resource *resource,
+        const QString &uuid, int32_t splitType) override;
+private:
+    QString m_splitUuid;
+    int     m_splitable = 0;
 };
 
 ClientManagementInterfacePrivate::ClientManagementInterfacePrivate(ClientManagementInterface *q, Display *d)
@@ -76,6 +83,13 @@ void ClientManagementInterfacePrivate::com_deepin_client_management_capture_wind
     captureWindowImage(windowId, buffer);
 }
 
+void ClientManagementInterfacePrivate::com_deepin_client_management_split_window(Resource *resource, const QString &uuid, int32_t splitType)
+{
+    Q_UNUSED(resource);
+
+    splitWindow(uuid, splitType);
+}
+
 void ClientManagementInterfacePrivate::getWindowStates()
 {
     Q_EMIT q->windowStatesRequest();
@@ -85,6 +99,11 @@ void ClientManagementInterfacePrivate::captureWindowImage(int windowId, wl_resou
 {
     qWarning() << __func__ << ":" << __LINE__ << "ut-gfx-capture: windowId " << windowId;
     Q_EMIT q->captureWindowImageRequest(windowId, buffer);
+}
+
+void ClientManagementInterfacePrivate::splitWindow(QString uuid, int splitType)
+{
+    Q_EMIT q->splitWindowRequest(uuid, splitType);
 }
 
 void ClientManagementInterfacePrivate::sendWindowStates(wl_resource *resource)
@@ -115,6 +134,18 @@ void ClientManagementInterfacePrivate::sendWindowCaption(int windowId, bool succ
     for (Resource *resource : clientResources) {
         qWarning() << __func__ << ":" << __LINE__ << "ut-gfx-capture-sendWindowCaption: windowId " << windowId << " resource" << resource->handle;
         com_deepin_client_management_send_capture_callback(resource->handle, windowId, succeed, buffer);
+    }
+}
+
+void ClientManagementInterfacePrivate::sendSplitChange(const QString& uuid, int splitable)
+{
+    if (splitable > 0) {
+        m_splitUuid = uuid;
+        m_splitable = splitable;
+        const auto clientResources = resourceMap();
+        for (Resource *resource : clientResources) {
+            com_deepin_client_management_send_split_change(resource->handle, m_splitUuid.toLatin1().data(), m_splitable);
+        }
     }
 }
 
@@ -188,6 +219,11 @@ void ClientManagementInterface::sendWindowCaption(int windowId, wl_resource *buf
         }
     }
     d->sendWindowCaption(windowId, succeed, buffer);
+}
+
+void ClientManagementInterface::sendSplitChange(const QString& uuid, int splitable)
+{
+    d->sendSplitChange(uuid, splitable);
 }
 
 }

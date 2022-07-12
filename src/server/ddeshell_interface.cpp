@@ -252,6 +252,10 @@ void DDEShellSurfaceInterfacePrivate::dde_shell_surface_set_property(Resource *r
         QPointF pnt = QPointF(value[0],value[1]);
         Q_EMIT q->windowRadiusPropertyRequested(pnt);
     }
+    if (property & DDE_SHELL_PROPERTY_QUICKTILE) {
+        int *value = static_cast<int *>(dataArr->data);
+        Q_EMIT q->splitWindowRequested((SplitType)*value);
+    }
 }
 
 void DDEShellSurfaceInterface::setActive(bool set)
@@ -332,6 +336,24 @@ void DDEShellSurfaceInterface::setModal(bool set)
 void DDEShellSurfaceInterface::sendGeometry(const QRect &geom)
 {
     d->sendGeometry(geom);
+}
+
+void DDEShellSurfaceInterface::sendSplitable(int splitable)
+{
+    if (splitable == 0) {
+        d->setState(DDE_SHELL_STATE_NO_SPLIT, true);
+        d->setState(DDE_SHELL_STATE_TWO_SPLIT, false);
+        d->setState(DDE_SHELL_STATE_FOUR_SPLIT, false);
+    } else {
+        d->setState(DDE_SHELL_STATE_NO_SPLIT, false);
+        if (splitable == 1) {
+            d->setState(DDE_SHELL_STATE_FOUR_SPLIT, false);
+            d->setState(DDE_SHELL_STATE_TWO_SPLIT, true);
+        } else if (splitable == 2) {
+            d->setState(DDE_SHELL_STATE_TWO_SPLIT, false);
+            d->setState(DDE_SHELL_STATE_FOUR_SPLIT, true);
+        }
+    }
 }
 
 }

@@ -73,6 +73,7 @@ public:
     bool acceptFocus = true;
     bool modality = false;
     bool onAllDesktops = false;
+    int splitable = 0;
 
     static DDEShellSurface *get(wl_surface *surface);
     static DDEShellSurface *get(Surface *surface);
@@ -272,6 +273,15 @@ void DDEShellSurface::Private::stateChangedCallback(void *data, dde_shell_surfac
     p->setResizable(state & DDE_SHELL_STATE_RESIZABLE);
     p->setAcceptFocus(state * DDE_SHELL_STATE_ACCEPT_FOCUS);
     p->setModal(state & DDE_SHELL_STATE_MODALITY);
+    if (state & DDE_SHELL_STATE_TWO_SPLIT) {
+        p->splitable = 1;
+    }
+    if (state & DDE_SHELL_STATE_FOUR_SPLIT) {
+        p->splitable = 2;
+    }
+    if (state & DDE_SHELL_STATE_NO_SPLIT) {
+        p->splitable = 0;
+    }
 }
 
 void DDEShellSurface::Private::geometryCallback(void *data, dde_shell_surface *ddeShellSurface, int32_t x, int32_t y, uint32_t width, uint32_t height)
@@ -693,6 +703,14 @@ bool DDEShellSurface::isModal() const
     return d->modality;
 }
 
+bool DDEShellSurface::isSplitable() const
+{
+    if (d->splitable) {
+        return true;
+    }
+    return false;
+}
+
 bool DDEShellSurface::isMovable() const
 {
     return d->movable;
@@ -701,6 +719,11 @@ bool DDEShellSurface::isMovable() const
 QRect DDEShellSurface::getGeometry() const
 {
     return d->geometry;
+}
+
+int DDEShellSurface::getSplitable() const
+{
+    return d->splitable;
 }
 
 void DDEShellSurface::requestNoTitleBarProperty(qint32 value)
@@ -726,6 +749,19 @@ void DDEShellSurface::requestWindowRadiusProperty(QPointF windowRadius)
     arr_data[1] = windowRadius.y();
     dde_shell_surface_set_property(d->ddeShellSurface,
                                    DDE_SHELL_PROPERTY_WINDOWRADIUS,
+                                   &arr);
+    wl_array_release(&arr);
+}
+
+void DDEShellSurface::requestSplitWindow(DDEShellSurface::SplitType splitType)
+{
+    struct wl_array arr;
+    int *arr_data = nullptr;
+    wl_array_init(&arr);
+    arr_data = static_cast<int *>(wl_array_add(&arr, sizeof(int)));
+    arr_data[0] = (int)splitType;
+    dde_shell_surface_set_property(d->ddeShellSurface,
+                                   DDE_SHELL_PROPERTY_QUICKTILE,
                                    &arr);
     wl_array_release(&arr);
 }

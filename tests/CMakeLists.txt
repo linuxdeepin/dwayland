@@ -27,6 +27,10 @@ add_executable(pasteClient pasteclient.cpp)
 target_link_libraries(pasteClient Qt::Concurrent Deepin::WaylandClient)
 ecm_mark_as_test(pasteClient)
 
+add_executable(clientManagementTest clientManagementTest.cpp)
+target_link_libraries(clientManagementTest Deepin::WaylandClient)
+ecm_mark_as_test(clientManagementTest)
+
 add_executable(touchClientTest touchclienttest.cpp)
 target_link_libraries(touchClientTest Deepin::WaylandClient)
 
