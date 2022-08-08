@@ -209,6 +209,18 @@ public:
      */
     QSize logicalSize() const;
 
+    /**
+     * A consistent unique name for this monitor
+     * @since 5.XDGOUTPUT
+     */
+    QString name() const;
+
+    /**
+     * A longer human readable description
+     * @since 5.XDGOUTPUT
+     */
+    QString description() const;
+
 Q_SIGNALS:
     /**
      * Emitted when the logical position or size changes

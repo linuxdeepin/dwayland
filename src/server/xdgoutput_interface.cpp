@@ -25,6 +25,7 @@ License along with this library.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <QHash>
 #include <wayland-xdg-output-server-protocol.h>
+#include <QDebug>
 
 namespace KWayland
 {
@@ -53,7 +54,7 @@ private:
     static const quint32 s_version;
 };
 
-const quint32 XdgOutputManagerInterface::Private::s_version = 1;
+const quint32 XdgOutputManagerInterface::Private::s_version = 2;
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 const struct zxdg_output_manager_v1_interface XdgOutputManagerInterface::Private::s_interface = {
@@ -69,6 +70,8 @@ public:
     ~XdgOutputV1Interface();
     void setLogicalSize(const QSize &size);
     void setLogicalPosition(const QPoint &pos);
+    void setName(const QString &name);
+    void setDescription(const QString &description);
     void done();
 private:
     class Private;
@@ -81,6 +84,8 @@ public:
     void resourceDisconnected(XdgOutputV1Interface *resource);
     QPoint pos;
     QSize size;
+    QString name;
+    QString description;
     bool dirty = false;
     bool doneOnce = false;
     QList<XdgOutputV1Interface*> resources;
@@ -224,6 +229,40 @@ QPoint XdgOutputInterface::logicalPosition() const
     return d->pos;
 }
 
+void XdgOutputInterface::setName(const QString &name)
+{
+    if (name == d->name) {
+        return;
+    }
+    d->name = name;
+    d->dirty = true;
+    for(auto resource: d->resources) {
+        resource->setName(name);
+    }
+}
+
+QString XdgOutputInterface::name() const
+{
+    return d->name;
+}
+
+void XdgOutputInterface::setDescription(const QString &description)
+{
+    if (description == d->description) {
+        return;
+    }
+    d->description = description;
+    d->dirty = true;
+    for(auto resource: d->resources) {
+        resource->setDescription(description);
+    }
+}
+
+QString XdgOutputInterface::description() const
+{
+    return d->description;
+}
+
 void XdgOutputInterface::done()
 {
     d->doneOnce = true;
@@ -238,8 +277,15 @@ void XdgOutputInterface::done()
 
 void XdgOutputInterface::Private::resourceConnected(XdgOutputV1Interface *resource)
 {
+    qDebug() << "resouce" << pos << size << name << description;
     resource->setLogicalPosition(pos);
     resource->setLogicalSize(size);
+    if (!name.isEmpty()) {
+        resource->setName(name);
+    }
+    if (!description.isEmpty()) {
+        resource->setDescription(description);
+    }
     if (doneOnce) {
         resource->done();
     }
@@ -288,6 +334,28 @@ void XdgOutputV1Interface::setLogicalPosition(const QPoint &pos)
         return;
     }
     zxdg_output_v1_send_logical_position(d->resource, pos.x(), pos.y());
+}
+
+void XdgOutputV1Interface::setName(const QString &name)
+{
+    if (!d->resource) {
+        return;
+    }
+    if (wl_resource_get_version(d->resource) < ZXDG_OUTPUT_V1_NAME_SINCE_VERSION) {
+        return;
+    }
+    zxdg_output_v1_send_name(d->resource, name.toUtf8().constData());
+}
+
+void XdgOutputV1Interface::setDescription(const QString &description)
+{
+    if (!d->resource) {
+        return;
+    }
+    if (wl_resource_get_version(d->resource) < ZXDG_OUTPUT_V1_DESCRIPTION_SINCE_VERSION) {
+        return;
+    }
+    zxdg_output_v1_send_description(d->resource, description.toUtf8().constData());
 }
 
 void XdgOutputV1Interface::done()
