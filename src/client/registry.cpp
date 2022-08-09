@@ -30,6 +30,7 @@
 #include "plasmawindowmanagement.h"
 #include "pointerconstraints.h"
 #include "pointergestures.h"
+#include "primaryoutput_v1.h"
 #include "relativepointer.h"
 #include "remote_access.h"
 #include "seat.h"
@@ -67,6 +68,7 @@
 #include <wayland-keystate-client-protocol.h>
 #include <wayland-org_kde_kwin_outputdevice-client-protocol.h>
 #include <wayland-kde-output-device-v2-client-protocol.h>
+#include <wayland-kde-primary-output-v1-client-protocol.h>
 #include <wayland-output-management-client-protocol.h>
 #include "wayland-kde-output-management-v2-client-protocol.h"
 #include <wayland-plasma-shell-client-protocol.h>
@@ -238,6 +240,13 @@ static const QMap<Registry::Interface, SuppertedInterfaceData> s_interfaces = {
         &kde_output_device_v2_interface,
         &Registry::outputDeviceV2Announced,
         &Registry::outputDeviceV2Removed
+    }},
+    {Registry::Interface::PrimaryOutputV1, {
+        1,
+        QByteArrayLiteral("kde_primary_output_v1"),
+        &kde_primary_output_v1_interface,
+        &Registry::primaryOutputV1Announced,
+        &Registry::primaryOutputV1Removed
     }},
     {Registry::Interface::Shadow, {
         2,
@@ -726,6 +735,7 @@ BIND(OutputManagement, org_kde_kwin_outputmanagement)
 BIND(OutputManagementV2, kde_output_management_v2)
 BIND(OutputDevice, org_kde_kwin_outputdevice)
 BIND(OutputDeviceV2, kde_output_device_v2)
+BIND(PrimaryOutputV1, kde_primary_output_v1)
 BIND(ServerSideDecorationManager, org_kde_kwin_server_decoration_manager)
 BIND(TextInputManagerUnstableV0, wl_text_input_manager)
 BIND(TextInputManagerUnstableV2, zwp_text_input_manager_v2)
@@ -799,6 +809,7 @@ CREATE(OutputManagement)
 CREATE(OutputManagementV2)
 CREATE(OutputDevice)
 CREATE(OutputDeviceV2)
+CREATE(PrimaryOutputV1)
 CREATE(ShadowManager)
 CREATE(BlurManager)
 CREATE(ContrastManager)

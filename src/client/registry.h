@@ -29,6 +29,7 @@ struct org_kde_kwin_outputmanagement;
 struct kde_output_management_v2;
 struct org_kde_kwin_outputdevice;
 struct kde_output_device_v2;
+struct kde_primary_output_v1;
 struct org_kde_kwin_fake_input;
 struct org_kde_kwin_idle;
 struct org_kde_kwin_keystate;
@@ -87,6 +88,7 @@ class PlasmaVirtualDesktopManagement;
 class PlasmaWindowManagement;
 class PointerConstraints;
 class PointerGestures;
+class PrimaryOutputV1;
 class Seat;
 class ShadowManager;
 class BlurManager;
@@ -170,6 +172,7 @@ public:
         OutputManagementV2,
         OutputDevice, ///< Refers to the org_kde_kwin_outputdevice interface
         OutputDeviceV2,
+        PrimaryOutputV1,
         ServerSideDecorationManager, ///< Refers to org_kde_kwin_server_decoration_manager
         TextInputManagerUnstableV0, ///< Refers to wl_text_input_manager @since 5.23
         TextInputManagerUnstableV2, ///< Refers to zwp_text_input_manager_v2 @since 5.23
@@ -384,6 +387,8 @@ public:
     org_kde_kwin_outputdevice *bindOutputDevice(uint32_t name, uint32_t version) const;
 
     kde_output_device_v2 *bindOutputDeviceV2(uint32_t name, uint32_t version) const;
+
+    kde_primary_output_v1 *bindPrimaryOutputV1(uint32_t name, uint32_t version) const;
 
     /**
      * Binds the _wl_fullscreen_shell with @p name and @p version.
@@ -876,6 +881,8 @@ public:
     OutputDevice *createOutputDevice(quint32 name, quint32 version, QObject *parent = nullptr);
 
     OutputDeviceV2 *createOutputDeviceV2(quint32 name, quint32 version, QObject *parent = nullptr);
+
+    PrimaryOutputV1 *createPrimaryOutputV1(quint32 name, quint32 version, QObject *parent = nullptr);
 
     /**
      * Creates a FullscreenShell and sets it up to manage the interface identified by
@@ -1488,6 +1495,8 @@ Q_SIGNALS:
 
     void outputDeviceV2Announced(quint32 name, quint32 version);
 
+
+    void primaryOutputV1Announced(quint32 name, quint32 version);
     /**
      * Emitted whenever a org_kde_plasma_shell interface gets announced.
      * @param name The name for the announced interface
@@ -1797,6 +1806,8 @@ Q_SIGNALS:
     void outputDeviceRemoved(quint32 name);
 
     void outputDeviceV2Removed(quint32 name);
+
+    void primaryOutputV1Removed(quint32 name);
 
     /**
      * Emitted whenever a org_kde_plasma_shell interface gets removed.
