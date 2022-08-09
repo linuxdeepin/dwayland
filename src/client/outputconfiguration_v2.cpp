@@ -204,14 +204,18 @@ void OutputConfigurationV2::setVrrPolicy(OutputDeviceV2 *outputdevice, OutputDev
     }
 }
 
-void OutputConfigurationV2::setRgbRange(OutputDeviceV2 *outputdevice)
+void OutputConfigurationV2::setRgbRange(OutputDeviceV2 *outputdevice, uint32_t rgbRange)
 {
-    //kde_output_configuration_v2_set_rgb_range
+    if (wl_proxy_get_version(d->outputconfiguration) >= KDE_OUTPUT_CONFIGURATION_V2_SET_RGB_RANGE_SINCE_VERSION) {
+        kde_output_configuration_v2_set_rgb_range(d->outputconfiguration, outputdevice->output(), rgbRange);
+    }
 }
 
 void OutputConfigurationV2::setPrimaryOutput(OutputDeviceV2 *outputdevice)
 {
-    //kde_output_configuration_v2_set_primary_output
+    if (wl_proxy_get_version(d->outputconfiguration) >= KDE_OUTPUT_CONFIGURATION_V2_SET_PRIMARY_OUTPUT_SINCE_VERSION) {
+        kde_output_configuration_v2_set_primary_output(d->outputconfiguration, outputdevice->output());
+    }
 }
 
 void OutputConfigurationV2::apply()

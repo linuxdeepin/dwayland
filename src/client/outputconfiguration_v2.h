@@ -236,7 +236,7 @@ public:
      */
     void setVrrPolicy(OutputDeviceV2 *outputdevice, OutputDeviceV2::VrrPolicy policy);
 
-    void setRgbRange(OutputDeviceV2 *outputdevice);
+    void setRgbRange(OutputDeviceV2 *outputdevice, uint32_t rgbRange);
 
     void setPrimaryOutput(OutputDeviceV2 *outputdevice);
 

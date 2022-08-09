@@ -45,6 +45,7 @@ set(CLIENT_LIB_SRCS
     plasmavirtualdesktop.cpp
     plasmawindowmanagement.cpp
     plasmawindowmodel.cpp
+    primaryoutput_v1.cpp
     region.cpp
     registry.cpp
     relativepointer.cpp
@@ -363,6 +364,7 @@ set(CLIENT_LIB_HEADERS
   plasmawindowmanagement.h
   plasmawindowmodel.h
   pointergestures.h
+  primaryoutput_v1.h
   region.h
   registry.h
   relativepointer.h
