@@ -105,8 +105,8 @@ ClientManagement::~ClientManagement()
 
 com_deepin_client_management_listener ClientManagement::Private::s_clientManagementListener = {
     windowStatesCallback,
-    splitChangeCallback,
-    windowCaptureCallback
+    windowCaptureCallback,
+    splitChangeCallback
 };
 
 void ClientManagement::Private::addWindowStates(uint32_t count, wl_array *windowStates)
