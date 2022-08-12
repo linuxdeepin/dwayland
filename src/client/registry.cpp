@@ -10,6 +10,7 @@
 #include "compositor.h"
 #include "connection_thread.h"
 #include "contrast.h"
+#include "datacontroldevicemanager.h"
 #include "datadevicemanager.h"
 #include "dpms.h"
 #include "event_queue.h"
@@ -93,6 +94,7 @@
 #include <wayland-dde-seat-client-protocol.h>
 #include <wayland-dde-shell-client-protocol.h>
 #include <wayland-strut-client-protocol.h>
+#include <wayland-wlr-data-control-unstable-v1-client-protocol.h>
 
 /*****
  * How to add another interface:
@@ -444,6 +446,13 @@ static const QMap<Registry::Interface, SuppertedInterfaceData> s_interfaces = {
         &Registry::strutAnnounced,
         &Registry::strutRemoved
     }},
+    {Registry::Interface::DataControlDeviceManager, {
+        1,
+        QByteArrayLiteral("zwlr_data_control_manager_v1"),
+        &zwlr_data_control_manager_v1_interface,
+        &Registry::dataControlDeviceManagerAnnounced,
+        &Registry::dataControlDeviceManagerRemoved
+    }},
 };
 // clang-format on
 
@@ -762,6 +771,7 @@ BIND(ClientManagement, com_deepin_client_management)
 BIND(DDESeat, dde_seat)
 BIND(DDEShell, dde_shell)
 BIND(Strut, com_deepin_kwin_strut)
+BIND(DataControlDeviceManager, zwlr_data_control_manager_v1)
 
 #undef BIND
 #undef BIND2
@@ -921,6 +931,16 @@ XdgDecorationManager *Registry::createXdgDecorationManager(quint32 name, quint32
     switch (d->interfaceForName(name)) {
     case Interface::XdgDecorationUnstableV1:
         return d->create<XdgDecorationManager>(name, version, parent, &Registry::bindXdgDecorationUnstableV1);
+    default:
+        return nullptr;
+    }
+}
+
+DataControlDeviceManager *Registry::createDataControlDeviceManager(quint32 name, quint32 version, QObject *parent)
+{
+    switch(d->interfaceForName(name)) {
+    case Interface::DataControlDeviceManager:
+        return d->create<DataControlDeviceManager>(name, version, parent, &Registry::bindDataControlDeviceManager);
     default:
         return nullptr;
     }
