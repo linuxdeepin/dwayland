@@ -254,7 +254,7 @@ void DDEShellSurfaceInterfacePrivate::dde_shell_surface_set_property(Resource *r
     }
     if (property & DDE_SHELL_PROPERTY_QUICKTILE) {
         int *value = static_cast<int *>(dataArr->data);
-        Q_EMIT q->splitWindowRequested((SplitType)*value);
+        Q_EMIT q->splitWindowRequested((SplitType)value[0], value[1]);
     }
 }
 

@@ -753,13 +753,14 @@ void DDEShellSurface::requestWindowRadiusProperty(QPointF windowRadius)
     wl_array_release(&arr);
 }
 
-void DDEShellSurface::requestSplitWindow(DDEShellSurface::SplitType splitType)
+void DDEShellSurface::requestSplitWindow(DDEShellSurface::SplitType splitType, DDEShellSurface::SplitMode mode)
 {
     struct wl_array arr;
     int *arr_data = nullptr;
     wl_array_init(&arr);
-    arr_data = static_cast<int *>(wl_array_add(&arr, sizeof(int)));
+    arr_data = static_cast<int *>(wl_array_add(&arr, sizeof(int)*2));
     arr_data[0] = (int)splitType;
+    arr_data[1] = (int)mode;
     dde_shell_surface_set_property(d->ddeShellSurface,
                                    DDE_SHELL_PROPERTY_QUICKTILE,
                                    &arr);

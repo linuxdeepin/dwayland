@@ -120,7 +120,7 @@ Q_SIGNALS:
     void noTitleBarPropertyRequested(qint32 value);
     void windowRadiusPropertyRequested(QPointF windowRadius);
     void nonStandardWindowPropertyRequested(const QMap<QString, QVariant> &mapNonStandardWindowPropertyData);
-    void splitWindowRequested(SplitType splitType);
+    void splitWindowRequested(SplitType splitType, int splitMode);
 private:
     friend class DDEShellInterfacePrivate;
     explicit DDEShellSurfaceInterface(SurfaceInterface *surface, wl_resource *resource);

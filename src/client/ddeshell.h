@@ -236,8 +236,13 @@ public:
         LeftBottom  = Left | Bottom,
         RightBottom = Right | Bottom,
     };
+    enum class SplitMode {
+        Two         = 1 << 0,
+        Three       = 1 << 1,
+        Four        = 1 << 2,
+    };
 
-    void requestSplitWindow(SplitType splitType);
+    void requestSplitWindow(SplitType splitType, SplitMode mode = SplitMode::Two);
 Q_SIGNALS:
     void geometryChanged(const QRect &geom);
     void activeChanged();
