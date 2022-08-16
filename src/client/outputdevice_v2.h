@@ -238,6 +238,8 @@ public:
 
     uint32_t rgbRange() const;
 
+    QString outputName() const;
+
     /**
      * Destroys the data hold by this OutputDeviceV2.
      * This method is supposed to be used when the connection to the Wayland

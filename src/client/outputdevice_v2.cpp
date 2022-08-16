@@ -567,6 +567,11 @@ uint32_t OutputDeviceV2::rgbRange() const
     return d->rgbRange;
 }
 
+QString OutputDeviceV2::outputName() const
+{
+    return d->outputName;
+}
+
 void OutputDeviceV2::destroy()
 {
     d->output.destroy();
