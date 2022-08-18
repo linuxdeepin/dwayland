@@ -658,6 +658,8 @@ public:
      */
     void setSelection(AbstractDataSource *selection);
 
+    void updateCachedSelection(AbstractDataSource *selection);
+
     KWaylandServer::AbstractDataSource *primarySelection() const;
     void setPrimarySelection(AbstractDataSource *selection);
 

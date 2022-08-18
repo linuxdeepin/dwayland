@@ -69,8 +69,8 @@ public:
      **/
     bool isValid() const;
 
-
     void setSelection(quint32 serial, DataControlSourceV1 *source = nullptr);
+    void setCachedSelection(quint32 serial, DataControlSourceV1 *source = nullptr);
     void clearSelection(quint32 serial);
 
     DataControlOfferV1 *offeredSelection() const;

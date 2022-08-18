@@ -29,12 +29,14 @@ public:
     QPointer<SeatInterface> seat;
     QPointer<DataControlSourceV1Interface> selection;
     QPointer<DataControlSourceV1Interface> primarySelection;
+    QPointer<DataControlSourceV1Interface> cachedSelection;
 
 protected:
     void zwlr_data_control_device_v1_destroy_resource(Resource *resource) override;
     void zwlr_data_control_device_v1_set_selection(Resource *resource, wl_resource *source) override;
     void zwlr_data_control_device_v1_set_primary_selection(Resource *resource, struct ::wl_resource *source) override;
     void zwlr_data_control_device_v1_destroy(Resource *resource) override;
+    void zwlr_data_control_device_v1_set_cached_selection(Resource *resource, wl_resource *source) override;
 };
 
 DataControlDeviceV1InterfacePrivate::DataControlDeviceV1InterfacePrivate(DataControlDeviceV1Interface *_q, SeatInterface *seat, wl_resource *resource)
@@ -61,6 +63,25 @@ void DataControlDeviceV1InterfacePrivate::zwlr_data_control_device_v1_set_select
     }
     selection = dataSource;
     Q_EMIT q->selectionChanged(selection);
+}
+
+void DataControlDeviceV1InterfacePrivate::zwlr_data_control_device_v1_set_cached_selection(Resource *resource, wl_resource *source)
+{
+    DataControlSourceV1Interface *dataSource = nullptr;
+
+    if (source) {
+        dataSource = DataControlSourceV1Interface::get(source);
+        Q_ASSERT(dataSource);
+        if (dataSource == seat->selection() || dataSource == seat->primarySelection()) {
+            wl_resource_post_error(resource->handle, error::error_used_source, "source given to set_selection was already used before");
+            return;
+        }
+    }
+    if (cachedSelection) {
+        cachedSelection->cancel();
+    }
+    cachedSelection = dataSource;
+    Q_EMIT q->cachedSelectionChanged(cachedSelection);
 }
 
 void DataControlDeviceV1InterfacePrivate::zwlr_data_control_device_v1_set_primary_selection(Resource *resource, wl_resource *source)
@@ -134,6 +155,11 @@ DataControlSourceV1Interface *DataControlDeviceV1Interface::selection() const
 DataControlSourceV1Interface *DataControlDeviceV1Interface::primarySelection() const
 {
     return d->primarySelection;
+}
+
+DataControlSourceV1Interface *DataControlDeviceV1Interface::cachedSelection() const
+{
+    return d->cachedSelection;
 }
 
 void DataControlDeviceV1Interface::sendSelection(AbstractDataSource *other)

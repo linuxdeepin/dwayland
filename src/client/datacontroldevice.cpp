@@ -180,6 +180,12 @@ void DataControlDeviceV1::setSelection(quint32 serial, DataControlSourceV1 *sour
     zwlr_data_control_device_v1_set_selection(d->device, dataControlSource(source));
 }
 
+void DataControlDeviceV1::setCachedSelection(quint32 serial, DataControlSourceV1 *source)
+{
+    Q_UNUSED(serial)
+    zwlr_data_control_device_v1_set_cached_selection(d->device, dataControlSource(source));
+}
+
 void DataControlDeviceV1::clearSelection(quint32 serial)
 {
     setSelection(serial);

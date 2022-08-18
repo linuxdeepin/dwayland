@@ -215,6 +215,10 @@ void SeatInterfacePrivate::registerDataControlDevice(DataControlDeviceV1Interfac
         q->setSelection(dataDevice->selection());
     });
 
+    QObject::connect(dataDevice, &DataControlDeviceV1Interface::cachedSelectionChanged, q, [this, dataDevice] {
+        q->updateCachedSelection(dataDevice->cachedSelection());
+    });
+
     QObject::connect(dataDevice, &DataControlDeviceV1Interface::selectionCleared, q, [this, dataDevice] {
         Q_UNUSED(dataDevice);
         q->setSelection(nullptr);
@@ -1255,6 +1259,27 @@ AbstractDataSource *SeatInterface::selection() const
     return d->currentSelection;
 }
 
+void SeatInterface::updateCachedSelection(AbstractDataSource *selection)
+{
+    if (d->currentCachedSelection == selection) {
+        return;
+    }
+
+    if (d->currentCachedSelection) {
+        d->currentCachedSelection->cancel();
+        disconnect(d->currentCachedSelection, nullptr, this, nullptr);
+    }
+
+    if (selection) {
+        auto cleanup = [this]() {
+            updateCachedSelection(nullptr);
+        };
+        connect(selection, &AbstractDataSource::aboutToBeDestroyed, this, cleanup);
+    }
+
+    d->currentCachedSelection = selection;
+}
+
 void SeatInterface::setSelection(AbstractDataSource *selection)
 {
     if (d->currentSelection == selection) {
@@ -1274,6 +1299,10 @@ void SeatInterface::setSelection(AbstractDataSource *selection)
     }
 
     d->currentSelection = selection;
+
+    if (!d->currentSelection && d->currentCachedSelection) {
+        d->currentSelection = d->currentCachedSelection;
+    }
 
     for (auto focussedSelection : qAsConst(d->globalKeyboard.focus.selections)) {
         if (selection) {

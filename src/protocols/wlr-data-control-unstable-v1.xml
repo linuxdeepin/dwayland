@@ -71,7 +71,7 @@
     </request>
   </interface>
 
-  <interface name="zwlr_data_control_device_v1" version="2">
+  <interface name="zwlr_data_control_device_v1" version="3">
     <description summary="manage a data device for a seat">
       This interface allows a client to manage a seat's selection.
 
@@ -183,6 +183,22 @@
       <entry name="used_source" value="1"
         summary="source given to set_selection or set_primary_selection was already used before"/>
     </enum>
+
+    <request name="set_cached_selection" since="3">
+      <description summary="copy data to the cached selection">
+        This request asks the compositor to set the selection to the data from
+        the source on behalf of the client.
+
+        The given source may not be used in any further set_selection or
+        set_primary_selection requests. Attempting to use a previously used
+        source is a protocol error.
+
+        To unset the selection, set the source to NULL.
+      </description>
+      <arg name="source" type="object" interface="zwlr_data_control_source_v1"
+        allow-null="true"/>
+    </request>
+
   </interface>
 
   <interface name="zwlr_data_control_source_v1" version="1">
