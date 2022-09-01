@@ -71,7 +71,7 @@
     </request>
   </interface>
 
-  <interface name="zwlr_data_control_device_v1" version="3">
+  <interface name="zwlr_data_control_device_v1" version="2">
     <description summary="manage a data device for a seat">
       This interface allows a client to manage a seat's selection.
 
@@ -184,7 +184,7 @@
         summary="source given to set_selection or set_primary_selection was already used before"/>
     </enum>
 
-    <request name="set_cached_selection" since="3">
+    <request name="set_cached_selection">
       <description summary="copy data to the cached selection">
         This request asks the compositor to set the selection to the data from
         the source on behalf of the client.

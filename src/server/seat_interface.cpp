@@ -1305,8 +1305,8 @@ void SeatInterface::setSelection(AbstractDataSource *selection)
     }
 
     for (auto focussedSelection : qAsConst(d->globalKeyboard.focus.selections)) {
-        if (selection) {
-            focussedSelection->sendSelection(selection);
+        if (d->currentSelection) {
+            focussedSelection->sendSelection(d->currentSelection);
         } else {
             focussedSelection->sendClearSelection();
         }
