@@ -260,6 +260,27 @@ PointerInterface::PointerInterface(SeatInterface *parent, wl_resource *parentRes
             }
         }
     });
+
+    connect(parent, &SeatInterface::windowPosChanged, this, [this] {
+        Q_D();
+        if (d->focusedSurface && d->resource) {
+            if (d->seat->isDragPointer() && !d->focusedSurface->dataProxy()) {
+                return;
+            }
+
+            if (!d->focusedSurface->lockedPointer().isNull() && d->focusedSurface->lockedPointer()->isLocked()) {
+                return;
+            }
+            const QPointF pos = d->seat->focusedPointerSurfaceTransformation().map(d->seat->pointerPos());
+            auto targetSurface = d->focusedSurface->inputSurfaceAt(pos);
+            const quint32 serial = d->seat->display()->nextSerial();
+
+            d->sendLeave(targetSurface, serial);
+            d->sendEnter(targetSurface, pos, serial);
+            d->sendFrame();
+            d->client->flush();
+        }
+    });
 }
 
 PointerInterface::~PointerInterface() = default;
