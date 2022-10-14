@@ -14,40 +14,14 @@
 extern "C" {
 #endif
 
-/**
- * @page page_zxdg_shell_v5_unstable_v5 The zxdg_shell_v5_unstable_v5 protocol
- * @section page_ifaces_zxdg_shell_v5_unstable_v5 Interfaces
- * - @subpage page_iface_xdg_shell - create desktop-style surfaces
- * - @subpage page_iface_xdg_surface - A desktop window
- * - @subpage page_iface_xdg_popup - short-lived, popup surfaces for menus
- * @section page_copyright_zxdg_shell_v5_unstable_v5 Copyright
- * <pre>
- *
- * Copyright © 2008-2013 Kristian Høgsberg
- * Copyright © 2013      Rafael Antognolli
- * Copyright © 2013      Jasper St. Pierre
- * Copyright © 2010-2013 Intel Corporation
- *
- * Permission is hereby granted, free of charge, to any person obtaining a
- * copy of this software and associated documentation files (the "Software"),
- * to deal in the Software without restriction, including without limitation
- * the rights to use, copy, modify, merge, publish, distribute, sublicense,
- * and/or sell copies of the Software, and to permit persons to whom the
- * Software is furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice (including the next
- * paragraph) shall be included in all copies or substantial portions of the
- * Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL
- * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
- * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
- * DEALINGS IN THE SOFTWARE.
- * </pre>
- */
+// Copyright © 2008-2013 Kristian Høgsberg
+// Copyright © 2010-2013 Intel Corporation
+// Copyright © 2013      Jasper St. Pierre
+// Copyright © 2013      Rafael Antognolli
+// SPDX-FileCopyrightText: 2022 Martin Gräßlin <mgraesslin@kde.org>
+//
+// SPDX-License-Identifier: LGPL-2.1-or-later
+
 struct wl_output;
 struct wl_seat;
 struct wl_surface;

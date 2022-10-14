@@ -1,0 +1,46 @@
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: dframework
+Upstream-Contact: guoyao <guoyao@uniontech.com>
+Source: https://github.com/Groveer/dframework
+
+# Config files
+Files: .clang-format misc/*.in config.sh .arcconfig .arclint .pc/* metainfo.yaml src/.krazy src/org_kde_kwayland.categories src/tools/mapping.txt
+Copyright: None
+License: CC0-1.0
+
+# Readme
+Files: README*.md
+Copyright: None
+License: CC0-1.0
+
+# docs
+Files: docs/*.md
+Copyright: None
+License: CC0-1.0
+
+# debian
+Files: debian/*
+Copyright: None
+License: CC0-1.0
+
+# git github
+Files: .github/* .gitignore
+Copyright: None
+License: CC0-1.0
+
+# cpp-stub
+Files: tests/3rdparty/cpp-stub/*
+Copyright: None
+License: MIT
+
+# cmake
+Files: CMakeLists.txt KF5WaylandConfig.cmake.in autotest/client/CMakeLists.txt autotests/server/CMakeLists autotests/CMakeLists.txt KF5WaylandConfig.cmake.in src/CMakeLists.txt autotests/client/CMakeLists.txt config-kwayland.h.cmake src/client/CMakeLists.txt src/server/CMakeLists.txt src/tools/CMakeLists.txt src/tools/testserver/CMakeLists.txt tests/CMakeLists.txt
+Copyright: None
+License: LGPL-2.1-or-later
+
+# protocol 
+Files: src/client/protocols/*
+Copyright: None
+License: LGPL-2.1-or-later
+
+
