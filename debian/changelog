@@ -1,3 +1,10 @@
+dwayland (5.24.3-deepin.1.2) unstable; urgency=medium
+
+  * Fix data control version error
+  * Add datasource cache support
+
+ -- Lei Su <sulei@uniontech.com>  Wed, 19 Oct 2022 17:05:39 +0800
+
 dwayland (5.24.3-deepin.1.1) unstable; urgency=medium
 
   * splitscreen package 8 
