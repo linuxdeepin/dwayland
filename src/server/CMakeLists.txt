@@ -75,6 +75,7 @@ set(SERVER_LIB_SRCS
     xdgoutput_v1_interface.cpp
     xdgshell_interface.cpp
     globalproperty_interface.cpp
+    remote_access_interface.cpp
 )
 
 ecm_qt_declare_logging_category(SERVER_LIB_SRCS
@@ -315,6 +316,11 @@ ecm_add_qtwayland_server_protocol_kde(SERVER_LIB_SRCS
     BASENAME strut
 )
 
+ecm_add_qtwayland_server_protocol_kde(SERVER_LIB_SRCS
+    PROTOCOL ${DEEPIN_WAYLAND_PROTOCOLS_DIR}/remote-access.xml
+    BASENAME remote-access
+)
+
 add_library(DWaylandServer ${SERVER_LIB_SRCS})
 
 if(CMAKE_SYSTEM_NAME MATCHES "Linux")
@@ -435,6 +441,7 @@ set(SERVER_LIB_HEADERS
   xdgoutput_v1_interface.h
   xdgshell_interface.h
   globalproperty_interface.h
+  remote_access_interface.h
 )
 
 install(FILES

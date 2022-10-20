@@ -18,6 +18,7 @@ namespace KWayland
 {
 namespace Client
 {
+
 class EventQueue;
 class RemoteBuffer;
 
@@ -55,7 +56,7 @@ public:
      * Registry::createRemoteAccessManager.
      **/
     explicit RemoteAccessManager(QObject *parent = nullptr);
-    ~RemoteAccessManager() override;
+    virtual ~RemoteAccessManager();
 
     /**
      * Setup this RemoteAccessManager to manage the @p remoteaccessmanager.
@@ -91,6 +92,8 @@ public:
      **/
     void destroy();
 
+    void getRendersequence();
+
     /**
      * Sets the @p queue to use for creating objects with this RemoteAccessManager.
      **/
@@ -100,8 +103,10 @@ public:
      **/
     EventQueue *eventQueue();
 
-    operator org_kde_kwin_remote_access_manager *();
-    operator org_kde_kwin_remote_access_manager *() const;
+    operator org_kde_kwin_remote_access_manager*();
+    operator org_kde_kwin_remote_access_manager*() const;
+
+    bool startRecording(int frame);
 
 Q_SIGNALS:
     /**
@@ -116,7 +121,9 @@ Q_SIGNALS:
      * Buffer from server is ready to be delivered to this client
      * @param buffer_id internal buffer id to be created
      **/
-    void bufferReady(const void *output, const RemoteBuffer *rbuf);
+    void bufferReady(const void* output, const RemoteBuffer *rbuf);
+
+    void renderSequence(int number);
 
 private:
     class Private;
@@ -132,7 +139,7 @@ class KWAYLANDCLIENT_EXPORT RemoteBuffer : public QObject
 {
     Q_OBJECT
 public:
-    ~RemoteBuffer() override;
+    virtual ~RemoteBuffer();
     /**
      * Setup this RemoteBuffer to manage the @p remotebuffer.
      **/
@@ -165,8 +172,8 @@ public:
      **/
     void destroy();
 
-    operator org_kde_kwin_remote_buffer *();
-    operator org_kde_kwin_remote_buffer *() const;
+    operator org_kde_kwin_remote_buffer*();
+    operator org_kde_kwin_remote_buffer*() const;
 
     qint32 fd() const;
     quint32 width() const;
@@ -174,15 +181,18 @@ public:
     quint32 stride() const;
     quint32 format() const;
 
+
 Q_SIGNALS:
     void parametersObtained();
 
 private:
+
     friend class RemoteAccessManager;
     explicit RemoteBuffer(QObject *parent = nullptr);
     class Private;
     QScopedPointer<Private> d;
 };
+
 
 }
 }
