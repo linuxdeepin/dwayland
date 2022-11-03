@@ -50,6 +50,7 @@ private:
 
     static void offerCallback(wl_client *client, wl_resource *resource, const char *mimeType);
     static void setActionsCallback(wl_client *client, wl_resource *resource, uint32_t dnd_actions);
+    static void resourceDestroyedCallback(wl_client *client, wl_resource *resource);
 
     const static struct wl_data_source_interface s_interface;
 };
@@ -73,6 +74,12 @@ void DataSourceInterface::Private::offerCallback(wl_client *client, wl_resource 
 {
     Q_UNUSED(client)
     cast<Private>(resource)->offer(QString::fromUtf8(mimeType));
+}
+
+void DataSourceInterface::Private::resourceDestroyedCallback(wl_client *client, wl_resource *resource)
+{
+    Q_UNUSED(client)
+    wl_resource_destroy(resource);
 }
 
 void DataSourceInterface::Private::offer(const QString &mimeType)
@@ -116,7 +123,10 @@ DataSourceInterface::DataSourceInterface(DataDeviceManagerInterface *parent, wl_
     }
 }
 
-DataSourceInterface::~DataSourceInterface() = default;
+DataSourceInterface::~DataSourceInterface() {
+
+    emit this->aboutToBeDestroyed();
+}
 
 void DataSourceInterface::accept(const QString &mimeType)
 {

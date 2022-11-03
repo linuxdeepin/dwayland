@@ -281,6 +281,9 @@ void SeatInterface::Private::registerDataDevice(DataDeviceInterface *dataDevice)
             }
             if (currentSelection == dataDevice->selection()) {
                 // current selection is cleared
+                if (currentSelection) {
+                    emit currentSelection->aboutToBeDestroyed();
+                }
                 currentSelection = nullptr;
                 emit q->selectionChanged(nullptr);
                 if (keys.focus.selection) {
@@ -394,7 +397,6 @@ void SeatInterface::Private::registerDataControlDevice(DataControlDeviceV1Interf
 
     QObject::connect(dataDevice, &DataControlDeviceV1Interface::selectionCleared, q,
         [this, dataDevice] {
-            Q_UNUSED(dataDevice);
             updateSelection(dataDevice->selection(),false);
         }
     );
@@ -517,6 +519,12 @@ void SeatInterface::Private::updateSelection(AbstractDataSource *dataSource, boo
     if (dataSource && sendDataConctrl && !(keys.focus.surface  && (keys.focus.surface->client() == dataSource->client()))) {
         return ;
     }
+    connect(dataSource, &KWayland::Server::AbstractDataSource::aboutToBeDestroyed,
+                         q, [this,dataSource](){
+        if (dataSource == currentSelection) {
+            currentSelection = nullptr;
+        }
+    });
     if(sendDataConctrl)
         q->setSelection(dataSource);
     else {   //   dataconctrl Don’t send to yourself when you don’t change yourself

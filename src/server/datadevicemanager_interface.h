@@ -59,6 +59,7 @@ public:
 Q_SIGNALS:
     void dataSourceCreated(KWayland::Server::DataSourceInterface*);
     void dataDeviceCreated(KWayland::Server::DataDeviceInterface*);
+    void dataSourceDestroyed();
 
 private:
     explicit DataDeviceManagerInterface(Display *display, QObject *parent = nullptr);

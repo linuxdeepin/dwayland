@@ -102,6 +102,11 @@ void DataDeviceManagerInterface::Private::createDataSource(wl_client *client, wl
         delete dataSource;
         return;
     }
+    QObject::connect(dataSource, &QObject::destroyed, q,
+        [this] {
+            emit q->dataSourceDestroyed();
+        }
+    );
     emit q->dataSourceCreated(dataSource);
 }
 

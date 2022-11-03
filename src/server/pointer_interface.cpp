@@ -333,7 +333,9 @@ void PointerInterface::setFocusedSurface(SurfaceInterface *surface, quint32 seri
 void PointerInterface::buttonPressed(quint32 button, quint32 serial)
 {
     Q_D();
-    Q_ASSERT(d->focusedSurface);
+    if (!d->focusedSurface) {
+        return;
+    }
     if (!d->resource) {
         return;
     }
@@ -344,7 +346,9 @@ void PointerInterface::buttonPressed(quint32 button, quint32 serial)
 void PointerInterface::buttonReleased(quint32 button, quint32 serial)
 {
     Q_D();
-    Q_ASSERT(d->focusedSurface);
+    if (!d->focusedSurface) {
+        return;
+    }
     if (!d->resource) {
         return;
     }
@@ -355,7 +359,9 @@ void PointerInterface::buttonReleased(quint32 button, quint32 serial)
 void PointerInterface::axis(Qt::Orientation orientation, qint32 delta)
 {
     Q_D();
-    Q_ASSERT(d->focusedSurface);
+    if (!d->focusedSurface) {
+        return;
+    }
     if (!d->resource) {
         return;
     }
