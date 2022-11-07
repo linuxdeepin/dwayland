@@ -1,3 +1,10 @@
+dwayland (5.24.3-deepin.1.3) unstable; urgency=medium
+
+  * Bug fix:
+    + fix: support set split mode when request split window use splitmenu
+
+ -- Lei Su <sulei@uniontech.com>  Mon, 07 Nov 2022 16:39:02 +0800
+
 dwayland (5.24.3-deepin.1.2) unstable; urgency=medium
 
   * Fix data control version error
