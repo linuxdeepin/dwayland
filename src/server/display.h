@@ -93,6 +93,7 @@ class XdgDecorationManagerInterface;
 class ClientManagementInterface;
 class DDESeatInterface;
 class DDEShellInterface;
+class DDERestrictInterface;
 class StrutInterface;
 class ZWPXwaylandKeyboardGrabManagerV1Interface;
 class ScreencastV1Interface;
@@ -324,6 +325,14 @@ public:
      * @since 5.52
      **/
     DDEShellInterface *createDDEShell(QObject *parent = nullptr);
+
+    /**
+     * Creates the DDERestrictInterface in interface @p version.
+     *
+     * @returns The created manager object
+     * @since 5.52
+     **/
+    DDERestrictInterface *createDDERestrict(QObject *parent = nullptr);
 
     /**
      * Creates the ZWPXwaylandKeyboardGrabManagerV1Interface in interface @p version.

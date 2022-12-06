@@ -26,6 +26,7 @@ set(CLIENT_LIB_SRCS
     ddeseat.cpp
     ddekeyboard.cpp
     ddeshell.cpp
+    dderestrict.cpp
     dpms.cpp
     fakeinput.cpp
     fullscreen_shell.cpp
@@ -237,6 +238,11 @@ ecm_add_wayland_client_protocol (CLIENT_LIB_SRCS
     BASENAME wlr-data-control-unstable-v1
 )
 
+ecm_add_wayland_client_protocol(CLIENT_LIB_SRCS
+    PROTOCOL ${KWayland_SOURCE_DIR}/src/client/protocols/dde-restrict.xml
+    BASENAME dde-restrict
+)
+
 set(CLIENT_GENERATED_FILES
     ${CMAKE_CURRENT_BINARY_DIR}/wayland-fullscreen-shell-client-protocol.h
     ${CMAKE_CURRENT_BINARY_DIR}/wayland-output-management-client-protocol.h
@@ -270,6 +276,7 @@ set(CLIENT_GENERATED_FILES
     ${CMAKE_CURRENT_BINARY_DIR}/wayland-dde-shell-client-protocol.h
     ${CMAKE_CURRENT_BINARY_DIR}/wayland-wp-primary-selection-unstable-v1-protocol.h
     ${CMAKE_CURRENT_BINARY_DIR}/wayland-wlr-data-control-unstable-v1-protocol.h
+    ${CMAKE_CURRENT_BINARY_DIR}/wayland-dde-restrict-client-protocol.h
 )
 
 set_source_files_properties(${CLIENT_GENERATED_FILES} PROPERTIES SKIP_AUTOMOC ON)
@@ -324,6 +331,7 @@ set(CLIENT_LIB_HEADERS
   ddeseat.h
   ddekeyboard.h
   ddeshell.h
+  dderestrict.h
   dpms.h
   fakeinput.h
   fullscreen_shell.h
