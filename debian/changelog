@@ -1,3 +1,10 @@
+kwayland (4:5.57.0.19-1) unstable; urgency=medium
+
+  * Bug fix:
+    + 148417 Log: add datasource destroyed sign, fix the problem of selection crash.
+
+ -- Lei Su <sulei@uniontech.com>  Tue, 13 Dec 2022 15:29:55 +0800
+
 kwayland (4:5.57.0.18-1) unstable; urgency=medium
 
   * fix: kwin seatInterface dataDevices crash
