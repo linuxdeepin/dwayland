@@ -1,0 +1,28 @@
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: deepin-kwin
+Upstream-Contact:  <>
+Source: https://github.com/linuxdeepin/deepin-kwin
+
+# Sample paragraph, commented out:
+#
+# Files: src/*
+# Copyright: $YEAR $NAME <$CONTACT>
+# License: ...
+
+Files: src/*.h src/*.c src/*.cpp src/*.xml
+Copyright: UnionTech Software Technology Co., Ltd.
+License: GPL-2.0-or-later
+
+Files: autotests/client/*.h autotests/client/*.cpp autotests/server/*.h autotests/server/*.cpp tests/*.h tests/*.cpp
+Copyright: UnionTech Software Technology Co., Ltd.
+License: GPL-2.0-or-later
+
+Files: src/tools/testserver/CMakeLists.txt src/CMakeLists.txt src/tools/CMakeLists.txt src/tools/testserver/CmakeLists.txt tests/CMakeLists.txt src/client/CMakeLists.txt src/server/CMakeLists.txt CMakeLists.txt autotests/CMakeLists.txt autotests/client/CMakeLists.txt autotests/server/CMakeLists.txt *.cmake debian/* .github/* .arcconfig .arclint .pc/.quilt_patches .pc/.quilt_series .pc/.version
+Copyright: UnionTech Software Technology Co., Ltd.
+License: GPL-2.0-or-later
+
+Files: README.md metainfo.yaml src/.krazy src/tools/mapping.txt
+Copyright: UnionTech Software Technology Co., Ltd.
+License: GPL-2.0-or-later
+
+
