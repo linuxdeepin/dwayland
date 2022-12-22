@@ -707,7 +707,6 @@ Q_SIGNALS:
     void hasKeyboardChanged(bool);
     void hasTouchChanged(bool);
     void pointerPosChanged(const QPointF &pos);
-    void windowPosChanged();
     void touchMoved(qint32 id, quint32 serial, const QPointF &globalPosition);
     void timestampChanged(quint32);
 
