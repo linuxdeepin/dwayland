@@ -1,3 +1,10 @@
+kwayland (4:5.57.0.21-1) unstable; urgency=medium
+
+  * Bug fix:
+    + fix: Revert "Fix: fix the problem that the window cannot be maximized"
+
+ -- Lei Su <sulei@uniontech.com>  Thu, 22 Dec 2022 13:00:12 +0800
+
 kwayland (4:5.57.0.20-1) unstable; urgency=medium
 
   * Bug fix:
