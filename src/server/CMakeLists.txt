@@ -16,7 +16,6 @@ set(SERVER_LIB_SRCS
     ddeseat_interface.cpp
     ddekeyboard_interface.cpp
     ddeshell_interface.cpp
-    dderestrict_interface.cpp
     display.cpp
     dpms_interface.cpp
     filtered_display.cpp
@@ -241,11 +240,6 @@ ecm_add_wayland_server_protocol(SERVER_LIB_SRCS
 )
 
 ecm_add_wayland_server_protocol(SERVER_LIB_SRCS
-    PROTOCOL ${KWayland_SOURCE_DIR}/src/client/protocols/dde-restrict.xml
-    BASENAME dde-restrict
-)
-
-ecm_add_wayland_server_protocol(SERVER_LIB_SRCS
     PROTOCOL ${KWayland_SOURCE_DIR}/src/client/protocols/strut.xml
     BASENAME strut
 )
@@ -333,8 +327,6 @@ set(SERVER_GENERATED_SRCS
     ${CMAKE_CURRENT_BINARY_DIR}/wayland-dde-seat-client-protocol.h
     ${CMAKE_CURRENT_BINARY_DIR}/wayland-dde-shell-server-protocol.h
     ${CMAKE_CURRENT_BINARY_DIR}/wayland-dde-shell-client-protocol.h
-    ${CMAKE_CURRENT_BINARY_DIR}/wayland-dde-restrict-server-protocol.h
-    ${CMAKE_CURRENT_BINARY_DIR}/wayland-dde-restrict-client-protocol.h
     ${CMAKE_CURRENT_BINARY_DIR}/wayland-strut-client-protocol.h
     ${CMAKE_CURRENT_BINARY_DIR}/wayland-strut-server-protocol.h
     ${CMAKE_CURRENT_BINARY_DIR}/wayland-xwayland-keyboard-grab-v1-client-protocol.h
@@ -395,7 +387,6 @@ set(SERVER_LIB_HEADERS
   datasource_interface.h
   ddeseat_interface.h
   ddeshell_interface.h
-  dderestrict_interface.h
   display.h
   dpms_interface.h
   filtered_display.h
