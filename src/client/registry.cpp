@@ -63,7 +63,6 @@ License along with this library.  If not, see <http://www.gnu.org/licenses/>.
 #include "clientmanagement.h"
 #include "ddeseat.h"
 #include "ddeshell.h"
-#include "dderestrict.h"
 #include "strut.h"
 #include "xwayland_keyboard_grab_v1.h"
 // Qt
@@ -103,7 +102,6 @@ License along with this library.  If not, see <http://www.gnu.org/licenses/>.
 #include <wayland-client-management-client-protocol.h>
 #include <wayland-dde-seat-client-protocol.h>
 #include <wayland-dde-shell-client-protocol.h>
-#include <wayland-dde-restrict-client-protocol.h>
 #include <wayland-xwayland-keyboard-grab-v1-client-protocol.h>
 #include <wayland-wp-primary-selection-unstable-v1-client-protocol.h>
 #include <wayland-wlr-data-control-unstable-v1-client-protocol.h>
@@ -414,13 +412,6 @@ static const QMap<Registry::Interface, SuppertedInterfaceData> s_interfaces = {
         &dde_shell_interface,
         &Registry::ddeShellAnnounced,
         &Registry::ddeShellRemoved
-    }},
-    {Registry::Interface::DDERestrict, {
-        1,
-        QByteArrayLiteral("dde_restrict"),
-        &dde_restrict_interface,
-        &Registry::ddeRestrictAnnounced,
-        &Registry::ddeRestrictRemoved
     }},
     {Registry::Interface::Strut, {
         1,
@@ -768,7 +759,6 @@ BIND(XdgDecorationUnstableV1, zxdg_decoration_manager_v1)
 BIND(ClientManagement, com_deepin_client_management)
 BIND(DDESeat, dde_seat)
 BIND(DDEShell, dde_shell)
-BIND(DDERestrict, dde_restrict)
 BIND(Strut, com_deepin_kwin_strut)
 BIND2(ZWPXwaylandKeyboardGrabManagerV1, ZWPXwaylandKeyboardGrabV1, zwp_xwayland_keyboard_grab_manager_v1)
 BIND(PrimarySelectionDeviceManagerV1, zwp_primary_selection_device_manager_v1)
@@ -829,7 +819,6 @@ CREATE(ServerSideDecorationPaletteManager)
 CREATE(ClientManagement)
 CREATE(DDESeat)
 CREATE(DDEShell)
-CREATE(DDERestrict)
 CREATE(Strut)
 CREATE(ZWPXwaylandKeyboardGrabManagerV1)
 
