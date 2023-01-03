@@ -282,9 +282,7 @@ void RemoteAccessManagerInterface::Private::getBufferCallback(wl_client *client,
         qCDebug(KWAYLAND_SERVER) << "Remote buffer returned, client" << wl_resource_get_id(resource)
                                                      << ", id" << rbuf->id()
                                                      << ", fd" << bh.buf->fd();
-        if (p->unref(bh)) {
-            p->sentBuffers.remove(bh.buf->fd());
-        }
+        p->unref(bh);
     });
 
     // send buffer params
@@ -323,6 +321,7 @@ bool RemoteAccessManagerInterface::Private::unref(BufferHolder &bh)
     if (!bh.counter) {
         // no more clients using this buffer
         qCDebug(KWAYLAND_SERVER) << "Buffer released, fd" << bh.buf->fd();
+        sentBuffers.remove(bh.buf->fd());
         emit q->bufferReleased(bh.buf);
         return true;
     }
