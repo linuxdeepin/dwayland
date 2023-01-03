@@ -1,3 +1,10 @@
+kwayland (4:5.57.0.22-1) unstable; urgency=medium
+
+  * feat:
+    + feat: add dde restrict wayland protocols.
+
+ -- Lei Su <sulei@uniontech.com>  Tue, 03 Jan 2023 19:00:56 +0800
+
 kwayland (4:5.57.0.21-1) unstable; urgency=medium
 
   * Bug fix:
