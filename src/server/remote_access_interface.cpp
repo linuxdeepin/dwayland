@@ -344,9 +344,7 @@ void RemoteAccessManagerInterface::Private::release(wl_resource *resource)
     QMutableHashIterator<qint32, BufferHolder> itr(sentBuffers);
     while (itr.hasNext()) {
         BufferHolder &bh = itr.next().value();
-        if (unref(bh)) {
-            itr.remove();
-        }
+        unref(bh);
     }
 
     clientResources.removeAll(resource);
