@@ -1,3 +1,10 @@
+kwayland (4:5.57.0.23-1) unstable; urgency=medium
+
+  * Bug fix:
+    + 178455 fix: fix remote_access cause crash
+
+ -- Lei Su <sulei@uniontech.com>  Fri, 06 Jan 2023 11:26:06 +0800
+
 kwayland (4:5.57.0.22-1) unstable; urgency=medium
 
   * feat:
