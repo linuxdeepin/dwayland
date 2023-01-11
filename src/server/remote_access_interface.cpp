@@ -340,13 +340,6 @@ void RemoteAccessManagerInterface::Private::unbind(wl_resource *resource)
 
 void RemoteAccessManagerInterface::Private::release(wl_resource *resource)
 {
-    // all holders should decrement their counter as one client is gone
-    QMutableHashIterator<qint32, BufferHolder> itr(sentBuffers);
-    while (itr.hasNext()) {
-        BufferHolder &bh = itr.next().value();
-        unref(bh);
-    }
-
     clientResources.removeAll(resource);
 }
 
