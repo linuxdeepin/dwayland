@@ -4,7 +4,7 @@ Upstream-Contact:  UnionTech Software Technology Co., Ltd. <>
 Source: https://github.com/linuxdeepin/dde-dock
 
 # ci
-Files: .github/* .gitlab-ci.yml .kde-ci.yml metainfo.yaml
+Files: .github/* .gitlab-ci.yml .kde-ci.yml metainfo.yaml .obs/*
 Copyright: None
 License: CC0-1.0
 
