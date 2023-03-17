@@ -2,6 +2,9 @@
 pkgname=dwayland-git
 pkgver=5.24.3
 pkgrel=1
+sourcename=dwayland
+sourcetars=("$sourcename"_"$pkgver".orig.tar.gz)
+sourcedir="$sourcename"-"$pkgver"
 pkgdesc='Qt-style Client and Server library wrapper for the Wayland libraries'
 arch=(x86_64)
 license=(LGPL)
@@ -10,11 +13,11 @@ makedepends=('extra-cmake-modules' 'doxygen' 'qt5-tools' 'qt5-doc' 'wayland-prot
 provides=('dwayland-reborn' 'dwayland')
 conflicts=('dwayland-reborn' 'dwayland')
 groups=('deepin-git')
-source=("source.tar.gz")
+source=("${sourcetars[@]}")
 sha256sums=('SKIP')
 
 build() {
-  cd $deepin_source_name
+  cd "$sourcedir"
   cmake . -G Ninja -B build \
     -DCMAKE_INSTALL_LIBEXECDIR=lib \
     -DBUILD_TESTING=OFF \
@@ -23,7 +26,7 @@ build() {
 }
 
 package() {
-  cd $deepin_source_name
+  cd "$sourcedir"
   DESTDIR="$pkgdir" cmake --install build
 }
 
