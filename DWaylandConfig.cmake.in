@@ -2,7 +2,6 @@
 
 include(CMakeFindDependencyMacro)
 find_dependency(Qt5Gui "@QT_MIN_VERSION@")
-find_dependency(Wayland "@WAYLAND_MIN_VERSION@")
 
 include("${CMAKE_CURRENT_LIST_DIR}/DWaylandTargets.cmake")
 @PACKAGE_INCLUDE_QCHTARGETS@

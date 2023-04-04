@@ -45,6 +45,7 @@ Depends: libdwaylandclient5 (= ${binary:Version}),
          libdwaylandserver5 (= ${binary:Version}),
          libwayland-dev (>= 1.13~),
          qtbase5-dev (>= 5.15.0~),
+         extra-cmake-modules (>= 5.90.0~),
          ${misc:Depends},
          ${shlibs:Depends},
 Replaces: dwayland-dev (<< 4:5.23.0-2~)
