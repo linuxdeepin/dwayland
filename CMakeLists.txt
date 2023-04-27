@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.16)
+cmake_minimum_required(VERSION 3.13)
 
 set(KF_VERSION "5.102.0") # handled by release scripts
 project(KWayland VERSION ${KF_VERSION})
@@ -37,8 +37,10 @@ ecm_setup_version(PROJECT VARIABLE_PREFIX KWAYLAND
                         PACKAGE_VERSION_FILE "${CMAKE_CURRENT_BINARY_DIR}/KF5WaylandConfigVersion.cmake"
                         SOVERSION 5)
 
+include_directories(${Qt5XkbCommonSupport_INCLUDE_DIRS})
+
 # Dependencies
-set(REQUIRED_QT_VERSION 5.15.2)
+set(REQUIRED_QT_VERSION 5.11.3)
 find_package(Qt${QT_MAJOR_VERSION}Gui ${REQUIRED_QT_VERSION} REQUIRED NO_MODULE COMPONENTS Private)
 find_package(Qt${QT_MAJOR_VERSION} ${REQUIRED_QT_VERSION} CONFIG REQUIRED Concurrent)
 find_package(Qt${QT_MAJOR_VERSION}WaylandClient ${REQUIRED_QT_VERSION} CONFIG REQUIRED NO_MODULE COMPONENTS Private)
@@ -72,7 +74,7 @@ set_package_properties(PlasmaWaylandProtocols PROPERTIES TYPE REQUIRED)
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=gnu90")
 
 ecm_set_disabled_deprecation_versions(
-    QT 5.15.2
+    QT 5.11.3
 )
 
 check_cxx_source_compiles("

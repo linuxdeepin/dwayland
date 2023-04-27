@@ -276,7 +276,6 @@ target_link_libraries(KF5WaylandClient
 if (QT_MAJOR_VERSION EQUAL "5")
     target_link_libraries(KF5WaylandClient
         PRIVATE
-            Qt::XkbCommonSupportPrivate
             PkgConfig::XKBCommon
     )
 endif()
