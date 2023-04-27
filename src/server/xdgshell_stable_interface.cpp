@@ -403,7 +403,7 @@ namespace
 template<>
 Qt::Edges edgesToQtEdges(xdg_toplevel_resize_edge edges)
 {
-    Qt::Edges qtEdges;
+    int qtEdges;
     switch (edges) {
     case XDG_TOPLEVEL_RESIZE_EDGE_TOP:
         qtEdges = Qt::TopEdge;
@@ -435,7 +435,7 @@ Qt::Edges edgesToQtEdges(xdg_toplevel_resize_edge edges)
         Q_UNREACHABLE();
         break;
     }
-    return qtEdges;
+    return (Qt::Edges)qtEdges;
 }
 }
 
@@ -628,7 +628,7 @@ void XdgPositionerStableInterface::Private::setAnchorCallback(wl_client *client,
 
     auto s = cast<Private>(resource);
 
-    Qt::Edges qtEdges;
+    int qtEdges;
     switch (anchor) {
     case XDG_POSITIONER_ANCHOR_TOP:
         qtEdges = Qt::TopEdge;
@@ -661,7 +661,7 @@ void XdgPositionerStableInterface::Private::setAnchorCallback(wl_client *client,
         break;
     }
 
-    s->anchorEdge = qtEdges;
+    s->anchorEdge = (Qt::Edges)qtEdges;
 }
 
 void XdgPositionerStableInterface::Private::setGravityCallback(wl_client *client, wl_resource *resource, uint32_t gravity)
@@ -669,7 +669,7 @@ void XdgPositionerStableInterface::Private::setGravityCallback(wl_client *client
     Q_UNUSED(client)
     auto s = cast<Private>(resource);
 
-    Qt::Edges qtEdges;
+    int qtEdges;
     switch (gravity) {
     case XDG_POSITIONER_GRAVITY_TOP:
         qtEdges = Qt::TopEdge;
@@ -702,7 +702,7 @@ void XdgPositionerStableInterface::Private::setGravityCallback(wl_client *client
         break;
     }
 
-    s->gravity = qtEdges;
+    s->gravity = (Qt::Edges)qtEdges;
 }
 
 void XdgPositionerStableInterface::Private::setConstraintAdjustmentCallback(wl_client *client, wl_resource *resource, uint32_t constraint_adjustment)

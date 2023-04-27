@@ -240,7 +240,8 @@ namespace
 template<>
 Qt::Edges edgesToQtEdges(wl_shell_surface_resize edges)
 {
-    Qt::Edges qtEdges;
+    int qtEdges;
+    //Qt::Edges qtEdges;
     switch (edges) {
     case WL_SHELL_SURFACE_RESIZE_TOP:
         qtEdges = Qt::TopEdge;
@@ -272,7 +273,7 @@ Qt::Edges edgesToQtEdges(wl_shell_surface_resize edges)
         Q_UNREACHABLE();
         break;
     }
-    return qtEdges;
+    return (Qt::Edges)qtEdges;
 }
 }
 

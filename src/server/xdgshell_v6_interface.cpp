@@ -402,7 +402,7 @@ namespace
 template<>
 Qt::Edges edgesToQtEdges(zxdg_toplevel_v6_resize_edge edges)
 {
-    Qt::Edges qtEdges;
+    int qtEdges;
     switch (edges) {
     case ZXDG_TOPLEVEL_V6_RESIZE_EDGE_TOP:
         qtEdges = Qt::TopEdge;
@@ -434,7 +434,7 @@ Qt::Edges edgesToQtEdges(zxdg_toplevel_v6_resize_edge edges)
         Q_UNREACHABLE();
         break;
     }
-    return qtEdges;
+    return (Qt::Edges)qtEdges;
 }
 }
 
