@@ -118,6 +118,12 @@ void OutputConfiguration::setBrightness(OutputDevice *outputdevice, const int br
                                           brightness);
 }
 
+void OutputConfiguration::setCTM(OutputDevice *outputdevice, quint16 red, quint16 green, quint16 blue)
+{
+    org_kde_kwin_outputdevice *od = outputdevice->output();
+    org_kde_kwin_outputconfiguration_ctm(d->outputconfiguration, od, red, green, blue);
+}
+
 void OutputConfiguration::setTransform(OutputDevice *outputdevice, KWayland::Client::OutputDevice::Transform transform)
 {
     auto toTransform = [transform]() {

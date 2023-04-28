@@ -118,6 +118,12 @@ void OutputConfigurationV2::setBrightness(OutputDeviceV2 *outputdevice, const in
                                           brightness);
 }
 
+void OutputConfigurationV2::setCTM(OutputDeviceV2 *outputdevice, quint16 red, quint16 green, quint16 blue)
+{
+    kde_output_device_v2 *od = outputdevice->output();
+    kde_output_configuration_v2_ctm(d->outputconfiguration, od, red, green, blue);
+}
+
 void OutputConfigurationV2::setTransform(OutputDeviceV2 *outputdevice, KWayland::Client::OutputDeviceV2::Transform transform)
 {
     auto toTransform = [transform]() {

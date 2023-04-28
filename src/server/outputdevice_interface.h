@@ -84,6 +84,11 @@ public:
         bool operator==(const ColorCurves &cc) const;
         bool operator!=(const ColorCurves &cc) const;
     };
+    struct CtmValue {
+        uint16_t r, g, b;
+        bool operator==(const CtmValue &cv) const;
+        bool operator!=(const CtmValue &cv) const;
+    };
     ~OutputDeviceInterface() override;
 
     QSize physicalSize() const;
@@ -104,6 +109,7 @@ public:
     SubPixel subPixel() const;
     Transform transform() const;
     ColorCurves colorCurves() const;
+    CtmValue ctmValue() const;
     QList<Mode> modes() const;
     int currentModeId() const;
     int brightness() const;
@@ -128,6 +134,7 @@ public:
     void setSubPixel(SubPixel subPixel);
     void setTransform(Transform transform);
     void setColorCurves(const ColorCurves &colorCurves);
+    void setCtmValue(const CtmValue &value);
 
     /**
      * Add an additional mode to this output device. This is only allowed before create() is called
@@ -164,6 +171,7 @@ Q_SIGNALS:
     void subPixelChanged(SubPixel);
     void transformChanged(Transform);
     void colorCurvesChanged(ColorCurves);
+    void ctmValueChanged(CtmValue);
     void modesChanged();
     void currentModeChanged();
 

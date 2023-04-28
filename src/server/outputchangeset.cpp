@@ -20,6 +20,7 @@ OutputChangeSet::Private::Private(OutputDeviceInterface *outputdevice, OutputCha
     , position(o->globalPosition())
     , scale(o->scaleF())
     , colorCurves(o->colorCurves())
+    , ctmValue(o->ctmValue())
     , brightness(o->brightness())
 {
 }
@@ -126,6 +127,18 @@ OutputDeviceInterface::ColorCurves OutputChangeSet::colorCurves() const
 {
     Q_D();
     return d->colorCurves;
+}
+
+bool OutputChangeSet::ctmChanged() const
+{
+    Q_D();
+    return d->ctmValue != d->o->ctmValue();
+}
+
+OutputDeviceInterface::CtmValue OutputChangeSet::ctmValue() const
+{
+    Q_D();
+    return d->ctmValue;
 }
 
 }

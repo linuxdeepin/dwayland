@@ -28,6 +28,7 @@ public:
     QPoint position;
     qreal scale;
     OutputDeviceInterface::ColorCurves colorCurves;
+    OutputDeviceInterface::CtmValue ctmValue;
 };
 }
 }

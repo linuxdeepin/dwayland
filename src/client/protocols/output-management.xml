@@ -205,6 +205,16 @@
         <arg name="brightness" type="int" summary="aspired brightness's number"/>
     </request>
 
+    <request name="ctm">
+        <description summary="set screen color temperature">
+            Set CTM.
+        </description>
+        <arg name="outputdevice" type="object" interface="org_kde_kwin_outputdevice" summary="outputdevice ctm apply to"/>
+        <arg name="red" type="int" summary="red component"/>
+        <arg name="green" type="int" summary="green component"/>
+        <arg name="blue" type="int" summary="blue component"/>
+    </request>
+
 </interface>
 
 </protocol>

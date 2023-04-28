@@ -222,6 +222,9 @@ public:
      */
     void setColorCurves(OutputDevice *outputdevice, QVector<quint16> red, QVector<quint16> green, QVector<quint16> blue);
 
+    // Set CTM to adjust color temperature
+    void setCTM(OutputDevice *outputdevice, quint16 red, quint16 green, quint16 blue);
+
     /**
      * Set overscan in % for this output.
      *

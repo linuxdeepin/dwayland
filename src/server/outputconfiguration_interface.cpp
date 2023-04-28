@@ -52,6 +52,7 @@ private:
     static void overscanCallback(wl_client *client, wl_resource *resource, wl_resource *outputdevice, uint32_t overscan);
     static void vrrCallback(wl_client *client, wl_resource *resource, wl_resource *outputdevice, uint32_t vrrPolicy);
     static void brightnessCallback(wl_client *client, wl_resource *resource, wl_resource * outputdevice, int32_t brightness);
+    static void ctmCallback(wl_client *client, wl_resource *resource, wl_resource * outputdevice, int32_t r, int32_t g, int32_t b);
 
     OutputConfigurationInterface *q_func()
     {
@@ -72,7 +73,8 @@ const struct org_kde_kwin_outputconfiguration_interface OutputConfigurationInter
                                                                                                               resourceDestroyedCallback,
                                                                                                               overscanCallback,
                                                                                                               vrrCallback,
-                                                                                                              brightnessCallback};
+                                                                                                              brightnessCallback,
+                                                                                                              ctmCallback};
 
 OutputConfigurationInterface::OutputConfigurationInterface(OutputManagementInterface *parent, wl_resource *parentResource)
     : Resource(new Private(this, parent, parentResource))
@@ -261,6 +263,21 @@ void OutputConfigurationInterface::Private::brightnessCallback(wl_client *client
     s->pendingChanges(o)->d_func()->brightness = brightness;
 }
 
+void OutputConfigurationInterface::Private::ctmCallback(wl_client *client, wl_resource *resource, wl_resource * outputdevice, int32_t r, int32_t g, int32_t b)
+{
+    Q_UNUSED(client);
+    OutputDeviceInterface *o = OutputDeviceInterface::get(outputdevice);
+    if (!o) {
+        qDebug() << "outputdevice is nullptr";
+        return;
+    }
+
+    auto s = cast<Private>(resource);
+    Q_ASSERT(s);
+    s->pendingChanges(o)->d_func()->ctmValue = OutputDeviceInterface::CtmValue{(uint16_t)r, (uint16_t)g, (uint16_t)b};
+    return;
+}
+
 void OutputConfigurationInterface::Private::emitConfigurationChangeRequested() const
 {
     auto configinterface = reinterpret_cast<OutputConfigurationInterface *>(q);
@@ -329,7 +346,7 @@ bool OutputConfigurationInterface::Private::hasPendingChanges(OutputDeviceInterf
         return false;
     }
     auto c = changes[outputdevice];
-    return c->enabledChanged() || c->modeChanged() || c->transformChanged() || c->positionChanged() || c->scaleChanged() || c->brightnessChanged();
+    return c->enabledChanged() || c->modeChanged() || c->transformChanged() || c->positionChanged() || c->scaleChanged() || c->brightnessChanged() || c->ctmChanged();
 }
 
 void OutputConfigurationInterface::Private::clearPendingChanges()

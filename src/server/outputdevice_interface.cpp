@@ -57,6 +57,7 @@ public:
     SubPixel subPixel = SubPixel::Unknown;
     Transform transform = Transform::Normal;
     ColorCurves colorCurves;
+    CtmValue ctmValue;
     QList<Mode> modes;
     Mode currentMode;
     QList<ResourceData> resources;
@@ -472,6 +473,14 @@ void OutputDeviceInterface::Private::updateColorCurves()
     }
 }
 
+bool OutputDeviceInterface::CtmValue::operator==(const CtmValue &cc) const
+{
+    return r == cc.r && g == cc.g && b == cc.b;
+}
+bool OutputDeviceInterface::CtmValue::operator!=(const CtmValue &cc) const {
+    return !operator==(cc);
+}
+
 bool OutputDeviceInterface::ColorCurves::operator==(const ColorCurves &cc) const
 {
     return red == cc.red && green == cc.green && blue == cc.blue;
@@ -593,6 +602,12 @@ OutputDeviceInterface::ColorCurves OutputDeviceInterface::colorCurves() const
     return d->colorCurves;
 }
 
+OutputDeviceInterface::CtmValue OutputDeviceInterface::ctmValue() const
+{
+    Q_D();
+    return d->ctmValue;
+}
+
 QList<OutputDeviceInterface::Mode> OutputDeviceInterface::modes() const
 {
     Q_D();
@@ -630,6 +645,17 @@ void OutputDeviceInterface::setColorCurves(const ColorCurves &colorCurves)
     }
     d->colorCurves = colorCurves;
     Q_EMIT colorCurvesChanged(d->colorCurves);
+}
+
+void OutputDeviceInterface::setCtmValue(const CtmValue &value)
+{
+    Q_D();
+
+    if (d->ctmValue == value) {
+        return;
+    }
+    d->ctmValue = value;
+    Q_EMIT ctmValueChanged(d->ctmValue);
 }
 
 void OutputDeviceInterface::setEdid(const QByteArray &edid)

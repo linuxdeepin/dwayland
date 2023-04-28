@@ -63,6 +63,8 @@ public:
      */
     bool colorCurvesChanged() const;
 
+    bool ctmChanged() const;
+
     /** The new value for enabled. */
     OutputDeviceInterface::Enablement enabled() const;
     /** The new mode id.*/
@@ -87,6 +89,8 @@ public:
      * @since 5.XX
      */
     OutputDeviceInterface::ColorCurves colorCurves() const;
+
+    OutputDeviceInterface::CtmValue ctmValue() const;
 
 private:
     friend class OutputConfigurationInterface;
