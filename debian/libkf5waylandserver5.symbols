@@ -62,7 +62,6 @@ libKF5WaylandServer.so.5 libkf5waylandserver5 #MINVER#
  _ZN8KWayland6Server13SeatInterface11dragStartedEv@Base 4:5.6.2
  _ZN8KWayland6Server13SeatInterface11keyReleasedEj@Base 4:5.1.1+git20141128.0009
  _ZN8KWayland6Server13SeatInterface11nameChangedERK7QString@Base 4:5.1.1+git20141128.0009
- _ZN8KWayland6Server13SeatInterface11pointerAxisEN2Qt11OrientationEj@Base 4:5.1.1+git20141128.0009
  _ZN8KWayland6Server13SeatInterface11qt_metacallEN11QMetaObject4CallEiPPv@Base 4:5.1.1+git20141128.0009
  _ZN8KWayland6Server13SeatInterface11qt_metacastEPKc@Base 4:5.1.1+git20141128.0009
  _ZN8KWayland6Server13SeatInterface11setHasTouchEb@Base 4:5.1.1+git20141128.0009
@@ -435,7 +434,6 @@ libKF5WaylandServer.so.5 libkf5waylandserver5 #MINVER#
  _ZN8KWayland6Server16PointerInterface17setFocusedSurfaceEPNS0_16SurfaceInterfaceEj@Base 4:5.1.1+git20141128.0009
  _ZN8KWayland6Server16PointerInterface3getEP11wl_resource@Base 4:5.28.0
  _ZN8KWayland6Server16PointerInterface4axisEN2Qt11OrientationEdiNS0_17PointerAxisSourceE@Base 4:5.61.0
- _ZN8KWayland6Server16PointerInterface4axisEN2Qt11OrientationEj@Base 4:5.1.1+git20141128.0009
  _ZN8KWayland6Server16PointerInterface7Private11s_interfaceE@Base 4:5.1.1+git20141128.0009
  _ZN8KWayland6Server16PointerInterface7Private15endPinchGestureEj@Base 4:5.35.0
  _ZN8KWayland6Server16PointerInterface7Private15endSwipeGestureEj@Base 4:5.35.0
