@@ -203,6 +203,8 @@ public:
     bool isAcceptFocus() const;
     bool isModal() const;
     bool isOnAllDesktops() const;
+    bool isSplitable() const;
+    int getSplitable() const;
 
     void requestActivate();
     void requestKeepAbove(bool set);
@@ -222,6 +224,25 @@ public:
 
     void requestNoTitleBarProperty(qint32 value);
     void requestWindowRadiusProperty(QPointF windowRadius);
+
+    enum class SplitType {
+        None        = 0,
+        Left        = 1 << 0,
+        Right       = 1 << 1,
+        Top         = 1 << 2,
+        Bottom      = 1 << 3,
+        LeftTop     = Left | Top,
+        RightTop    = Right | Top,
+        LeftBottom  = Left | Bottom,
+        RightBottom = Right | Bottom,
+    };
+    enum class SplitMode {
+        Two         = 1 << 0,
+        Three       = 1 << 1,
+        Four        = 1 << 2,
+    };
+
+    void requestSplitWindow(SplitType splitType, SplitMode mode = SplitMode::Two);
 Q_SIGNALS:
     void geometryChanged(const QRect &geom);
     void activeChanged();
