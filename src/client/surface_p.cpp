@@ -37,10 +37,6 @@ Surface *Surface::fromWindow(QWindow *window)
     Surface *surface = new Surface(window);
     surface->d->surface.setup(s, true);
 
-    auto waylandWindow = dynamic_cast<QtWaylandClient::QWaylandWindow *>(window->handle());
-    if (waylandWindow) {
-        connect(waylandWindow, &QtWaylandClient::QWaylandWindow::wlSurfaceDestroyed, surface, &QObject::deleteLater);
-    }
     return surface;
 }
 
