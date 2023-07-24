@@ -16,23 +16,29 @@
 #include <QHash>
 #include <QMutableHashIterator>
 
+#include <fcntl.h>
 #include <functional>
 
 namespace KWayland
 {
 namespace Server
 {
+static const QString SCREEN_RECORDING_START = QStringLiteral("screenRecordingStart");
+static const QString SCREEN_RECORDING_FINISHED = QStringLiteral("screenRecordingStop");
+static QObject gsScreenRecord;
+
 class BufferHandle::Private // @see gbm_import_fd_data
 {
 public:
     // Note that on client side received fd number will be different
     // and meaningful only for client process!
     // Thus we can use server-side fd as an implicit unique id
-    qint32 fd = 0; ///< also internal buffer id for client
+    qint32 fd = -1; ///< also internal buffer id for client
     quint32 width = 0;
     quint32 height = 0;
     quint32 stride = 0;
     quint32 format = 0;
+    qint32 frame = -1;
 };
 
 BufferHandle::BufferHandle()
@@ -46,6 +52,9 @@ BufferHandle::~BufferHandle()
 
 void BufferHandle::setFd(qint32 fd)
 {
+    if (d == nullptr || d.isNull()) {
+        return;
+    }
     d->fd = fd;
 }
 
@@ -90,12 +99,23 @@ quint32 BufferHandle::format() const
     return d->format;
 }
 
+void BufferHandle::setFrame(qint32 frame)
+{
+    d->frame = frame;
+}
+
+qint32 BufferHandle::frame() const
+{
+    return d->frame;
+}
+
 /**
  * @brief helper struct for manual reference counting.
  * automatic counting via QSharedPointer is no-go here as we hold strong reference in sentBuffers.
  */
-struct BufferHolder {
-    const BufferHandle *buf;
+struct BufferHolder
+{
+    BufferHandle *buf;
     quint64 counter;
 };
 
@@ -110,12 +130,14 @@ public:
      * @param output wl_output interface to determine which screen sent this buf
      * @param buf buffer containing GBM-related params
      */
-    void sendBufferReady(const OutputInterface *output, const BufferHandle *buf);
+    void sendBufferReady(const OutputInterface *output, BufferHandle *buf);
     /**
      * @brief Release all bound buffers associated with this resource
      * @param resource one of bound clients
      */
     void release(wl_resource *resource);
+
+    void incrementRenderSequence();
 
     /**
      * Clients of this interface.
@@ -132,8 +154,11 @@ private:
         return reinterpret_cast<Private *>(wl_resource_get_user_data(r));
     }
     static void getBufferCallback(wl_client *client, wl_resource *resource, uint32_t buffer, int32_t internalBufId);
+    static void recordCallback(wl_client *client, wl_resource *resource, int32_t count);
     static void releaseCallback(wl_client *client, wl_resource *resource);
+    static void getRenderSequenceCallback(wl_client *client, wl_resource *resource);
     void bind(wl_client *client, uint32_t version, uint32_t id) override;
+    void startRecord(wl_client *client, wl_resource *resource, int32_t frame);
 
     /**
      * @brief Unreferences counter and frees buffer when it reaches zero
@@ -153,9 +178,13 @@ private:
      * Keys are fd numbers as they are unique
      **/
     QHash<qint32, BufferHolder> sentBuffers;
+    QHash<wl_resource*, qint32> requestFrames;
+    QHash<wl_resource*, qint32> lastFrames;
+
+    int renderSequence = 0;
 };
 
-const quint32 RemoteAccessManagerInterface::Private::s_version = 1;
+const quint32 RemoteAccessManagerInterface::Private::s_version = 2;
 
 RemoteAccessManagerInterface::Private::Private(RemoteAccessManagerInterface *q, Display *d)
     : Global::Private(d, &org_kde_kwin_remote_access_manager_interface, s_version)
@@ -178,7 +207,7 @@ void RemoteAccessManagerInterface::Private::bind(wl_client *client, uint32_t ver
     clientResources << resource;
 }
 
-void RemoteAccessManagerInterface::Private::sendBufferReady(const OutputInterface *output, const BufferHandle *buf)
+void RemoteAccessManagerInterface::Private::sendBufferReady(const OutputInterface *output, BufferHandle *buf)
 {
     BufferHolder holder{buf, 0};
     // notify clients
@@ -192,9 +221,21 @@ void RemoteAccessManagerInterface::Private::sendBufferReady(const OutputInterfac
             continue;
         }
 
-        // no reason for client to bind wl_output multiple times, send only to first one
-        org_kde_kwin_remote_access_manager_send_buffer_ready(res, buf->fd(), boundScreens[0]);
-        holder.counter++;
+        int frame = -1;
+        if (requestFrames.contains(res)) {
+            frame = requestFrames[res];
+        }
+        if (frame) {
+            // no reason for client to bind wl_output multiple times, send only to first one
+            org_kde_kwin_remote_access_manager_send_buffer_ready(res, buf->fd(), boundScreens[0]);
+            holder.counter++;
+            if (frame == 1) {
+                lastFrames[res] = buf->fd();
+            }
+        }
+        if (frame > 0) {
+            requestFrames[res] = frame - 1;
+        }
     }
     if (holder.counter == 0) {
         // buffer was not requested by any client
@@ -205,9 +246,20 @@ void RemoteAccessManagerInterface::Private::sendBufferReady(const OutputInterfac
     sentBuffers[buf->fd()] = holder;
 }
 
+void RemoteAccessManagerInterface::Private::incrementRenderSequence()
+{
+    renderSequence++;
+}
+
 #ifndef K_DOXYGEN
-const struct org_kde_kwin_remote_access_manager_interface RemoteAccessManagerInterface::Private::s_interface = {getBufferCallback, releaseCallback};
+const struct org_kde_kwin_remote_access_manager_interface RemoteAccessManagerInterface::Private::s_interface = {
+    getBufferCallback,
+    releaseCallback,
+    recordCallback,
+    getRenderSequenceCallback
+};
 #endif
+
 
 void RemoteAccessManagerInterface::Private::getBufferCallback(wl_client *client, wl_resource *resource, uint32_t buffer, int32_t internalBufId)
 {
@@ -220,6 +272,11 @@ void RemoteAccessManagerInterface::Private::getBufferCallback(wl_client *client,
     }
 
     BufferHolder &bh = p->sentBuffers[internalBufId];
+    if (p->requestFrames.contains(resource)) {
+        if (p->lastFrames[resource] == bh.buf->fd()) {
+            bh.buf->setFrame(0);
+        }
+    }
     auto rbuf = new RemoteBufferInterface(p->q, resource, bh.buf);
     rbuf->create(p->display->getConnection(client), wl_resource_get_version(resource), buffer);
     if (!rbuf->resource()) {
@@ -234,14 +291,19 @@ void RemoteAccessManagerInterface::Private::getBufferCallback(wl_client *client,
             // all relevant buffers are already unreferenced
             return;
         }
-        qCDebug(KWAYLAND_SERVER) << "Remote buffer returned, client" << wl_resource_get_id(resource) << ", id" << rbuf->id() << ", fd" << bh.buf->fd();
-        if (p->unref(bh)) {
-            p->sentBuffers.remove(bh.buf->fd());
-        }
+        qCDebug(KWAYLAND_SERVER) << "Remote buffer returned, client" << wl_resource_get_id(resource)
+                                                     << ", id" << rbuf->id()
+                                                     << ", fd" << bh.buf->fd();
+        p->unref(bh);
     });
 
     // send buffer params
-    rbuf->passFd();
+    // unref resource when fd return -1
+    if (rbuf->passFd() == -1) {
+        delete rbuf;
+    }
+
+    gsScreenRecord.setObjectName(SCREEN_RECORDING_START);
 }
 
 void RemoteAccessManagerInterface::Private::releaseCallback(wl_client *client, wl_resource *resource)
@@ -250,12 +312,32 @@ void RemoteAccessManagerInterface::Private::releaseCallback(wl_client *client, w
     unbind(resource);
 }
 
+void RemoteAccessManagerInterface::Private::recordCallback(wl_client *client, wl_resource *resource, int32_t frame)
+{
+    Private *p = cast(resource);
+    p->startRecord(client, resource, frame);
+}
+
+void RemoteAccessManagerInterface::Private::startRecord(wl_client *client, wl_resource *resource, int32_t frame)
+{
+    requestFrames[resource] = frame;
+    lastFrames[resource] = 0;
+    Q_EMIT q->startRecord(frame);
+}
+
+void RemoteAccessManagerInterface::Private::getRenderSequenceCallback(wl_client *client, wl_resource *resource)
+{
+    Private *p = cast(resource);
+    org_kde_kwin_remote_access_manager_send_rendersequence(resource, p->renderSequence);
+}
+
 bool RemoteAccessManagerInterface::Private::unref(BufferHolder &bh)
 {
     bh.counter--;
     if (!bh.counter) {
         // no more clients using this buffer
         qCDebug(KWAYLAND_SERVER) << "Buffer released, fd" << bh.buf->fd();
+        sentBuffers.remove(bh.buf->fd());
         Q_EMIT q->bufferReleased(bh.buf);
         return true;
     }
@@ -268,18 +350,14 @@ void RemoteAccessManagerInterface::Private::unbind(wl_resource *resource)
     // we're unbinding, all sent buffers for this client are now effectively invalid
     Private *p = cast(resource);
     p->release(resource);
+
+    gsScreenRecord.setObjectName(SCREEN_RECORDING_FINISHED);
 }
 
 void RemoteAccessManagerInterface::Private::release(wl_resource *resource)
 {
-    // all holders should decrement their counter as one client is gone
-    QMutableHashIterator<qint32, BufferHolder> itr(sentBuffers);
-    while (itr.hasNext()) {
-        BufferHolder &bh = itr.next().value();
-        if (unref(bh)) {
-            itr.remove();
-        }
-    }
+    requestFrames.remove(resource);
+    lastFrames.remove(resource);
 
     clientResources.removeAll(resource);
 }
@@ -296,12 +374,21 @@ RemoteAccessManagerInterface::Private::~Private()
 RemoteAccessManagerInterface::RemoteAccessManagerInterface(Display *display, QObject *parent)
     : Global(new Private(this, display), parent)
 {
+    connect(&gsScreenRecord, &QObject::objectNameChanged, this, [=](const QString& name) {
+        Q_EMIT screenRecordStatusChanged(name == SCREEN_RECORDING_START);
+    });
 }
 
-void RemoteAccessManagerInterface::sendBufferReady(const OutputInterface *output, const BufferHandle *buf)
+void RemoteAccessManagerInterface::sendBufferReady(const OutputInterface *output, BufferHandle *buf)
 {
     Private *priv = reinterpret_cast<Private *>(d.data());
     priv->sendBufferReady(output, buf);
+}
+
+void RemoteAccessManagerInterface::incrementRenderSequence()
+{
+    Private *priv = reinterpret_cast<Private *>(d.data());
+    priv->incrementRenderSequence();
 }
 
 bool RemoteAccessManagerInterface::isBound() const
@@ -316,7 +403,7 @@ public:
     Private(RemoteAccessManagerInterface *ram, RemoteBufferInterface *q, wl_resource *pResource, const BufferHandle *buf);
     ~Private() override;
 
-    void passFd();
+    int passFd();
 
 private:
     static const struct org_kde_kwin_remote_buffer_interface s_interface;
@@ -338,9 +425,14 @@ RemoteBufferInterface::Private::~Private()
 {
 }
 
-void RemoteBufferInterface::Private::passFd()
+int RemoteBufferInterface::Private::passFd()
 {
-    org_kde_kwin_remote_buffer_send_gbm_handle(resource, wrapped->fd(), wrapped->width(), wrapped->height(), wrapped->stride(), wrapped->format());
+    if (fcntl(wrapped->fd(), F_GETFL) == -1) {
+        return -1;
+    }
+    org_kde_kwin_remote_buffer_send_gbm_handle(resource, wrapped->fd(),
+            wrapped->width(), wrapped->height(), wrapped->stride(), wrapped->format(), wrapped->frame());
+    return 0;
 }
 
 RemoteBufferInterface::RemoteBufferInterface(RemoteAccessManagerInterface *ram, wl_resource *pResource, const BufferHandle *buf)
@@ -353,9 +445,9 @@ RemoteBufferInterface::Private *RemoteBufferInterface::d_func() const
     return reinterpret_cast<Private *>(d.data());
 }
 
-void RemoteBufferInterface::passFd()
+int RemoteBufferInterface::passFd()
 {
-    d_func()->passFd();
+    return d_func()->passFd();
 }
 
 }

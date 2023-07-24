@@ -322,7 +322,6 @@ libKF5WaylandClient.so.5 libkf5waylandclient5 #MINVER#
  _ZN8KWayland6Client12RemoteBuffer18parametersObtainedEv@Base 4:5.45.0
  _ZN8KWayland6Client12RemoteBuffer5setupEP26org_kde_kwin_remote_buffer@Base 4:5.45.0
  _ZN8KWayland6Client12RemoteBuffer7Private10s_listenerE@Base 4:5.45.0
- _ZN8KWayland6Client12RemoteBuffer7Private14paramsCallbackEPvP26org_kde_kwin_remote_bufferijjjj@Base 4:5.45.0
  _ZN8KWayland6Client12RemoteBuffer7Private5setupEP26org_kde_kwin_remote_buffer@Base 4:5.45.0
  _ZN8KWayland6Client12RemoteBuffer7PrivateC1EPS1_@Base 4:5.45.0
  _ZN8KWayland6Client12RemoteBuffer7PrivateC2EPS1_@Base 4:5.45.0
@@ -911,7 +910,6 @@ libKF5WaylandClient.so.5 libkf5waylandclient5 #MINVER#
  _ZN8KWayland6Client19PointerSwipeGestureD2Ev@Base 4:5.35.0
  _ZN8KWayland6Client19PointerSwipeGesturecvP28zwp_pointer_gesture_swipe_v1Ev@Base 4:5.35.0
  _ZN8KWayland6Client19RemoteAccessManager10eventQueueEv@Base 4:5.45.0
- _ZN8KWayland6Client19RemoteAccessManager11bufferReadyEPKvPKNS0_12RemoteBufferE@Base 4:5.45.0
  _ZN8KWayland6Client19RemoteAccessManager11qt_metacallEN11QMetaObject4CallEiPPv@Base 4:5.45.0
  _ZN8KWayland6Client19RemoteAccessManager11qt_metacastEPKc@Base 4:5.45.0
  _ZN8KWayland6Client19RemoteAccessManager13setEventQueueEPNS0_10EventQueueE@Base 4:5.45.0

@@ -27,7 +27,7 @@ public:
      * Sends GBM fd to the client.
      * Note that server still has to close mirror fd from its side.
      **/
-    void passFd();
+    int passFd();
 
 private:
     explicit RemoteBufferInterface(RemoteAccessManagerInterface *ram, wl_resource *pResource, const BufferHandle *buf);

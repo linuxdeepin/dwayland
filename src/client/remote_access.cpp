@@ -14,18 +14,20 @@ namespace KWayland
 {
 namespace Client
 {
+
 class RemoteAccessManager::Private
 {
 public:
     explicit Private(RemoteAccessManager *ram);
     void setup(org_kde_kwin_remote_access_manager *k);
+    bool startRecording(int frame);
 
     WaylandPointer<org_kde_kwin_remote_access_manager, org_kde_kwin_remote_access_manager_release> ram;
     EventQueue *queue = nullptr;
-
 private:
     static const struct org_kde_kwin_remote_access_manager_listener s_listener;
     static void bufferReadyCallback(void *data, org_kde_kwin_remote_access_manager *interface, qint32 buffer_id, wl_output *output);
+    static void renderSequenceCallback(void *data, org_kde_kwin_remote_access_manager *interface, int number);
 
     RemoteAccessManager *q;
 };
@@ -35,7 +37,10 @@ RemoteAccessManager::Private::Private(RemoteAccessManager *q)
 {
 }
 
-const org_kde_kwin_remote_access_manager_listener RemoteAccessManager::Private::s_listener = {bufferReadyCallback};
+const org_kde_kwin_remote_access_manager_listener RemoteAccessManager::Private::s_listener = {
+    bufferReadyCallback,
+    renderSequenceCallback,
+};
 
 void RemoteAccessManager::Private::bufferReadyCallback(void *data, org_kde_kwin_remote_access_manager *interface, qint32 buffer_id, wl_output *output)
 {
@@ -51,12 +56,27 @@ void RemoteAccessManager::Private::bufferReadyCallback(void *data, org_kde_kwin_
     Q_EMIT ramp->q->bufferReady(output, rbuf);
 }
 
+void RemoteAccessManager::Private::renderSequenceCallback(void *data, org_kde_kwin_remote_access_manager *interface, int number)
+{
+    auto ramp = reinterpret_cast<RemoteAccessManager::Private*>(data);
+    Q_ASSERT(ramp->ram == interface);
+
+    Q_EMIT ramp->q->renderSequence(number);
+}
+
 void RemoteAccessManager::Private::setup(org_kde_kwin_remote_access_manager *k)
 {
     Q_ASSERT(k);
     Q_ASSERT(!ram);
     ram.setup(k);
     org_kde_kwin_remote_access_manager_add_listener(k, &s_listener, this);
+}
+
+bool RemoteAccessManager::Private::startRecording(int frame)
+{
+    Q_ASSERT(ram);
+    org_kde_kwin_remote_access_manager_record(ram, frame);
+    return true;
 }
 
 RemoteAccessManager::RemoteAccessManager(QObject *parent)
@@ -85,6 +105,11 @@ void RemoteAccessManager::destroy()
     d->ram.destroy();
 }
 
+void RemoteAccessManager::getRendersequence()
+{
+    org_kde_kwin_remote_access_manager_get_rendersequence(d->ram);
+}
+
 void RemoteAccessManager::setEventQueue(EventQueue *queue)
 {
     d->queue = queue;
@@ -110,6 +135,11 @@ bool RemoteAccessManager::isValid() const
     return d->ram.isValid();
 }
 
+bool RemoteAccessManager::startRecording(int frame)
+{
+    return d->startRecording(frame);
+}
+
 class RemoteBuffer::Private
 {
 public:
@@ -117,7 +147,8 @@ public:
     void setup(org_kde_kwin_remote_buffer *buffer);
 
     static struct org_kde_kwin_remote_buffer_listener s_listener;
-    static void paramsCallback(void *data, org_kde_kwin_remote_buffer *rbuf, qint32 fd, quint32 width, quint32 height, quint32 stride, quint32 format);
+    static void paramsCallback(void *data, org_kde_kwin_remote_buffer *rbuf,
+            qint32 fd, quint32 width, quint32 height, quint32 stride, quint32 format, qint32 frame);
 
     WaylandPointer<org_kde_kwin_remote_buffer, org_kde_kwin_remote_buffer_release> remotebuffer;
     RemoteBuffer *q;
@@ -127,6 +158,7 @@ public:
     quint32 height = 0;
     quint32 stride = 0;
     quint32 format = 0;
+    qint32 frame = -1;
 };
 
 RemoteBuffer::Private::Private(RemoteBuffer *q)
@@ -134,13 +166,8 @@ RemoteBuffer::Private::Private(RemoteBuffer *q)
 {
 }
 
-void RemoteBuffer::Private::paramsCallback(void *data,
-                                           org_kde_kwin_remote_buffer *rbuf,
-                                           qint32 fd,
-                                           quint32 width,
-                                           quint32 height,
-                                           quint32 stride,
-                                           quint32 format)
+void RemoteBuffer::Private::paramsCallback(void *data, org_kde_kwin_remote_buffer *rbuf,
+        qint32 fd, quint32 width, quint32 height, quint32 stride, quint32 format, qint32 frame)
 {
     Q_UNUSED(rbuf)
     Private *p = reinterpret_cast<Private *>(data);
@@ -149,6 +176,7 @@ void RemoteBuffer::Private::paramsCallback(void *data,
     p->height = height;
     p->stride = stride;
     p->format = format;
+    p->frame = frame;
     Q_EMIT p->q->parametersObtained();
 }
 
@@ -229,6 +257,11 @@ quint32 RemoteBuffer::stride() const
 quint32 RemoteBuffer::format() const
 {
     return d->format;
+}
+
+qint32 RemoteBuffer::frame() const
+{
+    return d->frame;
 }
 
 }

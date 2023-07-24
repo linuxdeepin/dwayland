@@ -37,13 +37,14 @@ public:
     void setSize(quint32 width, quint32 height);
     void setStride(quint32 stride);
     void setFormat(quint32 format);
+    void setFrame(qint32 frame);
 
     qint32 fd() const;
     quint32 height() const;
     quint32 width() const;
     quint32 stride() const;
     quint32 format() const;
-
+    qint32 frame() const;
 private:
     friend class RemoteAccessManagerInterface;
     friend class RemoteBufferInterface;
@@ -60,7 +61,9 @@ public:
     /**
      * Store buffer in sent list and notify client that we have a buffer for it
      **/
-    void sendBufferReady(const OutputInterface *output, const BufferHandle *buf);
+    void sendBufferReady(const OutputInterface *output, BufferHandle *buf);
+
+    void incrementRenderSequence();
     /**
      * Check whether interface has been bound
      **/
@@ -71,6 +74,8 @@ Q_SIGNALS:
      * Previously sent buffer has been released by client
      */
     void bufferReleased(const BufferHandle *buf);
+    void screenRecordStatusChanged(bool isScreenRecording);
+    void startRecord(int count);
 
 private:
     explicit RemoteAccessManagerInterface(Display *display, QObject *parent = nullptr);
