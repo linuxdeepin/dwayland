@@ -1,0 +1,914 @@
+kwayland (4:5.102.0-1) unstable; urgency=medium
+
+  [ Aurélien COUDERC ]
+  * New upstream release (5.102.0).
+  * Update build-deps and deps with the info from cmake.
+  * Bump Standards-Version to 4.6.2, no change required.
+  * Replace obsolete libegl1-mesa-dev build dependency with libegl-dev.
+
+ -- Aurélien COUDERC <coucouf@debian.org>  Sun, 22 Jan 2023 21:35:02 +0100
+
+kwayland (4:5.101.0-1) unstable; urgency=medium
+
+  [ Aurélien COUDERC ]
+  * New upstream release (5.101.0).
+  * Update build-deps and deps with the info from cmake.
+  * Update symbols from build for 5.101.0.
+
+ -- Aurélien COUDERC <coucouf@debian.org>  Tue, 13 Dec 2022 07:40:23 +0100
+
+kwayland (4:5.100.0-1) unstable; urgency=medium
+
+  [ Aurélien COUDERC ]
+  * New upstream release (5.99.0).
+  * Update build-deps and deps with the info from cmake.
+  * Update symbols from build for 5.99.0.
+  * New upstream release (5.100.0).
+  * Update build-deps and deps with the info from cmake.
+
+ -- Aurélien COUDERC <coucouf@debian.org>  Sat, 19 Nov 2022 23:18:57 +0100
+
+kwayland (4:5.98.0-1) unstable; urgency=medium
+
+  [ Aurélien COUDERC ]
+  * New upstream release (5.98.0).
+  * Update build-deps and deps with the info from cmake.
+
+ -- Aurélien COUDERC <coucouf@debian.org>  Sun, 18 Sep 2022 23:11:37 +0200
+
+kwayland (4:5.97.0-1) unstable; urgency=medium
+
+  [ Aurélien COUDERC ]
+  * New upstream release (5.97.0).
+
+ -- Aurélien COUDERC <coucouf@debian.org>  Sun, 14 Aug 2022 18:55:29 +0200
+
+kwayland (4:5.96.0-1) unstable; urgency=medium
+
+  [ Aurélien COUDERC ]
+  * New upstream release (5.96.0).
+  * Drop patch Fix-include-dir-in-the-generated-pri-file.patch applied
+    upstream.
+  * Update symbols from build for 5.96.0.
+  * Review copyright information.
+
+ -- Aurélien COUDERC <coucouf@debian.org>  Sun, 31 Jul 2022 13:32:58 +0200
+
+kwayland (4:5.94.0-2) unstable; urgency=medium
+
+  * Team upload.
+  * Backport upstream patch to fix include dir in the generated pri file.
+
+ -- Dmitry Shachnev <mitya57@debian.org>  Wed, 15 Jun 2022 10:25:09 +0300
+
+kwayland (4:5.94.0-1) unstable; urgency=medium
+
+  [ Aurélien COUDERC ]
+  * New upstream release (5.94.0).
+  * Drop backported upstream patches.
+  * Update symbols from build for 5.94.0.
+
+ -- Aurélien COUDERC <coucouf@debian.org>  Thu, 19 May 2022 23:59:03 +0200
+
+kwayland (4:5.93.0-2) unstable; urgency=medium
+
+  * Team upload.
+  * Bump Standards-Version to 4.6.1, no changes required.
+  * Modernize building:
+    - add the dh-sequence-kf5 build dependency to use the kf5 addon
+      automatically
+    - drop all the manually specified addons and buildsystem for dh
+  * Remove inactive Uploaders.
+  * CI: enable again the blhc job.
+  * Apply the upstream patches before the Debian ones (reduces potential
+    conflicts).
+  * Backport upstream commit 70eb1df5a14c668879443a853069af750920035b to fix
+    the KWaylandClient include directory in the qmake .pri file; patch
+    upstream_Fix-include-dir-in-the-generated-pri-file.patch. (Closes: #1011015)
+
+ -- Pino Toscano <pino@debian.org>  Sun, 15 May 2022 14:12:33 +0200
+
+kwayland (4:5.93.0-1) unstable; urgency=medium
+
+  [ Aurélien COUDERC ]
+  * New upstream release (5.92.0).
+  * Update the list of installed files.
+  * Update symbols from build for 5.92.0.
+  * New upstream release (5.93.0).
+  * Backport upstream commit to fix include path in the generated pkgconfig
+    file.
+
+ -- Aurélien COUDERC <coucouf@debian.org>  Wed, 11 May 2022 23:22:44 +0200
+
+kwayland (4:5.90.0-1) unstable; urgency=medium
+
+  [ Norbert Preining ]
+  * New upstream release (5.89.0).
+
+  [ Aurélien COUDERC ]
+  * New upstream release (5.90.0).
+  * Added myself to the uploaders.
+  * Update symbols from build for 5.90.0.
+
+ -- Aurélien COUDERC <coucouf@debian.org>  Fri, 11 Feb 2022 23:46:41 +0100
+
+kwayland (4:5.88.0-1) unstable; urgency=medium
+
+  [ Norbert Preining ]
+  * New upstream release (5.87.0).
+  * New upstream release (5.88.0).
+  * Force-bump frameworks internal b-d to 5.88.
+
+ -- Norbert Preining <norbert@preining.info>  Wed, 17 Nov 2021 06:07:42 +0900
+
+kwayland (4:5.86.0-1) unstable; urgency=medium
+
+  [ Norbert Preining ]
+  * New upstream release (5.86.0).
+  * Bump Standards-Version to 4.6.0, no change required.
+
+ -- Norbert Preining <norbert@preining.info>  Mon, 13 Sep 2021 11:01:42 +0900
+
+kwayland (4:5.85.0-2) unstable; urgency=medium
+
+  * Release to unstable.
+
+ -- Norbert Preining <norbert@preining.info>  Sat, 28 Aug 2021 23:42:49 +0900
+
+kwayland (4:5.85.0-1) experimental; urgency=medium
+
+  [ Norbert Preining ]
+  * New upstream release (5.85.0).
+
+ -- Norbert Preining <norbert@preining.info>  Mon, 16 Aug 2021 00:06:12 +0900
+
+kwayland (4:5.83.0-2) unstable; urgency=medium
+
+  * Upload to unstable.
+
+ -- Norbert Preining <norbert@preining.info>  Mon, 16 Aug 2021 11:53:11 +0900
+
+kwayland (4:5.83.0-1) experimental; urgency=medium
+
+  [ Norbert Preining ]
+  * New upstream release (5.83.0).
+  * Update symbols.
+
+ -- Norbert Preining <norbert@preining.info>  Sun, 13 Jun 2021 13:25:32 +0900
+
+kwayland (4:5.82.0-1) experimental; urgency=medium
+
+  [ Norbert Preining ]
+  * New upstream release (5.82.0).
+  * Removed Maximiliano Curia from the uploaders, thanks for your work
+    on the package!
+
+ -- Norbert Preining <norbert@preining.info>  Sat, 08 May 2021 21:21:15 +0900
+
+kwayland (4:5.81.0-1) experimental; urgency=medium
+
+  [ Norbert Preining ]
+  * New upstream version (5.81.0)
+  * Bump inter-frameworks dependencies.
+  * Bump dependency on plasma-wayland-protocols.
+
+ -- Norbert Preining <norbert@preining.info>  Mon, 12 Apr 2021 13:16:19 +0900
+
+kwayland (4:5.80.0-1) experimental; urgency=medium
+
+  [ Norbert Preining ]
+  * New upstream version (5.80.0)
+  * Bump inter-frameworks dependencies.
+
+ -- Norbert Preining <norbert@preining.info>  Mon, 15 Mar 2021 15:10:36 +0900
+
+kwayland (4:5.79.0-1) experimental; urgency=medium
+
+  [ Norbert Preining ]
+  * Remove graphviz from build depends.
+  * New upstream release (5.79.0).
+
+ -- Norbert Preining <norbert@preining.info>  Tue, 16 Feb 2021 06:45:30 +0900
+
+kwayland (4:5.78.0-2) unstable; urgency=medium
+
+  * Release to unstable.
+
+ -- Norbert Preining <norbert@preining.info>  Sun, 17 Jan 2021 12:02:25 +0900
+
+kwayland (4:5.78.0-1) experimental; urgency=medium
+
+  [ Norbert Preining ]
+  * New upstream release (5.78.0).
+  * Update build-deps and deps with the info from cmake.
+
+ -- Norbert Preining <norbert@preining.info>  Wed, 13 Jan 2021 10:32:44 +0900
+
+kwayland (4:5.77.0-2) unstable; urgency=medium
+
+  * Release to unstable.
+
+ -- Norbert Preining <norbert@preining.info>  Tue, 22 Dec 2020 10:33:36 +0900
+
+kwayland (4:5.77.0-1) experimental; urgency=medium
+
+  [ Norbert Preining ]
+  * Bump Standards-Version to 4.5.1 (No changes needed).
+  * New upstream release (5.77.0).
+  * Update build-deps and deps with the info from cmake.
+  * Add myself to Uploaders.
+  * Update maintainer to Debian Qt/KDE Maintainers.
+  * Update symbols.
+
+ -- Norbert Preining <norbert@preining.info>  Fri, 18 Dec 2020 10:03:56 +0900
+
+kwayland (4:5.74.0-2) unstable; urgency=medium
+
+  * Team upload to unstable.
+
+ -- Sandro Knauß <hefee@debian.org>  Mon, 19 Oct 2020 23:14:37 +0200
+
+kwayland (4:5.74.0-1) experimental; urgency=medium
+
+  * Team upload.
+
+  [ Sandro Knauß ]
+  * New upstream release (5.74.0).
+  * Update build-deps and deps with the info from cmake.
+  * Add renamecategories file to kwayland-data.
+  * Update symbols from build for 5.74.0 no ABI bump needed (only tempinst and
+    private symbols got removed).
+  * Update Homepage link to point to new invent.kde.org
+  * Update repository related entries to metadata file.
+  * Update field Source in debian/copyright to invent.kde.org move.
+  * Add Bug-* entries to metadata file.
+
+ -- Sandro Knauß <hefee@debian.org>  Sun, 27 Sep 2020 17:44:26 +0200
+
+kwayland (4:5.70.0-1) unstable; urgency=medium
+
+  * Team upload.
+
+  [ Sandro Knauß ]
+  * Bump compat level to 13.
+  * New upstream release (5.70.0).
+  * Update build-deps and deps with the info from cmake.
+  * Set field Upstream-Contact in debian/copyright.
+  * Remove obsolete fields Contact, Name from debian/upstream/metadata
+    (already present in machine-readable debian/copyright).
+  * Update patch hunks.
+  * Update symbols from build for 5.70.0.
+
+ -- Sandro Knauß <hefee@debian.org>  Tue, 26 May 2020 23:55:53 +0200
+
+kwayland (4:5.69.0-1) experimental; urgency=medium
+
+  * Team upload.
+
+  [ Sandro Knauß ]
+  * Bump compat level to 12.
+  * Bump Standards-Version to 4.5.0 (No changes needed).
+  * Add Rules-Requires-Root field to control.
+  * New upstream release (5.69.0).
+  * Update build-deps and deps with the info from cmake.
+  * Enable hardening all.
+  * Update copyright file.
+  * Update qtlogging categories files.
+  * Update symbols from build for 5.69.0.
+  * Remove not needed injection of linker flags.
+
+ -- Sandro Knauß <hefee@debian.org>  Thu, 30 Apr 2020 00:55:41 +0200
+
+kwayland (4:5.62.0-2) unstable; urgency=medium
+
+  * Team upload.
+  * Update symbols files with the logs of buildds.
+  * Bump Standards-Version to 4.4.0, no changes required.
+  * Remove unused ${shlibs:Depends} substvar for kwayland-data.
+  * Pass -DBUILD_TESTING=OFF to cmake to disable the build of tests, as they
+    are not run at build time anyway.
+  * Drop the migration from kwayland-dbg, no more needed after two
+    Debian stable releases.
+  * Drop the unused 'testsuite' autopkgtest, as it does not test the installed
+    packages anyway
+    - drop patch kubuntu_disable-tests.diff, no more needed now
+  * Remove the unused debian/meta/ stuff.
+
+ -- Pino Toscano <pino@debian.org>  Sat, 21 Sep 2019 09:05:10 +0200
+
+kwayland (4:5.62.0-1) unstable; urgency=medium
+
+  * Update reprotest args variable
+  * New upstream release (5.62.0).
+  * Update build-deps and deps with the info from cmake
+  * Update symbols file
+  * Disable autopkgtest testsuite
+  * Release to unstable
+
+ -- Maximiliano Curia <maxy@debian.org>  Fri, 20 Sep 2019 10:13:14 -0700
+
+kwayland (4:5.61.0-1) experimental; urgency=medium
+
+  [ Scarlett Moore ]
+  * Build-Depend on qttools5-dev to fix a cross build failure
+    (see #915122 for more info) (Closes: 932106).
+
+  [ Maximiliano Curia ]
+  * New upstream release (5.61.0).
+  * Add missing build dep wayland-protocols
+  * Update build-deps and deps with the info from cmake
+  * Update symbols files.
+  * Ignore reprotest build path variations
+  * Add missing version to maintscript
+  * Add missing libwayland-dev dep to the dev package
+  * Drop old transitional package (Closes: 939248)
+  * Release to experimental
+
+  [ Jonathan Riddell ]
+  * moved qdebug files
+
+ -- Maximiliano Curia <maxy@debian.org>  Mon, 09 Sep 2019 21:11:00 +0100
+
+kwayland (4:5.54.0-1) unstable; urgency=medium
+
+  * New upstream release (5.52.0).
+  * Update build-deps and deps with the info from cmake
+  * Update symbols files.
+  * New upstream release (5.53.0).
+  * Update build-deps and deps with the info from cmake
+  * Update symbols files
+  * New upstream release (5.54.0).
+  * Update build-deps and deps with the info from cmake
+  * Rediff patches
+  * Update symbols file
+  * Bump group breaks (4:5.54)
+  * Release to unstable
+
+ -- Maximiliano Curia <maxy@debian.org>  Thu, 17 Jan 2019 19:27:25 -0300
+
+kwayland (4:5.51.0-1) unstable; urgency=medium
+
+  * New upstream release (5.50.0).
+  * Update build-deps and deps with the info from cmake
+  * Update symbols files
+  * Bump group breaks (4:5.50)
+  * New upstream release (5.51.0).
+  * Update build-deps and deps with the info from cmake
+  * Bump group breaks (4:5.51)
+  * Release to unstable
+
+ -- Maximiliano Curia <maxy@debian.org>  Wed, 07 Nov 2018 17:17:24 +0100
+
+kwayland (4:5.49.0-1) unstable; urgency=medium
+
+  * New upstream release (5.48.0).
+  * Update build-deps and deps with the info from cmake
+  * New upstream release (5.49.0).
+  * Update build-deps and deps with the info from cmake
+  * Update symbols files
+  * Bump group breaks (4:5.49)
+  * Release to unstable
+
+ -- Maximiliano Curia <maxy@debian.org>  Fri, 17 Aug 2018 16:19:04 +0200
+
+kwayland (4:5.47.0-1) unstable; urgency=medium
+
+  * New upstream release (5.47.0).
+  * Update build-deps and deps with the info from cmake
+  * Refresh patches
+  * Update symbols files.
+  * Update build-deps and deps with the info from cmake
+  * Bump group breaks (4:5.47)
+  * Release to unstable
+
+ -- Maximiliano Curia <maxy@debian.org>  Fri, 15 Jun 2018 12:10:35 +0200
+
+kwayland (4:5.46.0-1) unstable; urgency=medium
+
+  * New upstream release (5.46.0).
+  * Update build-deps and deps with the info from cmake
+  * Bump Standards-Version to 4.1.4.
+  * Use https for the debian/copyright
+  * testsuite: Run tests one at the time
+  * Add patch: Add-missing-header.patch
+  * Bump group breaks (4:5.46)
+  * Release to unstable
+
+ -- Maximiliano Curia <maxy@debian.org>  Thu, 17 May 2018 22:15:38 +0200
+
+kwayland (4:5.45.0-1) unstable; urgency=medium
+
+  * New upstream release (5.45.0).
+  * Update build-deps and deps with the info from cmake
+  * Update symbols files.
+  * Bump group breaks (4:5.45)
+  * Release to unstable
+
+ -- Maximiliano Curia <maxy@debian.org>  Sat, 05 May 2018 08:11:00 +0200
+
+kwayland (4:5.44.0-1) sid; urgency=medium
+
+  * New revision
+  * Bump doxygen build dep.
+    Thanks to Aaron M. Ucko for the report (Closes: 891606)
+  * New upstream release (5.44.0).
+  * Update build-deps and deps with the info from cmake
+  * Bump group breaks (4:5.44)
+  * Release to sid
+
+ -- Maximiliano Curia <maxy@debian.org>  Wed, 21 Mar 2018 14:48:56 +0100
+
+kwayland (4:5.43.0-1) experimental; urgency=medium
+
+  * Use the salsa canonical urls
+  * New upstream release (5.43.0).
+  * Update build-deps and deps with the info from cmake
+  * Bump group breaks (5.43)
+  * Update symbols files
+  * Release to experimental
+
+ -- Maximiliano Curia <maxy@debian.org>  Mon, 26 Feb 2018 11:44:11 +0100
+
+kwayland (4:5.42.0-2) sid; urgency=medium
+
+  * New revision
+  * Release to sid
+
+ -- Maximiliano Curia <maxy@debian.org>  Sat, 10 Feb 2018 11:29:15 +0100
+
+kwayland (4:5.42.0-1) experimental; urgency=medium
+
+  * New upstream release (5.42.0).
+  * Add link options as-needed
+  * Bump debhelper build-dep and compat to 11.
+  * Build without build_stamp
+  * Update build-deps and deps with the info from cmake
+  * Update symbols files
+  * Bump Standards-Version to 4.1.3.
+  * Release to experimental
+
+ -- Maximiliano Curia <maxy@debian.org>  Fri, 02 Feb 2018 12:05:59 +0100
+
+kwayland (4:5.41.0-1) experimental; urgency=medium
+
+  * New upstream release (5.41.0).
+  * Update build-deps and deps with the info from cmake
+  * Update symbols files
+  * Release to experimental
+
+ -- Maximiliano Curia <maxy@debian.org>  Fri, 15 Dec 2017 10:43:12 -0300
+
+kwayland (4:5.41.0-0neon) xenial; urgency=medium
+
+  * New release
+
+ -- Neon CI <neon@kde.org>  Fri, 08 Dec 2017 14:48:28 +0000
+
+kwayland (4:5.40.0-0neon) xenial; urgency=medium
+
+  * New release
+
+ -- Neon CI <neon@kde.org>  Fri, 10 Nov 2017 13:00:37 +0000
+
+kwayland (4:5.39.0-0neon) xenial; urgency=medium
+
+  * New release
+
+ -- Neon CI <neon@kde.org>  Sun, 15 Oct 2017 11:46:54 +0000
+
+kwayland (4:5.38.0-0neon) xenial; urgency=medium
+
+  * New release
+
+ -- Neon CI <neon@kde.org>  Mon, 11 Sep 2017 13:32:10 +0000
+
+kwayland (4:5.37.0-2) sid; urgency=medium
+
+  * New revision
+  * Bump Standards-Version to 4.1.0.
+  * Update upstream metadata
+  * Release to sid
+
+ -- Maximiliano Curia <maxy@debian.org>  Sun, 03 Sep 2017 09:58:56 +0200
+
+kwayland (4:5.37.0-1) experimental; urgency=medium
+
+  * New upstream release (5.37.0).
+  * Update build-deps and deps with the info from cmake
+  * Update symbols files.
+  * Add a libkf5wayland-doc package for the qch files
+  * Bump Standards-Version to 4.0.1.
+  * Set Priority to optional
+  * Set section for the doc package
+  * Release to experimental
+
+ -- Maximiliano Curia <maxy@debian.org>  Wed, 16 Aug 2017 10:42:18 +0200
+
+kwayland (4:5.37.0-0neon) xenial; urgency=medium
+
+  * New release
+
+ -- Neon CI <neon@kde.org>  Fri, 11 Aug 2017 15:16:35 +0000
+
+kwayland (4:5.36.0-1) experimental; urgency=medium
+
+  [ Maximiliano Curia ]
+  * New upstream release (5.35.0).
+  * Bump Standards-Version to 4.0.0.
+  * Update build-deps and deps with the info from cmake
+  * Update symbols files.
+  * Add qtwayland5 test dependency
+  * watch: Use https uris
+  * New upstream release (5.36.0).
+  * Update build-deps and deps with the info from cmake
+
+  [ Raymond Wooninck ]
+  * Add signing key
+  * also include signing-key
+
+  [ Harald Sitter ]
+  * bring back xvfb-run wrapping
+
+ -- Maximiliano Curia <maxy@debian.org>  Sun, 09 Jul 2017 23:41:22 +0200
+
+kwayland (4:5.36.0-0neon) xenial; urgency=medium
+
+  * New release
+
+ -- Neon CI <neon@kde.org>  Mon, 10 Jul 2017 17:14:00 +0000
+
+kwayland (4:5.35.0-0neon) xenial; urgency=medium
+
+  * New release
+
+ -- Neon CI <neon@kde.org>  Sun, 11 Jun 2017 20:38:04 +0000
+
+kwayland (4:5.34.0-0neon) xenial; urgency=medium
+
+  * New release
+
+ -- Neon CI <neon@kde.org>  Sun, 14 May 2017 17:41:06 +0000
+
+kwayland (4:5.33.0-0neon) xenial; urgency=medium
+
+  * New release
+
+ -- Neon CI <neon@kde.org>  Fri, 07 Apr 2017 16:25:43 +0000
+
+kwayland (4:5.32.0-0neon) xenial; urgency=medium
+
+  * New release
+
+ -- Neon CI <neon@kde.org>  Sun, 12 Mar 2017 13:23:39 +0000
+
+kwayland (4:5.31.0-0neon) xenial; urgency=medium
+
+  * New release
+
+ -- Neon CI <neon@kde.org>  Mon, 13 Feb 2017 14:41:11 +0000
+
+kwayland (4:5.30.0-0neon) xenial; urgency=medium
+
+  * New release
+
+ -- Neon CI <neon@kde.org>  Mon, 16 Jan 2017 13:43:02 +0000
+
+kwayland (4:5.29.0-0neon) xenial; urgency=medium
+
+  * New release
+
+ -- Neon CI <neon@kde.org>  Fri, 09 Dec 2016 19:09:26 +0000
+
+kwayland (4:5.28.0-1) unstable; urgency=medium
+
+  [ Automatic packaging ]
+  * Update build-deps and deps with the info from cmake
+  * Update symbols files from buildds logs (4:5.27.0-1).
+  * Update symbols files.
+
+  [ Maximiliano Curia ]
+  * New upstream release (5.28)
+
+ -- Maximiliano Curia <maxy@debian.org>  Fri, 18 Nov 2016 16:02:26 +0100
+
+kwayland (4:5.28.0-0neon) xenial; urgency=medium
+
+  * New release
+
+ -- Neon CI <neon@kde.org>  Thu, 17 Nov 2016 09:46:36 +0000
+
+kwayland (4:5.27.0-1) unstable; urgency=medium
+
+  [ Automatic packaging ]
+  * Update build-deps and deps with the info from cmake
+
+  [ Maximiliano Curia ]
+  * New upstream release (5.27)
+
+ -- Maximiliano Curia <maxy@debian.org>  Sat, 15 Oct 2016 16:56:38 +0200
+
+kwayland (4:5.27.0-0neon) xenial; urgency=medium
+
+  * New release
+
+ -- Neon CI <neon@kde.org>  Sat, 08 Oct 2016 11:33:15 +0000
+
+kwayland (4:5.26.0-1) unstable; urgency=medium
+
+  [ Automatic packaging ]
+  * Update build-deps and deps with the info from cmake
+
+ -- Maximiliano Curia <maxy@debian.org>  Thu, 29 Sep 2016 11:56:48 +0200
+
+kwayland (4:5.26.0-0neon) xenial; urgency=medium
+
+  * New release
+
+ -- Neon CI <neon@kde.org>  Mon, 12 Sep 2016 08:34:10 +0000
+
+kwayland (4:5.25.0-1) unstable; urgency=medium
+
+  [ Harald Sitter ]
+  * Rename -dev package to align with the cmake package name for
+    greater discoverability and consistency across frameworks.
+    Add a transitional package to help with the name transition.
+
+  [ Automatic packaging ]
+  * Update build-deps and deps with the info from cmake
+  * Update symbols files
+
+ -- Maximiliano Curia <maxy@debian.org>  Thu, 18 Aug 2016 17:19:51 +0200
+
+kwayland (4:5.25.0-0neon) xenial; urgency=medium
+
+  * New release
+
+ -- Neon CI <neon@kde.org>  Sat, 13 Aug 2016 20:16:39 +0000
+
+kwayland (4:5.24.0-0neon) xenial; urgency=medium
+
+  * New release
+
+ -- Neon CI <neon@kde.org>  Mon, 11 Jul 2016 07:42:50 +0000
+
+kwayland (4:5.23.0-1) unstable; urgency=medium
+
+  [ Automatic packaging ]
+  * Update build-deps and deps with the info from cmake
+  * Update symbols files
+
+  [ Maximiliano Curia ]
+  * Install kwayland testserver
+  * Add shlibs depends for the org-kde-kf5-kwayland-testserver libexec
+
+ -- Maximiliano Curia <maxy@debian.org>  Sat, 18 Jun 2016 08:23:08 +0200
+
+kwayland (4:5.23.0-0neon) xenial; urgency=medium
+
+  * New release
+
+ -- Neon CI <neon@kde.org>  Mon, 13 Jun 2016 09:40:40 +0000
+
+kwayland (4:5.22.0-1) unstable; urgency=medium
+
+  [ Maximiliano Curia ]
+  * Update Vcs uris
+
+  [ Automatic packaging ]
+  * Update watch file
+  * Update build-deps and deps with the info from cmake
+  * Update symbols files.
+
+ -- Maximiliano Curia <maxy@debian.org>  Wed, 18 May 2016 20:10:31 +0200
+
+kwayland (4:5.22.0-0neon) xenial; urgency=medium
+
+  * New release
+
+ -- Neon CI <neon@kde.org>  Tue, 17 May 2016 07:37:54 +0000
+
+kwayland (4:5.6.4-0neon) xenial; urgency=medium
+
+  * New release
+
+ -- Neon CI <neon@kde.org>  Wed, 11 May 2016 09:42:28 +0000
+
+kwayland (4:5.6.3-1) experimental; urgency=medium
+
+  [ Automatic packaging ]
+  * Update symbols files from buildds logs (4:5.5.4-1).
+  * Update symbols files
+  * Bump Standards-Version to 3.9.8
+
+  [ Maximiliano Curia ]
+  * uscan no longer supports this kind of watch files.
+  * New upstream release (5.5.5).
+  * Update symbols files from buildds logs (4:5.5.4-1).
+  * Automatic update with ddeb_migration3.py
+  * Add upstream metadata (DEP-12)
+  * debian/control: Update Vcs-Browser and Vcs-Git fields
+  * Update testsuite
+
+ -- Maximiliano Curia <maxy@debian.org>  Fri, 06 May 2016 20:22:53 +0200
+
+kwayland (4:5.6.3-0neon) xenial; urgency=medium
+
+  * New release
+
+ -- Neon CI <neon@kde.org>  Tue, 19 Apr 2016 16:56:24 +0000
+
+kwayland (4:5.6.2-0neon) xenial; urgency=medium
+
+  * New release
+
+ -- Neon CI <neon@kde.org>  Fri, 08 Apr 2016 11:44:29 +0000
+
+kwayland (4:5.5.4-1) experimental; urgency=medium
+
+  * New upstream release (5.5.0).
+  * New upstream release (5.5.1).
+  * New upstream release (5.5.2).
+  * New upstream release (5.5.3).
+  * New upstream release (5.5.4).
+
+ -- Maximiliano Curia <maxy@debian.org>  Wed, 27 Jan 2016 16:48:51 +0100
+
+kwayland (4:5.4.3-0ubuntu1) xenial; urgency=medium
+
+  [ Scarlett Clark ]
+  * Vivid backport
+  * New upstream bugfix release
+
+  [ Philip Muškovac ]
+  * New upstream bugfix release (LP: #1518598)
+
+ -- Philip Muškovac <yofel@kubuntu.org>  Sun, 22 Nov 2015 16:33:34 +0100
+
+kwayland (4:5.4.3-1) unstable; urgency=medium
+
+  * New upstream release (5.4.3).
+
+ -- Maximiliano Curia <maxy@debian.org>  Tue, 01 Dec 2015 11:45:43 +0100
+
+kwayland (4:5.4.2-0ubuntu2) xenial; urgency=medium
+
+  * Fix autopackagetests by adding allow-stderr to the requirements.
+
+ -- Philip Muškovac <yofel@kubuntu.org>  Tue, 03 Nov 2015 15:34:49 +0100
+
+kwayland (4:5.4.2-1) unstable; urgency=medium
+
+  * New upstream release (5.4.2).
+  * Update symbols files from buildds logs (4:5.4.1-1).
+
+ -- Maximiliano Curia <maxy@debian.org>  Tue, 06 Oct 2015 07:51:55 +0200
+
+kwayland (4:5.4.2-0ubuntu1) wily; urgency=medium
+
+  * New upstream release
+
+ -- Scarlett Clark <sgclark@kubuntu.org>  Fri, 02 Oct 2015 15:56:12 +0100
+
+kwayland (4:5.4.1-1) unstable; urgency=medium
+
+  * New upstream release (5.4.1).
+
+ -- Maximiliano Curia <maxy@debian.org>  Fri, 11 Sep 2015 18:45:00 +0200
+
+kwayland (4:5.4.1-0ubuntu1) wily; urgency=medium
+
+  * new upstream release
+
+ -- Jonathan Riddell <jriddell@ubuntu.com>  Tue, 08 Sep 2015 10:18:04 +0100
+
+kwayland (4:5.4.0-1) unstable; urgency=medium
+
+  * New upstream release (5.4.0).
+  * Update symbols files.
+
+ -- Maximiliano Curia <maxy@debian.org>  Fri, 04 Sep 2015 10:45:27 +0200
+
+kwayland (4:5.4.0-0ubuntu1) wily; urgency=medium
+
+  * new upstream release
+
+ -- Jonathan Riddell <jriddell@ubuntu.com>  Mon, 31 Aug 2015 15:51:53 +0100
+
+kwayland (4:5.3.95-0ubuntu1) wily; urgency=medium
+
+  * new upstream beta release
+
+ -- Jonathan Riddell <jriddell@ubuntu.com>  Mon, 10 Aug 2015 23:15:54 +0200
+
+kwayland (4:5.3.2-1ubuntu3) wily; urgency=medium
+
+  * Non-maintainer upload.
+  * Update symbols files: mark as optional the symbols gone after
+    building with GCC 5
+
+ -- José Manuel Santamaría Lema <panfaust@gmail.com>  Wed, 22 Jul 2015 19:48:10 +0200
+
+kwayland (4:5.3.2-1ubuntu2) wily; urgency=medium
+
+  * Add kubuntu_disable-tests.diff to disable failing tests
+
+ -- Jonathan Riddell <jriddell@ubuntu.com>  Mon, 13 Jul 2015 16:32:21 +0200
+
+kwayland (4:5.3.2-1ubuntu1) wily; urgency=medium
+
+  * Enable weston in debian/tests/control
+
+ -- Jonathan Riddell <jriddell@ubuntu.com>  Mon, 13 Jul 2015 14:07:42 +0200
+
+kwayland (4:5.3.2-2) unstable; urgency=medium
+
+  * Team upload.
+
+  [ Martin Steigerwald ]
+  * Updated symbol files to fix FTBFS.
+
+ -- Lisandro Damián Nicanor Pérez Meyer <lisandro@debian.org>  Tue, 18 Aug 2015 19:59:54 -0300
+
+kwayland (4:5.3.2-1) unstable; urgency=medium
+
+  * New upstream release (5.3.2).
+  * Update symbols files.
+
+ -- Maximiliano Curia <maxy@debian.org>  Tue, 30 Jun 2015 22:34:50 +0200
+
+kwayland (4:5.3.1-1) unstable; urgency=medium
+
+  * New upstream release (5.3.0).
+  * New upstream release (5.3.1).
+
+ -- Maximiliano Curia <maxy@debian.org>  Tue, 30 Jun 2015 10:53:37 +0200
+
+kwayland (4:5.3.1-0ubuntu1) wily; urgency=medium
+
+  [ Jonathan Riddell ]
+  * Plasma 5.3 beta
+  * new upstream release
+
+  [ Scarlett Clark ]
+  * Vivid backport
+
+  [ Jonathan Riddell ]
+  * New upstream release
+
+ -- Jonathan Riddell <jriddell@ubuntu.com>  Fri, 05 Jun 2015 02:33:14 +0200
+
+kwayland (4:5.2.2-1) experimental; urgency=medium
+
+  * New upstream release (5.2.1).
+  * New upstream release (5.2.2).
+
+ -- Maximiliano Curia <maxy@debian.org>  Wed, 25 Mar 2015 23:17:23 +0100
+
+kwayland (4:5.2.2-0ubuntu1) vivid; urgency=medium
+
+  * New upstream release
+
+ -- Scarlett Clark <sgclark@kubuntu.org>  Tue, 24 Mar 2015 07:32:32 -0700
+
+kwayland (4:5.2.1-0ubuntu1) vivid; urgency=medium
+
+  * New upstream release
+
+ -- Scarlett Clark <sgclark@kubuntu.org>  Mon, 23 Feb 2015 09:41:56 -0800
+
+kwayland (4:5.2.0-1) experimental; urgency=medium
+
+  * Prepare initial Debian release.
+  * Update watch file.
+  * Add myself as Uploader.
+  * Update build dependencies to build against experimental and to
+    follow cmake.
+  * Add acc autopkgtests.
+  * Update copyright information.
+  * Update symbols files.
+
+ -- Maximiliano Curia <maxy@debian.org>  Mon, 09 Feb 2015 00:43:37 +0100
+
+kwayland (4:5.2.0-0ubuntu1) vivid; urgency=medium
+
+  * New upstream release
+
+ -- Harald Sitter <sitter@kde.org>  Tue, 27 Jan 2015 14:54:21 +0100
+
+kwayland (4:5.1.95-0ubuntu1) vivid; urgency=medium
+
+  * New upstream beta release
+
+ -- Jonathan Riddell <jriddell@ubuntu.com>  Thu, 15 Jan 2015 01:31:34 +0100
+
+kwayland (5.1.2-0ubuntu1) vivid; urgency=medium
+
+  * New upstream release
+
+ -- Jonathan Riddell <jriddell@ubuntu.com>  Mon, 05 Jan 2015 19:29:06 +0100
+
+kwayland (5.1.1-0ubuntu1) vivid; urgency=medium
+
+  * New upstream release
+
+ -- Jonathan Riddell <jriddell@ubuntu.com>  Tue, 14 Oct 2014 13:48:52 +0200

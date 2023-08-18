@@ -1,0 +1,8 @@
+usr/include/KF5/KWayland/
+usr/lib/*/cmake/KF5Wayland/
+usr/lib/*/libKF5WaylandClient.so
+usr/lib/*/libKF5WaylandServer.so
+usr/lib/*/libexec/org-kde-kf5-kwayland-testserver
+usr/lib/*/pkgconfig/KF5WaylandClient.pc
+usr/lib/*/qt5/mkspecs/modules/qt_KWaylandClient.pri
+usr/lib/*/qt5/mkspecs/modules/qt_KWaylandServer.pri
