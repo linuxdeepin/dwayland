@@ -312,7 +312,7 @@ else()
 endif()
 
 target_include_directories(KF5WaylandClient
-    INTERFACE "$<INSTALL_INTERFACE:${KDE_INSTALL_INCLUDEDIR_KF}/KWayland>"
+    INTERFACE "$<INSTALL_INTERFACE:${KDE_INSTALL_INCLUDEDIR_KF}/KWayland;${KDE_INSTALL_INCLUDEDIR_KF}/KWayland/Client>"
 )
 
 target_link_libraries(KF5WaylandClient
@@ -401,7 +401,7 @@ set(CLIENT_LIB_HEADERS
 
 install(FILES
   ${CLIENT_LIB_HEADERS}
-  DESTINATION ${KDE_INSTALL_INCLUDEDIR_KF}/KWayland/KWayland/Client COMPONENT Devel
+  DESTINATION ${KDE_INSTALL_INCLUDEDIR_KF}/KWayland/Client COMPONENT Devel
 )
 
 # make available to ecm_add_qch in parent folder
@@ -409,6 +409,6 @@ set(KWaylandClient_APIDOX_SRCS ${CLIENT_LIB_HEADERS} PARENT_SCOPE)
 set(KWaylandClient_APIDOX_BUILD_INCLUDE_DIRS ${CMAKE_CURRENT_BINARY_DIR} PARENT_SCOPE)
 
 include(ECMGeneratePriFile)
-ecm_generate_pri_file(BASE_NAME KWaylandClient LIB_NAME KF5WaylandClient DEPS "core" FILENAME_VAR PRI_FILENAME INCLUDE_INSTALL_DIR ${KDE_INSTALL_INCLUDEDIR_KF}/KWayland)
+ecm_generate_pri_file(BASE_NAME KWaylandClient LIB_NAME KF5WaylandClient DEPS "core" FILENAME_VAR PRI_FILENAME INCLUDE_INSTALL_DIR ${KDE_INSTALL_INCLUDEDIR_KF})
 install(FILES ${PRI_FILENAME}
         DESTINATION ${ECM_MKSPECS_INSTALL_DIR})
