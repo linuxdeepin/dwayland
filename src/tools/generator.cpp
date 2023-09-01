@@ -69,28 +69,28 @@ Argument::~Argument() = default;
 
 Argument::Type Argument::parseType(const QStringView type)
 {
-    if (type.compare(QLatin1String("new_id")) == 0) {
+    if (type.toString().compare(QLatin1String("new_id")) == 0) {
         return Type::NewId;
     }
-    if (type.compare(QLatin1String("destructor")) == 0) {
+    if (type.toString().compare(QLatin1String("destructor")) == 0) {
         return Type::Destructor;
     }
-    if (type.compare(QLatin1String("object")) == 0) {
+    if (type.toString().compare(QLatin1String("object")) == 0) {
         return Type::Object;
     }
-    if (type.compare(QLatin1String("fd")) == 0) {
+    if (type.toString().compare(QLatin1String("fd")) == 0) {
         return Type::FileDescriptor;
     }
-    if (type.compare(QLatin1String("fixed")) == 0) {
+    if (type.toString().compare(QLatin1String("fixed")) == 0) {
         return Type::Fixed;
     }
-    if (type.compare(QLatin1String("uint")) == 0) {
+    if (type.toString().compare(QLatin1String("uint")) == 0) {
         return Type::Uint;
     }
-    if (type.compare(QLatin1String("int")) == 0) {
+    if (type.toString().compare(QLatin1String("int")) == 0) {
         return Type::Int;
     }
-    if (type.compare(QLatin1String("string")) == 0) {
+    if (type.toString().compare(QLatin1String("string")) == 0) {
         return Type::String;
     }
 

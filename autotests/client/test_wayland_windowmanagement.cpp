@@ -629,7 +629,7 @@ void TestWindowManagement::testIcon()
     QCOMPARE(iconChangedSpy.count(), 3);
 
     auto clientImage = p.toImage();
-    clientImage.convertTo(p.toImage().format());
+    clientImage = clientImage.convertToFormat(p.toImage().format());
     QCOMPARE(clientImage, p.toImage());
 
     // let's set a themed icon
