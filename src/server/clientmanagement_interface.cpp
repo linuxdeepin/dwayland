@@ -45,7 +45,6 @@ public:
 
     void updateWindowStates();
     void sendWindowStates(wl_resource *resource);
-    void sendWindowCaption(int windowId, bool succeed, wl_resource *buffer);
 
     WindowState m_windowStates[MAX_WINDOWS];
     uint32_t m_windowCount;
@@ -56,14 +55,12 @@ public:
 private:
     void bind(wl_client *client, uint32_t version, uint32_t id) override;
     void getWindowStates();
-    void captureWindowImage(int windowId, wl_resource *buffer);
     static void unbind(wl_resource *resource);
     static Private *cast(wl_resource *r) {
         return reinterpret_cast<Private*>(wl_resource_get_user_data(r));
     }
 
     static void getWindowStatesCallback(wl_client *client, wl_resource *resource);
-    static void captureWindowImageCallback(wl_client *client, wl_resource *resource, int window_id, wl_resource *buffer);
 
     static const quint32 s_version;
     ClientManagementInterface *q;
@@ -81,7 +78,6 @@ ClientManagementInterface::Private::Private(ClientManagementInterface *q, Displa
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 const struct com_deepin_client_management_interface ClientManagementInterface::Private::s_interface = {
     getWindowStatesCallback,
-    captureWindowImageCallback
 };
 #endif
 
@@ -125,43 +121,6 @@ void ClientManagementInterface::setWindowStates(QList<WindowState*> &windowState
     Q_EMIT windowStatesChanged();
 }
 
-void ClientManagementInterface::sendWindowCaptionImage(int windowId, wl_resource *buffer, QImage image)
-{
-    Q_D();
-    bool succeed = false;
-    wl_shm_buffer *shm_buffer = wl_shm_buffer_get(buffer);
-    if (shm_buffer && !image.isNull()) {
-        wl_shm_buffer_begin_access(shm_buffer);
-        void *data = wl_shm_buffer_get_data(shm_buffer);
-        if (data) {
-            succeed = true;
-            memcpy(data, image.bits(), image.sizeInBytes());
-        }
-        wl_shm_buffer_end_access(shm_buffer);
-    }
-    d->sendWindowCaption(windowId, succeed, buffer);
-}
-
-void ClientManagementInterface::sendWindowCaption(int windowId, wl_resource *buffer, SurfaceInterface* surface) {
-    Q_D();
-    if (!surface || !surface->buffer()) {
-        d->sendWindowCaption(windowId, false, buffer);
-        return;
-    }
-    bool succeed = false;
-    wl_shm_buffer *shm_buffer = wl_shm_buffer_get(buffer);
-    if (shm_buffer) {
-        QImage image = surface->buffer()->data();
-        void *data = wl_shm_buffer_get_data(shm_buffer);
-        if (!image.isNull())
-        {
-            memcpy(data, image.bits(), image.sizeInBytes());
-            succeed = true;
-        }
-    }
-    d->sendWindowCaption(windowId, succeed, buffer);
-}
-
 void ClientManagementInterface::Private::bind(wl_client *client, uint32_t version, uint32_t id)
 {
     auto c = display->getConnection(client);
@@ -197,22 +156,9 @@ void ClientManagementInterface::Private::getWindowStatesCallback(wl_client *clie
     p->getWindowStates();
 }
 
-void ClientManagementInterface::Private::captureWindowImageCallback(wl_client *client, wl_resource *resource, int windowId, wl_resource *buffer)
-{
-    Q_UNUSED(client)
-    Private *p = cast(resource);
-    p->captureWindowImage(windowId, buffer);
-}
-
 void ClientManagementInterface::Private::getWindowStates()
 {
     Q_EMIT q->windowStatesRequest();
-}
-
-void ClientManagementInterface::Private::captureWindowImage(int windowId, wl_resource *buffer)
-{
-    qWarning() << __func__ << ":" << __LINE__ << "ut-gfx-capture: windowId " << windowId;
-    Q_EMIT q->captureWindowImageRequest(windowId, buffer);
 }
 
 void ClientManagementInterface::Private::sendWindowStates(wl_resource *resource)
@@ -233,14 +179,6 @@ void ClientManagementInterface::Private::updateWindowStates()
 {
     for (auto it = resources.constBegin(); it != resources.constEnd(); ++it) {
         sendWindowStates((*it).resource);
-    }
-}
-
-void ClientManagementInterface::Private::sendWindowCaption(int windowId, bool succeed, wl_resource *buffer)
-{
-    for (auto it = resources.constBegin(); it != resources.constEnd(); ++it) {
-        qWarning() << __func__ << ":" << __LINE__ << "ut-gfx-capture-sendWindowCaption: windowId " << windowId << " resource" << (*it).resource;
-        com_deepin_client_management_send_capture_callback((*it).resource, windowId, succeed, buffer);
     }
 }
 

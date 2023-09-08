@@ -131,8 +131,6 @@ public:
 
     const QVector <ClientManagement::WindowState> &getWindowStates() const;
 
-    void getWindowCaption(int windowId, wl_buffer* buffer);
-
 Q_SIGNALS:
     /**
      * Emitted whenever window State changed.
@@ -147,8 +145,6 @@ Q_SIGNALS:
      * @since 5.5
      **/
     void removed();
-
-    void captionWindowDone(int windowId, bool succeed);
 
 private:
     class Private;

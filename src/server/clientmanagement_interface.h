@@ -69,14 +69,9 @@ public:
     static ClientManagementInterface *get(wl_resource *native);
     void setWindowStates(QList<WindowState*> &windowStates);
 
-    void sendWindowCaptionImage(int windowId, wl_resource *buffer, QImage image);
-    void sendWindowCaption(int windowId, wl_resource *buffer, SurfaceInterface* surface);
-
 Q_SIGNALS:
     void windowStatesRequest();
     void windowStatesChanged();
-
-    void captureWindowImageRequest(int windowId, wl_resource *buffer);
 
 private:
     friend class Display;
