@@ -1,3 +1,10 @@
+kwayland (4:5.102.0.7-deepin7-1) unstable; urgency=medium
+
+  [ jccKevin ]
+  * use remote access version 2
+
+ -- jccKevin <luochaojiang@uniontech.com>  Fri, 15 Sep 2023 17:02:41 +0800
+
 kwayland (4:5.102.0.6-deepin6) unstable; urgency=medium
 
   * Bug fix:
