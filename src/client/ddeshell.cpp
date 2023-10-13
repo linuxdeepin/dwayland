@@ -73,7 +73,7 @@ public:
     bool acceptFocus = true;
     bool modality = false;
     bool onAllDesktops = false;
-    int splitable = 0;
+    bool splitable = false;
 
     static DDEShellSurface *get(wl_surface *surface);
     static DDEShellSurface *get(Surface *surface);
@@ -81,6 +81,7 @@ public:
 private:
     static void geometryCallback(void *data, dde_shell_surface *dde_shell_surface, int32_t x, int32_t y, uint32_t width, uint32_t height);
     static void stateChangedCallback(void *data, dde_shell_surface *dde_shell_surface, uint32_t state);
+    static void splitableCallback(void *data, dde_shell_surface *dde_shell_surface, uint32_t splitable);
     void setActive(bool set);
     void setMinimized(bool set);
     void setMaximized(bool set);
@@ -273,15 +274,6 @@ void DDEShellSurface::Private::stateChangedCallback(void *data, dde_shell_surfac
     p->setResizable(state & DDE_SHELL_STATE_RESIZABLE);
     p->setAcceptFocus(state * DDE_SHELL_STATE_ACCEPT_FOCUS);
     p->setModal(state & DDE_SHELL_STATE_MODALITY);
-    if (state & DDE_SHELL_STATE_TWO_SPLIT) {
-        p->splitable = 1;
-    }
-    if (state & DDE_SHELL_STATE_FOUR_SPLIT) {
-        p->splitable = 2;
-    }
-    if (state & DDE_SHELL_STATE_NO_SPLIT) {
-        p->splitable = 0;
-    }
 }
 
 void DDEShellSurface::Private::geometryCallback(void *data, dde_shell_surface *ddeShellSurface, int32_t x, int32_t y, uint32_t width, uint32_t height)
@@ -296,9 +288,18 @@ void DDEShellSurface::Private::geometryCallback(void *data, dde_shell_surface *d
     Q_EMIT p->q->geometryChanged(geo);
 }
 
+void DDEShellSurface::Private::splitableCallback(void *data, dde_shell_surface *ddeShellSurface, uint32_t splitable)
+{
+    Q_UNUSED(ddeShellSurface)
+    Private *p = cast(data);
+
+    p->splitable = splitable;
+}
+
 const dde_shell_surface_listener DDEShellSurface::Private::s_listener = {
     geometryCallback,
     stateChangedCallback,
+    splitableCallback,
 };
 
 void DDEShellSurface::Private::setActive(bool set)
@@ -721,11 +722,6 @@ QRect DDEShellSurface::getGeometry() const
     return d->geometry;
 }
 
-int DDEShellSurface::getSplitable() const
-{
-    return d->splitable;
-}
-
 void DDEShellSurface::requestNoTitleBarProperty(qint32 value)
 {
     struct wl_array arr;
@@ -753,18 +749,18 @@ void DDEShellSurface::requestWindowRadiusProperty(QPointF windowRadius)
     wl_array_release(&arr);
 }
 
-void DDEShellSurface::requestSplitWindow(DDEShellSurface::SplitType splitType, DDEShellSurface::SplitMode mode)
+void DDEShellSurface::requestSplitWindow(DDEShellSurface::SplitType splitType)
 {
-    struct wl_array arr;
-    int *arr_data = nullptr;
-    wl_array_init(&arr);
-    arr_data = static_cast<int *>(wl_array_add(&arr, sizeof(int)*2));
-    arr_data[0] = (int)splitType;
-    arr_data[1] = (int)mode;
-    dde_shell_surface_set_property(d->ddeShellSurface,
-                                   DDE_SHELL_PROPERTY_QUICKTILE,
-                                   &arr);
-    wl_array_release(&arr);
+    switch (splitType) {
+    case SplitType::leftSplit:
+        dde_shell_surface_request_split_window(d->ddeShellSurface, DDE_SHELL_SPLIT_TYPE_LEFT_SPLIT);
+        break;
+    case SplitType::rightSplit:
+        dde_shell_surface_request_split_window(d->ddeShellSurface, DDE_SHELL_SPLIT_TYPE_RIGHT_SPLIT);
+        break;
+    default:
+        break;
+    }
 }
 
 }
