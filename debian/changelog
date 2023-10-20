@@ -1,3 +1,10 @@
+kwayland (4:5.102.0.8-deepin8-1) unstable; urgency=medium
+
+  [ huangzeming ]
+  * Fix dtk split menu protocol
+
+ -- huangzeming <huangzeming@uniontech.com>  Fri, 20 Oct 2023 15:38:36 +0800
+
 kwayland (4:5.102.0.7-deepin7-1) unstable; urgency=medium
 
   [ jccKevin ]
