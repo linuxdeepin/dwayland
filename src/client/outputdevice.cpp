@@ -51,6 +51,12 @@ public:
     uint32_t overscan = 0;
     VrrPolicy vrrPolicy = VrrPolicy::Automatic;
 
+    int brightness = -1;
+    CtmValue ctmValue = {0};
+
+    uint32_t rgbRange;
+    QString outputName;
+
     bool done = false;
 
 private:
@@ -80,6 +86,10 @@ private:
     static void capabilitiesCallback(void *data, org_kde_kwin_outputdevice *output, uint32_t capabilities);
     static void overscanCallback(void *data, org_kde_kwin_outputdevice *output, uint32_t overscan);
     static void vrrPolicyCallback(void *data, org_kde_kwin_outputdevice *output, uint32_t vrrPolicy);
+    static void brightnessCallback(void *data, org_kde_kwin_outputdevice *output, int brightness);
+    static void ctmCallback(void *data, org_kde_kwin_outputdevice *output, int red, int green, int blue);
+    static void colorRgbRangeCallback(void *data, org_kde_kwin_outputdevice *output, uint32_t rgb_range);
+    static void nameCallback(void *data, org_kde_kwin_outputdevice *output, const char *name);
 
     void setPhysicalSize(const QSize &size);
     void setGlobalPosition(const QPoint &pos);
@@ -123,6 +133,14 @@ bool OutputDevice::ColorCurves::operator!=(const ColorCurves &cc) const
     return !operator==(cc);
 }
 
+bool OutputDevice::CtmValue::operator==(const CtmValue &cc) const
+{
+    return r == cc.r && g == cc.g && b == cc.b;
+}
+bool OutputDevice::CtmValue::operator!=(const CtmValue &cc) const {
+    return !operator==(cc);
+}
+
 OutputDevice::OutputDevice(QObject *parent)
     : QObject(parent)
     , d(new Private(this))
@@ -148,7 +166,11 @@ org_kde_kwin_outputdevice_listener OutputDevice::Private::s_outputListener = {
     eisaIdCallback,
     capabilitiesCallback,
     overscanCallback,
-    vrrPolicyCallback
+    vrrPolicyCallback,
+    brightnessCallback,
+    ctmCallback,
+    colorRgbRangeCallback,
+    nameCallback
 };
 
 void OutputDevice::Private::geometryCallback(void *data,
@@ -420,6 +442,47 @@ void OutputDevice::Private::vrrPolicyCallback(void *data, org_kde_kwin_outputdev
     }
 }
 
+void OutputDevice::Private::brightnessCallback(void *data, org_kde_kwin_outputdevice *output, int b)
+{
+    auto o = reinterpret_cast<OutputDevice::Private*>(data);
+    Q_UNUSED(output);
+    if (o->brightness != b) {
+        o->brightness = b;
+        Q_EMIT o->q->brightnessChanged(b);
+        if (o->done) {
+            Q_EMIT o->q->changed();
+        }
+    }
+}
+
+void OutputDevice::Private::ctmCallback(void *data, org_kde_kwin_outputdevice *output, int r, int g, int b)
+{
+    auto o = reinterpret_cast<OutputDevice::Private*>(data);
+    Q_UNUSED(output);
+    CtmValue ctm = CtmValue{(uint16_t)r, (uint16_t)g, (uint16_t)b};
+    if (o->ctmValue != ctm) {
+        o->ctmValue = ctm;
+        Q_EMIT o->q->ctmChanged();
+        if (o->done) {
+            Q_EMIT o->q->changed();
+        }
+    }
+}
+
+void OutputDevice::Private::colorRgbRangeCallback(void *data, org_kde_kwin_outputdevice *output, uint32_t rgb_range)
+{
+    auto o = reinterpret_cast<OutputDevice::Private *>(data);
+    Q_UNUSED(output);
+    o->rgbRange = rgb_range;
+}
+
+void OutputDevice::Private::nameCallback(void *data, org_kde_kwin_outputdevice *output, const char *name)
+{
+    auto o = reinterpret_cast<OutputDevice::Private *>(data);
+    Q_UNUSED(output);
+    o->outputName = name;
+}
+
 void OutputDevice::setup(org_kde_kwin_outputdevice *output)
 {
     d->setup(output);
@@ -614,6 +677,26 @@ uint32_t OutputDevice::overscan() const
 OutputDevice::VrrPolicy OutputDevice::vrrPolicy() const
 {
     return d->vrrPolicy;
+}
+
+int OutputDevice::brightness() const
+{
+    return d->brightness;
+}
+
+OutputDevice::CtmValue OutputDevice::ctmValue() const
+{
+    return d->ctmValue;
+}
+
+uint32_t OutputDevice::rgbRange() const
+{
+    return d->rgbRange;
+}
+
+QString OutputDevice::outputName() const
+{
+    return d->outputName;
 }
 
 void OutputDevice::destroy()

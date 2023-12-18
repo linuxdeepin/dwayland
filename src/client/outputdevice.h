@@ -132,6 +132,13 @@ public:
         Always = 1,
         Automatic = 2
     };
+    struct CtmValue {
+        uint16_t r = 0;
+        uint16_t g = 0;
+        uint16_t b = 0;
+        bool operator==(const CtmValue &cv) const;
+        bool operator!=(const CtmValue &cv) const;
+    };
 
     explicit OutputDevice(QObject *parent = nullptr);
     ~OutputDevice() override;
@@ -280,6 +287,26 @@ public:
     VrrPolicy vrrPolicy() const;
 
     /**
+     * @returns the brightness on this output
+    */
+    int brightness() const;
+
+    /**
+     * @returns the ctm on this output
+    */
+    CtmValue ctmValue() const;
+
+    /**
+     * @returns the rgb range on this output
+    */
+    uint32_t rgbRange() const;
+
+    /**
+     * @returns the output name of this output
+    */
+    QString outputName() const;
+
+    /**
      * Destroys the data hold by this OutputDevice.
      * This method is supposed to be used when the connection to the Wayland
      * server goes away. If the connection is not valid any more, it's not
@@ -347,6 +374,14 @@ Q_SIGNALS:
      **/
     void vrrPolicyChanged(VrrPolicy vrrPolicy);
     /**
+     * Emitted whenever the brightness changed
+    */
+    void brightnessChanged(int brightness);
+    /**
+     * Emitted whenever the brightness changed
+    */
+    void ctmChanged();
+    /**
      * The corresponding global for this interface on the Registry got removed.
      *
      * This signal gets only emitted if the OutputDevice got created by
@@ -371,5 +406,6 @@ Q_DECLARE_METATYPE(KWayland::Client::OutputDevice::Transform)
 Q_DECLARE_METATYPE(KWayland::Client::OutputDevice::Enablement)
 Q_DECLARE_METATYPE(KWayland::Client::OutputDevice::Mode)
 Q_DECLARE_METATYPE(KWayland::Client::OutputDevice::ColorCurves)
+Q_DECLARE_METATYPE(KWayland::Client::OutputDevice::CtmValue)
 
 #endif
