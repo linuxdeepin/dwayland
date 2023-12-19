@@ -1,3 +1,10 @@
+kwayland (4:5.102.0.9-deepin9-1) unstable; urgency=medium
+
+  [ huangzeming ]
+  * Feat replaced interface GetAllWindowStates with GetAllWindowStatesList
+
+ -- huangzeming <huangzeming@uniontech.com>  Tue, 19 Dec 2023 16:32:04 +0800
+
 kwayland (4:5.102.0.8-deepin8-1) unstable; urgency=medium
 
   [ huangzeming ]
