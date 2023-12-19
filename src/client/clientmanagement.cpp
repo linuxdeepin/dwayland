@@ -47,8 +47,17 @@ public:
     uint m_windowsCount;
     WindowStates m_windowStates;
 
+    uint32_t m_windowFromPoint;
+    QVector<uint32_t> m_allWindowId;
+    WindowState m_specificWindowState;
+
 private:
     static void windowStatesCallback(void *data, com_deepin_client_management *clientManagement, uint32_t count, wl_array *windowStates);
+    static void windowFromPointCallback(void *data, com_deepin_client_management *clientManagement, uint32_t window_id);
+    static void allWindowIdCallback(void *data, com_deepin_client_management *clientManagement, wl_array *id_array);
+    static void specificWindowStateCallback(void *data, com_deepin_client_management *clientManagement, int32_t pid,
+            uint32_t window_id, const char *resource_name, int32_t x, int32_t y, int32_t width, int32_t height,
+            int32_t is_minimized, int32_t is_fullscreen, int32_t is_active, int32_t splitable, const char *uuid);
     void addWindowStates(uint32_t count, wl_array *windowStates);
 
     ClientManagement *q;
@@ -86,7 +95,10 @@ ClientManagement::~ClientManagement()
 }
 
 com_deepin_client_management_listener ClientManagement::Private::s_clientManagementListener = {
-    windowStatesCallback,
+    .window_states = windowStatesCallback,
+    .window_from_point = windowFromPointCallback,
+    .all_window_id = allWindowIdCallback,
+    .specific_window_state = specificWindowStateCallback,
 };
 
 void ClientManagement::Private::addWindowStates(uint32_t count, wl_array *windowStates)
@@ -110,6 +122,52 @@ void ClientManagement::Private::windowStatesCallback(void *data, com_deepin_clie
     Q_UNUSED(clientManagement);
     auto o = reinterpret_cast<ClientManagement::Private*>(data);
     o->addWindowStates(count, windowStates);
+}
+
+void ClientManagement::Private::windowFromPointCallback(void *data, com_deepin_client_management *clientManagement, uint32_t window_id)
+{
+    Q_UNUSED(clientManagement);
+    auto o = reinterpret_cast<ClientManagement::Private*>(data);
+    o->m_windowFromPoint = window_id;
+}
+
+void ClientManagement::Private::allWindowIdCallback(void *data, com_deepin_client_management *clientManagement, wl_array *id_array)
+{
+    Q_UNUSED(clientManagement);
+    auto o = reinterpret_cast<ClientManagement::Private*>(data);
+    if (0 < id_array->size && (0 == (id_array->size % sizeof(ClientManagement::WindowState)))) {
+        o->m_allWindowId.clear();
+        o->m_allWindowId.resize(id_array->size / sizeof(ClientManagement::WindowState));
+        memcpy(o->m_allWindowId.data(), id_array->data, id_array->size);
+    } else {
+        qWarning() << Q_FUNC_INFO << "receive wayland event error";
+    }
+}
+
+void ClientManagement::Private::specificWindowStateCallback(void *data, com_deepin_client_management *clientManagement, int32_t pid,
+            uint32_t window_id, const char *resource_name, int32_t x, int32_t y, int32_t width, int32_t height,
+            int32_t is_minimized, int32_t is_fullscreen, int32_t is_active, int32_t splitable, const char *uuid)
+{
+    Q_UNUSED(clientManagement);
+    auto o = reinterpret_cast<ClientManagement::Private*>(data);
+    o->m_specificWindowState = {
+        .pid = pid,
+        .windowId = static_cast<int32_t>(window_id),
+        .resourceName = {0},
+        .geometry = {
+            .x = x,
+            .y = y,
+            .width = width,
+            .height = height
+        },
+        .isMinimized = static_cast<bool>(is_minimized),
+        .isFullScreen = static_cast<bool>(is_fullscreen),
+        .isActive = static_cast<bool>(is_active)
+    };
+    int length = strlen(resource_name);
+    std::copy_n(resource_name,
+            std::min(static_cast<int>(sizeof(o->m_specificWindowState.resourceName) - 1), length),
+            o->m_specificWindowState.resourceName);
 }
 
 void ClientManagement::setup(com_deepin_client_management *clientManagement)
