@@ -449,9 +449,6 @@ void OutputDevice::Private::brightnessCallback(void *data, org_kde_kwin_outputde
     if (o->brightness != b) {
         o->brightness = b;
         Q_EMIT o->q->brightnessChanged(b);
-        if (o->done) {
-            Q_EMIT o->q->changed();
-        }
     }
 }
 
@@ -463,9 +460,6 @@ void OutputDevice::Private::ctmCallback(void *data, org_kde_kwin_outputdevice *o
     if (o->ctmValue != ctm) {
         o->ctmValue = ctm;
         Q_EMIT o->q->ctmChanged();
-        if (o->done) {
-            Q_EMIT o->q->changed();
-        }
     }
 }
 
