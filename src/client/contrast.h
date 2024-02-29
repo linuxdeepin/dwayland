@@ -14,7 +14,7 @@
 #include <QSize>
 #include <QColor>
 
-#include "KWayland/Client/kwaylandclient_export.h"
+#include "DWayland/Client/kwaylandclient_export.h"
 
 struct org_kde_kwin_contrast;
 struct org_kde_kwin_contrast_manager;
@@ -31,7 +31,7 @@ class Region;
 /**
  * TODO
  */
-class KWAYLANDCLIENT_EXPORT ContrastManager : public QObject
+class DWAYLANDCLIENT_EXPORT ContrastManager : public QObject
 {
     Q_OBJECT
 public:
@@ -127,7 +127,7 @@ private:
  *
  * @see ContrastManager
  **/
-class KWAYLANDCLIENT_EXPORT Contrast : public QObject
+class DWAYLANDCLIENT_EXPORT Contrast : public QObject
 {
     Q_OBJECT
 public:

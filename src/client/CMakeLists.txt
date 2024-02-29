@@ -82,11 +82,11 @@ set(CLIENT_LIB_SRCS
 ecm_qt_declare_logging_category(CLIENT_LIB_SRCS
     HEADER logging.h
     IDENTIFIER KWAYLAND_CLIENT
-    CATEGORY_NAME kf.wayland.client
-    OLD_CATEGORY_NAMES kwayland-client
+    CATEGORY_NAME dwayland.client
+    OLD_CATEGORY_NAMES dwayland-client
     DEFAULT_SEVERITY Critical
-    DESCRIPTION "KWayland Client Library"
-    EXPORT KWAYLAND
+    DESCRIPTION "DWayland Client Library"
+    EXPORT DWAYLAND
 )
 
 ecm_add_wayland_client_protocol(CLIENT_LIB_SRCS
@@ -301,53 +301,54 @@ ecm_add_wayland_client_protocol(CLIENT_LIB_SRCS
 set_source_files_properties(${CLIENT_LIB_SRCS} PROPERTIES
     COMPILE_FLAGS -DQT_NO_KEYWORDS)
 
-add_library(KF5WaylandClient ${CLIENT_LIB_SRCS} surface_p.cpp)
-add_library(KF5::WaylandClient ALIAS KF5WaylandClient)
-ecm_generate_export_header(KF5WaylandClient
+add_library(DWaylandClient ${CLIENT_LIB_SRCS} surface_p.cpp)
+add_library(D::WaylandClient ALIAS DWaylandClient)
+ecm_generate_export_header(DWaylandClient
     BASE_NAME
-        KWaylandClient
+        DWaylandClient
     EXPORT_FILE_NAME
-        KWayland/Client/kwaylandclient_export.h
+        DWayland/Client/kwaylandclient_export.h
     GROUP_BASE_NAME KF
-    VERSION ${KF_VERSION}
+    VERSION ${PROJECT_VERSION}
     DEPRECATED_BASE_VERSION 0
     DEPRECATION_VERSIONS 5.49 5.50 5.52 5.53 5.73 5.82
     EXCLUDE_DEPRECATED_BEFORE_AND_AT ${EXCLUDE_DEPRECATED_BEFORE_AND_AT}
 )
 
 if (HAVE_MEMFD)
-    target_compile_definitions(KF5WaylandClient PRIVATE -DHAVE_MEMFD=1)
+    target_compile_definitions(DWaylandClient PRIVATE -DHAVE_MEMFD=1)
 else()
-    target_compile_definitions(KF5WaylandClient PRIVATE -DHAVE_MEMFD=0)
+    target_compile_definitions(DWaylandClient PRIVATE -DHAVE_MEMFD=0)
 endif()
 
-target_include_directories(KF5WaylandClient
-    INTERFACE "$<INSTALL_INTERFACE:${KDE_INSTALL_INCLUDEDIR_KF}/KWayland;${KDE_INSTALL_INCLUDEDIR_KF}/KWayland/Client>"
+target_include_directories(DWaylandClient
+    INTERFACE "$<INSTALL_INTERFACE:${KDE_INSTALL_INCLUDEDIR}/DWayland;${KDE_INSTALL_INCLUDEDIR}/DWayland/Client>"
 )
 
-target_link_libraries(KF5WaylandClient
+target_link_libraries(DWaylandClient
     PUBLIC Qt${QT_MAJOR_VERSION}::Gui
     PRIVATE Wayland::Client
         Qt${QT_MAJOR_VERSION}::Concurrent
         Qt${QT_MAJOR_VERSION}::WaylandClientPrivate
+        Qt${QT_MAJOR_VERSION}::XkbCommonSupportPrivate
 )
 
 if (QT_MAJOR_VERSION EQUAL "5")
-    target_link_libraries(KF5WaylandClient
+    target_link_libraries(DWaylandClient
         PRIVATE
             PkgConfig::XKBCommon
     )
 endif()
 
-set_target_properties(KF5WaylandClient PROPERTIES VERSION   ${KWAYLAND_VERSION}
+set_target_properties(DWaylandClient PROPERTIES VERSION   ${KWAYLAND_VERSION}
                                                  SOVERSION ${KWAYLAND_SOVERSION}
                                                  EXPORT_NAME WaylandClient
 )
 
-install(TARGETS KF5WaylandClient EXPORT KF5WaylandTargets ${KF_INSTALL_TARGETS_DEFAULT_ARGS})
+install(TARGETS DWaylandClient EXPORT DWaylandTargets ${KF_INSTALL_TARGETS_DEFAULT_ARGS})
 
 set(CLIENT_LIB_HEADERS
-  ${CMAKE_CURRENT_BINARY_DIR}/KWayland/Client/kwaylandclient_export.h
+  ${CMAKE_CURRENT_BINARY_DIR}/DWayland/Client/kwaylandclient_export.h
   appmenu.h
   blur.h
   buffer.h
@@ -410,19 +411,20 @@ set(CLIENT_LIB_HEADERS
   xdgdecoration.h
   xdgshell.h
   xdgforeign.h
+  xdgforeign_v2.h
   xdgoutput.h
 )
 
 install(FILES
   ${CLIENT_LIB_HEADERS}
-  DESTINATION ${KDE_INSTALL_INCLUDEDIR_KF}/KWayland/Client COMPONENT Devel
+  DESTINATION ${KDE_INSTALL_INCLUDEDIR}/DWayland/Client COMPONENT Devel
 )
 
 # make available to ecm_add_qch in parent folder
-set(KWaylandClient_APIDOX_SRCS ${CLIENT_LIB_HEADERS} PARENT_SCOPE)
-set(KWaylandClient_APIDOX_BUILD_INCLUDE_DIRS ${CMAKE_CURRENT_BINARY_DIR} PARENT_SCOPE)
+set(DWaylandClient_APIDOX_SRCS ${CLIENT_LIB_HEADERS} PARENT_SCOPE)
+set(DWaylandClient_APIDOX_BUILD_INCLUDE_DIRS ${CMAKE_CURRENT_BINARY_DIR} PARENT_SCOPE)
 
 include(ECMGeneratePriFile)
-ecm_generate_pri_file(BASE_NAME KWaylandClient LIB_NAME KF5WaylandClient DEPS "core" FILENAME_VAR PRI_FILENAME INCLUDE_INSTALL_DIR ${KDE_INSTALL_INCLUDEDIR_KF})
+ecm_generate_pri_file(BASE_NAME DWaylandClient LIB_NAME DWaylandClient DEPS "core" FILENAME_VAR PRI_FILENAME INCLUDE_INSTALL_DIR ${KDE_INSTALL_INCLUDEDIR})
 install(FILES ${PRI_FILENAME}
         DESTINATION ${ECM_MKSPECS_INSTALL_DIR})

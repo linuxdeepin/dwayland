@@ -6,7 +6,7 @@
 #ifndef WAYLAND_SERVER_KEYBOARD_INTERFACE_H
 #define WAYLAND_SERVER_KEYBOARD_INTERFACE_H
 
-#include <KWayland/Server/kwaylandserver_export.h>
+#include <DWayland/Server/kwaylandserver_export.h>
 
 #include "resource.h"
 
@@ -21,7 +21,7 @@ class SurfaceInterface;
  * @brief Resource for the wl_keyboard interface.
  *
  **/
-class KWAYLANDSERVER_EXPORT KeyboardInterface : public Resource
+class DWAYLANDSERVER_EXPORT KeyboardInterface : public Resource
 {
     Q_OBJECT
 public:

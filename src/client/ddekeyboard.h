@@ -25,7 +25,7 @@ License along with this library.  If not, see <http://www.gnu.org/licenses/>.
 #include <QSize>
 #include <QVector>
 
-#include <KWayland/Client/kwaylandclient_export.h>
+#include <DWayland/Client/kwaylandclient_export.h>
 
 struct dde_seat;
 struct dde_keyboard;
@@ -47,7 +47,7 @@ namespace Client
  *
  * @see DDEKeyboard
  **/
-class KWAYLANDCLIENT_EXPORT DDEKeyboard : public QObject
+class DWAYLANDCLIENT_EXPORT DDEKeyboard : public QObject
 {
     Q_OBJECT
 public:

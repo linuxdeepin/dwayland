@@ -9,7 +9,7 @@
 #include <QObject>
 #include <QSize>
 
-#include "KWayland/Client/kwaylandclient_export.h"
+#include "DWayland/Client/kwaylandclient_export.h"
 
 struct wl_surface;
 struct org_kde_plasma_shell;
@@ -48,7 +48,7 @@ class PlasmaShellSurface;
  * @see Registry
  * @see PlasmaShellSurface
  **/
-class KWAYLANDCLIENT_EXPORT PlasmaShell : public QObject
+class DWAYLANDCLIENT_EXPORT PlasmaShell : public QObject
 {
     Q_OBJECT
 public:
@@ -170,7 +170,7 @@ private:
  * @see PlasmaShell
  * @see Surface
  **/
-class KWAYLANDCLIENT_EXPORT PlasmaShellSurface : public QObject
+class DWAYLANDCLIENT_EXPORT PlasmaShellSurface : public QObject
 {
     Q_OBJECT
 public:

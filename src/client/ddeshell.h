@@ -26,7 +26,7 @@ License along with this library.  If not, see <http://www.gnu.org/licenses/>.
 #include <QRect>
 #include <QVector>
 
-#include <KWayland/Client/kwaylandclient_export.h>
+#include <DWayland/Client/kwaylandclient_export.h>
 
 struct dde_shell;
 struct dde_shell_surface;
@@ -73,7 +73,7 @@ class DDEShellSurface;
  * @see Registry
  * @since 5.5
  **/
-class KWAYLANDCLIENT_EXPORT DDEShell : public QObject
+class DWAYLANDCLIENT_EXPORT DDEShell : public QObject
 {
     Q_OBJECT
 public:
@@ -168,7 +168,7 @@ private:
 };
 
 
-class KWAYLANDCLIENT_EXPORT DDEShellSurface : public QObject
+class DWAYLANDCLIENT_EXPORT DDEShellSurface : public QObject
 {
     Q_OBJECT
 public:

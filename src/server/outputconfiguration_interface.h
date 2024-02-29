@@ -11,7 +11,7 @@
 #include "outputmanagement_interface.h"
 #include "resource.h"
 
-#include <KWayland/Server/kwaylandserver_export.h>
+#include <DWayland/Server/kwaylandserver_export.h>
 
 namespace KWayland
 {
@@ -42,7 +42,7 @@ namespace Server
  * @see OutputConfiguration
  * @since 5.5
  */
-class KWAYLANDSERVER_EXPORT OutputConfigurationInterface : public Resource
+class DWAYLANDSERVER_EXPORT OutputConfigurationInterface : public Resource
 {
     Q_OBJECT
 public:

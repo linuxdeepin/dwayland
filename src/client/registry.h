@@ -10,7 +10,7 @@
 #include <QHash>
 #include <QObject>
 
-#include "KWayland/Client/kwaylandclient_export.h"
+#include "DWayland/Client/kwaylandclient_export.h"
 
 struct wl_compositor;
 struct wl_data_device_manager;
@@ -142,7 +142,7 @@ class DataControlDeviceManager;
  * The interfaces are announced in an asynchronous way by the Wayland server.
  * To initiate the announcing of the interfaces one needs to call setup.
  **/
-class KWAYLANDCLIENT_EXPORT Registry : public QObject
+class DWAYLANDCLIENT_EXPORT Registry : public QObject
 {
     Q_OBJECT
 public:

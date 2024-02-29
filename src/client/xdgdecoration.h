@@ -8,7 +8,7 @@
 
 #include <QObject>
 
-#include "KWayland/Client/kwaylandclient_export.h"
+#include "DWayland/Client/kwaylandclient_export.h"
 
 struct zxdg_decoration_manager_v1;
 struct zxdg_toplevel_decoration_v1;
@@ -47,7 +47,7 @@ class XdgShellSurface;
  * @see Registry
  * @since 5.54
  **/
-class KWAYLANDCLIENT_EXPORT XdgDecorationManager : public QObject
+class DWAYLANDCLIENT_EXPORT XdgDecorationManager : public QObject
 {
     Q_OBJECT
 public:
@@ -122,7 +122,7 @@ private:
     QScopedPointer<Private> d;
 };
 
-class KWAYLANDCLIENT_EXPORT XdgDecoration : public QObject
+class DWAYLANDCLIENT_EXPORT XdgDecoration : public QObject
 {
     Q_OBJECT
 public:

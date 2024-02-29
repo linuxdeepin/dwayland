@@ -8,7 +8,7 @@
 
 #include <QObject>
 
-#include <KWayland/Server/kwaylandserver_export.h>
+#include <DWayland/Server/kwaylandserver_export.h>
 
 struct wl_client;
 struct wl_resource;
@@ -28,7 +28,7 @@ class Global;
  * The Resource is a base class for all specific resources and provides
  * access to various common aspects.
  **/
-class KWAYLANDSERVER_EXPORT Resource : public QObject
+class DWAYLANDSERVER_EXPORT Resource : public QObject
 {
     Q_OBJECT
 public:

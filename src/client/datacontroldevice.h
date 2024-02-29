@@ -10,7 +10,7 @@
 
 #include <QObject>
 
-#include "KWayland/Client/kwaylandclient_export.h"
+#include "DWayland/Client/kwaylandclient_export.h"
 
 struct zwlr_data_control_device_v1;
 
@@ -30,7 +30,7 @@ class Surface;
  *
  * @see DataDeviceManager
  **/
-class KWAYLANDCLIENT_EXPORT DataControlDeviceV1 : public QObject
+class DWAYLANDCLIENT_EXPORT DataControlDeviceV1 : public QObject
 {
     Q_OBJECT
 public:

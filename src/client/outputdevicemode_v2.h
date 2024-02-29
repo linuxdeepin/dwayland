@@ -9,7 +9,7 @@
 #include <QObject>
 #include <QSize>
 
-#include "KWayland/Client/kwaylandclient_export.h"
+#include "DWayland/Client/kwaylandclient_export.h"
 
 struct kde_output_device_mode_v2;
 
@@ -17,7 +17,7 @@ namespace KWayland
 {
 namespace Client
 {
-class KWAYLANDCLIENT_EXPORT DeviceModeV2 : public QObject
+class DWAYLANDCLIENT_EXPORT DeviceModeV2 : public QObject
 {
     Q_OBJECT
 public:

@@ -9,7 +9,7 @@
 #include <QObject>
 #include <QPointer>
 
-#include <KWayland/Server/kwaylandserver_export.h>
+#include <DWayland/Server/kwaylandserver_export.h>
 
 #include "global.h"
 #include "resource.h"
@@ -27,7 +27,7 @@ class SubSurfaceInterface;
 /**
  * @todo Add documentation
  */
-class KWAYLANDSERVER_EXPORT SubCompositorInterface : public Global
+class DWAYLANDSERVER_EXPORT SubCompositorInterface : public Global
 {
     Q_OBJECT
 public:
@@ -45,7 +45,7 @@ private:
 /**
  * @todo Add documentation
  */
-class KWAYLANDSERVER_EXPORT SubSurfaceInterface : public Resource
+class DWAYLANDSERVER_EXPORT SubSurfaceInterface : public Resource
 {
     Q_OBJECT
     Q_PROPERTY(QPoint position READ position NOTIFY positionChanged)

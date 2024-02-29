@@ -9,7 +9,7 @@
 #include "global.h"
 #include "resource.h"
 
-#include <KWayland/Server/kwaylandserver_export.h>
+#include <DWayland/Server/kwaylandserver_export.h>
 
 namespace KWayland
 {
@@ -26,7 +26,7 @@ class ServerSideDecorationPaletteInterface;
  * and notifies when a new one is created
  * @since 5.42
  */
-class KWAYLANDSERVER_EXPORT ServerSideDecorationPaletteManagerInterface : public Global
+class DWAYLANDSERVER_EXPORT ServerSideDecorationPaletteManagerInterface : public Global
 {
     Q_OBJECT
 public:
@@ -55,7 +55,7 @@ private:
  * This interface is attached to a wl_surface and informs the server of a requested palette
  * @since 5.42
  */
-class KWAYLANDSERVER_EXPORT ServerSideDecorationPaletteInterface : public Resource
+class DWAYLANDSERVER_EXPORT ServerSideDecorationPaletteInterface : public Resource
 {
     Q_OBJECT
 public:

@@ -8,7 +8,7 @@
 
 #include <QObject>
 
-#include "KWayland/Client/kwaylandclient_export.h"
+#include "DWayland/Client/kwaylandclient_export.h"
 
 struct org_kde_kwin_idle;
 struct org_kde_kwin_idle_timeout;
@@ -49,7 +49,7 @@ class Seat;
  *
  * @see Registry
  **/
-class KWAYLANDCLIENT_EXPORT Idle : public QObject
+class DWAYLANDCLIENT_EXPORT Idle : public QObject
 {
     Q_OBJECT
 public:
@@ -144,7 +144,7 @@ private:
  *
  * @see IdleTimeoutManager
  **/
-class KWAYLANDCLIENT_EXPORT IdleTimeout : public QObject
+class DWAYLANDCLIENT_EXPORT IdleTimeout : public QObject
 {
     Q_OBJECT
 public:

@@ -12,7 +12,7 @@
 #include <QMarginsF>
 #include <QObject>
 
-#include <KWayland/Server/kwaylandserver_export.h>
+#include <DWayland/Server/kwaylandserver_export.h>
 
 namespace KWayland
 {
@@ -24,7 +24,7 @@ class Display;
 /**
  * TODO
  */
-class KWAYLANDSERVER_EXPORT ShadowManagerInterface : public Global
+class DWAYLANDSERVER_EXPORT ShadowManagerInterface : public Global
 {
     Q_OBJECT
 public:
@@ -39,7 +39,7 @@ private:
 /**
  * TODO
  */
-class KWAYLANDSERVER_EXPORT ShadowInterface : public Resource
+class DWAYLANDSERVER_EXPORT ShadowInterface : public Resource
 {
     Q_OBJECT
 public:

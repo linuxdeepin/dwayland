@@ -8,7 +8,7 @@
 
 #include <QObject>
 
-#include "KWayland/Client/kwaylandclient_export.h"
+#include "DWayland/Client/kwaylandclient_export.h"
 
 struct wl_text_input;
 struct wl_text_input_manager;
@@ -35,7 +35,7 @@ class Seat;
  *
  * @since 5.23
  **/
-class KWAYLANDCLIENT_EXPORT TextInput : public QObject
+class DWAYLANDCLIENT_EXPORT TextInput : public QObject
 {
     Q_OBJECT
 public:
@@ -412,7 +412,7 @@ protected:
  *
  * @since 5.23
  **/
-class KWAYLANDCLIENT_EXPORT TextInputManager : public QObject
+class DWAYLANDCLIENT_EXPORT TextInputManager : public QObject
 {
     Q_OBJECT
 public:

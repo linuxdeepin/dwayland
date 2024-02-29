@@ -8,7 +8,7 @@
 
 #include <QObject>
 
-#include "KWayland/Client/kwaylandclient_export.h"
+#include "DWayland/Client/kwaylandclient_export.h"
 
 struct org_kde_kwin_keystate;
 
@@ -18,7 +18,7 @@ namespace Client
 {
 class EventQueue;
 
-class KWAYLANDCLIENT_EXPORT Keystate : public QObject
+class DWAYLANDCLIENT_EXPORT Keystate : public QObject
 {
     Q_OBJECT
 public:

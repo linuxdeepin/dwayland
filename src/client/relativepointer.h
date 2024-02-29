@@ -8,7 +8,7 @@
 
 #include <QObject>
 
-#include "KWayland/Client/kwaylandclient_export.h"
+#include "DWayland/Client/kwaylandclient_export.h"
 
 struct zwp_relative_pointer_manager_v1;
 struct zwp_relative_pointer_v1;
@@ -45,7 +45,7 @@ class RelativePointer;
  * @see Registry
  * @since 5.28
  **/
-class KWAYLANDCLIENT_EXPORT RelativePointerManager : public QObject
+class DWAYLANDCLIENT_EXPORT RelativePointerManager : public QObject
 {
     Q_OBJECT
 public:
@@ -132,7 +132,7 @@ private:
  *
  * @since 5.28
  **/
-class KWAYLANDCLIENT_EXPORT RelativePointer : public QObject
+class DWAYLANDCLIENT_EXPORT RelativePointer : public QObject
 {
     Q_OBJECT
 public:

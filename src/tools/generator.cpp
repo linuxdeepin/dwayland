@@ -598,7 +598,7 @@ void Generator::generateHeaderIncludes()
     default:
         Q_UNREACHABLE();
     }
-    *m_stream.localData() << QStringLiteral("#include <KWayland/%1/kwayland%2_export.h>\n\n").arg(projectToName()).arg(projectToName().toLower());
+    *m_stream.localData() << QStringLiteral("#include <DWayland/%1/kwayland%2_export.h>\n\n").arg(projectToName()).arg(projectToName().toLower());
 }
 
 void Generator::generateCppIncludes()
@@ -676,7 +676,7 @@ void Generator::generateServerGlobalClass(const Interface &interface)
         return;
     }
     const QString templateString = QStringLiteral(
-        "class KWAYLANDSERVER_EXPORT %1 : public Global\n"
+        "class DWAYLANDSERVER_EXPORT %1 : public Global\n"
         "{\n"
         "    Q_OBJECT\n"
         "public:\n"
@@ -694,7 +694,7 @@ void Generator::generateServerGlobalClass(const Interface &interface)
 void Generator::generateServerGlobalClassUnstable(const Interface &interface)
 {
     const QString templateString = QStringLiteral(
-        "class KWAYLANDSERVER_EXPORT %1 : public Global\n"
+        "class DWAYLANDSERVER_EXPORT %1 : public Global\n"
         "{\n"
         "    Q_OBJECT\n"
         "public:\n"
@@ -723,7 +723,7 @@ void Generator::generateServerResourceClass(const Interface &interface)
         return;
     }
     const QString templateString = QStringLiteral(
-        "class KWAYLANDSERVER_EXPORT %1 : public Resource\n"
+        "class DWAYLANDSERVER_EXPORT %1 : public Resource\n"
         "{\n"
         "    Q_OBJECT\n"
         "public:\n"
@@ -743,7 +743,7 @@ void Generator::generateServerResourceClass(const Interface &interface)
 void Generator::generateServerResourceClassUnstable(const Interface &interface)
 {
     const QString templateString = QStringLiteral(
-        "class KWAYLANDSERVER_EXPORT %1 : public Resource\n"
+        "class DWAYLANDSERVER_EXPORT %1 : public Resource\n"
         "{\n"
         "    Q_OBJECT\n"
         "public:\n"
@@ -1195,7 +1195,7 @@ void Generator::generateClientGlobalClassDoxy(const Interface &interface)
 void Generator::generateClientClassQObjectDerived(const Interface &interface)
 {
     const QString templateString = QStringLiteral(
-        "class KWAYLANDCLIENT_EXPORT %1 : public QObject\n"
+        "class DWAYLANDCLIENT_EXPORT %1 : public QObject\n"
         "{\n"
         "    Q_OBJECT\n"
         "public:\n");

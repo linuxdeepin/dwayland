@@ -8,7 +8,7 @@
 
 #include <QObject>
 
-#include "KWayland/Client/kwaylandclient_export.h"
+#include "DWayland/Client/kwaylandclient_export.h"
 
 struct zwp_pointer_constraints_v1;
 struct zwp_locked_pointer_v1;
@@ -51,7 +51,7 @@ class Pointer;
  * @see Registry
  * @since 5.29
  **/
-class KWAYLANDCLIENT_EXPORT PointerConstraints : public QObject
+class DWAYLANDCLIENT_EXPORT PointerConstraints : public QObject
 {
     Q_OBJECT
 public:
@@ -243,7 +243,7 @@ private:
  * @see PointerConstraints::lockedPointer
  * @since 5.29
  **/
-class KWAYLANDCLIENT_EXPORT LockedPointer : public QObject
+class DWAYLANDCLIENT_EXPORT LockedPointer : public QObject
 {
     Q_OBJECT
 public:
@@ -361,7 +361,7 @@ private:
  * @see PointerConstraints::confinePointer
  * @since 5.29
  **/
-class KWAYLANDCLIENT_EXPORT ConfinedPointer : public QObject
+class DWAYLANDCLIENT_EXPORT ConfinedPointer : public QObject
 {
     Q_OBJECT
 public:

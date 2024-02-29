@@ -10,7 +10,7 @@
 #include <QPoint>
 #include <QSize>
 
-#include "KWayland/Client/kwaylandclient_export.h"
+#include "DWayland/Client/kwaylandclient_export.h"
 
 struct zxdg_output_manager_v1;
 struct zxdg_output_v1;
@@ -51,7 +51,7 @@ class Output;
  *
  * @see Registry
  **/
-class KWAYLANDCLIENT_EXPORT XdgOutputManager : public QObject
+class DWAYLANDCLIENT_EXPORT XdgOutputManager : public QObject
 {
     Q_OBJECT
 public:
@@ -140,7 +140,7 @@ private:
  * @see Registry
  **/
 
-class KWAYLANDCLIENT_EXPORT XdgOutput : public QObject
+class DWAYLANDCLIENT_EXPORT XdgOutput : public QObject
 {
     Q_OBJECT
 public:

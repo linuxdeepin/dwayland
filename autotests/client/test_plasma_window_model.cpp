@@ -873,7 +873,7 @@ void PlasmaWindowModelTest::testChangeWindowAfterModelDestroy_data()
     QTest::newRow("onallDesktop")     << &PlasmaWindow::onAllDesktopsChanged            << QVariant::fromValue(&PlasmaWindowInterface::setOnAllDesktops)            << QVariant(true);
     QTest::newRow("title")            << &PlasmaWindow::titleChanged                    << QVariant::fromValue(&PlasmaWindowInterface::setTitle)                    << QVariant(QStringLiteral("foo"));
     QTest::newRow("appId")            << &PlasmaWindow::appIdChanged                    << QVariant::fromValue(&PlasmaWindowInterface::setAppId)                    << QVariant(QStringLiteral("foo"));
-#if KWAYLANDSERVER_ENABLE_DEPRECATED_SINCE(5, 28)
+#if DWAYLANDSERVER_ENABLE_DEPRECATED_SINCE(5, 28)
     QTest::newRow("iconname" )            << &PlasmaWindow::iconChanged                     << QVariant::fromValue(&PlasmaWindowInterface::setThemedIconName)           << QVariant(QStringLiteral("foo"));
 #endif
     QTest::newRow("icon" )            << &PlasmaWindow::iconChanged                     << QVariant::fromValue(&PlasmaWindowInterface::setIcon)                     << QVariant::fromValue(QIcon::fromTheme(QStringLiteral("foo")));

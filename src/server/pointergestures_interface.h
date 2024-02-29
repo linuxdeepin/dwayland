@@ -8,7 +8,7 @@
 
 #include "global.h"
 
-#include <KWayland/Server/kwaylandserver_export.h>
+#include <DWayland/Server/kwaylandserver_export.h>
 
 namespace KWayland
 {
@@ -35,7 +35,7 @@ enum class PointerGesturesInterfaceVersion {
  * @see Display::createPointerGestures
  * @since 5.29
  **/
-class KWAYLANDSERVER_EXPORT PointerGesturesInterface : public Global
+class DWAYLANDSERVER_EXPORT PointerGesturesInterface : public Global
 {
     Q_OBJECT
 public:

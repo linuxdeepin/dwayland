@@ -26,7 +26,7 @@ License along with this library.  If not, see <http://www.gnu.org/licenses/>.
 #include <QRect>
 #include <QVector>
 
-#include <KWayland/Server/kwaylandserver_export.h>
+#include <DWayland/Server/kwaylandserver_export.h>
 #include "global.h"
 #include "resource.h"
 
@@ -42,7 +42,7 @@ class SurfaceInterface;
 class DDEShellInterface;
 class DDEShellSurfaceInterface;
 
-class KWAYLANDSERVER_EXPORT DDEShellInterface : public Global
+class DWAYLANDSERVER_EXPORT DDEShellInterface : public Global
 {
     Q_OBJECT
 public:
@@ -59,7 +59,7 @@ private:
     Private *d_func() const;
 };
 
-class KWAYLANDSERVER_EXPORT DDEShellSurfaceInterface : public Resource
+class DWAYLANDSERVER_EXPORT DDEShellSurfaceInterface : public Resource
 {
     Q_OBJECT
 public:

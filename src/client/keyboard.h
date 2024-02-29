@@ -8,7 +8,7 @@
 
 #include <QObject>
 
-#include "KWayland/Client/kwaylandclient_export.h"
+#include "DWayland/Client/kwaylandclient_export.h"
 
 struct wl_keyboard;
 
@@ -27,7 +27,7 @@ class Surface;
  *
  * @see Seat
  **/
-class KWAYLANDCLIENT_EXPORT Keyboard : public QObject
+class DWAYLANDCLIENT_EXPORT Keyboard : public QObject
 {
     Q_OBJECT
 public:

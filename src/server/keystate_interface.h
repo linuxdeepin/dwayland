@@ -9,7 +9,7 @@
 
 #include "global.h"
 #include "resource.h"
-#include <KWayland/Server/kwaylandserver_export.h>
+#include <DWayland/Server/kwaylandserver_export.h>
 
 namespace KWayland
 {
@@ -22,7 +22,7 @@ class Display;
  *
  * @since 5.60
  **/
-class KWAYLANDSERVER_EXPORT KeyStateInterface : public Global
+class DWAYLANDSERVER_EXPORT KeyStateInterface : public Global
 {
     Q_OBJECT
 public:

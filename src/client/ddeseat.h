@@ -25,7 +25,7 @@ License along with this library.  If not, see <http://www.gnu.org/licenses/>.
 #include <QSize>
 #include <QVector>
 
-#include <KWayland/Client/kwaylandclient_export.h>
+#include <DWayland/Client/kwaylandclient_export.h>
 
 struct dde_seat;
 struct dde_pointer;
@@ -73,7 +73,7 @@ class DDETouch;
  * @see Registry
  * @since 5.5
  **/
-class KWAYLANDCLIENT_EXPORT DDESeat : public QObject
+class DWAYLANDCLIENT_EXPORT DDESeat : public QObject
 {
     Q_OBJECT
 public:
@@ -179,7 +179,7 @@ private:
  *
  * @see DDESeat
  **/
-class KWAYLANDCLIENT_EXPORT DDEPointer : public QObject
+class DWAYLANDCLIENT_EXPORT DDEPointer : public QObject
 {
     Q_OBJECT
 public:
@@ -279,7 +279,7 @@ private:
  *
  * @see DDETouch
  **/
-class KWAYLANDCLIENT_EXPORT DDETouch : public QObject
+class DWAYLANDCLIENT_EXPORT DDETouch : public QObject
 {
     Q_OBJECT
 public:

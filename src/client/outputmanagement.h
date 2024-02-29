@@ -8,7 +8,7 @@
 
 #include <QObject>
 
-#include "KWayland/Client/kwaylandclient_export.h"
+#include "DWayland/Client/kwaylandclient_export.h"
 
 struct org_kde_kwin_outputmanagement;
 struct org_kde_kwin_outputconfiguration;
@@ -44,7 +44,7 @@ class OutputConfiguration;
  * @see Registry
  * @since 5.5
  **/
-class KWAYLANDCLIENT_EXPORT OutputManagement : public QObject
+class DWAYLANDCLIENT_EXPORT OutputManagement : public QObject
 {
     Q_OBJECT
 public:

@@ -10,7 +10,7 @@
 
 #include <QObject>
 
-#include <KWayland/Server/kwaylandserver_export.h>
+#include <DWayland/Server/kwaylandserver_export.h>
 
 struct wl_client;
 struct wl_interface;
@@ -31,7 +31,7 @@ class Display;
  *
  * @see Display
  **/
-class KWAYLANDSERVER_EXPORT ClientConnection : public QObject
+class DWAYLANDSERVER_EXPORT ClientConnection : public QObject
 {
     Q_OBJECT
 public:

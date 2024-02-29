@@ -13,7 +13,7 @@
 #include <QPoint>
 #include <QSize>
 
-#include "KWayland/Client/kwaylandclient_export.h"
+#include "DWayland/Client/kwaylandclient_export.h"
 
 struct wl_buffer;
 struct wl_region;
@@ -33,7 +33,7 @@ class Region;
 /**
  * TODO
  */
-class KWAYLANDCLIENT_EXPORT BlurManager : public QObject
+class DWAYLANDCLIENT_EXPORT BlurManager : public QObject
 {
     Q_OBJECT
 public:
@@ -129,7 +129,7 @@ private:
  *
  * @see BlurManager
  **/
-class KWAYLANDCLIENT_EXPORT Blur : public QObject
+class DWAYLANDCLIENT_EXPORT Blur : public QObject
 {
     Q_OBJECT
 public:

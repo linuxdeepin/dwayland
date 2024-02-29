@@ -9,7 +9,7 @@
 #include <QObject>
 #include <QPointer>
 
-#include "KWayland/Client/kwaylandclient_export.h"
+#include "DWayland/Client/kwaylandclient_export.h"
 
 struct zwp_pointer_gestures_v1;
 struct zwp_pointer_gesture_swipe_v1;
@@ -53,7 +53,7 @@ class PointerSwipeGesture;
  * @see PointerPinchGesture
  * @since 5.29
  **/
-class KWAYLANDCLIENT_EXPORT PointerGestures : public QObject
+class DWAYLANDCLIENT_EXPORT PointerGestures : public QObject
 {
     Q_OBJECT
 public:
@@ -158,7 +158,7 @@ private:
  * @see PointerPinchGesture
  * @since 5.29
  **/
-class KWAYLANDCLIENT_EXPORT PointerSwipeGesture : public QObject
+class DWAYLANDCLIENT_EXPORT PointerSwipeGesture : public QObject
 {
     Q_OBJECT
 public:
@@ -286,7 +286,7 @@ private:
  * @see PointerSwipeGesture
  * @since 5.29
  **/
-class KWAYLANDCLIENT_EXPORT PointerPinchGesture : public QObject
+class DWAYLANDCLIENT_EXPORT PointerPinchGesture : public QObject
 {
     Q_OBJECT
 public:

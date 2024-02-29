@@ -21,7 +21,7 @@ License along with this library.  If not, see <http://www.gnu.org/licenses/>.
 #define KWAYLAND_STRUT_H
 
 #include <QObject>
-#include <KWayland/Client/kwaylandclient_export.h>
+#include <DWayland/Client/kwaylandclient_export.h>
 
 struct wl_surface;
 struct com_deepin_kwin_strut;
@@ -119,7 +119,7 @@ struct deepinKwinStrut
  * be set by the Client if the window is to reserve space at the edge of the screen.
  *
  **/
-class KWAYLANDCLIENT_EXPORT Strut : public QObject
+class DWAYLANDCLIENT_EXPORT Strut : public QObject
 {
     Q_OBJECT
 public:
@@ -203,4 +203,3 @@ private:
 }
 
 #endif
-

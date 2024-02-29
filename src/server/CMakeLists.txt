@@ -74,11 +74,11 @@ set(SERVER_LIB_SRCS
 ecm_qt_declare_logging_category(SERVER_LIB_SRCS
     HEADER logging.h
     IDENTIFIER KWAYLAND_SERVER
-    CATEGORY_NAME kf.wayland.server
-    OLD_CATEGORY_NAMES kwayland-server
+    CATEGORY_NAME dwayland.server
+    OLD_CATEGORY_NAMES dwayland-server
     DEFAULT_SEVERITY Critical
-    DESCRIPTION "KWayland Server Library"
-    EXPORT KWAYLAND
+    DESCRIPTION "DWayland Server Library"
+    EXPORT DWAYLAND
 )
 
 ecm_add_wayland_server_protocol(SERVER_LIB_SRCS
@@ -331,24 +331,24 @@ set(SERVER_GENERATED_SRCS
 
 set_source_files_properties(${SERVER_GENERATED_SRCS} PROPERTIES SKIP_AUTOMOC ON)
 
-add_library(KF5WaylandServer ${SERVER_LIB_SRCS})
-add_library(KF5::WaylandServer ALIAS KF5WaylandServer)
-ecm_generate_export_header(KF5WaylandServer
+add_library(DWaylandServer ${SERVER_LIB_SRCS})
+add_library(D::WaylandServer ALIAS DWaylandServer)
+ecm_generate_export_header(DWaylandServer
     BASE_NAME
-        KWaylandServer
+        DWaylandServer
     EXPORT_FILE_NAME
-        KWayland/Server/kwaylandserver_export.h
+        DWayland/Server/kwaylandserver_export.h
     GROUP_BASE_NAME KF
-    VERSION ${KF_VERSION}
+    VERSION ${PROJECT_VERSION}
     DEPRECATED_BASE_VERSION 0
     DEPRECATION_VERSIONS 5.5 5.28 5.50 5.52 5.69 5.73
     EXCLUDE_DEPRECATED_BEFORE_AND_AT ${EXCLUDE_DEPRECATED_BEFORE_AND_AT}
 )
 
-target_include_directories(KF5WaylandServer
-    INTERFACE "$<INSTALL_INTERFACE:${KDE_INSTALL_INCLUDEDIR_KF}/KWayland;${KDE_INSTALL_INCLUDEDIR_KF5}/KWayland/Server>")
+target_include_directories(DWaylandServer
+    INTERFACE "$<INSTALL_INTERFACE:${KDE_INSTALL_INCLUDEDIR}/DWayland;${KDE_INSTALL_INCLUDEDIR}/DWayland/Server>")
 
-target_link_libraries(KF5WaylandServer
+target_link_libraries(DWaylandServer
     PUBLIC Qt5::Gui
     PRIVATE
         Wayland::Server
@@ -356,15 +356,15 @@ target_link_libraries(KF5WaylandServer
         Qt5::Concurrent
 )
 
-set_target_properties(KF5WaylandServer PROPERTIES VERSION   ${KWAYLAND_VERSION}
+set_target_properties(DWaylandServer PROPERTIES VERSION   ${KWAYLAND_VERSION}
                                                  SOVERSION ${KWAYLAND_SOVERSION}
                                                  EXPORT_NAME WaylandServer
 )
 
-install(TARGETS KF5WaylandServer EXPORT KF5WaylandTargets ${KF_INSTALL_TARGETS_DEFAULT_ARGS})
+install(TARGETS DWaylandServer EXPORT DWaylandTargets ${KF_INSTALL_TARGETS_DEFAULT_ARGS})
 
 set(SERVER_LIB_HEADERS
-  ${CMAKE_CURRENT_BINARY_DIR}/KWayland/Server/kwaylandserver_export.h
+  ${CMAKE_CURRENT_BINARY_DIR}/DWayland/Server/kwaylandserver_export.h
   appmenu_interface.h
   blur_interface.h
   buffer_interface.h
@@ -425,14 +425,14 @@ set(SERVER_LIB_HEADERS
 
 install(FILES
   ${SERVER_LIB_HEADERS}
-  DESTINATION ${KDE_INSTALL_INCLUDEDIR_KF5}/KWayland/Server COMPONENT Devel
+  DESTINATION ${KDE_INSTALL_INCLUDEDIR}/DWayland/Server COMPONENT Devel
 )
 
 # make available to ecm_add_qch in parent folder
-set(KWaylandServer_APIDOX_SRCS ${SERVER_LIB_HEADERS} PARENT_SCOPE)
-set(KWaylandServer_APIDOX_BUILD_INCLUDE_DIRS ${CMAKE_CURRENT_BINARY_DIR} PARENT_SCOPE)
+set(DWaylandServer_APIDOX_SRCS ${SERVER_LIB_HEADERS} PARENT_SCOPE)
+set(DWaylandServer_APIDOX_BUILD_INCLUDE_DIRS ${CMAKE_CURRENT_BINARY_DIR} PARENT_SCOPE)
 
 include(ECMGeneratePriFile)
-ecm_generate_pri_file(BASE_NAME KWaylandServer LIB_NAME KF5WaylandServer DEPS "core" FILENAME_VAR PRI_FILENAME INCLUDE_INSTALL_DIR ${KDE_INSTALL_INCLUDEDIR_KF5})
+ecm_generate_pri_file(BASE_NAME DWaylandServer LIB_NAME DWaylandServer DEPS "core" FILENAME_VAR PRI_FILENAME INCLUDE_INSTALL_DIR ${KDE_INSTALL_INCLUDEDIR})
 install(FILES ${PRI_FILENAME}
         DESTINATION ${ECM_MKSPECS_INSTALL_DIR})

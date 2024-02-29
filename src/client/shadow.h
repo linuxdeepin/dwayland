@@ -12,7 +12,7 @@
 #include <QPoint>
 #include <QSize>
 
-#include "KWayland/Client/kwaylandclient_export.h"
+#include "DWayland/Client/kwaylandclient_export.h"
 
 struct wl_buffer;
 struct org_kde_kwin_shadow;
@@ -52,7 +52,7 @@ class Surface;
  * @see Registry
  * @since 5.4
  **/
-class KWAYLANDCLIENT_EXPORT ShadowManager : public QObject
+class DWAYLANDCLIENT_EXPORT ShadowManager : public QObject
 {
     Q_OBJECT
 public:
@@ -146,7 +146,7 @@ private:
  *
  * @see Compositor
  **/
-class KWAYLANDCLIENT_EXPORT Shadow : public QObject
+class DWAYLANDCLIENT_EXPORT Shadow : public QObject
 {
     Q_OBJECT
 public:

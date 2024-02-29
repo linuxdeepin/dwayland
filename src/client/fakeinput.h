@@ -8,7 +8,7 @@
 
 #include <QObject>
 
-#include "KWayland/Client/kwaylandclient_export.h"
+#include "DWayland/Client/kwaylandclient_export.h"
 
 struct org_kde_kwin_fake_input;
 
@@ -44,7 +44,7 @@ class EventQueue;
  *
  * @see Registry
  **/
-class KWAYLANDCLIENT_EXPORT FakeInput : public QObject
+class DWAYLANDCLIENT_EXPORT FakeInput : public QObject
 {
     Q_OBJECT
 public:

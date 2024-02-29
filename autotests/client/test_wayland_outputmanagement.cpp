@@ -255,7 +255,7 @@ void TestWaylandOutputManagement::createOutputDevices()
     QCOMPARE(output->physicalSize(), QSize());
     QCOMPARE(output->pixelSize(), QSize());
     QCOMPARE(output->refreshRate(), 0);
-#if KWAYLANDSERVER_ENABLE_DEPRECATED_SINCE(5, 50)
+#if DWAYLANDSERVER_ENABLE_DEPRECATED_SINCE(5, 50)
     QCOMPARE(output->scale(), 1);
 #endif
     QCOMPARE(output->scaleF(), 1.0);
@@ -514,12 +514,12 @@ void TestWaylandOutputManagement::testScale()
     QVERIFY(configAppliedSpy.isValid());
     QVERIFY(configAppliedSpy.wait(200));
 
-#if KWAYLANDSERVER_ENABLE_DEPRECATED_SINCE(5, 50)
+#if DWAYLANDSERVER_ENABLE_DEPRECATED_SINCE(5, 50)
     QCOMPARE(output->scale(), 2); // test backwards compatibility
 #endif
     QCOMPARE(wl_fixed_from_double(output->scaleF()), wl_fixed_from_double(2.3));
 
-#if KWAYLANDSERVER_ENABLE_DEPRECATED_SINCE(5, 50)
+#if DWAYLANDSERVER_ENABLE_DEPRECATED_SINCE(5, 50)
     config->setScale(output, 3);
     config->apply();
 

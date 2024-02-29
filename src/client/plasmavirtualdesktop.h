@@ -8,7 +8,7 @@
 
 #include <QObject>
 
-#include "KWayland/Client/kwaylandclient_export.h"
+#include "DWayland/Client/kwaylandclient_export.h"
 
 struct org_kde_plasma_virtual_desktop_management;
 struct org_kde_plasma_virtual_desktop;
@@ -44,7 +44,7 @@ class PlasmaVirtualDesktop;
  *
  * @see Registry
  **/
-class KWAYLANDCLIENT_EXPORT PlasmaVirtualDesktopManagement : public QObject
+class DWAYLANDCLIENT_EXPORT PlasmaVirtualDesktopManagement : public QObject
 {
     Q_OBJECT
 public:
@@ -170,7 +170,7 @@ private:
     QScopedPointer<Private> d;
 };
 
-class KWAYLANDCLIENT_EXPORT PlasmaVirtualDesktop : public QObject
+class DWAYLANDCLIENT_EXPORT PlasmaVirtualDesktop : public QObject
 {
     Q_OBJECT
 public:

@@ -1,46 +1,46 @@
-kwayland (4:5.102.0.11-deepin11-1) unstable; urgency=medium
+dwayland (4:5.102.0.11-deepin11-1) unstable; urgency=medium
 
   [ Chaojiang Luo ]
   * feat: do not send changed sig for ctm and brightness
 
  -- jccKevin <luochaojiang@uniontech.com>  Thu, 04 Jan 2024 16:20:15 +0800
 
-kwayland (4:5.102.0.10-deepin10-1) unstable; urgency=medium
+dwayland (4:5.102.0.10-deepin10-1) unstable; urgency=medium
 
   [ Chaojiang Luo ]
   * feat: Add compatibility for v2
 
  -- jccKevin <luochaojiang@uniontech.com>  Tue, 19 Dec 2023 20:00:43 +0800
 
-kwayland (4:5.102.0.9-deepin9-1) unstable; urgency=medium
+dwayland (4:5.102.0.9-deepin9-1) unstable; urgency=medium
 
   [ huangzeming ]
   * Feat replaced interface GetAllWindowStates with GetAllWindowStatesList
 
  -- huangzeming <huangzeming@uniontech.com>  Tue, 19 Dec 2023 16:32:04 +0800
 
-kwayland (4:5.102.0.8-deepin8-1) unstable; urgency=medium
+dwayland (4:5.102.0.8-deepin8-1) unstable; urgency=medium
 
   [ huangzeming ]
   * Fix dtk split menu protocol
 
  -- huangzeming <huangzeming@uniontech.com>  Fri, 20 Oct 2023 15:38:36 +0800
 
-kwayland (4:5.102.0.7-deepin7-1) unstable; urgency=medium
+dwayland (4:5.102.0.7-deepin7-1) unstable; urgency=medium
 
   [ jccKevin ]
   * use remote access version 2
 
  -- jccKevin <luochaojiang@uniontech.com>  Fri, 15 Sep 2023 17:02:41 +0800
 
-kwayland (4:5.102.0.6-deepin6) unstable; urgency=medium
+dwayland (4:5.102.0.6-deepin6) unstable; urgency=medium
 
   * Bug fix:
     + 218685 fix: failed to show split menu on wayland
 
  -- huangzeming <huangzeming@uniontech.com>  Mon, 11 Sep 2023 16:46:28 +0800
 
-kwayland (4:5.102.0.5-deepin5-1) unstable; urgency=medium
+dwayland (4:5.102.0.5-deepin5-1) unstable; urgency=medium
 
   [ jccKevin ]
   * New upstream release (5.102.0).
@@ -48,7 +48,7 @@ kwayland (4:5.102.0.5-deepin5-1) unstable; urgency=medium
 
  -- jccKevin <luochaojiang@uniontech.com>  Tue, 05 Sep 2023 20:35:26 +0800
 
-kwayland (4:5.102.0-1) unstable; urgency=medium
+dwayland (4:5.102.0-1) unstable; urgency=medium
 
   [ Aurélien COUDERC ]
   * New upstream release (5.102.0).
@@ -58,7 +58,7 @@ kwayland (4:5.102.0-1) unstable; urgency=medium
 
  -- Aurélien COUDERC <coucouf@debian.org>  Sun, 22 Jan 2023 21:35:02 +0100
 
-kwayland (4:5.101.0-1) unstable; urgency=medium
+dwayland (4:5.101.0-1) unstable; urgency=medium
 
   [ Aurélien COUDERC ]
   * New upstream release (5.101.0).
@@ -67,7 +67,7 @@ kwayland (4:5.101.0-1) unstable; urgency=medium
 
  -- Aurélien COUDERC <coucouf@debian.org>  Tue, 13 Dec 2022 07:40:23 +0100
 
-kwayland (4:5.100.0-1) unstable; urgency=medium
+dwayland (4:5.100.0-1) unstable; urgency=medium
 
   [ Aurélien COUDERC ]
   * New upstream release (5.99.0).
@@ -78,7 +78,7 @@ kwayland (4:5.100.0-1) unstable; urgency=medium
 
  -- Aurélien COUDERC <coucouf@debian.org>  Sat, 19 Nov 2022 23:18:57 +0100
 
-kwayland (4:5.98.0-1) unstable; urgency=medium
+dwayland (4:5.98.0-1) unstable; urgency=medium
 
   [ Aurélien COUDERC ]
   * New upstream release (5.98.0).
@@ -86,14 +86,14 @@ kwayland (4:5.98.0-1) unstable; urgency=medium
 
  -- Aurélien COUDERC <coucouf@debian.org>  Sun, 18 Sep 2022 23:11:37 +0200
 
-kwayland (4:5.97.0-1) unstable; urgency=medium
+dwayland (4:5.97.0-1) unstable; urgency=medium
 
   [ Aurélien COUDERC ]
   * New upstream release (5.97.0).
 
  -- Aurélien COUDERC <coucouf@debian.org>  Sun, 14 Aug 2022 18:55:29 +0200
 
-kwayland (4:5.96.0-1) unstable; urgency=medium
+dwayland (4:5.96.0-1) unstable; urgency=medium
 
   [ Aurélien COUDERC ]
   * New upstream release (5.96.0).
@@ -104,14 +104,14 @@ kwayland (4:5.96.0-1) unstable; urgency=medium
 
  -- Aurélien COUDERC <coucouf@debian.org>  Sun, 31 Jul 2022 13:32:58 +0200
 
-kwayland (4:5.94.0-2) unstable; urgency=medium
+dwayland (4:5.94.0-2) unstable; urgency=medium
 
   * Team upload.
   * Backport upstream patch to fix include dir in the generated pri file.
 
  -- Dmitry Shachnev <mitya57@debian.org>  Wed, 15 Jun 2022 10:25:09 +0300
 
-kwayland (4:5.94.0-1) unstable; urgency=medium
+dwayland (4:5.94.0-1) unstable; urgency=medium
 
   [ Aurélien COUDERC ]
   * New upstream release (5.94.0).
@@ -120,7 +120,7 @@ kwayland (4:5.94.0-1) unstable; urgency=medium
 
  -- Aurélien COUDERC <coucouf@debian.org>  Thu, 19 May 2022 23:59:03 +0200
 
-kwayland (4:5.93.0-2) unstable; urgency=medium
+dwayland (4:5.93.0-2) unstable; urgency=medium
 
   * Team upload.
   * Bump Standards-Version to 4.6.1, no changes required.
@@ -138,7 +138,7 @@ kwayland (4:5.93.0-2) unstable; urgency=medium
 
  -- Pino Toscano <pino@debian.org>  Sun, 15 May 2022 14:12:33 +0200
 
-kwayland (4:5.93.0-1) unstable; urgency=medium
+dwayland (4:5.93.0-1) unstable; urgency=medium
 
   [ Aurélien COUDERC ]
   * New upstream release (5.92.0).
@@ -150,7 +150,7 @@ kwayland (4:5.93.0-1) unstable; urgency=medium
 
  -- Aurélien COUDERC <coucouf@debian.org>  Wed, 11 May 2022 23:22:44 +0200
 
-kwayland (4:5.90.0-1) unstable; urgency=medium
+dwayland (4:5.90.0-1) unstable; urgency=medium
 
   [ Norbert Preining ]
   * New upstream release (5.89.0).
@@ -162,7 +162,7 @@ kwayland (4:5.90.0-1) unstable; urgency=medium
 
  -- Aurélien COUDERC <coucouf@debian.org>  Fri, 11 Feb 2022 23:46:41 +0100
 
-kwayland (4:5.88.0-1) unstable; urgency=medium
+dwayland (4:5.88.0-1) unstable; urgency=medium
 
   [ Norbert Preining ]
   * New upstream release (5.87.0).
@@ -171,7 +171,7 @@ kwayland (4:5.88.0-1) unstable; urgency=medium
 
  -- Norbert Preining <norbert@preining.info>  Wed, 17 Nov 2021 06:07:42 +0900
 
-kwayland (4:5.86.0-1) unstable; urgency=medium
+dwayland (4:5.86.0-1) unstable; urgency=medium
 
   [ Norbert Preining ]
   * New upstream release (5.86.0).
@@ -179,26 +179,26 @@ kwayland (4:5.86.0-1) unstable; urgency=medium
 
  -- Norbert Preining <norbert@preining.info>  Mon, 13 Sep 2021 11:01:42 +0900
 
-kwayland (4:5.85.0-2) unstable; urgency=medium
+dwayland (4:5.85.0-2) unstable; urgency=medium
 
   * Release to unstable.
 
  -- Norbert Preining <norbert@preining.info>  Sat, 28 Aug 2021 23:42:49 +0900
 
-kwayland (4:5.85.0-1) experimental; urgency=medium
+dwayland (4:5.85.0-1) experimental; urgency=medium
 
   [ Norbert Preining ]
   * New upstream release (5.85.0).
 
  -- Norbert Preining <norbert@preining.info>  Mon, 16 Aug 2021 00:06:12 +0900
 
-kwayland (4:5.83.0-2) unstable; urgency=medium
+dwayland (4:5.83.0-2) unstable; urgency=medium
 
   * Upload to unstable.
 
  -- Norbert Preining <norbert@preining.info>  Mon, 16 Aug 2021 11:53:11 +0900
 
-kwayland (4:5.83.0-1) experimental; urgency=medium
+dwayland (4:5.83.0-1) experimental; urgency=medium
 
   [ Norbert Preining ]
   * New upstream release (5.83.0).
@@ -206,7 +206,7 @@ kwayland (4:5.83.0-1) experimental; urgency=medium
 
  -- Norbert Preining <norbert@preining.info>  Sun, 13 Jun 2021 13:25:32 +0900
 
-kwayland (4:5.82.0-1) experimental; urgency=medium
+dwayland (4:5.82.0-1) experimental; urgency=medium
 
   [ Norbert Preining ]
   * New upstream release (5.82.0).
@@ -215,7 +215,7 @@ kwayland (4:5.82.0-1) experimental; urgency=medium
 
  -- Norbert Preining <norbert@preining.info>  Sat, 08 May 2021 21:21:15 +0900
 
-kwayland (4:5.81.0-1) experimental; urgency=medium
+dwayland (4:5.81.0-1) experimental; urgency=medium
 
   [ Norbert Preining ]
   * New upstream version (5.81.0)
@@ -224,7 +224,7 @@ kwayland (4:5.81.0-1) experimental; urgency=medium
 
  -- Norbert Preining <norbert@preining.info>  Mon, 12 Apr 2021 13:16:19 +0900
 
-kwayland (4:5.80.0-1) experimental; urgency=medium
+dwayland (4:5.80.0-1) experimental; urgency=medium
 
   [ Norbert Preining ]
   * New upstream version (5.80.0)
@@ -232,7 +232,7 @@ kwayland (4:5.80.0-1) experimental; urgency=medium
 
  -- Norbert Preining <norbert@preining.info>  Mon, 15 Mar 2021 15:10:36 +0900
 
-kwayland (4:5.79.0-1) experimental; urgency=medium
+dwayland (4:5.79.0-1) experimental; urgency=medium
 
   [ Norbert Preining ]
   * Remove graphviz from build depends.
@@ -240,13 +240,13 @@ kwayland (4:5.79.0-1) experimental; urgency=medium
 
  -- Norbert Preining <norbert@preining.info>  Tue, 16 Feb 2021 06:45:30 +0900
 
-kwayland (4:5.78.0-2) unstable; urgency=medium
+dwayland (4:5.78.0-2) unstable; urgency=medium
 
   * Release to unstable.
 
  -- Norbert Preining <norbert@preining.info>  Sun, 17 Jan 2021 12:02:25 +0900
 
-kwayland (4:5.78.0-1) experimental; urgency=medium
+dwayland (4:5.78.0-1) experimental; urgency=medium
 
   [ Norbert Preining ]
   * New upstream release (5.78.0).
@@ -254,13 +254,13 @@ kwayland (4:5.78.0-1) experimental; urgency=medium
 
  -- Norbert Preining <norbert@preining.info>  Wed, 13 Jan 2021 10:32:44 +0900
 
-kwayland (4:5.77.0-2) unstable; urgency=medium
+dwayland (4:5.77.0-2) unstable; urgency=medium
 
   * Release to unstable.
 
  -- Norbert Preining <norbert@preining.info>  Tue, 22 Dec 2020 10:33:36 +0900
 
-kwayland (4:5.77.0-1) experimental; urgency=medium
+dwayland (4:5.77.0-1) experimental; urgency=medium
 
   [ Norbert Preining ]
   * Bump Standards-Version to 4.5.1 (No changes needed).
@@ -272,13 +272,13 @@ kwayland (4:5.77.0-1) experimental; urgency=medium
 
  -- Norbert Preining <norbert@preining.info>  Fri, 18 Dec 2020 10:03:56 +0900
 
-kwayland (4:5.74.0-2) unstable; urgency=medium
+dwayland (4:5.74.0-2) unstable; urgency=medium
 
   * Team upload to unstable.
 
  -- Sandro Knauß <hefee@debian.org>  Mon, 19 Oct 2020 23:14:37 +0200
 
-kwayland (4:5.74.0-1) experimental; urgency=medium
+dwayland (4:5.74.0-1) experimental; urgency=medium
 
   * Team upload.
 
@@ -295,7 +295,7 @@ kwayland (4:5.74.0-1) experimental; urgency=medium
 
  -- Sandro Knauß <hefee@debian.org>  Sun, 27 Sep 2020 17:44:26 +0200
 
-kwayland (4:5.70.0-1) unstable; urgency=medium
+dwayland (4:5.70.0-1) unstable; urgency=medium
 
   * Team upload.
 
@@ -311,7 +311,7 @@ kwayland (4:5.70.0-1) unstable; urgency=medium
 
  -- Sandro Knauß <hefee@debian.org>  Tue, 26 May 2020 23:55:53 +0200
 
-kwayland (4:5.69.0-1) experimental; urgency=medium
+dwayland (4:5.69.0-1) experimental; urgency=medium
 
   * Team upload.
 
@@ -329,7 +329,7 @@ kwayland (4:5.69.0-1) experimental; urgency=medium
 
  -- Sandro Knauß <hefee@debian.org>  Thu, 30 Apr 2020 00:55:41 +0200
 
-kwayland (4:5.62.0-2) unstable; urgency=medium
+dwayland (4:5.62.0-2) unstable; urgency=medium
 
   * Team upload.
   * Update symbols files with the logs of buildds.
@@ -346,7 +346,7 @@ kwayland (4:5.62.0-2) unstable; urgency=medium
 
  -- Pino Toscano <pino@debian.org>  Sat, 21 Sep 2019 09:05:10 +0200
 
-kwayland (4:5.62.0-1) unstable; urgency=medium
+dwayland (4:5.62.0-1) unstable; urgency=medium
 
   * Update reprotest args variable
   * New upstream release (5.62.0).
@@ -357,7 +357,7 @@ kwayland (4:5.62.0-1) unstable; urgency=medium
 
  -- Maximiliano Curia <maxy@debian.org>  Fri, 20 Sep 2019 10:13:14 -0700
 
-kwayland (4:5.61.0-1) experimental; urgency=medium
+dwayland (4:5.61.0-1) experimental; urgency=medium
 
   [ Scarlett Moore ]
   * Build-Depend on qttools5-dev to fix a cross build failure
@@ -379,7 +379,7 @@ kwayland (4:5.61.0-1) experimental; urgency=medium
 
  -- Maximiliano Curia <maxy@debian.org>  Mon, 09 Sep 2019 21:11:00 +0100
 
-kwayland (4:5.54.0-1) unstable; urgency=medium
+dwayland (4:5.54.0-1) unstable; urgency=medium
 
   * New upstream release (5.52.0).
   * Update build-deps and deps with the info from cmake
@@ -396,7 +396,7 @@ kwayland (4:5.54.0-1) unstable; urgency=medium
 
  -- Maximiliano Curia <maxy@debian.org>  Thu, 17 Jan 2019 19:27:25 -0300
 
-kwayland (4:5.51.0-1) unstable; urgency=medium
+dwayland (4:5.51.0-1) unstable; urgency=medium
 
   * New upstream release (5.50.0).
   * Update build-deps and deps with the info from cmake
@@ -409,7 +409,7 @@ kwayland (4:5.51.0-1) unstable; urgency=medium
 
  -- Maximiliano Curia <maxy@debian.org>  Wed, 07 Nov 2018 17:17:24 +0100
 
-kwayland (4:5.49.0-1) unstable; urgency=medium
+dwayland (4:5.49.0-1) unstable; urgency=medium
 
   * New upstream release (5.48.0).
   * Update build-deps and deps with the info from cmake
@@ -421,7 +421,7 @@ kwayland (4:5.49.0-1) unstable; urgency=medium
 
  -- Maximiliano Curia <maxy@debian.org>  Fri, 17 Aug 2018 16:19:04 +0200
 
-kwayland (4:5.47.0-1) unstable; urgency=medium
+dwayland (4:5.47.0-1) unstable; urgency=medium
 
   * New upstream release (5.47.0).
   * Update build-deps and deps with the info from cmake
@@ -433,7 +433,7 @@ kwayland (4:5.47.0-1) unstable; urgency=medium
 
  -- Maximiliano Curia <maxy@debian.org>  Fri, 15 Jun 2018 12:10:35 +0200
 
-kwayland (4:5.46.0-1) unstable; urgency=medium
+dwayland (4:5.46.0-1) unstable; urgency=medium
 
   * New upstream release (5.46.0).
   * Update build-deps and deps with the info from cmake
@@ -446,7 +446,7 @@ kwayland (4:5.46.0-1) unstable; urgency=medium
 
  -- Maximiliano Curia <maxy@debian.org>  Thu, 17 May 2018 22:15:38 +0200
 
-kwayland (4:5.45.0-1) unstable; urgency=medium
+dwayland (4:5.45.0-1) unstable; urgency=medium
 
   * New upstream release (5.45.0).
   * Update build-deps and deps with the info from cmake
@@ -456,7 +456,7 @@ kwayland (4:5.45.0-1) unstable; urgency=medium
 
  -- Maximiliano Curia <maxy@debian.org>  Sat, 05 May 2018 08:11:00 +0200
 
-kwayland (4:5.44.0-1) sid; urgency=medium
+dwayland (4:5.44.0-1) sid; urgency=medium
 
   * New revision
   * Bump doxygen build dep.
@@ -468,7 +468,7 @@ kwayland (4:5.44.0-1) sid; urgency=medium
 
  -- Maximiliano Curia <maxy@debian.org>  Wed, 21 Mar 2018 14:48:56 +0100
 
-kwayland (4:5.43.0-1) experimental; urgency=medium
+dwayland (4:5.43.0-1) experimental; urgency=medium
 
   * Use the salsa canonical urls
   * New upstream release (5.43.0).
@@ -479,14 +479,14 @@ kwayland (4:5.43.0-1) experimental; urgency=medium
 
  -- Maximiliano Curia <maxy@debian.org>  Mon, 26 Feb 2018 11:44:11 +0100
 
-kwayland (4:5.42.0-2) sid; urgency=medium
+dwayland (4:5.42.0-2) sid; urgency=medium
 
   * New revision
   * Release to sid
 
  -- Maximiliano Curia <maxy@debian.org>  Sat, 10 Feb 2018 11:29:15 +0100
 
-kwayland (4:5.42.0-1) experimental; urgency=medium
+dwayland (4:5.42.0-1) experimental; urgency=medium
 
   * New upstream release (5.42.0).
   * Add link options as-needed
@@ -499,7 +499,7 @@ kwayland (4:5.42.0-1) experimental; urgency=medium
 
  -- Maximiliano Curia <maxy@debian.org>  Fri, 02 Feb 2018 12:05:59 +0100
 
-kwayland (4:5.41.0-1) experimental; urgency=medium
+dwayland (4:5.41.0-1) experimental; urgency=medium
 
   * New upstream release (5.41.0).
   * Update build-deps and deps with the info from cmake
@@ -508,31 +508,31 @@ kwayland (4:5.41.0-1) experimental; urgency=medium
 
  -- Maximiliano Curia <maxy@debian.org>  Fri, 15 Dec 2017 10:43:12 -0300
 
-kwayland (4:5.41.0-0neon) xenial; urgency=medium
+dwayland (4:5.41.0-0neon) xenial; urgency=medium
 
   * New release
 
  -- Neon CI <neon@kde.org>  Fri, 08 Dec 2017 14:48:28 +0000
 
-kwayland (4:5.40.0-0neon) xenial; urgency=medium
+dwayland (4:5.40.0-0neon) xenial; urgency=medium
 
   * New release
 
  -- Neon CI <neon@kde.org>  Fri, 10 Nov 2017 13:00:37 +0000
 
-kwayland (4:5.39.0-0neon) xenial; urgency=medium
+dwayland (4:5.39.0-0neon) xenial; urgency=medium
 
   * New release
 
  -- Neon CI <neon@kde.org>  Sun, 15 Oct 2017 11:46:54 +0000
 
-kwayland (4:5.38.0-0neon) xenial; urgency=medium
+dwayland (4:5.38.0-0neon) xenial; urgency=medium
 
   * New release
 
  -- Neon CI <neon@kde.org>  Mon, 11 Sep 2017 13:32:10 +0000
 
-kwayland (4:5.37.0-2) sid; urgency=medium
+dwayland (4:5.37.0-2) sid; urgency=medium
 
   * New revision
   * Bump Standards-Version to 4.1.0.
@@ -541,7 +541,7 @@ kwayland (4:5.37.0-2) sid; urgency=medium
 
  -- Maximiliano Curia <maxy@debian.org>  Sun, 03 Sep 2017 09:58:56 +0200
 
-kwayland (4:5.37.0-1) experimental; urgency=medium
+dwayland (4:5.37.0-1) experimental; urgency=medium
 
   * New upstream release (5.37.0).
   * Update build-deps and deps with the info from cmake
@@ -554,13 +554,13 @@ kwayland (4:5.37.0-1) experimental; urgency=medium
 
  -- Maximiliano Curia <maxy@debian.org>  Wed, 16 Aug 2017 10:42:18 +0200
 
-kwayland (4:5.37.0-0neon) xenial; urgency=medium
+dwayland (4:5.37.0-0neon) xenial; urgency=medium
 
   * New release
 
  -- Neon CI <neon@kde.org>  Fri, 11 Aug 2017 15:16:35 +0000
 
-kwayland (4:5.36.0-1) experimental; urgency=medium
+dwayland (4:5.36.0-1) experimental; urgency=medium
 
   [ Maximiliano Curia ]
   * New upstream release (5.35.0).
@@ -581,55 +581,55 @@ kwayland (4:5.36.0-1) experimental; urgency=medium
 
  -- Maximiliano Curia <maxy@debian.org>  Sun, 09 Jul 2017 23:41:22 +0200
 
-kwayland (4:5.36.0-0neon) xenial; urgency=medium
+dwayland (4:5.36.0-0neon) xenial; urgency=medium
 
   * New release
 
  -- Neon CI <neon@kde.org>  Mon, 10 Jul 2017 17:14:00 +0000
 
-kwayland (4:5.35.0-0neon) xenial; urgency=medium
+dwayland (4:5.35.0-0neon) xenial; urgency=medium
 
   * New release
 
  -- Neon CI <neon@kde.org>  Sun, 11 Jun 2017 20:38:04 +0000
 
-kwayland (4:5.34.0-0neon) xenial; urgency=medium
+dwayland (4:5.34.0-0neon) xenial; urgency=medium
 
   * New release
 
  -- Neon CI <neon@kde.org>  Sun, 14 May 2017 17:41:06 +0000
 
-kwayland (4:5.33.0-0neon) xenial; urgency=medium
+dwayland (4:5.33.0-0neon) xenial; urgency=medium
 
   * New release
 
  -- Neon CI <neon@kde.org>  Fri, 07 Apr 2017 16:25:43 +0000
 
-kwayland (4:5.32.0-0neon) xenial; urgency=medium
+dwayland (4:5.32.0-0neon) xenial; urgency=medium
 
   * New release
 
  -- Neon CI <neon@kde.org>  Sun, 12 Mar 2017 13:23:39 +0000
 
-kwayland (4:5.31.0-0neon) xenial; urgency=medium
+dwayland (4:5.31.0-0neon) xenial; urgency=medium
 
   * New release
 
  -- Neon CI <neon@kde.org>  Mon, 13 Feb 2017 14:41:11 +0000
 
-kwayland (4:5.30.0-0neon) xenial; urgency=medium
+dwayland (4:5.30.0-0neon) xenial; urgency=medium
 
   * New release
 
  -- Neon CI <neon@kde.org>  Mon, 16 Jan 2017 13:43:02 +0000
 
-kwayland (4:5.29.0-0neon) xenial; urgency=medium
+dwayland (4:5.29.0-0neon) xenial; urgency=medium
 
   * New release
 
  -- Neon CI <neon@kde.org>  Fri, 09 Dec 2016 19:09:26 +0000
 
-kwayland (4:5.28.0-1) unstable; urgency=medium
+dwayland (4:5.28.0-1) unstable; urgency=medium
 
   [ Automatic packaging ]
   * Update build-deps and deps with the info from cmake
@@ -641,13 +641,13 @@ kwayland (4:5.28.0-1) unstable; urgency=medium
 
  -- Maximiliano Curia <maxy@debian.org>  Fri, 18 Nov 2016 16:02:26 +0100
 
-kwayland (4:5.28.0-0neon) xenial; urgency=medium
+dwayland (4:5.28.0-0neon) xenial; urgency=medium
 
   * New release
 
  -- Neon CI <neon@kde.org>  Thu, 17 Nov 2016 09:46:36 +0000
 
-kwayland (4:5.27.0-1) unstable; urgency=medium
+dwayland (4:5.27.0-1) unstable; urgency=medium
 
   [ Automatic packaging ]
   * Update build-deps and deps with the info from cmake
@@ -657,26 +657,26 @@ kwayland (4:5.27.0-1) unstable; urgency=medium
 
  -- Maximiliano Curia <maxy@debian.org>  Sat, 15 Oct 2016 16:56:38 +0200
 
-kwayland (4:5.27.0-0neon) xenial; urgency=medium
+dwayland (4:5.27.0-0neon) xenial; urgency=medium
 
   * New release
 
  -- Neon CI <neon@kde.org>  Sat, 08 Oct 2016 11:33:15 +0000
 
-kwayland (4:5.26.0-1) unstable; urgency=medium
+dwayland (4:5.26.0-1) unstable; urgency=medium
 
   [ Automatic packaging ]
   * Update build-deps and deps with the info from cmake
 
  -- Maximiliano Curia <maxy@debian.org>  Thu, 29 Sep 2016 11:56:48 +0200
 
-kwayland (4:5.26.0-0neon) xenial; urgency=medium
+dwayland (4:5.26.0-0neon) xenial; urgency=medium
 
   * New release
 
  -- Neon CI <neon@kde.org>  Mon, 12 Sep 2016 08:34:10 +0000
 
-kwayland (4:5.25.0-1) unstable; urgency=medium
+dwayland (4:5.25.0-1) unstable; urgency=medium
 
   [ Harald Sitter ]
   * Rename -dev package to align with the cmake package name for
@@ -689,37 +689,37 @@ kwayland (4:5.25.0-1) unstable; urgency=medium
 
  -- Maximiliano Curia <maxy@debian.org>  Thu, 18 Aug 2016 17:19:51 +0200
 
-kwayland (4:5.25.0-0neon) xenial; urgency=medium
+dwayland (4:5.25.0-0neon) xenial; urgency=medium
 
   * New release
 
  -- Neon CI <neon@kde.org>  Sat, 13 Aug 2016 20:16:39 +0000
 
-kwayland (4:5.24.0-0neon) xenial; urgency=medium
+dwayland (4:5.24.0-0neon) xenial; urgency=medium
 
   * New release
 
  -- Neon CI <neon@kde.org>  Mon, 11 Jul 2016 07:42:50 +0000
 
-kwayland (4:5.23.0-1) unstable; urgency=medium
+dwayland (4:5.23.0-1) unstable; urgency=medium
 
   [ Automatic packaging ]
   * Update build-deps and deps with the info from cmake
   * Update symbols files
 
   [ Maximiliano Curia ]
-  * Install kwayland testserver
+  * Install dwayland testserver
   * Add shlibs depends for the org-kde-kf5-kwayland-testserver libexec
 
  -- Maximiliano Curia <maxy@debian.org>  Sat, 18 Jun 2016 08:23:08 +0200
 
-kwayland (4:5.23.0-0neon) xenial; urgency=medium
+dwayland (4:5.23.0-0neon) xenial; urgency=medium
 
   * New release
 
  -- Neon CI <neon@kde.org>  Mon, 13 Jun 2016 09:40:40 +0000
 
-kwayland (4:5.22.0-1) unstable; urgency=medium
+dwayland (4:5.22.0-1) unstable; urgency=medium
 
   [ Maximiliano Curia ]
   * Update Vcs uris
@@ -731,19 +731,19 @@ kwayland (4:5.22.0-1) unstable; urgency=medium
 
  -- Maximiliano Curia <maxy@debian.org>  Wed, 18 May 2016 20:10:31 +0200
 
-kwayland (4:5.22.0-0neon) xenial; urgency=medium
+dwayland (4:5.22.0-0neon) xenial; urgency=medium
 
   * New release
 
  -- Neon CI <neon@kde.org>  Tue, 17 May 2016 07:37:54 +0000
 
-kwayland (4:5.6.4-0neon) xenial; urgency=medium
+dwayland (4:5.6.4-0neon) xenial; urgency=medium
 
   * New release
 
  -- Neon CI <neon@kde.org>  Wed, 11 May 2016 09:42:28 +0000
 
-kwayland (4:5.6.3-1) experimental; urgency=medium
+dwayland (4:5.6.3-1) experimental; urgency=medium
 
   [ Automatic packaging ]
   * Update symbols files from buildds logs (4:5.5.4-1).
@@ -761,19 +761,19 @@ kwayland (4:5.6.3-1) experimental; urgency=medium
 
  -- Maximiliano Curia <maxy@debian.org>  Fri, 06 May 2016 20:22:53 +0200
 
-kwayland (4:5.6.3-0neon) xenial; urgency=medium
+dwayland (4:5.6.3-0neon) xenial; urgency=medium
 
   * New release
 
  -- Neon CI <neon@kde.org>  Tue, 19 Apr 2016 16:56:24 +0000
 
-kwayland (4:5.6.2-0neon) xenial; urgency=medium
+dwayland (4:5.6.2-0neon) xenial; urgency=medium
 
   * New release
 
  -- Neon CI <neon@kde.org>  Fri, 08 Apr 2016 11:44:29 +0000
 
-kwayland (4:5.5.4-1) experimental; urgency=medium
+dwayland (4:5.5.4-1) experimental; urgency=medium
 
   * New upstream release (5.5.0).
   * New upstream release (5.5.1).
@@ -783,7 +783,7 @@ kwayland (4:5.5.4-1) experimental; urgency=medium
 
  -- Maximiliano Curia <maxy@debian.org>  Wed, 27 Jan 2016 16:48:51 +0100
 
-kwayland (4:5.4.3-0ubuntu1) xenial; urgency=medium
+dwayland (4:5.4.3-0ubuntu1) xenial; urgency=medium
 
   [ Scarlett Clark ]
   * Vivid backport
@@ -794,63 +794,63 @@ kwayland (4:5.4.3-0ubuntu1) xenial; urgency=medium
 
  -- Philip Muškovac <yofel@kubuntu.org>  Sun, 22 Nov 2015 16:33:34 +0100
 
-kwayland (4:5.4.3-1) unstable; urgency=medium
+dwayland (4:5.4.3-1) unstable; urgency=medium
 
   * New upstream release (5.4.3).
 
  -- Maximiliano Curia <maxy@debian.org>  Tue, 01 Dec 2015 11:45:43 +0100
 
-kwayland (4:5.4.2-0ubuntu2) xenial; urgency=medium
+dwayland (4:5.4.2-0ubuntu2) xenial; urgency=medium
 
   * Fix autopackagetests by adding allow-stderr to the requirements.
 
  -- Philip Muškovac <yofel@kubuntu.org>  Tue, 03 Nov 2015 15:34:49 +0100
 
-kwayland (4:5.4.2-1) unstable; urgency=medium
+dwayland (4:5.4.2-1) unstable; urgency=medium
 
   * New upstream release (5.4.2).
   * Update symbols files from buildds logs (4:5.4.1-1).
 
  -- Maximiliano Curia <maxy@debian.org>  Tue, 06 Oct 2015 07:51:55 +0200
 
-kwayland (4:5.4.2-0ubuntu1) wily; urgency=medium
+dwayland (4:5.4.2-0ubuntu1) wily; urgency=medium
 
   * New upstream release
 
  -- Scarlett Clark <sgclark@kubuntu.org>  Fri, 02 Oct 2015 15:56:12 +0100
 
-kwayland (4:5.4.1-1) unstable; urgency=medium
+dwayland (4:5.4.1-1) unstable; urgency=medium
 
   * New upstream release (5.4.1).
 
  -- Maximiliano Curia <maxy@debian.org>  Fri, 11 Sep 2015 18:45:00 +0200
 
-kwayland (4:5.4.1-0ubuntu1) wily; urgency=medium
+dwayland (4:5.4.1-0ubuntu1) wily; urgency=medium
 
   * new upstream release
 
  -- Jonathan Riddell <jriddell@ubuntu.com>  Tue, 08 Sep 2015 10:18:04 +0100
 
-kwayland (4:5.4.0-1) unstable; urgency=medium
+dwayland (4:5.4.0-1) unstable; urgency=medium
 
   * New upstream release (5.4.0).
   * Update symbols files.
 
  -- Maximiliano Curia <maxy@debian.org>  Fri, 04 Sep 2015 10:45:27 +0200
 
-kwayland (4:5.4.0-0ubuntu1) wily; urgency=medium
+dwayland (4:5.4.0-0ubuntu1) wily; urgency=medium
 
   * new upstream release
 
  -- Jonathan Riddell <jriddell@ubuntu.com>  Mon, 31 Aug 2015 15:51:53 +0100
 
-kwayland (4:5.3.95-0ubuntu1) wily; urgency=medium
+dwayland (4:5.3.95-0ubuntu1) wily; urgency=medium
 
   * new upstream beta release
 
  -- Jonathan Riddell <jriddell@ubuntu.com>  Mon, 10 Aug 2015 23:15:54 +0200
 
-kwayland (4:5.3.2-1ubuntu3) wily; urgency=medium
+dwayland (4:5.3.2-1ubuntu3) wily; urgency=medium
 
   * Non-maintainer upload.
   * Update symbols files: mark as optional the symbols gone after
@@ -858,19 +858,19 @@ kwayland (4:5.3.2-1ubuntu3) wily; urgency=medium
 
  -- José Manuel Santamaría Lema <panfaust@gmail.com>  Wed, 22 Jul 2015 19:48:10 +0200
 
-kwayland (4:5.3.2-1ubuntu2) wily; urgency=medium
+dwayland (4:5.3.2-1ubuntu2) wily; urgency=medium
 
   * Add kubuntu_disable-tests.diff to disable failing tests
 
  -- Jonathan Riddell <jriddell@ubuntu.com>  Mon, 13 Jul 2015 16:32:21 +0200
 
-kwayland (4:5.3.2-1ubuntu1) wily; urgency=medium
+dwayland (4:5.3.2-1ubuntu1) wily; urgency=medium
 
   * Enable weston in debian/tests/control
 
  -- Jonathan Riddell <jriddell@ubuntu.com>  Mon, 13 Jul 2015 14:07:42 +0200
 
-kwayland (4:5.3.2-2) unstable; urgency=medium
+dwayland (4:5.3.2-2) unstable; urgency=medium
 
   * Team upload.
 
@@ -879,21 +879,21 @@ kwayland (4:5.3.2-2) unstable; urgency=medium
 
  -- Lisandro Damián Nicanor Pérez Meyer <lisandro@debian.org>  Tue, 18 Aug 2015 19:59:54 -0300
 
-kwayland (4:5.3.2-1) unstable; urgency=medium
+dwayland (4:5.3.2-1) unstable; urgency=medium
 
   * New upstream release (5.3.2).
   * Update symbols files.
 
  -- Maximiliano Curia <maxy@debian.org>  Tue, 30 Jun 2015 22:34:50 +0200
 
-kwayland (4:5.3.1-1) unstable; urgency=medium
+dwayland (4:5.3.1-1) unstable; urgency=medium
 
   * New upstream release (5.3.0).
   * New upstream release (5.3.1).
 
  -- Maximiliano Curia <maxy@debian.org>  Tue, 30 Jun 2015 10:53:37 +0200
 
-kwayland (4:5.3.1-0ubuntu1) wily; urgency=medium
+dwayland (4:5.3.1-0ubuntu1) wily; urgency=medium
 
   [ Jonathan Riddell ]
   * Plasma 5.3 beta
@@ -907,26 +907,26 @@ kwayland (4:5.3.1-0ubuntu1) wily; urgency=medium
 
  -- Jonathan Riddell <jriddell@ubuntu.com>  Fri, 05 Jun 2015 02:33:14 +0200
 
-kwayland (4:5.2.2-1) experimental; urgency=medium
+dwayland (4:5.2.2-1) experimental; urgency=medium
 
   * New upstream release (5.2.1).
   * New upstream release (5.2.2).
 
  -- Maximiliano Curia <maxy@debian.org>  Wed, 25 Mar 2015 23:17:23 +0100
 
-kwayland (4:5.2.2-0ubuntu1) vivid; urgency=medium
+dwayland (4:5.2.2-0ubuntu1) vivid; urgency=medium
 
   * New upstream release
 
  -- Scarlett Clark <sgclark@kubuntu.org>  Tue, 24 Mar 2015 07:32:32 -0700
 
-kwayland (4:5.2.1-0ubuntu1) vivid; urgency=medium
+dwayland (4:5.2.1-0ubuntu1) vivid; urgency=medium
 
   * New upstream release
 
  -- Scarlett Clark <sgclark@kubuntu.org>  Mon, 23 Feb 2015 09:41:56 -0800
 
-kwayland (4:5.2.0-1) experimental; urgency=medium
+dwayland (4:5.2.0-1) experimental; urgency=medium
 
   * Prepare initial Debian release.
   * Update watch file.
@@ -939,25 +939,25 @@ kwayland (4:5.2.0-1) experimental; urgency=medium
 
  -- Maximiliano Curia <maxy@debian.org>  Mon, 09 Feb 2015 00:43:37 +0100
 
-kwayland (4:5.2.0-0ubuntu1) vivid; urgency=medium
+dwayland (4:5.2.0-0ubuntu1) vivid; urgency=medium
 
   * New upstream release
 
  -- Harald Sitter <sitter@kde.org>  Tue, 27 Jan 2015 14:54:21 +0100
 
-kwayland (4:5.1.95-0ubuntu1) vivid; urgency=medium
+dwayland (4:5.1.95-0ubuntu1) vivid; urgency=medium
 
   * New upstream beta release
 
  -- Jonathan Riddell <jriddell@ubuntu.com>  Thu, 15 Jan 2015 01:31:34 +0100
 
-kwayland (5.1.2-0ubuntu1) vivid; urgency=medium
+dwayland (5.1.2-0ubuntu1) vivid; urgency=medium
 
   * New upstream release
 
  -- Jonathan Riddell <jriddell@ubuntu.com>  Mon, 05 Jan 2015 19:29:06 +0100
 
-kwayland (5.1.1-0ubuntu1) vivid; urgency=medium
+dwayland (5.1.1-0ubuntu1) vivid; urgency=medium
 
   * New upstream release
 

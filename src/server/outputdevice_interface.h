@@ -12,7 +12,7 @@
 #include <QVector>
 
 #include "global.h"
-#include <KWayland/Server/kwaylandserver_export.h>
+#include <DWayland/Server/kwaylandserver_export.h>
 
 struct wl_resource;
 
@@ -30,7 +30,7 @@ class Display;
  * @see OutputManagementInterface
  * @since 5.5
  */
-class KWAYLANDSERVER_EXPORT OutputDeviceInterface : public Global
+class DWAYLANDSERVER_EXPORT OutputDeviceInterface : public Global
 {
     Q_OBJECT
     Q_PROPERTY(QSize physicalSize READ physicalSize WRITE setPhysicalSize NOTIFY physicalSizeChanged)
@@ -99,9 +99,9 @@ public:
     QString eisaId() const;
     QSize pixelSize() const;
     int refreshRate() const;
-#if KWAYLANDSERVER_ENABLE_DEPRECATED_SINCE(5, 50)
+#if DWAYLANDSERVER_ENABLE_DEPRECATED_SINCE(5, 50)
     /// @deprecated Since 5.50, use scaleF()
-    KWAYLANDSERVER_DEPRECATED_VERSION(5, 50, "Use OutputDeviceInterface::scaleF()")
+    DWAYLANDSERVER_DEPRECATED_VERSION(5, 50, "Use OutputDeviceInterface::scaleF()")
     int scale() const;
 #endif
     /// @since 5.50
@@ -124,9 +124,9 @@ public:
     void setModel(const QString &model);
     void setSerialNumber(const QString &serialNumber);
     void setEisaId(const QString &eisaId);
-#if KWAYLANDSERVER_ENABLE_DEPRECATED_SINCE(5, 50)
+#if DWAYLANDSERVER_ENABLE_DEPRECATED_SINCE(5, 50)
     /// @deprecated Since 5.50, use setScale(qreal)
-    KWAYLANDSERVER_DEPRECATED_VERSION(5, 50, "Use OutputDeviceInterface::setScale(qreal)")
+    DWAYLANDSERVER_DEPRECATED_VERSION(5, 50, "Use OutputDeviceInterface::setScale(qreal)")
     void setScale(int scale);
 #endif
     /// @since 5.50
@@ -161,9 +161,9 @@ Q_SIGNALS:
     void eisaIdChanged(const QString &);
     void pixelSizeChanged(const QSize &);
     void refreshRateChanged(int);
-#if KWAYLANDSERVER_ENABLE_DEPRECATED_SINCE(5, 50)
+#if DWAYLANDSERVER_ENABLE_DEPRECATED_SINCE(5, 50)
     /// @deprecated Since 5.50, use scaleFChanged(qreal)
-    KWAYLANDSERVER_DEPRECATED_VERSION(5, 50, "Use OutputDeviceInterface::scaleFChanged(qreal)")
+    DWAYLANDSERVER_DEPRECATED_VERSION(5, 50, "Use OutputDeviceInterface::scaleFChanged(qreal)")
     void scaleChanged(int);
 #endif
     /// @since 5.50

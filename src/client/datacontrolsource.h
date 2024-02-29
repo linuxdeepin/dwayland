@@ -11,7 +11,7 @@
 
 #include <QObject>
 
-#include "KWayland/Client/kwaylandclient_export.h"
+#include "DWayland/Client/kwaylandclient_export.h"
 
 class QMimeType;
 
@@ -32,7 +32,7 @@ namespace Client
  *
  * @see DataDeviceManager
  **/
-class KWAYLANDCLIENT_EXPORT DataControlSourceV1 : public QObject
+class DWAYLANDCLIENT_EXPORT DataControlSourceV1 : public QObject
 {
     Q_OBJECT
 public:

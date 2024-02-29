@@ -8,7 +8,7 @@
 
 #include <QObject>
 
-#include "KWayland/Client/kwaylandclient_export.h"
+#include "DWayland/Client/kwaylandclient_export.h"
 
 #include "datacontroldevicemanager.h"
 
@@ -30,7 +30,7 @@ class DataControlDeviceV1;
  *
  * @see DataOfferManager
  **/
-class KWAYLANDCLIENT_EXPORT DataControlOfferV1 : public QObject
+class DWAYLANDCLIENT_EXPORT DataControlOfferV1 : public QObject
 {
     Q_OBJECT
 public:

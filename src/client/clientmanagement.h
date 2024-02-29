@@ -27,7 +27,7 @@ License along with this library.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <wayland-client-protocol.h>
 
-#include <KWayland/Client/kwaylandclient_export.h>
+#include <DWayland/Client/kwaylandclient_export.h>
 
 struct com_deepin_client_management;
 class QPoint;
@@ -70,7 +70,7 @@ class EventQueue;
  * @see Registry
  * @since 5.5
  **/
-class KWAYLANDCLIENT_EXPORT ClientManagement : public QObject
+class DWAYLANDCLIENT_EXPORT ClientManagement : public QObject
 {
     Q_OBJECT
 public:

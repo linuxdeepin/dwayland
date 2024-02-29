@@ -11,7 +11,7 @@
 #include <QSize>
 
 #include "global.h"
-#include <KWayland/Server/kwaylandserver_export.h>
+#include <DWayland/Server/kwaylandserver_export.h>
 
 struct wl_global;
 struct wl_client;
@@ -28,7 +28,7 @@ class Display;
  * @brief Global for the wl_output interface.
  *
  **/
-class KWAYLANDSERVER_EXPORT OutputInterface : public Global
+class DWAYLANDSERVER_EXPORT OutputInterface : public Global
 {
     Q_OBJECT
     Q_PROPERTY(QSize physicalSize READ physicalSize WRITE setPhysicalSize NOTIFY physicalSizeChanged)

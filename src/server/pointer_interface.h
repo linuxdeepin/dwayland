@@ -6,7 +6,7 @@
 #ifndef WAYLAND_SERVER_POINTER_INTERFACE_H
 #define WAYLAND_SERVER_POINTER_INTERFACE_H
 
-#include <KWayland/Server/kwaylandserver_export.h>
+#include <DWayland/Server/kwaylandserver_export.h>
 
 #include "resource.h"
 
@@ -27,7 +27,7 @@ enum class PointerAxisSource;
  *
  * @see SeatInterface
  **/
-class KWAYLANDSERVER_EXPORT PointerInterface : public Resource
+class DWAYLANDSERVER_EXPORT PointerInterface : public Resource
 {
     Q_OBJECT
 public:
@@ -79,7 +79,7 @@ private:
  *
  * @since 5.3
  **/
-class KWAYLANDSERVER_EXPORT Cursor : public QObject
+class DWAYLANDSERVER_EXPORT Cursor : public QObject
 {
     Q_OBJECT
 public:

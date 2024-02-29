@@ -8,7 +8,7 @@
 
 #include "global.h"
 
-#include <KWayland/Server/kwaylandserver_export.h>
+#include <DWayland/Server/kwaylandserver_export.h>
 
 namespace KWayland
 {
@@ -29,7 +29,7 @@ class OutputConfigurationInterface;
  * @see OutputConfigurationInterface
  * @since 5.5
  */
-class KWAYLANDSERVER_EXPORT OutputManagementInterface : public Global
+class DWAYLANDSERVER_EXPORT OutputManagementInterface : public Global
 {
     Q_OBJECT
 public:

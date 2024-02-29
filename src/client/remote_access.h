@@ -8,7 +8,7 @@
 
 #include <QObject>
 
-#include "KWayland/Client/kwaylandclient_export.h"
+#include "DWayland/Client/kwaylandclient_export.h"
 
 struct org_kde_kwin_remote_access_manager;
 struct org_kde_kwin_remote_buffer;
@@ -45,7 +45,7 @@ class RemoteBuffer;
  *
  * @see Registry
  **/
-class KWAYLANDCLIENT_EXPORT RemoteAccessManager : public QObject
+class DWAYLANDCLIENT_EXPORT RemoteAccessManager : public QObject
 {
     Q_OBJECT
 public:
@@ -135,7 +135,7 @@ private:
  * The instances of this class are created by parent RemoteAccessManager.
  * Deletion (by noLongerNeeded call) is in responsibility of underlying system.
  */
-class KWAYLANDCLIENT_EXPORT RemoteBuffer : public QObject
+class DWAYLANDCLIENT_EXPORT RemoteBuffer : public QObject
 {
     Q_OBJECT
 public:

@@ -31,7 +31,7 @@ private Q_SLOTS:
 
     void testRegistry();
     void testModeChanges();
-#if KWAYLANDSERVER_ENABLE_DEPRECATED_SINCE(5, 50)
+#if DWAYLANDSERVER_ENABLE_DEPRECATED_SINCE(5, 50)
     void testScaleChange_legacy();
 #endif
     void testScaleChange();
@@ -197,7 +197,7 @@ void TestWaylandOutputDevice::testRegistry()
     QCOMPARE(output.physicalSize(), QSize());
     QCOMPARE(output.pixelSize(), QSize());
     QCOMPARE(output.refreshRate(), 0);
-#if KWAYLANDSERVER_ENABLE_DEPRECATED_SINCE(5, 50)
+#if DWAYLANDSERVER_ENABLE_DEPRECATED_SINCE(5, 50)
     QCOMPARE(output.scale(), 1);
 #endif
     QCOMPARE(output.scaleF(), 1.0);
@@ -226,7 +226,7 @@ void TestWaylandOutputDevice::testRegistry()
     QCOMPARE(output.physicalSize(), QSize(200, 100));
     QCOMPARE(output.pixelSize(), QSize(1024, 768));
     QCOMPARE(output.refreshRate(), 60000);
-#if KWAYLANDSERVER_ENABLE_DEPRECATED_SINCE(5, 50)
+#if DWAYLANDSERVER_ENABLE_DEPRECATED_SINCE(5, 50)
     QCOMPARE(output.scale(), 1);
 #endif
     QCOMPARE(output.scaleF(), 1.0);
@@ -343,7 +343,7 @@ void TestWaylandOutputDevice::testModeChanges()
     QCOMPARE(output.pixelSize(), QSize(1280, 1024));
 }
 
-#if KWAYLANDSERVER_ENABLE_DEPRECATED_SINCE(5, 50)
+#if DWAYLANDSERVER_ENABLE_DEPRECATED_SINCE(5, 50)
 void TestWaylandOutputDevice::testScaleChange_legacy()
 {
     KWayland::Client::Registry registry;
@@ -407,7 +407,7 @@ void TestWaylandOutputDevice::testScaleChange()
     outputChanged.clear();
     m_serverOutputDevice->setScaleF(2.2);
     QVERIFY(outputChanged.wait());
-#if KWAYLANDSERVER_ENABLE_DEPRECATED_SINCE(5, 50)
+#if DWAYLANDSERVER_ENABLE_DEPRECATED_SINCE(5, 50)
     QCOMPARE(output.scale(), 2); // check backwards compatibility works
 #endif
     QCOMPARE(wl_fixed_from_double(output.scaleF()), wl_fixed_from_double(2.2));
@@ -416,7 +416,7 @@ void TestWaylandOutputDevice::testScaleChange()
     outputChanged.clear();
     m_serverOutputDevice->setScaleF(4.9);
     QVERIFY(outputChanged.wait());
-#if KWAYLANDSERVER_ENABLE_DEPRECATED_SINCE(5, 50)
+#if DWAYLANDSERVER_ENABLE_DEPRECATED_SINCE(5, 50)
     QCOMPARE(output.scale(), 5);
 #endif
     QCOMPARE(wl_fixed_from_double(output.scaleF()), wl_fixed_from_double(4.9));

@@ -9,7 +9,7 @@
 #include <QObject>
 
 #include "global.h"
-#include <KWayland/Server/kwaylandserver_export.h>
+#include <DWayland/Server/kwaylandserver_export.h>
 
 namespace KWayland
 {
@@ -50,7 +50,7 @@ class Display;
  * @see OutputInterface
  * @since 5.5
  **/
-class KWAYLANDSERVER_EXPORT DpmsManagerInterface : public Global
+class DWAYLANDSERVER_EXPORT DpmsManagerInterface : public Global
 {
     Q_OBJECT
 public:

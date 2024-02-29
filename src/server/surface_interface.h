@@ -13,7 +13,7 @@
 #include <QPointer>
 #include <QRegion>
 
-#include <KWayland/Server/kwaylandserver_export.h>
+#include <DWayland/Server/kwaylandserver_export.h>
 
 namespace KWayland
 {
@@ -59,7 +59,7 @@ class SubSurfaceInterface;
  * @see ShadowInterface
  * @see SlideInterface
  **/
-class KWAYLANDSERVER_EXPORT SurfaceInterface : public Resource
+class DWAYLANDSERVER_EXPORT SurfaceInterface : public Resource
 {
     Q_OBJECT
     /**
@@ -85,12 +85,12 @@ public:
     QRegion damage() const;
     QRegion opaque() const;
     QRegion input() const;
-#if KWAYLANDSERVER_ENABLE_DEPRECATED_SINCE(5, 5)
+#if DWAYLANDSERVER_ENABLE_DEPRECATED_SINCE(5, 5)
     /**
      * Use Surface::inputIsInfinite instead.
      * @deprecated Since 5.5, use inputIsInfinite
      */
-    KWAYLANDSERVER_DEPRECATED_VERSION(5, 5, "Use SurfaceInterface::inputIsInfinite()")
+    DWAYLANDSERVER_DEPRECATED_VERSION(5, 5, "Use SurfaceInterface::inputIsInfinite()")
     bool inputIsInfitine() const;
 #endif
     /**

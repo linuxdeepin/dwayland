@@ -6,7 +6,7 @@
 #ifndef WAYLAND_SERVER_TOUCH_INTERFACE_H
 #define WAYLAND_SERVER_TOUCH_INTERFACE_H
 
-#include <KWayland/Server/kwaylandserver_export.h>
+#include <DWayland/Server/kwaylandserver_export.h>
 
 #include "resource.h"
 
@@ -20,7 +20,7 @@ class SeatInterface;
  * @brief Resource for the wl_touch interface.
  *
  **/
-class KWAYLANDSERVER_EXPORT TouchInterface : public Resource
+class DWAYLANDSERVER_EXPORT TouchInterface : public Resource
 {
     Q_OBJECT
 public:

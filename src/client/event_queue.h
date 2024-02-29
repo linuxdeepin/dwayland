@@ -8,7 +8,7 @@
 
 #include <QObject>
 
-#include "KWayland/Client/kwaylandclient_export.h"
+#include "DWayland/Client/kwaylandclient_export.h"
 
 struct wl_display;
 struct wl_proxy;
@@ -51,7 +51,7 @@ class ConnectionThread;
  * The EventQueue can be used as a drop-in replacement for any wl_event_queue
  * pointer as it provides matching cast operators.
  **/
-class KWAYLANDCLIENT_EXPORT EventQueue : public QObject
+class DWAYLANDCLIENT_EXPORT EventQueue : public QObject
 {
     Q_OBJECT
 public:

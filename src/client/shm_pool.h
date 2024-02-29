@@ -8,7 +8,7 @@
 
 #include <QObject>
 
-#include "KWayland/Client/kwaylandclient_export.h"
+#include "DWayland/Client/kwaylandclient_export.h"
 #include "buffer.h"
 
 class QImage;
@@ -112,7 +112,7 @@ class EventQueue;
  *
  * @see Buffer
  **/
-class KWAYLANDCLIENT_EXPORT ShmPool : public QObject
+class DWAYLANDCLIENT_EXPORT ShmPool : public QObject
 {
     Q_OBJECT
 public:

@@ -10,7 +10,7 @@
 #include <QList>
 #include <QObject>
 
-#include <KWayland/Server/kwaylandserver_export.h>
+#include <DWayland/Server/kwaylandserver_export.h>
 
 #include "clientconnection.h"
 
@@ -87,7 +87,7 @@ class StrutInterface;
  *
  * @todo Improve documentation
  **/
-class KWAYLANDSERVER_EXPORT Display : public QObject
+class DWAYLANDSERVER_EXPORT Display : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(QString socketName READ socketName WRITE setSocketName NOTIFY socketNameChanged)

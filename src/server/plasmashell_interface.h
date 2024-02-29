@@ -8,7 +8,7 @@
 
 #include <QObject>
 
-#include <KWayland/Server/kwaylandserver_export.h>
+#include <DWayland/Server/kwaylandserver_export.h>
 
 #include "global.h"
 #include "resource.h"
@@ -35,7 +35,7 @@ class PlasmaShellSurfaceInterface;
  *
  * @since 5.4
  **/
-class KWAYLANDSERVER_EXPORT PlasmaShellInterface : public Global
+class DWAYLANDSERVER_EXPORT PlasmaShellInterface : public Global
 {
     Q_OBJECT
 public:
@@ -60,7 +60,7 @@ private:
  *
  * @since 5.4
  **/
-class KWAYLANDSERVER_EXPORT PlasmaShellSurfaceInterface : public Resource
+class DWAYLANDSERVER_EXPORT PlasmaShellSurfaceInterface : public Resource
 {
     Q_OBJECT
 public:

@@ -11,7 +11,7 @@
 
 #include <QSize>
 
-#include <KWayland/Server/kwaylandserver_export.h>
+#include <DWayland/Server/kwaylandserver_export.h>
 
 namespace KWayland
 {
@@ -84,7 +84,7 @@ Q_DECLARE_FLAGS(PositionerConstraints, PositionerConstraint)
  *
  * @since 5.25
  **/
-class KWAYLANDSERVER_EXPORT XdgShellInterface : public Global
+class DWAYLANDSERVER_EXPORT XdgShellInterface : public Global
 {
     Q_OBJECT
 public:
@@ -177,7 +177,7 @@ private:
  *
  * @since 5.25
  **/
-class KWAYLANDSERVER_EXPORT XdgShellSurfaceInterface : public Resource
+class DWAYLANDSERVER_EXPORT XdgShellSurfaceInterface : public Resource
 {
     Q_OBJECT
 public:
@@ -370,7 +370,7 @@ private:
  *
  * @since 5.25
  **/
-class KWAYLANDSERVER_EXPORT XdgShellPopupInterface : public Resource
+class DWAYLANDSERVER_EXPORT XdgShellPopupInterface : public Resource
 {
     Q_OBJECT
 public:

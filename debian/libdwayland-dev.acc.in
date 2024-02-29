@@ -6,12 +6,12 @@
 </version>
 
 <headers>
-    /usr/include/KF5/KWayland/
+    /usr/include/DWayland/
 </headers>
 
 <libs>
-    /usr/lib/@@DEB_HOST_MULTIARCH@@/libKF5WaylandClient.so
-    /usr/lib/@@DEB_HOST_MULTIARCH@@/libKF5WaylandServer.so
+    /usr/lib/@@DEB_HOST_MULTIARCH@@/libDWaylandClient.so
+    /usr/lib/@@DEB_HOST_MULTIARCH@@/libDWaylandServer.so
 </libs>
 
 <gcc_options>

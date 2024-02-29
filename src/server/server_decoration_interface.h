@@ -9,7 +9,7 @@
 #include "global.h"
 #include "resource.h"
 
-#include <KWayland/Server/kwaylandserver_export.h>
+#include <DWayland/Server/kwaylandserver_export.h>
 
 namespace KWayland
 {
@@ -24,7 +24,7 @@ class SurfaceInterface;
  *
  * @since 5.6
  **/
-class KWAYLANDSERVER_EXPORT ServerSideDecorationManagerInterface : public Global
+class DWAYLANDSERVER_EXPORT ServerSideDecorationManagerInterface : public Global
 {
     Q_OBJECT
 public:
@@ -80,7 +80,7 @@ private:
  *
  * @since 5.6
  **/
-class KWAYLANDSERVER_EXPORT ServerSideDecorationInterface : public Resource
+class DWAYLANDSERVER_EXPORT ServerSideDecorationInterface : public Resource
 {
     Q_OBJECT
 public:

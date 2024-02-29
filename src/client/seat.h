@@ -8,7 +8,7 @@
 
 #include <QObject>
 
-#include "KWayland/Client/kwaylandclient_export.h"
+#include "DWayland/Client/kwaylandclient_export.h"
 
 struct wl_seat;
 struct wl_touch;
@@ -48,7 +48,7 @@ class Touch;
  * @see Keyboard
  * @see Pointer
  **/
-class KWAYLANDCLIENT_EXPORT Seat : public QObject
+class DWAYLANDCLIENT_EXPORT Seat : public QObject
 {
     Q_OBJECT
     /**

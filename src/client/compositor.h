@@ -10,7 +10,7 @@
 
 #include <memory>
 
-#include "KWayland/Client/kwaylandclient_export.h"
+#include "DWayland/Client/kwaylandclient_export.h"
 
 struct wl_compositor;
 
@@ -46,7 +46,7 @@ class Surface;
  *
  * @see Registry
  **/
-class KWAYLANDCLIENT_EXPORT Compositor : public QObject
+class DWAYLANDCLIENT_EXPORT Compositor : public QObject
 {
     Q_OBJECT
 public:

@@ -9,7 +9,7 @@
 #include <QObject>
 
 #include "seat_interface.h"
-#include <KWayland/Server/kwaylandserver_export.h>
+#include <DWayland/Server/kwaylandserver_export.h>
 
 #include "global.h"
 #include "resource.h"
@@ -34,7 +34,7 @@ class GenericShellSurface;
  * @see ShellSurfaceInterface
  * @see SurfaceInterface
  **/
-class KWAYLANDSERVER_EXPORT ShellInterface : public Global
+class DWAYLANDSERVER_EXPORT ShellInterface : public Global
 {
     Q_OBJECT
 public:
@@ -63,7 +63,7 @@ private:
  * @see SurfaceInterface
  * @see ShellInterface
  **/
-class KWAYLANDSERVER_EXPORT ShellSurfaceInterface : public Resource
+class DWAYLANDSERVER_EXPORT ShellSurfaceInterface : public Resource
 {
     Q_OBJECT
     /**

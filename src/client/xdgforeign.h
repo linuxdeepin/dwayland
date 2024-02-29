@@ -10,7 +10,7 @@
 
 #include <QObject>
 
-#include "KWayland/Client/kwaylandclient_export.h"
+#include "DWayland/Client/kwaylandclient_export.h"
 
 struct zxdg_exporter_v2;
 struct zxdg_importer_v2;
@@ -49,7 +49,7 @@ class XdgImported;
  *
  * @see Registry
  **/
-class KWAYLANDCLIENT_EXPORT XdgExporter : public QObject
+class DWAYLANDCLIENT_EXPORT XdgExporter : public QObject
 {
     Q_OBJECT
 public:
@@ -149,7 +149,7 @@ protected:
  *
  * @see Registry
  **/
-class KWAYLANDCLIENT_EXPORT XdgImporter : public QObject
+class DWAYLANDCLIENT_EXPORT XdgImporter : public QObject
 {
     Q_OBJECT
 public:
@@ -231,7 +231,7 @@ protected:
     QScopedPointer<Private> d;
 };
 
-class KWAYLANDCLIENT_EXPORT XdgExported : public QObject
+class DWAYLANDCLIENT_EXPORT XdgExported : public QObject
 {
     Q_OBJECT
 public:
@@ -295,7 +295,7 @@ protected:
     QScopedPointer<Private> d;
 };
 
-class KWAYLANDCLIENT_EXPORT XdgImported : public QObject
+class DWAYLANDCLIENT_EXPORT XdgImported : public QObject
 {
     Q_OBJECT
 public:

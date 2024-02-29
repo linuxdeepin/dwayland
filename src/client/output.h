@@ -10,7 +10,7 @@
 #include <QPointer>
 #include <QSize>
 
-#include "KWayland/Client/kwaylandclient_export.h"
+#include "DWayland/Client/kwaylandclient_export.h"
 
 struct wl_output;
 class QPoint;
@@ -51,7 +51,7 @@ class EventQueue;
  *
  * @see Registry
  **/
-class KWAYLANDCLIENT_EXPORT Output : public QObject
+class DWAYLANDCLIENT_EXPORT Output : public QObject
 {
     Q_OBJECT
 public:

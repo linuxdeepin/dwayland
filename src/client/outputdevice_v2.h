@@ -11,7 +11,7 @@
 #include <QSize>
 #include <QVector>
 
-#include "KWayland/Client/kwaylandclient_export.h"
+#include "DWayland/Client/kwaylandclient_export.h"
 
 #include "outputdevicemode_v2.h"
 
@@ -55,7 +55,7 @@ class EventQueue;
  * @see Registry
  * @since 5.5
  **/
-class KWAYLANDCLIENT_EXPORT OutputDeviceV2 : public QObject
+class DWAYLANDCLIENT_EXPORT OutputDeviceV2 : public QObject
 {
     Q_OBJECT
 public:
@@ -152,7 +152,7 @@ public:
      **/
     int refreshRate() const;
 
-#if KWAYLANDCLIENT_ENABLE_DEPRECATED_SINCE(5, 50)
+#if DWAYLANDCLIENT_ENABLE_DEPRECATED_SINCE(5, 50)
     /**
      * Scaling factor of this output.
      *
@@ -161,7 +161,7 @@ public:
      * applications rendering at the native resolution would be too small to be legible.
      * @deprecated Since 5.50, use scaleF()
      **/
-    KWAYLANDCLIENT_DEPRECATED_VERSION(5, 50, "Use OutputDeviceV2::scaleF()")
+    DWAYLANDCLIENT_DEPRECATED_VERSION(5, 50, "Use OutputDeviceV2::scaleF()")
     int scale() const;
 #endif
 

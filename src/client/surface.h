@@ -13,7 +13,7 @@
 #include <QSize>
 #include <QWindow>
 
-#include "KWayland/Client/kwaylandclient_export.h"
+#include "DWayland/Client/kwaylandclient_export.h"
 
 struct wl_buffer;
 struct wl_surface;
@@ -40,7 +40,7 @@ class Region;
  *
  * @see Compositor
  **/
-class KWAYLANDCLIENT_EXPORT Surface : public QObject
+class DWAYLANDCLIENT_EXPORT Surface : public QObject
 {
     Q_OBJECT
 public:

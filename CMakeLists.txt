@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.13)
 
-set(KF_VERSION "5.102.0") # handled by release scripts
-project(KWayland VERSION ${KF_VERSION})
+set(PROJECT_VERSION "5.102.0") # handled by release scripts
+project(DWayland VERSION ${PROJECT_VERSION})
 
 # ECM setup
 include(FeatureSummary)
@@ -33,8 +33,8 @@ option(BUILD_QCH "Build API documentation in QCH format (for e.g. Qt Assistant, 
 add_feature_info(QCH ${BUILD_QCH} "API documentation in QCH format (for e.g. Qt Assistant, Qt Creator & KDevelop)")
 
 ecm_setup_version(PROJECT VARIABLE_PREFIX KWAYLAND
-                        VERSION_HEADER "${CMAKE_CURRENT_BINARY_DIR}/kwayland_version.h"
-                        PACKAGE_VERSION_FILE "${CMAKE_CURRENT_BINARY_DIR}/KF5WaylandConfigVersion.cmake"
+                        VERSION_HEADER "${CMAKE_CURRENT_BINARY_DIR}/dwayland_version.h"
+                        PACKAGE_VERSION_FILE "${CMAKE_CURRENT_BINARY_DIR}/DWaylandConfigVersion.cmake"
                         SOVERSION 5)
 
 include_directories(${Qt5XkbCommonSupport_INCLUDE_DIRS})
@@ -102,37 +102,37 @@ if (BUILD_TESTING)
 endif()
 
 # create a Config.cmake and a ConfigVersion.cmake file and install them
-set(CMAKECONFIG_INSTALL_DIR "${KDE_INSTALL_CMAKEPACKAGEDIR}/KF5Wayland")
+set(CMAKECONFIG_INSTALL_DIR "${KDE_INSTALL_CMAKEPACKAGEDIR}/DWayland")
 
 if (BUILD_QCH)
     ecm_install_qch_export(
-        TARGETS KF5Wayland_QCH
-        FILE KF5WaylandQchTargets.cmake
+        TARGETS DWayland_QCH
+        FILE DWaylandQchTargets.cmake
         DESTINATION "${CMAKECONFIG_INSTALL_DIR}"
         COMPONENT Devel
     )
-    set(PACKAGE_INCLUDE_QCHTARGETS "include(\"\${CMAKE_CURRENT_LIST_DIR}/KF5WaylandQchTargets.cmake\")")
+    set(PACKAGE_INCLUDE_QCHTARGETS "include(\"\${CMAKE_CURRENT_LIST_DIR}/DWaylandQchTargets.cmake\")")
 endif()
 
-configure_package_config_file("${CMAKE_CURRENT_SOURCE_DIR}/KF5WaylandConfig.cmake.in"
-                              "${CMAKE_CURRENT_BINARY_DIR}/KF5WaylandConfig.cmake"
+configure_package_config_file("${CMAKE_CURRENT_SOURCE_DIR}/DWaylandConfig.cmake.in"
+                              "${CMAKE_CURRENT_BINARY_DIR}/DWaylandConfig.cmake"
                               INSTALL_DESTINATION  ${CMAKECONFIG_INSTALL_DIR}
                               )
 
-install(FILES  "${CMAKE_CURRENT_BINARY_DIR}/KF5WaylandConfig.cmake"
-               "${CMAKE_CURRENT_BINARY_DIR}/KF5WaylandConfigVersion.cmake"
+install(FILES  "${CMAKE_CURRENT_BINARY_DIR}/DWaylandConfig.cmake"
+               "${CMAKE_CURRENT_BINARY_DIR}/DWaylandConfigVersion.cmake"
         DESTINATION "${CMAKECONFIG_INSTALL_DIR}"
         COMPONENT Devel )
 
-install(EXPORT KF5WaylandTargets DESTINATION "${CMAKECONFIG_INSTALL_DIR}" FILE KF5WaylandTargets.cmake NAMESPACE KF5:: )
+install(EXPORT DWaylandTargets DESTINATION "${CMAKECONFIG_INSTALL_DIR}" FILE DWaylandTargets.cmake NAMESPACE D:: )
 
 
-install(FILES ${CMAKE_CURRENT_BINARY_DIR}/kwayland_version.h
-        DESTINATION ${KDE_INSTALL_INCLUDEDIR_KF}/KWayland COMPONENT Devel)
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/dwayland_version.h
+        DESTINATION ${CMAKECONFIG_INSTALL_DIR}/DWayland COMPONENT Devel)
 
 if (NOT WIN32)
-    ecm_generate_pkgconfig_file(BASE_NAME KF5WaylandClient
-      INCLUDE_INSTALL_DIR ${KDE_INSTALL_INCLUDEDIR_KF}/KWayland
+    ecm_generate_pkgconfig_file(BASE_NAME DWaylandClient
+      INCLUDE_INSTALL_DIR ${KDE_INSTALL_INCLUDEDIR}/DWayland
       DEPS Qt${QT_MAJOR_VERSION}Gui
     INSTALL)
 endif()

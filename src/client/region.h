@@ -8,7 +8,7 @@
 
 #include <QObject>
 
-#include "KWayland/Client/kwaylandclient_export.h"
+#include "DWayland/Client/kwaylandclient_export.h"
 
 struct wl_region;
 
@@ -28,7 +28,7 @@ namespace Client
  * @see Compositor
  * @see Surface
  **/
-class KWAYLANDCLIENT_EXPORT Region : public QObject
+class DWAYLANDCLIENT_EXPORT Region : public QObject
 {
     Q_OBJECT
 public:

@@ -9,7 +9,7 @@
 #include "global.h"
 #include "resource.h"
 
-#include <KWayland/Server/kwaylandserver_export.h>
+#include <DWayland/Server/kwaylandserver_export.h>
 
 #include <QRegion>
 
@@ -42,7 +42,7 @@ enum class PointerConstraintsInterfaceVersion {
  * @see Display::createPointerConstraints
  * @since 5.29
  **/
-class KWAYLANDSERVER_EXPORT PointerConstraintsInterface : public Global
+class DWAYLANDSERVER_EXPORT PointerConstraintsInterface : public Global
 {
     Q_OBJECT
 public:
@@ -77,7 +77,7 @@ private:
  *
  * @since 5.29
  **/
-class KWAYLANDSERVER_EXPORT LockedPointerInterface : public Resource
+class DWAYLANDSERVER_EXPORT LockedPointerInterface : public Resource
 {
     Q_OBJECT
 public:
@@ -198,7 +198,7 @@ private:
  *
  * @since 5.29
  **/
-class KWAYLANDSERVER_EXPORT ConfinedPointerInterface : public Resource
+class DWAYLANDSERVER_EXPORT ConfinedPointerInterface : public Resource
 {
     Q_OBJECT
 public:

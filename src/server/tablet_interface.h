@@ -20,7 +20,7 @@ License along with this library.  If not, see <http://www.gnu.org/licenses/>.
 #ifndef WAYLAND_SERVER_TABLET_INTERFACE_H
 #define WAYLAND_SERVER_TABLET_INTERFACE_H
 
-#include <KWayland/Server/kwaylandserver_export.h>
+#include <DWayland/Server/kwaylandserver_export.h>
 #include <QVector>
 
 #include "resource.h"
@@ -45,7 +45,7 @@ class TabletCursor;
  * @since 5.69
  */
 
-class KWAYLANDSERVER_EXPORT TabletManagerInterface : public QObject
+class DWAYLANDSERVER_EXPORT TabletManagerInterface : public QObject
 {
     Q_OBJECT
 public:
@@ -60,7 +60,7 @@ private:
     QScopedPointer<Private> d;
 };
 
-class KWAYLANDSERVER_EXPORT TabletToolInterface : public QObject
+class DWAYLANDSERVER_EXPORT TabletToolInterface : public QObject
 {
     Q_OBJECT
 public:
@@ -131,7 +131,7 @@ private:
     QScopedPointer<Private> d;
 };
 
-class KWAYLANDSERVER_EXPORT TabletCursor : public QObject
+class DWAYLANDSERVER_EXPORT TabletCursor : public QObject
 {
     Q_OBJECT
 public:
@@ -150,7 +150,7 @@ private:
     const QScopedPointer<Private> d;
 };
 
-class KWAYLANDSERVER_EXPORT TabletInterface : public QObject
+class DWAYLANDSERVER_EXPORT TabletInterface : public QObject
 {
     Q_OBJECT
 public:
@@ -171,7 +171,7 @@ private:
     QScopedPointer<Private> d;
 };
 
-class KWAYLANDSERVER_EXPORT TabletSeatInterface : public QObject
+class DWAYLANDSERVER_EXPORT TabletSeatInterface : public QObject
 {
     Q_OBJECT
 public:

@@ -10,7 +10,7 @@
 #include <QObject>
 
 #include "outputdevice_interface.h"
-#include <KWayland/Server/kwaylandserver_export.h>
+#include <DWayland/Server/kwaylandserver_export.h>
 
 namespace KWayland
 {
@@ -26,7 +26,7 @@ namespace Server
  * @see OutputConfiguration
  * @since 5.5
  **/
-class KWAYLANDSERVER_EXPORT OutputChangeSet : public QObject
+class DWAYLANDSERVER_EXPORT OutputChangeSet : public QObject
 {
     Q_OBJECT
 public:
@@ -74,11 +74,11 @@ public:
     OutputDeviceInterface::Transform transform() const;
     /** The new value for globalPosition. */
     QPoint position() const;
-#if KWAYLANDSERVER_ENABLE_DEPRECATED_SINCE(5, 50)
+#if DWAYLANDSERVER_ENABLE_DEPRECATED_SINCE(5, 50)
     /** The new value for scale.
      @deprecated Since 5.50, use scaleF
      */
-    KWAYLANDSERVER_DEPRECATED_VERSION(5, 50, "Use OutputChangeSet::scaleF()")
+    DWAYLANDSERVER_DEPRECATED_VERSION(5, 50, "Use OutputChangeSet::scaleF()")
     int scale() const;
 #endif
     /** The new value for scale.

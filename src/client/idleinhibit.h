@@ -8,7 +8,7 @@
 
 #include <QObject>
 
-#include "KWayland/Client/kwaylandclient_export.h"
+#include "DWayland/Client/kwaylandclient_export.h"
 
 struct zwp_idle_inhibit_manager_v1;
 struct zwp_idle_inhibitor_v1;
@@ -45,7 +45,7 @@ class IdleInhibitor;
  * @see Registry
  * @since 5.41
  **/
-class KWAYLANDCLIENT_EXPORT IdleInhibitManager : public QObject
+class DWAYLANDCLIENT_EXPORT IdleInhibitManager : public QObject
 {
     Q_OBJECT
 public:
@@ -145,7 +145,7 @@ private:
  * @see Surface
  * @since 5.41
  **/
-class KWAYLANDCLIENT_EXPORT IdleInhibitor : public QObject
+class DWAYLANDCLIENT_EXPORT IdleInhibitor : public QObject
 {
     Q_OBJECT
 public:

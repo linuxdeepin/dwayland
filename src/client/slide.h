@@ -8,7 +8,7 @@
 
 #include <QObject>
 
-#include "KWayland/Client/kwaylandclient_export.h"
+#include "DWayland/Client/kwaylandclient_export.h"
 
 struct org_kde_kwin_slide_manager;
 struct org_kde_kwin_slide;
@@ -51,7 +51,7 @@ class Surface;
  *
  * @see Registry
  **/
-class KWAYLANDCLIENT_EXPORT SlideManager : public QObject
+class DWAYLANDCLIENT_EXPORT SlideManager : public QObject
 {
     Q_OBJECT
 public:
@@ -129,7 +129,7 @@ private:
 /**
  * TODO
  */
-class KWAYLANDCLIENT_EXPORT Slide : public QObject
+class DWAYLANDCLIENT_EXPORT Slide : public QObject
 {
     Q_OBJECT
 public:

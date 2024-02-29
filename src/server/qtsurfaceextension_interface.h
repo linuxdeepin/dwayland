@@ -8,7 +8,7 @@
 
 #include <QObject>
 
-#include <KWayland/Server/kwaylandserver_export.h>
+#include <DWayland/Server/kwaylandserver_export.h>
 
 #include "global.h"
 #include "resource.h"
@@ -26,7 +26,7 @@ class QtExtendedSurfaceInterface;
 /**
  * TODO
  */
-class KWAYLANDSERVER_EXPORT QtSurfaceExtensionInterface : public Global
+class DWAYLANDSERVER_EXPORT QtSurfaceExtensionInterface : public Global
 {
     Q_OBJECT
 public:
@@ -44,7 +44,7 @@ private:
 /**
  * TODO
  */
-class KWAYLANDSERVER_EXPORT QtExtendedSurfaceInterface : public Resource
+class DWAYLANDSERVER_EXPORT QtExtendedSurfaceInterface : public Resource
 {
     Q_OBJECT
 public:

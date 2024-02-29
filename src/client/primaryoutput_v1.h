@@ -8,7 +8,7 @@
 
 #include <QObject>
 
-#include "KWayland/Client/kwaylandclient_export.h"
+#include "DWayland/Client/kwaylandclient_export.h"
 
 struct kde_primary_output_v1;
 
@@ -18,7 +18,7 @@ namespace Client
 {
 class EventQueue;
 
-class KWAYLANDCLIENT_EXPORT PrimaryOutputV1 : public QObject
+class DWAYLANDCLIENT_EXPORT PrimaryOutputV1 : public QObject
 {
     Q_OBJECT
 public:

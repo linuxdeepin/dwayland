@@ -8,7 +8,7 @@
 
 #include <QAbstractListModel>
 
-#include "KWayland/Client/kwaylandclient_export.h"
+#include "DWayland/Client/kwaylandclient_export.h"
 
 namespace KWayland
 {
@@ -39,7 +39,7 @@ class Surface;
  * @see PlasmaWindow
  **/
 
-class KWAYLANDCLIENT_EXPORT PlasmaWindowModel : public QAbstractListModel
+class DWAYLANDCLIENT_EXPORT PlasmaWindowModel : public QAbstractListModel
 {
     Q_OBJECT
 
@@ -55,11 +55,11 @@ public:
         IsMinimized,
         IsKeepAbove,
         IsKeepBelow,
-#if KWAYLANDCLIENT_ENABLE_DEPRECATED_SINCE(5, 53)
+#if DWAYLANDCLIENT_ENABLE_DEPRECATED_SINCE(5, 53)
         /**
           @deprecated Since 5.53, use VirtualDesktops
          */
-        VirtualDesktop KWAYLANDCLIENT_ENUMERATOR_DEPRECATED_VERSION_BELATED(5, 82, 5, 53, "Use VirtualDesktops"),
+        VirtualDesktop DWAYLANDCLIENT_ENUMERATOR_DEPRECATED_VERSION_BELATED(5, 82, 5, 53, "Use VirtualDesktops"),
 #else
         VirtualDesktop_DEPRECATED_DO_NOT_USE,
 #endif
@@ -151,13 +151,13 @@ public:
      **/
     Q_INVOKABLE void requestResize(int row);
 
-#if KWAYLANDCLIENT_ENABLE_DEPRECATED_SINCE(5, 52)
+#if DWAYLANDCLIENT_ENABLE_DEPRECATED_SINCE(5, 52)
     /**
      * Request the window at this model row index be moved to this virtual desktop.
      *
      * @deprecated Since 5.52; starting from 5.90, use requestEnterVirtualDesktop(int row, const QString &id) instead.
      **/
-    KWAYLANDCLIENT_DEPRECATED_VERSION(5, 52, "Starting from 5.90 use PlasmaWindowModel::requestEnterVirtualDesktop(int row, const QString &id) instead.")
+    DWAYLANDCLIENT_DEPRECATED_VERSION(5, 52, "Starting from 5.90 use PlasmaWindowModel::requestEnterVirtualDesktop(int row, const QString &id) instead.")
     Q_INVOKABLE void requestVirtualDesktop(int row, quint32 desktop);
 #endif
 

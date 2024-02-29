@@ -596,7 +596,7 @@ int OutputDevice::refreshRate() const
     return (*d->currentMode).refreshRate;
 }
 
-#if KWAYLANDCLIENT_BUILD_DEPRECATED_SINCE(5, 50)
+#if DWAYLANDCLIENT_BUILD_DEPRECATED_SINCE(5, 50)
 int OutputDevice::scale() const
 {
     return qRound(d->scale);

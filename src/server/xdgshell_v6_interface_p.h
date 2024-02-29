@@ -10,7 +10,7 @@
 #include "resource.h"
 #include "xdgshell_interface.h"
 
-#include <KWayland/Server/kwaylandserver_export.h>
+#include <DWayland/Server/kwaylandserver_export.h>
 
 #include <QSize>
 

@@ -8,7 +8,7 @@
 
 #include <QObject>
 
-#include <KWayland/Server/kwaylandserver_export.h>
+#include <DWayland/Server/kwaylandserver_export.h>
 
 #include "resource.h"
 
@@ -32,7 +32,7 @@ class SurfaceInterface;
  * @see SeatInterface
  * @see DataSourceInterface
  **/
-class KWAYLANDSERVER_EXPORT DataDeviceInterface : public Resource
+class DWAYLANDSERVER_EXPORT DataDeviceInterface : public Resource
 {
     Q_OBJECT
 public:

@@ -8,7 +8,7 @@
 
 #include <QObject>
 
-#include "KWayland/Client/kwaylandclient_export.h"
+#include "DWayland/Client/kwaylandclient_export.h"
 
 struct org_kde_kwin_server_decoration_manager;
 struct org_kde_kwin_server_decoration;
@@ -46,7 +46,7 @@ class ServerSideDecoration;
  * @see Registry
  * @since 5.6
  **/
-class KWAYLANDCLIENT_EXPORT ServerSideDecorationManager : public QObject
+class DWAYLANDCLIENT_EXPORT ServerSideDecorationManager : public QObject
 {
     Q_OBJECT
 public:
@@ -130,7 +130,7 @@ private:
  * @see ServerSideDecorationManager
  * @since 5.6
  **/
-class KWAYLANDCLIENT_EXPORT ServerSideDecoration : public QObject
+class DWAYLANDCLIENT_EXPORT ServerSideDecoration : public QObject
 {
     Q_OBJECT
 public:

@@ -9,7 +9,7 @@
 #include "global.h"
 #include "resource.h"
 
-#include <KWayland/Server/kwaylandserver_export.h>
+#include <DWayland/Server/kwaylandserver_export.h>
 
 namespace KWayland
 {
@@ -30,7 +30,7 @@ class XdgImporterUnstableV2Interface;
  *
  * @since 5.40
  */
-class KWAYLANDSERVER_EXPORT XdgForeignInterface : public QObject
+class DWAYLANDSERVER_EXPORT XdgForeignInterface : public QObject
 {
     Q_OBJECT
 public:

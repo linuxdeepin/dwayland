@@ -8,7 +8,7 @@
 
 #include <QObject>
 
-#include "KWayland/Client/kwaylandclient_export.h"
+#include "DWayland/Client/kwaylandclient_export.h"
 
 struct org_kde_kwin_server_decoration_palette_manager;
 struct org_kde_kwin_server_decoration_palette;
@@ -44,7 +44,7 @@ class ServerSideDecorationPalette;
  *
  * @see Registry
  **/
-class KWAYLANDCLIENT_EXPORT ServerSideDecorationPaletteManager : public QObject
+class DWAYLANDCLIENT_EXPORT ServerSideDecorationPaletteManager : public QObject
 {
     Q_OBJECT
 public:
@@ -119,7 +119,7 @@ private:
     QScopedPointer<Private> d;
 };
 
-class KWAYLANDCLIENT_EXPORT ServerSideDecorationPalette : public QObject
+class DWAYLANDCLIENT_EXPORT ServerSideDecorationPalette : public QObject
 {
     Q_OBJECT
 public:

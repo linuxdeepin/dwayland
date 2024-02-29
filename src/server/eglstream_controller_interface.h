@@ -9,7 +9,7 @@
 #include "global.h"
 #include "surface_interface.h"
 
-#include <KWayland/Server/kwaylandserver_export.h>
+#include <DWayland/Server/kwaylandserver_export.h>
 #include <QObject>
 #include <wayland-util.h>
 
@@ -27,7 +27,7 @@ class Display;
  * of buffer contents between client and compositor.
  *
  */
-class KWAYLANDSERVER_EXPORT EglStreamControllerInterface : public Global
+class DWAYLANDSERVER_EXPORT EglStreamControllerInterface : public Global
 {
     Q_OBJECT
 public:

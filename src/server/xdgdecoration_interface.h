@@ -9,7 +9,7 @@
 #include "global.h"
 #include "resource.h"
 
-#include <KWayland/Server/kwaylandserver_export.h>
+#include <DWayland/Server/kwaylandserver_export.h>
 
 namespace KWayland
 {
@@ -24,7 +24,7 @@ class XdgShellSurfaceInterface;
  * @brief The XdgDecorationManagerInterface class
  * @since 5.54
  */
-class KWAYLANDSERVER_EXPORT XdgDecorationManagerInterface : public Global
+class DWAYLANDSERVER_EXPORT XdgDecorationManagerInterface : public Global
 {
     Q_OBJECT
 public:
@@ -42,7 +42,7 @@ private:
  * @brief The XdgDecorationInterface class
  * @since 5.54
  */
-class KWAYLANDSERVER_EXPORT XdgDecorationInterface : public Resource
+class DWAYLANDSERVER_EXPORT XdgDecorationInterface : public Resource
 {
     Q_OBJECT
 public:

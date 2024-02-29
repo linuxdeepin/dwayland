@@ -8,7 +8,7 @@
 
 #include <QObject>
 
-#include "KWayland/Client/kwaylandclient_export.h"
+#include "DWayland/Client/kwaylandclient_export.h"
 
 struct _wl_fullscreen_shell;
 struct wl_output;
@@ -45,7 +45,7 @@ class Output;
  *
  * @see Registry
  **/
-class KWAYLANDCLIENT_EXPORT FullscreenShell : public QObject
+class DWAYLANDCLIENT_EXPORT FullscreenShell : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(bool capabilityArbitraryModes READ hasCapabilityArbitraryModes NOTIFY capabilityArbitraryModesChanged)

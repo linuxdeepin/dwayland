@@ -12,7 +12,7 @@
 #include <QSize>
 #include <QVector>
 
-#include "KWayland/Client/kwaylandclient_export.h"
+#include "DWayland/Client/kwaylandclient_export.h"
 
 struct org_kde_kwin_outputdevice;
 class QPoint;
@@ -54,7 +54,7 @@ class EventQueue;
  * @see Registry
  * @since 5.5
  **/
-class KWAYLANDCLIENT_EXPORT OutputDevice : public QObject
+class DWAYLANDCLIENT_EXPORT OutputDevice : public QObject
 {
     Q_OBJECT
 public:
@@ -197,7 +197,7 @@ public:
      **/
     int refreshRate() const;
 
-#if KWAYLANDCLIENT_ENABLE_DEPRECATED_SINCE(5, 50)
+#if DWAYLANDCLIENT_ENABLE_DEPRECATED_SINCE(5, 50)
     /**
      * Scaling factor of this output.
      *
@@ -206,7 +206,7 @@ public:
      * applications rendering at the native resolution would be too small to be legible.
      * @deprecated Since 5.50, use scaleF()
      **/
-    KWAYLANDCLIENT_DEPRECATED_VERSION(5, 50, "Use OutputDevice::scaleF()")
+    DWAYLANDCLIENT_DEPRECATED_VERSION(5, 50, "Use OutputDevice::scaleF()")
     int scale() const;
 #endif
 

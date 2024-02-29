@@ -7,7 +7,7 @@
 #define KWAYLAND_SERVER_FAKEINPUT_INTERFACE_H
 
 #include "global.h"
-#include <KWayland/Server/kwaylandserver_export.h>
+#include <DWayland/Server/kwaylandserver_export.h>
 
 struct wl_resource;
 
@@ -35,7 +35,7 @@ class FakeInputDevice;
  * @see FakeInputDevice
  * @since 5.4
  **/
-class KWAYLANDSERVER_EXPORT FakeInputInterface : public Global
+class DWAYLANDSERVER_EXPORT FakeInputInterface : public Global
 {
     Q_OBJECT
 public:
@@ -60,7 +60,7 @@ private:
  * @see FakeInputInterface
  * @since 5.4
  **/
-class KWAYLANDSERVER_EXPORT FakeInputDevice : public QObject
+class DWAYLANDSERVER_EXPORT FakeInputDevice : public QObject
 {
     Q_OBJECT
 public:

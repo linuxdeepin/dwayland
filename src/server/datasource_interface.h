@@ -8,7 +8,7 @@
 
 #include <QObject>
 
-#include <KWayland/Server/kwaylandserver_export.h>
+#include <DWayland/Server/kwaylandserver_export.h>
 
 #include "datadevicemanager_interface.h"
 #include "resource.h"
@@ -20,7 +20,7 @@ namespace Server
 /**
  * @brief Represents the Resource for the wl_data_source interface.
  **/
-class KWAYLANDSERVER_EXPORT DataSourceInterface : public Resource
+class DWAYLANDSERVER_EXPORT DataSourceInterface : public Resource
 {
     Q_OBJECT
 public:

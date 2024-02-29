@@ -10,7 +10,7 @@
 #include "global.h"
 #include "resource.h"
 
-#include <KWayland/Server/kwaylandserver_export.h>
+#include <DWayland/Server/kwaylandserver_export.h>
 
 #include <QHash>
 #include <QSet>
@@ -30,7 +30,7 @@ class BufferInterface;
  * Compositors should reimplement this class to store objects specific
  * to the underlying graphics stack.
  */
-class KWAYLANDSERVER_EXPORT LinuxDmabufBuffer
+class DWAYLANDSERVER_EXPORT LinuxDmabufBuffer
 {
 public:
     LinuxDmabufBuffer();
@@ -52,7 +52,7 @@ private:
     friend class LinuxDmabufUnstableV1Buffer;
 };
 
-class KWAYLANDSERVER_EXPORT LinuxDmabufUnstableV1Buffer : public LinuxDmabufBuffer
+class DWAYLANDSERVER_EXPORT LinuxDmabufUnstableV1Buffer : public LinuxDmabufBuffer
 {
 public:
     /**
@@ -75,7 +75,7 @@ private:
  *
  * This interface provides a way for clients to create generic dmabuf based wl_buffers.
  */
-class KWAYLANDSERVER_EXPORT LinuxDmabufUnstableV1Interface : public Global
+class DWAYLANDSERVER_EXPORT LinuxDmabufUnstableV1Interface : public Global
 {
     Q_OBJECT
 public:

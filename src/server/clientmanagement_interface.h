@@ -26,7 +26,7 @@ License along with this library.  If not, see <http://www.gnu.org/licenses/>.
 #include <QVector>
 #include <QImage>
 
-#include <KWayland/Server/kwaylandserver_export.h>
+#include <DWayland/Server/kwaylandserver_export.h>
 #include "global.h"
 #include "surface_interface.h"
 
@@ -45,7 +45,7 @@ class Display;
  * @see ClientManagementInterface
  * @since 5.5
  */
-class KWAYLANDSERVER_EXPORT ClientManagementInterface : public Global
+class DWAYLANDSERVER_EXPORT ClientManagementInterface : public Global
 {
     Q_OBJECT
 public:

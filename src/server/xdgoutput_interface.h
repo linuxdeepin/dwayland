@@ -9,7 +9,7 @@
 #include "global.h"
 #include "resource.h"
 
-#include <KWayland/Server/kwaylandserver_export.h>
+#include <DWayland/Server/kwaylandserver_export.h>
 
 /*
  * In terms of protocol XdgOutputInterface are a resource
@@ -29,7 +29,7 @@ class XdgOutputInterface;
  * Global manager for XdgOutputs
  * @since 5.47
  */
-class KWAYLANDSERVER_EXPORT XdgOutputManagerInterface : public Global
+class DWAYLANDSERVER_EXPORT XdgOutputManagerInterface : public Global
 {
     Q_OBJECT
 public:
@@ -56,7 +56,7 @@ private:
  * done() should be explicitly called after change batches including initial setting.
  * @since 5.47
  */
-class KWAYLANDSERVER_EXPORT XdgOutputInterface : public QObject
+class DWAYLANDSERVER_EXPORT XdgOutputInterface : public QObject
 {
     Q_OBJECT
 public:

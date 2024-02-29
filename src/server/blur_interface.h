@@ -12,7 +12,7 @@
 
 #include <QObject>
 
-#include <KWayland/Server/kwaylandserver_export.h>
+#include <DWayland/Server/kwaylandserver_export.h>
 
 namespace KWayland
 {
@@ -29,7 +29,7 @@ class Display;
  * @see SurfaceInterface
  * @since 5.5
  **/
-class KWAYLANDSERVER_EXPORT BlurManagerInterface : public Global
+class DWAYLANDSERVER_EXPORT BlurManagerInterface : public Global
 {
     Q_OBJECT
 public:
@@ -54,7 +54,7 @@ private:
  * @see SurfaceInterface
  * @since 5.5
  **/
-class KWAYLANDSERVER_EXPORT BlurInterface : public Resource
+class DWAYLANDSERVER_EXPORT BlurInterface : public Resource
 {
     Q_OBJECT
 public:

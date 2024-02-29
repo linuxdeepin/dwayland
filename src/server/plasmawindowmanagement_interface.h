@@ -6,9 +6,9 @@
 #ifndef WAYLAND_SERVER_PLASMA_WINDOW_MANAGEMENT_INTERFACE_H
 #define WAYLAND_SERVER_PLASMA_WINDOW_MANAGEMENT_INTERFACE_H
 
-#include <KWayland/Server/kwaylandserver_export.h>
+#include <DWayland/Server/kwaylandserver_export.h>
 
-#if KWAYLANDSERVER_ENABLE_DEPRECATED_SINCE(5, 73)
+#if DWAYLANDSERVER_ENABLE_DEPRECATED_SINCE(5, 73)
 
 #include <QObject>
 
@@ -28,11 +28,11 @@ class PlasmaVirtualDesktopManagementInterface;
 /**
  * @deprecated 5.73 port to KWaylandServer in Plasma
  */
-class KWAYLANDSERVER_EXPORT PlasmaWindowManagementInterface : public Global
+class DWAYLANDSERVER_EXPORT PlasmaWindowManagementInterface : public Global
 {
     Q_OBJECT
 public:
-    KWAYLANDSERVER_DEPRECATED_VERSION(5, 73, "Port to KWaylandServer")
+    DWAYLANDSERVER_DEPRECATED_VERSION(5, 73, "Port to KWaylandServer")
     PlasmaWindowManagementInterface() = default;
     ~PlasmaWindowManagementInterface() override;
     enum class ShowingDesktopState { Disabled, Enabled };
@@ -91,22 +91,22 @@ private:
 /**
  * @todo Add documentation
  */
-class KWAYLANDSERVER_EXPORT PlasmaWindowInterface : public QObject
+class DWAYLANDSERVER_EXPORT PlasmaWindowInterface : public QObject
 {
     Q_OBJECT
 public:
-    KWAYLANDSERVER_DEPRECATED_VERSION(5, 73, "Port to KWaylandServer")
+    DWAYLANDSERVER_DEPRECATED_VERSION(5, 73, "Port to KWaylandServer")
     PlasmaWindowInterface() = default;
     ~PlasmaWindowInterface() override;
 
     void setTitle(const QString &title);
     void setAppId(const QString &appId);
     void setPid(quint32 pid);
-#if KWAYLANDSERVER_ENABLE_DEPRECATED_SINCE(5, 52)
+#if DWAYLANDSERVER_ENABLE_DEPRECATED_SINCE(5, 52)
     /**
      * @deprecated Since 5.52, use addPlasmaVirtualDesktop and removePlasmaVirtualDesktop
      */
-    KWAYLANDSERVER_DEPRECATED_VERSION(5,
+    DWAYLANDSERVER_DEPRECATED_VERSION(5,
                                       52,
                                       "Use PlasmaWindowManagementInterface::addPlasmaVirtualDesktop(const QString&) and "
                                       "PlasmaWindowManagementInterface::removePlasmaVirtualDesktop(const QString&)")
@@ -126,11 +126,11 @@ public:
     void setFullscreenable(bool set);
     void setSkipTaskbar(bool skip);
     void setSkipSwitcher(bool skip);
-#if KWAYLANDSERVER_ENABLE_DEPRECATED_SINCE(5, 28)
+#if DWAYLANDSERVER_ENABLE_DEPRECATED_SINCE(5, 28)
     /**
      * @deprecated since 5.28 use setIcon
      **/
-    KWAYLANDSERVER_DEPRECATED_VERSION(5, 28, "Use PlasmaWindowManagementInterface::setIcon(const QIcon&)")
+    DWAYLANDSERVER_DEPRECATED_VERSION(5, 28, "Use PlasmaWindowManagementInterface::setIcon(const QIcon&)")
     void setThemedIconName(const QString &iconName);
 #endif
     /**
@@ -250,11 +250,11 @@ Q_SIGNALS:
      * @since 5.22
      */
     void resizeRequested();
-#if KWAYLANDSERVER_ENABLE_DEPRECATED_SINCE(5, 52)
+#if DWAYLANDSERVER_ENABLE_DEPRECATED_SINCE(5, 52)
     /**
      * @deprecated Since 5.52, use enterPlasmaVirtualDesktopRequested and leavePlasmaVirtualDesktopRequested instead
      */
-    KWAYLANDSERVER_DEPRECATED_VERSION(5,
+    DWAYLANDSERVER_DEPRECATED_VERSION(5,
                                       52,
                                       "Use PlasmaWindowManagementInterface::enterPlasmaVirtualDesktopRequested(const QString&) and "
                                       "PlasmaWindowManagementInterface::leavePlasmaVirtualDesktopRequested(const QString&)")

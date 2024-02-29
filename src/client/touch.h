@@ -9,7 +9,7 @@
 #include <QObject>
 #include <QPoint>
 
-#include "KWayland/Client/kwaylandclient_export.h"
+#include "DWayland/Client/kwaylandclient_export.h"
 
 struct wl_touch;
 
@@ -23,7 +23,7 @@ class Touch;
 /**
  * TODO
  */
-class KWAYLANDCLIENT_EXPORT TouchPoint
+class DWAYLANDCLIENT_EXPORT TouchPoint
 {
 public:
     virtual ~TouchPoint();
@@ -84,7 +84,7 @@ private:
  *
  * @see Seat
  **/
-class KWAYLANDCLIENT_EXPORT Touch : public QObject
+class DWAYLANDCLIENT_EXPORT Touch : public QObject
 {
     Q_OBJECT
 public:

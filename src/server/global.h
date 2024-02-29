@@ -8,7 +8,7 @@
 
 #include <QObject>
 
-#include <KWayland/Server/kwaylandserver_export.h>
+#include <DWayland/Server/kwaylandserver_export.h>
 
 struct wl_global;
 
@@ -43,7 +43,7 @@ class Display;
  * @see Display
  *
  **/
-class KWAYLANDSERVER_EXPORT Global : public QObject
+class DWAYLANDSERVER_EXPORT Global : public QObject
 {
     Q_OBJECT
 public:

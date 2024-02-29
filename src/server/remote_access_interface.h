@@ -28,7 +28,7 @@ class OutputInterface;
  *     It's the responsibility of your process to delete this BufferHandle
  *     and release its' fd afterwards.
  **/
-class KWAYLANDSERVER_EXPORT BufferHandle
+class DWAYLANDSERVER_EXPORT BufferHandle
 {
 public:
     explicit BufferHandle();
@@ -52,7 +52,7 @@ private:
     QScopedPointer<Private> d;
 };
 
-class KWAYLANDSERVER_EXPORT RemoteAccessManagerInterface : public Global
+class DWAYLANDSERVER_EXPORT RemoteAccessManagerInterface : public Global
 {
     Q_OBJECT
 public:

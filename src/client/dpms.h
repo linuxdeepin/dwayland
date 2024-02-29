@@ -8,7 +8,7 @@
 
 #include <QObject>
 
-#include "KWayland/Client/kwaylandclient_export.h"
+#include "DWayland/Client/kwaylandclient_export.h"
 
 struct org_kde_kwin_dpms;
 struct org_kde_kwin_dpms_manager;
@@ -45,7 +45,7 @@ class Output;
  * @see Registry, Dpms
  * @since 5.5
  **/
-class KWAYLANDCLIENT_EXPORT DpmsManager : public QObject
+class DWAYLANDCLIENT_EXPORT DpmsManager : public QObject
 {
     Q_OBJECT
 public:
@@ -127,7 +127,7 @@ private:
  *
  * @see DpmsManager
  **/
-class KWAYLANDCLIENT_EXPORT Dpms : public QObject
+class DWAYLANDCLIENT_EXPORT Dpms : public QObject
 {
     Q_OBJECT
 public:

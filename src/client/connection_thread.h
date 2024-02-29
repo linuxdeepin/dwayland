@@ -9,7 +9,7 @@
 #include <QObject>
 #include <QVector>
 
-#include "KWayland/Client/kwaylandclient_export.h"
+#include "DWayland/Client/kwaylandclient_export.h"
 
 struct wl_display;
 
@@ -103,7 +103,7 @@ namespace Client
  * in that case as QtWayland holds it's connection in an own thread anyway.
  *
  **/
-class KWAYLANDCLIENT_EXPORT ConnectionThread : public QObject
+class DWAYLANDCLIENT_EXPORT ConnectionThread : public QObject
 {
     Q_OBJECT
 public:

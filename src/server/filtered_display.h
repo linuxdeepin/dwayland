@@ -10,7 +10,7 @@
 #include "display.h"
 #include "global.h"
 
-#include <KWayland/Server/kwaylandserver_export.h>
+#include <DWayland/Server/kwaylandserver_export.h>
 
 namespace KWayland
 {
@@ -23,7 +23,7 @@ namespace Server
  *
  * @since 5.FIXME
  */
-class KWAYLANDSERVER_EXPORT FilteredDisplay : public Display
+class DWAYLANDSERVER_EXPORT FilteredDisplay : public Display
 {
     Q_OBJECT
 public:

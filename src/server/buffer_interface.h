@@ -9,7 +9,7 @@
 #include <QImage>
 #include <QObject>
 
-#include <KWayland/Server/kwaylandserver_export.h>
+#include <DWayland/Server/kwaylandserver_export.h>
 
 struct wl_resource;
 struct wl_shm_buffer;
@@ -48,7 +48,7 @@ class LinuxDmabufBuffer;
  * @see Display
  * @see SurfaceInterace
  **/
-class KWAYLANDSERVER_EXPORT BufferInterface : public QObject
+class DWAYLANDSERVER_EXPORT BufferInterface : public QObject
 {
     Q_OBJECT
 public:

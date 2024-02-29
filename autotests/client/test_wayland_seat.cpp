@@ -2442,7 +2442,7 @@ void TestWaylandSeat::testKeymap()
 
 void TestWaylandSeat::testKeymapThroughFd()
 {
-#if KWAYLANDSERVER_BUILD_DEPRECATED_SINCE(5, 69)
+#if DWAYLANDSERVER_BUILD_DEPRECATED_SINCE(5, 69)
     using namespace KWayland::Client;
     using namespace KWayland::Server;
 

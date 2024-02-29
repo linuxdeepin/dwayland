@@ -14,7 +14,7 @@
 #include "keyboard_interface.h"
 #include "pointer_interface.h"
 #include "touch_interface.h"
-#include <KWayland/Server/kwaylandserver_export.h>
+#include <DWayland/Server/kwaylandserver_export.h>
 
 struct wl_client;
 struct wl_resource;
@@ -100,7 +100,7 @@ enum class PointerAxisSource {
  * @see TouchInterface
  * @see SurfaceInterface
  **/
-class KWAYLANDSERVER_EXPORT SeatInterface : public Global
+class DWAYLANDSERVER_EXPORT SeatInterface : public Global
 {
     Q_OBJECT
     /**
@@ -547,11 +547,11 @@ public:
      * @name keyboard related methods
      **/
     ///@{
-#if KWAYLANDSERVER_ENABLE_DEPRECATED_SINCE(5, 69)
+#if DWAYLANDSERVER_ENABLE_DEPRECATED_SINCE(5, 69)
     /**
      * @deprecated since 5.69, use setKeymapData
      **/
-    KWAYLANDSERVER_DEPRECATED_VERSION(5, 69, "Use SeatInterface::setKeymapData()")
+    DWAYLANDSERVER_DEPRECATED_VERSION(5, 69, "Use SeatInterface::setKeymapData()")
     void setKeymap(int fd, quint32 size);
 #endif
     /**
@@ -581,15 +581,15 @@ public:
     quint32 lockedModifiers() const;
     quint32 groupModifiers() const;
     quint32 lastModifiersSerial() const;
-#if KWAYLANDSERVER_ENABLE_DEPRECATED_SINCE(5, 69)
+#if DWAYLANDSERVER_ENABLE_DEPRECATED_SINCE(5, 69)
     /**
      * @deprecated since 5.69
      **/
-    int KWAYLANDSERVER_DEPRECATED keymapFileDescriptor() const;
+    int DWAYLANDSERVER_DEPRECATED keymapFileDescriptor() const;
     /**
      * @deprecated since 5.69
      **/
-    quint32 KWAYLANDSERVER_DEPRECATED keymapSize() const;
+    quint32 DWAYLANDSERVER_DEPRECATED keymapSize() const;
 #endif
     bool isKeymapXkbCompatible() const;
     QVector<quint32> pressedKeys() const;

@@ -9,7 +9,7 @@
 #include "global.h"
 #include "resource.h"
 
-#include <KWayland/Server/kwaylandserver_export.h>
+#include <DWayland/Server/kwaylandserver_export.h>
 
 namespace KWayland
 {
@@ -26,7 +26,7 @@ class AppMenuInterface;
  * and notifies when a new one is created
  * @since 5.42
  */
-class KWAYLANDSERVER_EXPORT AppMenuManagerInterface : public Global
+class DWAYLANDSERVER_EXPORT AppMenuManagerInterface : public Global
 {
     Q_OBJECT
 public:
@@ -56,7 +56,7 @@ private:
  * the AppMenu DBus interface is registered.
  * @since 5.42
  */
-class KWAYLANDSERVER_EXPORT AppMenuInterface : public Resource
+class DWAYLANDSERVER_EXPORT AppMenuInterface : public Resource
 {
     Q_OBJECT
 public:

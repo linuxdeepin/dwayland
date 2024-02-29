@@ -8,7 +8,7 @@
 
 #include <QObject>
 
-#include "KWayland/Client/kwaylandclient_export.h"
+#include "DWayland/Client/kwaylandclient_export.h"
 
 
 struct zwlr_data_control_manager_v1;
@@ -46,7 +46,7 @@ class Seat;
  *
  * @see Registry
  **/
-class KWAYLANDCLIENT_EXPORT DataControlDeviceManager : public QObject
+class DWAYLANDCLIENT_EXPORT DataControlDeviceManager : public QObject
 {
     Q_OBJECT
 public:

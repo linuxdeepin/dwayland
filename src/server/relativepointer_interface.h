@@ -8,7 +8,7 @@
 
 #include "global.h"
 
-#include <KWayland/Server/kwaylandserver_export.h>
+#include <DWayland/Server/kwaylandserver_export.h>
 
 namespace KWayland
 {
@@ -32,7 +32,7 @@ enum class RelativePointerInterfaceVersion {
  * @see SeatInterface::relativePointerMotion
  * @since 5.28
  **/
-class KWAYLANDSERVER_EXPORT RelativePointerManagerInterface : public Global
+class DWAYLANDSERVER_EXPORT RelativePointerManagerInterface : public Global
 {
     Q_OBJECT
 public:

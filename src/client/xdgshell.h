@@ -6,7 +6,7 @@
 #ifndef KWAYLAND_CLIENT_XDG_SHELL_H
 #define KWAYLAND_CLIENT_XDG_SHELL_H
 
-#include "KWayland/Client/kwaylandclient_export.h"
+#include "DWayland/Client/kwaylandclient_export.h"
 #include <QObject>
 #include <QRect>
 #include <QSize>
@@ -41,7 +41,7 @@ class XdgShellSurface;
  *
  * @since 5.39
  */
-class KWAYLANDCLIENT_EXPORT XdgPositioner
+class DWAYLANDCLIENT_EXPORT XdgPositioner
 {
 public:
     /*
@@ -152,7 +152,7 @@ Q_DECLARE_OPERATORS_FOR_FLAGS(XdgPositioner::Constraints)
  * @see Registry
  * @since 5.25
  **/
-class KWAYLANDCLIENT_EXPORT XdgShell : public QObject
+class DWAYLANDCLIENT_EXPORT XdgShell : public QObject
 {
     Q_OBJECT
 public:
@@ -271,7 +271,7 @@ private:
  *
  * @since 5.25
  **/
-class KWAYLANDCLIENT_EXPORT XdgShellSurface : public QObject
+class DWAYLANDCLIENT_EXPORT XdgShellSurface : public QObject
 {
     Q_OBJECT
 public:
@@ -508,7 +508,7 @@ Q_DECLARE_OPERATORS_FOR_FLAGS(XdgShellSurface::States)
  * or even locking the screen through closing the lid or a timeout.
  * @since 5.25
  **/
-class KWAYLANDCLIENT_EXPORT XdgShellPopup : public QObject
+class DWAYLANDCLIENT_EXPORT XdgShellPopup : public QObject
 {
     Q_OBJECT
 public:
@@ -521,7 +521,7 @@ public:
      *
      * @deprecated Since 5.49. This was for XDGShellV5, this is now deprecated
      **/
-    KWAYLANDCLIENT_DEPRECATED_VERSION(5, 49, "Use XDGShell version >5")
+    DWAYLANDCLIENT_DEPRECATED_VERSION(5, 49, "Use XDGShell version >5")
     void setup(xdg_popup *xdgpopupv5);
 
     /**
@@ -634,7 +634,7 @@ private:
  *
  * @since 5.101
  */
-class KWAYLANDCLIENT_EXPORT XdgShellStable : public XdgShell
+class DWAYLANDCLIENT_EXPORT XdgShellStable : public XdgShell
 {
     Q_OBJECT
 public:
@@ -650,7 +650,7 @@ private:
  *
  * @since 5.101
  */
-class KWAYLANDCLIENT_EXPORT XdgTopLevelStable : public XdgShellSurface
+class DWAYLANDCLIENT_EXPORT XdgTopLevelStable : public XdgShellSurface
 {
     Q_OBJECT
 public:
@@ -667,7 +667,7 @@ private:
  *
  * @since 5.101
  */
-class KWAYLANDCLIENT_EXPORT XdgShellPopupStable : public XdgShellPopup
+class DWAYLANDCLIENT_EXPORT XdgShellPopupStable : public XdgShellPopup
 {
 public:
     explicit XdgShellPopupStable(QObject *parent = nullptr);

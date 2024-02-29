@@ -9,7 +9,7 @@
 #include "global.h"
 #include "resource.h"
 
-#include <KWayland/Server/kwaylandserver_export.h>
+#include <DWayland/Server/kwaylandserver_export.h>
 
 namespace KWayland
 {
@@ -50,7 +50,7 @@ enum class TextInputInterfaceVersion {
  *
  * @since 5.23
  **/
-class KWAYLANDSERVER_EXPORT TextInputManagerInterface : public Global
+class DWAYLANDSERVER_EXPORT TextInputManagerInterface : public Global
 {
     Q_OBJECT
 public:
@@ -87,7 +87,7 @@ private:
  * @see SeatInterface
  * @since 5.23
  **/
-class KWAYLANDSERVER_EXPORT TextInputInterface : public Resource
+class DWAYLANDSERVER_EXPORT TextInputInterface : public Resource
 {
     Q_OBJECT
 public:

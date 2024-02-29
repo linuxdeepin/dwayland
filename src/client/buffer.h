@@ -10,7 +10,7 @@
 #include <QSize>
 #include <QWeakPointer>
 
-#include "KWayland/Client/kwaylandclient_export.h"
+#include "DWayland/Client/kwaylandclient_export.h"
 
 struct wl_buffer;
 
@@ -27,7 +27,7 @@ class ShmPool;
  *
  * @see ShmPool
  **/
-class KWAYLANDCLIENT_EXPORT Buffer
+class DWAYLANDCLIENT_EXPORT Buffer
 {
 public:
     /**

@@ -10,7 +10,7 @@
 #include <QPoint>
 #include <QVector>
 
-#include "KWayland/Client/kwaylandclient_export.h"
+#include "DWayland/Client/kwaylandclient_export.h"
 #include "outputdevice.h"
 
 struct org_kde_kwin_outputmanagement;
@@ -79,7 +79,7 @@ class EventQueue;
  * @see OutputManagement::createConfiguration()
  * @since 5.5
  */
-class KWAYLANDCLIENT_EXPORT OutputConfiguration : public QObject
+class DWAYLANDCLIENT_EXPORT OutputConfiguration : public QObject
 {
     Q_OBJECT
 public:
@@ -182,7 +182,7 @@ public:
      */
     void setPosition(OutputDevice *outputdevice, const QPoint &pos);
 
-#if KWAYLANDCLIENT_ENABLE_DEPRECATED_SINCE(5, 50)
+#if DWAYLANDCLIENT_ENABLE_DEPRECATED_SINCE(5, 50)
     /**
      * Scale rendering of this output.
      * The changes done in this call will be recorded in the
@@ -192,7 +192,7 @@ public:
      * @param outputdevice the OutputDevice this change applies to.
      * @deprecated Since 5.50, use setScaleF(OutputDevice *, qreal)
      */
-    KWAYLANDCLIENT_DEPRECATED_VERSION(5, 50, "Use OutputConfiguration::setScaleF(OutputDevice *, qreal)")
+    DWAYLANDCLIENT_DEPRECATED_VERSION(5, 50, "Use OutputConfiguration::setScaleF(OutputDevice *, qreal)")
     void setScale(OutputDevice *outputdevice, qint32 scale);
 #endif
 

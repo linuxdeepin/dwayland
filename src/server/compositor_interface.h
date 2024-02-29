@@ -12,7 +12,7 @@
 
 #include <QObject>
 
-#include <KWayland/Server/kwaylandserver_export.h>
+#include <DWayland/Server/kwaylandserver_export.h>
 
 namespace KWayland
 {
@@ -25,7 +25,7 @@ class SurfaceInterface;
  * @brief Represents the Global for wl_compositor interface.
  *
  **/
-class KWAYLANDSERVER_EXPORT CompositorInterface : public Global
+class DWAYLANDSERVER_EXPORT CompositorInterface : public Global
 {
     Q_OBJECT
 public:

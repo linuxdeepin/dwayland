@@ -10,7 +10,7 @@
 
 #include "datadevice_interface.h"
 #include "global.h"
-#include <KWayland/Server/kwaylandserver_export.h>
+#include <DWayland/Server/kwaylandserver_export.h>
 
 namespace KWayland
 {
@@ -23,7 +23,7 @@ class DataSourceInterface;
  * @brief Represents the Global for wl_data_device_manager interface.
  *
  **/
-class KWAYLANDSERVER_EXPORT DataDeviceManagerInterface : public Global
+class DWAYLANDSERVER_EXPORT DataDeviceManagerInterface : public Global
 {
     Q_OBJECT
 public:

@@ -11,7 +11,7 @@
 #include <QSize>
 #include <QWindow>
 
-#include "KWayland/Client/kwaylandclient_export.h"
+#include "DWayland/Client/kwaylandclient_export.h"
 
 struct wl_surface;
 struct wl_shell;
@@ -52,7 +52,7 @@ class Surface;
  * @see Registry
  * @see ShellSurface
  **/
-class KWAYLANDCLIENT_EXPORT Shell : public QObject
+class DWAYLANDCLIENT_EXPORT Shell : public QObject
 {
     Q_OBJECT
 public:
@@ -163,7 +163,7 @@ private:
  * @see Shell
  * @see Surface
  **/
-class KWAYLANDCLIENT_EXPORT ShellSurface : public QObject
+class DWAYLANDCLIENT_EXPORT ShellSurface : public QObject
 {
     Q_OBJECT
     /**

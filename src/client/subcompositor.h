@@ -9,7 +9,7 @@
 #include <QObject>
 #include <QPointer>
 
-#include "KWayland/Client/kwaylandclient_export.h"
+#include "DWayland/Client/kwaylandclient_export.h"
 
 struct wl_subcompositor;
 
@@ -31,7 +31,7 @@ class Surface;
  *
  * @see Registry
  **/
-class KWAYLANDCLIENT_EXPORT SubCompositor : public QObject
+class DWAYLANDCLIENT_EXPORT SubCompositor : public QObject
 {
     Q_OBJECT
 public:

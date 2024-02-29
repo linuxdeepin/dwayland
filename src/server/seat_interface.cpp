@@ -1114,7 +1114,7 @@ void SeatInterface::setFocusedKeyboardSurface(SurfaceInterface *surface)
     }
 }
 
-#if KWAYLANDSERVER_BUILD_DEPRECATED_SINCE(5, 69)
+#if DWAYLANDSERVER_BUILD_DEPRECATED_SINCE(5, 69)
 void SeatInterface::setKeymap(int fd, quint32 size)
 {
     QFile file;
@@ -1192,14 +1192,14 @@ bool SeatInterface::isKeymapXkbCompatible() const
     return d->keys.keymap.xkbcommonCompatible;
 }
 
-#if KWAYLANDSERVER_BUILD_DEPRECATED_SINCE(5, 69)
+#if DWAYLANDSERVER_BUILD_DEPRECATED_SINCE(5, 69)
 int SeatInterface::keymapFileDescriptor() const
 {
     return -1;
 }
 #endif
 
-#if KWAYLANDSERVER_BUILD_DEPRECATED_SINCE(5, 69)
+#if DWAYLANDSERVER_BUILD_DEPRECATED_SINCE(5, 69)
 quint32 SeatInterface::keymapSize() const
 {
     return 0;

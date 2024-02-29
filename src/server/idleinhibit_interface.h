@@ -9,7 +9,7 @@
 #include "global.h"
 #include "resource.h"
 
-#include <KWayland/Server/kwaylandserver_export.h>
+#include <DWayland/Server/kwaylandserver_export.h>
 
 namespace KWayland
 {
@@ -35,7 +35,7 @@ enum class IdleInhibitManagerInterfaceVersion {
  *
  * @since 5.41
  **/
-class KWAYLANDSERVER_EXPORT IdleInhibitManagerInterface : public Global
+class DWAYLANDSERVER_EXPORT IdleInhibitManagerInterface : public Global
 {
     Q_OBJECT
 public:

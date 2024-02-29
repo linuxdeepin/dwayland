@@ -25,7 +25,7 @@ License along with this library.  If not, see <http://www.gnu.org/licenses/>.
 #include <QSize>
 #include <QVector>
 
-#include <KWayland/Server/kwaylandserver_export.h>
+#include <DWayland/Server/kwaylandserver_export.h>
 #include "global.h"
 #include "resource.h"
 
@@ -47,7 +47,7 @@ class DDETouchInterface;
  * @see DDESeatInterface
  * @since 5.5
  */
-class KWAYLANDSERVER_EXPORT DDESeatInterface : public Global
+class DWAYLANDSERVER_EXPORT DDESeatInterface : public Global
 {
     Q_OBJECT
 public:
@@ -129,7 +129,7 @@ private:
  *
  * @since 5.4
  **/
-class KWAYLANDSERVER_EXPORT DDEPointerInterface : public Resource
+class DWAYLANDSERVER_EXPORT DDEPointerInterface : public Resource
 {
     Q_OBJECT
 public:
@@ -166,7 +166,7 @@ private:
  *
  * @since 5.4
  **/
-class KWAYLANDSERVER_EXPORT DDETouchInterface : public Resource
+class DWAYLANDSERVER_EXPORT DDETouchInterface : public Resource
 {
     Q_OBJECT
 public:

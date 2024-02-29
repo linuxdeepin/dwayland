@@ -158,7 +158,7 @@ void OutputConfiguration::setPosition(OutputDevice *outputdevice, const QPoint &
     org_kde_kwin_outputconfiguration_position(d->outputconfiguration, od, pos.x(), pos.y());
 }
 
-#if KWAYLANDCLIENT_BUILD_DEPRECATED_SINCE(5, 50)
+#if DWAYLANDCLIENT_BUILD_DEPRECATED_SINCE(5, 50)
 void OutputConfiguration::setScale(OutputDevice *outputdevice, qint32 scale)
 {
     setScaleF(outputdevice, scale);

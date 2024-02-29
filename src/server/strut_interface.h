@@ -24,7 +24,7 @@ License along with this library.  If not, see <http://www.gnu.org/licenses/>.
 #include "global.h"
 #include "resource.h"
 #include <QObject>
-#include <KWayland/Server/kwaylandserver_export.h>
+#include <DWayland/Server/kwaylandserver_export.h>
 
 namespace KWayland
 {
@@ -120,7 +120,7 @@ struct deepinKwinStrut
  * @see xxxx
  * @since 5.5
  **/
-class KWAYLANDSERVER_EXPORT StrutInterface : public Global
+class DWAYLANDSERVER_EXPORT StrutInterface : public Global
 {
     Q_OBJECT
 public:

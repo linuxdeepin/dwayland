@@ -9,7 +9,7 @@
 #include <QObject>
 #include <QPoint>
 
-#include "KWayland/Client/kwaylandclient_export.h"
+#include "DWayland/Client/kwaylandclient_export.h"
 
 struct wl_pointer;
 
@@ -28,7 +28,7 @@ class Surface;
  *
  * @see Seat
  **/
-class KWAYLANDCLIENT_EXPORT Pointer : public QObject
+class DWAYLANDCLIENT_EXPORT Pointer : public QObject
 {
     Q_OBJECT
 public:

@@ -9,7 +9,7 @@
 #include <QObject>
 #include <QRegion>
 
-#include <KWayland/Server/kwaylandserver_export.h>
+#include <DWayland/Server/kwaylandserver_export.h>
 
 #include "resource.h"
 
@@ -27,7 +27,7 @@ class CompositorInterface;
  *
  * @see CompositorInterface
  **/
-class KWAYLANDSERVER_EXPORT RegionInterface : public Resource
+class DWAYLANDSERVER_EXPORT RegionInterface : public Resource
 {
     Q_OBJECT
 public:

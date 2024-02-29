@@ -8,7 +8,7 @@
 
 #include "global.h"
 #include "resource.h"
-#include <KWayland/Server/kwaylandserver_export.h>
+#include <DWayland/Server/kwaylandserver_export.h>
 
 namespace KWayland
 {
@@ -37,7 +37,7 @@ class SeatInterface;
  *
  * @since 5.4
  **/
-class KWAYLANDSERVER_EXPORT IdleInterface : public Global
+class DWAYLANDSERVER_EXPORT IdleInterface : public Global
 {
     Q_OBJECT
 public:
@@ -106,7 +106,7 @@ private:
 };
 
 // TODO: KF6 make private class
-class KWAYLANDSERVER_EXPORT IdleTimeoutInterface : public Resource
+class DWAYLANDSERVER_EXPORT IdleTimeoutInterface : public Resource
 {
     Q_OBJECT
 public:
