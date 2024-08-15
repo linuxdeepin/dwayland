@@ -1,3 +1,9 @@
+dwayland (5.25.0-kwayland.5.24.3) unrelease; urgency=medium
+
+  * add ECM to dev package
+
+ -- Dingyuan Zhang <justforlxz@gmail.com>  Tue, 04 Apr 2023 14:43:28 +0800
+
 dwayland (5.25.0-kwayland.5.24.3) unstable; urgency=medium
 
   * add ECM to dev package
